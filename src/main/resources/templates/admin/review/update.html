@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+    <h2 th:text="|レビューID：${id}の編集|"></h2>
+    <a class="btn-primary" th:href="@{/admin/review/list}">一覧に戻る</a>
+
+    <form class="admin-form" th:method="post" th:action="@{/admin/review/update/{id}/(id=${review.id})}" th:object="${review}">
+        <table>
+            <tr>
+                <th><label for="id">ID</label></th>
+                <td><input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}" th:field="*{id}"></td>
+            </tr>
+            <tr>
+                <th><label for="user.id">投稿ユーザーID</label></th>
+                <td><input type="hidden" id="user.id" name="user.id" th:value="*{user.id}" th:text="*{user.id}" th:field="*{user.id}"></td>
+            </tr>
+            <tr>
+                <th><label for="user.username">投稿ユーザー名</label></th>
+                <td><input type="hidden" id="user.username" name="user.username" th:value="*{user.username}" th:text="*{user.username}" th:field="*{user.username}"></td>
+            </tr>
+            <tr>
+                <th><label for="manga.id">作品ID</label></th>
+                <td><input type="hidden" id="manga.id" name="manga.id" th:value="*{manga.id}" th:text="*{manga.id}" th:field="*{manga.id}"></td>
+            </tr>
+            <tr>
+                <th><label for="manga.title">作品名</label></th>
+                <td><input type="hidden" id="manga.title" name="manga.title" th:value="*{manga.title}" th:text="*{manga.title}" th:field="*{manga.title}"></td>
+            </tr>
+            <tr>
+                <th><label for="rating">レーティング</label></th>
+                <td><input type="text" th:field="*{rating}"></td>
+            </tr>
+            <tr>
+                <th><label for="title">レビュータイトル</label></th>
+                <td><input type="text" th:field="*{title}"></td>
+            </tr>
+            <tr>
+                <th><label for="content">レビュー本文</label></th>
+                <td><textarea th:field="*{content}"></textarea></td>
+            </tr>
+            <tr>
+                <th><label for="deleteFlag">削除フラグ</label></th>
+                <td><input type="text" th:field="*{deleteFlag}"></td>
+            </tr>
+        </table>
+        <input type="submit" value="更新">
+    </form>
+
+</div>
+</html>

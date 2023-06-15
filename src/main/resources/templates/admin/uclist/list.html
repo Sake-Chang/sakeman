@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h2>管理者用ページ</h2>
+    <h3>登録作品 一覧</h3>
+    <form method="get" th:action="@{/admin/uclist/register}">
+        <input type="submit" value="新規登録"/>
+    </form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>作成ユーザー名</th>
+            <th>リストタイトル</th>
+            <th>リスト説明</th>
+            <th>作品名</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="uclist : ${uclistlist}">
+            <td th:text="${uclist.id}"></td>
+            <td th:text="${uclist.user.username}"></td>
+            <td th:text="${uclist.title}"></td>
+            <td th:text="${uclist.description}"></td>
+                        <td>
+                <th:block th:if="!${#lists.isEmpty(uclist.uclistMangas)}">
+                    <th:block th:each="um : ${uclist.uclistMangas}">
+                        <p th:text="${um.manga.title}" />
+                    </th:block>
+                </th:block>
+            </td>
+            <td><a class="btn-primary" th:href="@{/admin/manga/detail/{id}/(id=${uclist.id})}">詳細</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

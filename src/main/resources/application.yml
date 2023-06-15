@@ -1,0 +1,22 @@
+# Spring
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  application:
+    name: sakeman
+  config:
+    import: 'aws-parameterstore:'
+
+# Tomcat
+server:
+  servlet:
+    context-path: /sakeman
+
+# AWS
+aws:
+  paramstore:
+    enabled: true
+    region: ap-northeast-1
+    prefix: /config
+    profileSeparator: _
+    failFast: true

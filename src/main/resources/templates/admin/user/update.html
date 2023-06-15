@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+    <h2 th:text="|${user.username}の編集|"></h2>
+    <a class="btn-primary" th:href="@{/admin/user/list}">一覧に戻る</a>
+
+    <form class="admin-form" th:method="post" th:action="@{/admin/user/update/{id}/(id=${user.id})}" th:object="${user}">
+        <table>
+            <tr>
+                <th><label for="id">ID</label></th>
+                <td><input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}" th:field="*{id}"></td>
+            </tr>
+            <tr>
+                <th><label for="username">ユーザーネーム</label></th>
+                <td><input type="text" th:field="*{username}"></td>
+            </tr>
+            <tr>
+                <th><label for="email">メールアドレス</label></th>
+                <td><input type="text" th:field="*{email}"></td>
+            </tr>
+            <tr>
+            <th><label for="password">パスワード</label></th>
+                <td><input type="password" th:field="*{password}"></td>
+            </tr>
+            <tr>
+                <th><label for="role">権限</label></th>
+                <td><select th:field="*{role}" th:errorclass="err">
+                <option value="" th:text="選択してください">
+                <option th:each="item:${T(com.techacademy.entity.User.Role).values()}" th:value="${item}" th:text="${item}">
+                </select>
+                <span th:errors="*{role}" class="err"></span></td>
+            </tr>
+            <tr>
+                <th><label for="selfIntro">自己紹介文</label></th>
+                <td><textarea th:field="*{selfIntro}"></textarea></td>
+            </tr>
+            <tr>
+                <th><label for="img">画像ファイル名</label></th>
+                <td><input type="text" th:field="*{img}"></td>
+            </tr>
+            <tr>
+                <th><label for="deleteFlag">削除フラグ</label></th>
+                <td><input type="text" th:field="*{deleteFlag}"></td>
+            </tr>
+        </table>
+        <input type="submit" value="更新">
+    </form>
+</div>
+</html>

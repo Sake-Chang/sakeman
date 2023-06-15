@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+.container-uclist {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    padding: 0 8px;
+    margin-bottom: 16px;
+}
+
+.card-outer-uclist {
+    background-color: #ffffff;
+    border: solid #dedede;
+    border-radius: 8px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.uclist-module-head {
+    padding: 16px;
+}
+
+.uclist-module-head-user {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.head-cont {
+    display: flex;
+    column-gap: 16px;
+}
+
+.uclist-module-head-user-img {
+    width: 40px;
+    border-radius: 50%;
+}
+
+.uclist-module-head-user-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.uclist-module-head-user-title {
+    margin: 0;
+    font-size: 11px;
+    color: #595959;
+    background-color: #E1D8F0;
+    border-radius: 8px;
+    padding: 2px 8px;
+    display: flex;
+    width: fit-content;
+}
+
+.counter-container {
+    display: flex;
+    column-gap: 16px;
+}
+
+.counter {
+    color: #7f7f7f;
+    display: inline-flex;
+    align-items: center;
+    column-gap: 4px;
+}
+
+.counter p {
+    margin: 0;
+}
+
+
+.uclist-module-head-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.uclist-module-head-description {
+    font-size: 14px;
+    color: #595959;
+    line-height: 20px;
+}
+
+.uclist-container {
+    display: flex;
+    column-gap: 8px;
+    width: 100%;
+    overflow: scroll;
+    margin-bottom: 16px;
+}
+
+.uclist-child {
+    width: 108px;
+    background-color: #ffffff;
+    border: solid #dedede;
+    border-radius: 8px;
+    flex-shrink: 0;
+}

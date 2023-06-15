@@ -1,0 +1,137 @@
+@charset "UTF-8";
+
+/* --------------------------------------------------
+    Main
+-------------------------------------------------- */
+
+
+/* --------------------------------------------------
+    Main > menu
+-------------------------------------------------- */
+
+.main-nemu {
+    width: 240px;
+}
+
+#main-menu-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+}
+
+#main-menu-nav ul li {
+    width: 150px;
+    text-align: center;
+}
+
+#main-menu-nav ul li a {
+    display: block;
+    padding: 10px 16px;
+    background-color: #7a42bf;
+    color: #fff;
+    transition: background-color .2s linear;
+}
+
+#main-menu-nav ul li .current a {
+    background-color: #9d64e1;
+}
+
+#main-menu-nav ul li a:hover {
+    background-color: #9d64e1;
+}
+
+
+/* --------------------------------------------------
+    Main > content
+-------------------------------------------------- */
+
+.main-content {
+    max-width: 900px;
+}
+
+.main-content h2 {
+    border-left: solid 4px #f29423;
+    padding: 0 16px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 900px;
+    margin-bottom: 16px;
+}
+
+th, td {
+    border: solid 1px #dedede;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+th {
+    background-color: #F5F2FB;
+    width: 150px;
+    text-align: left;
+}
+
+form {
+    margin-bottom: 24px;
+}
+
+.admin-form {
+    width: 900px;
+}
+
+.admin-form table {
+    width: 100%;
+}
+
+.admin-form table tr th {
+    width: 150px;
+    padding: 20px 16px
+}
+
+.admin-form table tr input,
+.admin-form table tr textarea {
+    width: 100%;
+    padding: .5em;
+    border: solid #dedede;
+    border-radius: 4px;
+}
+
+.admin-form table tr input {
+    height: 2rem;
+}
+
+.admin-form table tr input:not(:first-child) {
+    margin-top: .5rem;
+}
+
+.admin-form table tr textarea {
+    height: 8rem;
+}
+
+.admin-form table tr select {
+    padding: .5rem;
+    border: solid #dedede;
+    border-radius: 4px;
+}
+
+/* --------------------------------------------------
+    Mobile Styling
+-------------------------------------------------- */
+
+h2 {
+    font-size: 20px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+.admin-action-btn {
+    display: flex;
+    justify-content: center;
+    column-gap: 32px;
+}

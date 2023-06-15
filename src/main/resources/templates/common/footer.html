@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html    xmlns:th="http://www.thymeleaf.org"
+         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+         layout:decorate="~{common/layout}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/common/footer.css}">
+</head>
+
+<body>
+
+<footer class="footer" layout:fragment="footer">
+
+<!-- <form class="create-post">
+    <select class="post-select" name="sort" onchange="dropsort()">
+        <option value=""><i class="uil uil-edit md-24"></i></option>
+        <option th:value="@{/review}">レビューを書く</option>
+        <option th:value="@{/uclist}">リストをつくる</option>
+    </select>
+</form> -->
+
+
+<!-- ボタン用 -->
+<div class="create-post">
+    <i class="uil uil-edit md-24"></i>
+</div>
+<nav id="g-nav">
+    <div id="g-nav-list">
+        <ul>
+            <li><a th:href="@{/review/post}">レビューを書く</a></li>
+            <li><a th:href="@{/uclist/post}">リストをつくる</a></li>
+        </ul>
+    </div>
+</nav>
+<!-- 円背景用 -->
+<div class="circle-bg"></div>
+
+
+<nav class="footer-nav">
+    <ul class="footer-nav-menu">
+        <li class="footer-nav-menu-item">
+            <a class="footer-nav-menu-item-a" th:href="@{/manga}">
+                <i class="uil uil-book-open md-24 md-595959"></i>
+                <p class="footer-nav-menu-item-text">まんが</p>
+            </a>
+        </li>
+        <li class="footer-nav-menu-item">
+            <a class="footer-nav-menu-item-a" th:href="@{/review}">
+                <i class="uil uil-comment-lines md-24 md-595959"></i>
+                <p class="footer-nav-menu-item-text">レビュー</p>
+            </a>
+        </li>
+        <li class="footer-nav-menu-item">
+            <a class="footer-nav-menu-item-a" th:href="@{/uclist}">
+                <i class="uil uil-list-ul md-24 md-595959"></i>
+                <p class="footer-nav-menu-item-text">リスト</p>
+            </a>
+        </li>
+        <li class="footer-nav-menu-item">
+            <a class="footer-nav-menu-item-a" th:href="@{/user}">
+                <i class="uil uil-user-circle md-24 md-595959"></i>
+                <p class="footer-nav-menu-item-text">ユーザー</p>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+</footer>
+
+</body>
+</html>

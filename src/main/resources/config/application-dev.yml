@@ -1,0 +1,27 @@
+# Spring
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: never
+      encoding: UTF-8
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+# AWS
+cloud:
+  aws:
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-1
+    instance:
+      data:
+        enabled: true

@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+.postpage-title {
+    width: 100vw;
+    max-width: 400px;
+    display: inline-flex;
+    justify-content: center;
+    column-gap: 8px;
+    margin-bottom: 16px;
+    padding: 8px;
+}
+
+.post-review-form-container,
+.post-uclist-form-container {
+    padding: 0 16px;
+}
+
+.form-label {
+    color: #595959;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"] + label img {
+  color: #dedede;
+}
+input[type="radio"]:checked + label img {
+  color: #229944;
+}
+
+.rating-description {
+    color: #595959;
+    font-size: 10px;
+    font-weight: 100;
+    margin-bottom: 8px;
+}
+
+.rating-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto 16px;;
+}
+
+.post-review-form-title,
+.post-review-form-content,
+.post-uclist-form-title,
+.post-uclist-form-description {
+    color: #222222;
+    font-size: 12px;
+    padding: 8px;
+}
+
+.post-review-form-title,
+.post-uclist-form-title {
+    border: solid #dedede;
+    width: 100%;
+    height: 2rem;
+    margin-bottom: 16px;
+    border-radius: 4px;
+}
+
+.post-review-form-content,
+.post-uclist-form-description {
+    border: solid #dedede;
+    width: 100%;
+    height: 7rem;
+    margin-bottom: 16px;
+    border-radius: 4px;
+}
+
+::placeholder {
+    color: #c0c0c0;
+}
+
+.form-button {
+    color: #ffffff;
+    padding: 4px 16px;
+    margin: 0 auto;
+    border: none;
+    border-radius: 4px;
+    background-color: #7a42bf
+}

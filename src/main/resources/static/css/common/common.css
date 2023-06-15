@@ -1,0 +1,342 @@
+@charset "UTF-8";
+
+/* --------------------------------------------------
+    Default Styling
+-------------------------------------------------- */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: #222222;
+    background-color: #fafafa;
+}
+
+
+h1, h2, h3, h4 {
+    margin-top: 0;
+}
+
+h1, h2 {
+    line-height: 1.4;
+}
+
+h2, h3 {
+    font-weight: 700;
+}
+
+h1 {
+    font-weight: 500;
+}
+
+h4 {
+    margin-bottom: 0;
+}
+
+ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+p {
+    line-height: 1.5;
+}
+
+figure {
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+    margin: 0;
+    line-height: 0;
+}
+
+a, input, textarea {
+    transition: all 0.15s ease-in-out;
+}
+
+input[type="submit"] :hover {
+    cursor: pointer;
+}
+
+/* pre {
+    font-size: 14px;
+    margin: 0;
+    white-space: pre;
+    white-space: pre-wrap;
+    white-space: pre-line;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -hp-pre-wrap;
+    word-wrap: break-word;
+    font-family: "Hiragino Kaku Gothic Pro",Meiryo,"MS PGothic",Helvetica,Arial,sans-serif;
+} */
+
+.err {
+    color: red;
+    font-size: 12px;
+    font-weight: 100;
+}
+
+.alert {
+    display: block;
+    font-size: 14px;
+    width: calc(100%-32px);
+    background-color: #E1D8F0;
+    color: #7a42bf;
+    text-align: center;
+    padding: 16px;
+    margin: 0 16px 16px 16px;
+    border-radius: 4px;
+}
+/* --------------------------------------------------
+    Reusable Classes
+-------------------------------------------------- */
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.more-btn-container {
+    width: 100%;
+    padding: 0 16px;
+    margin-bottom: 32px;
+}
+
+.more-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 8px;
+    width: 100%;
+    height: 40px;
+    border: solid #dedede;
+    border-radius: 20px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.more-btn :hover {
+    cursor: pointer;
+}
+
+.more-btn-text {
+    font-size: 18px;
+    color: #595959;
+}
+
+.more-btn-link {
+    display: block;
+    height: 100%;
+}
+
+.btn-primary,
+.btn-secondary {
+    display: block;
+    width: 120px;
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 3px;
+    color: #FFF7F7;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: #7a42bf;
+}
+
+.btn-primary :hover,
+.btn-primary :focus {
+    background-color: #f29423;
+}
+
+.btn-secondary {
+    background-color: #cb6f10;
+}
+
+.btn-secondary :hover,
+.btn-secondary :focus {
+    background-color: #f29423;
+}
+
+.btn-ia-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-ia {
+    border: 0;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    column-gap: 4px;
+}
+
+.btn-ia-text {
+    color: #595959;
+    font-size: 14px;
+}
+
+.card-outer {
+    background-color: #ffffff;
+    border: solid #dedede;
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.page-title {
+    display: inline-flex;
+    align-items: center;
+    column-gap: 8px;
+    padding: 0 16px;
+    margin-bottom: 16px;
+}
+
+.page-title-icon {
+    color: #7f7f7f;
+}
+
+.icon-color-blue {
+    color: #3DA4F8;
+}
+
+.select2-selection__rendered {
+    font-size: 14px;
+}
+
+.select2-results__options {
+    font-size: 14px;
+}
+
+.btn-like, .btn-read-status {
+    display: inline-flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+/* .btn-like span:first-child {
+    margin-right: 8px;
+} */
+
+.status-text {
+    font-size: 14px;
+/*     margin-right: 8px;
+ */}
+
+/* .status-icon {
+    margin-right: 12px;
+}
+ */
+/* --------------------------------------------------
+    Icon Styling
+-------------------------------------------------- */
+
+/* アイコンのサイズを変更するためのルール */
+.material-icons-outlined.md-16 { font-size: 16px; }
+.material-icons-outlined.md-18 { font-size: 18px; }
+.material-icons-outlined.md-20 { font-size: 20px; }
+.material-icons-outlined.md-24 { font-size: 24px; }
+.material-icons-outlined.md-32 { font-size: 32px; }
+.material-icons-outlined.md-36 { font-size: 36px; }
+.material-icons-outlined.md-40 { font-size: 40px; }
+.material-icons-outlined.md-48 { font-size: 48px; }
+.material-icons-outlined.md-56 { font-size: 56px; }
+.material-icons-outlined.md-64 { font-size: 64px; }
+
+
+.md-16 { font-size: 16px; }
+.md-18 { font-size: 18px; }
+.md-20 { font-size: 20px; }
+.md-24 { font-size: 24px; }
+.md-28 { font-size: 28px; }
+.md-32 { font-size: 32px; }
+.md-36 { font-size: 36px; }
+.md-40 { font-size: 40px; }
+.md-48 { font-size: 48px; }
+
+/* アイコンの色を変更するためのルール */
+.md-595959 { color: #595959; }
+.md-dedede { color: #dedede; }
+.md-highlight { color: #f29423; }
+.md-superlight { color: #7a42bf; }
+.md-star-yellow { color: #FFBA1A; }
+
+.material-icons-outlined.star { color: #FFBA1A; }
+.material-icons-outlined.link { vertical-align: -6px; color: #4f96f6; }
+
+
+/* --------------------------------------------------
+    Mobile Styling
+-------------------------------------------------- */
+
+h1, h2 {
+    font-size: 1.3rem;
+}
+
+h1 {
+    margin-bottom: 24px;
+}
+
+h2 {
+    margin-bottom: 0;
+}
+
+h2 > i {
+    margin-right: 10px;
+}
+
+h3 {
+    margin-bottom: 0;
+    font-size: 1.2rem;
+}
+
+.main {
+    padding: 82px 0;
+    display: flex;
+    width: 100vw;
+}
+
+.container {
+    padding: 0 8px;
+}
+
+
+.wrap {
+    width: 100%;
+    display: flex;
+}
+
+.clm {
+    width: 35%;
+    background-color: #dedede;
+    padding: 250px 20px;
+}
+
+.review-module-head-user-img{
+    border-radius: 50%;
+}

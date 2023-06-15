@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"></meta>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- CSS -->
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+  <!-- JS -->
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" defer></script>
+  <title>EmployeeDetail</title>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="border-bottom mb-3">
+      <h1 class="h2">Detail</h1>
+    </div>
+    <form method="post" th:action="@{/employee/detail}" class="form-signup"
+      th:object="${employeeForm}">
+      <!-- 従業員の情報 -->
+      <table class="table table-striped table-bordered table-hover">
+        <tbody>
+          <tr>
+            <th class="w-25">ID</th>
+            <td>
+              <input type="text" readonly class="form-control-plaintext" th:field="*{id}"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Name</th>
+            <td>
+              <input type="text" class="form-control" th:field="*{name}"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Age</th>
+            <td>
+              <input type="text" class="form-control" th:field="*{age}"/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- ボタンエリア -->
+      <div class="text-center">
+        <!-- 削除ボタン -->
+        <button class="btn btn-danger" type="submit" name="delete">
+          Delete
+        </button>
+        <!-- 更新ボタン -->
+        <button class="btn btn-primary" type="submit" name="update">
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

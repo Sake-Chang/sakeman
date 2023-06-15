@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+    <h2>作品 新規登録</h2>
+    <a class="btn-primary" th:href="@{/admin/manga/list}">一覧に戻る</a>
+
+    <form class="admin-form" method="post" th:action="@{/admin/manga-author/register}" th:object="${mangaAuthor}">
+    <table class="form-table">
+<!--
+    <tr>
+        <th><label for="author">著者</label></th>
+        <td><select th:field="*{author.name}" th:errorclass="err">
+            <option value="" th:text="選択してください"></option>
+            <option th:each="authors:${authorlist}"
+                    th:value="${authors.id}"
+                    th:text="${authors.name}"
+                    th:selected="${mangaAuthors == selectedValue}">
+            </option>
+            </select>
+            <span th:errors="*{author}" class="err"></span></td>
+    </tr>
+ -->
+
+    <tr>
+        <th><label for="mangaId">作品ID</label></th>
+        <td>
+            <input type="text" th:field="*{manga.id}" th:errorclass="err">
+            <span th:errors="*{manga.id}" class="err"></span>
+        </td>
+    </tr>
+    <tr>
+        <th><label for="authorId">著者ID</label></th>
+        <td>
+            <input type="text" th:field="*{author.id}" th:errorclass="err">
+            <span th:errors="*{author.id}" class="err"></span>
+        </td>
+    </tr>
+    </table>
+
+    <input type="submit" value="登録">
+    </form>
+
+</div>
+</html>

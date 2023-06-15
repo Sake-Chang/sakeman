@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+.btn-read-status-mini {
+    border: solid #dedede;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.btn-read-status-mini > .status-text {
+    font-size: 12px;
+    margin: 0;
+}
+
+.btn-read-status-mini > .material-icons-outlined > .status-icon {
+    margin: 0;
+}
+
+.minimanga-action.btn-purple,
+.btn-read-status-mini.btn-purple{
+    background-color: #7a42bf;
+    border: solid #7a42bf;
+}
+
+.minimanga-action.btn-highlight,
+.btn-read-status-mini.btn-highlight {
+    background-color : #f29423;
+    border: solid #f29423;
+}
+
+.md-ffffff {
+    color: #ffffff;
+}

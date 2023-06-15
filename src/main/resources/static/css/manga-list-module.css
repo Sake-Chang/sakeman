@@ -1,0 +1,152 @@
+@charset "UTF-8";
+
+.manga-module-head {
+    display: flex;
+    margin-bottom: 16px;
+    column-gap: 16px;
+}
+
+.manga-module-calligraphy {
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.manga-module-info-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.manga-module-title {
+    display: inline-flex;
+    font-size: 16px;
+    font-weight: 700;
+    color: #222222;
+    margin-bottom: 8px;
+    line-height: 1.5rem;
+}
+
+.author-container {
+    display: flex;
+    column-gap: 16px;
+    margin-bottom: 12px;
+}
+
+.manga-module-author {
+    font-size: 14px;
+    color: #222222;
+    width: fit-content;
+    line-height: 1rem;
+}
+
+.manga-module-author a {
+    display: block;
+}
+
+.manga-module-volume {
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.manga-module-rating-container {
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.manga-module-rating {
+    font-size: 18px;
+    font-weight: 700;
+    color: #222222;
+}
+
+.manga-module-review-container {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 8px;
+
+}
+
+.manga-module-review {
+    font-size: 14px;
+    font-weight: 700;
+    color: #4f96f6;
+}
+
+/* --------------------------------------------------
+    Read-More Styling
+-------------------------------------------------- */
+
+.read-more-002 {
+    position: relative;
+    margin-bottom: 32px;
+}
+
+.read-more-002 p {
+    font-size: 14px;
+    color: #595959;
+    line-height: 20px;
+    display: -webkit-box;
+    position: relative;
+    margin-bottom: 0;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5; /* 開く前に見せたい行数を指定 */
+}
+
+.read-more-002:has(:checked) p {
+    display: block;
+}
+
+.read-more-002 p::after {
+    font-size: 14px;
+    color: #595959;
+    line-height: 20px;
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, hsla(0, 0%, 100%, .9) 35%, hsla(0, 0%, 100%, .9) 0, #fff);
+    content: '';
+}
+
+.read-more-002:has(:checked) p::after {
+    content: none;
+}
+
+.read-more-002 label {
+    display: flex;
+    align-items: center;
+    gap: 0 8px;
+    position: absolute;
+    bottom: 0;
+    left: 42%;
+    transform: translateX(-20%);
+    color: #4f96f6;
+    font-size: 14px;
+}
+
+.read-more-002 label:hover {
+    color: #f29423;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.read-more-002:has(:checked) label {
+    display: none;
+}
+
+.read-more-002 label::after {
+    display: inline-block;
+    width: 14px;
+    height: 7px;
+    background-color: #b6bdc3;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    content: '';
+}
+
+.read-more-002 input {
+    display: none;
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+    <h2>管理者用ページ</h2>
+    <h3>登録レビュー 一覧</h3>
+    <form method="get" th:action="@{/admin/review/register}">
+        <input type="submit" value="新規登録"/>
+    </form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>投稿ユーザー名</th>
+            <th>作品名</th>
+            <th>レーティング</th>
+            <th>レビュータイトル</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="review : ${reviewlist}">
+            <td th:text="${review.id}"></td>
+            <td th:text="${review.user.username}"></td>
+            <td th:text="${review.manga.title}"></td>
+            <td th:text="${review.rating}"></td>
+            <td th:text="${review.title}"></td>
+            <td><a class="btn-primary" th:href="@{/admin/review/detail/{id}/(id=${review.id})}">詳細</a></td>
+        </tr>
+    </table>
+</div>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+    <h2 th:text="|${user.username}の詳細|"></h2>
+        <table>
+        <tr>
+            <th>ID</th>
+            <td th:text="${user.id}"></td>
+        </tr>
+        <tr>
+            <th>ユーザーネーム</th>
+            <td th:text="${user.username}"></td>
+        </tr>
+        <tr>
+            <th>メールアドレス</th>
+            <td th:text="${user.email}"></td>
+        </tr>
+        <tr>
+            <th>パスワード</th>
+            <td th:text="${user.password}"></td>
+        </tr>
+        <tr>
+            <th>権限</th>
+            <td th:text="${user.role}"></td>
+        </tr>
+        <tr>
+            <th>自己紹介文</th>
+            <td th:text="${user.selfIntro}"></td>
+        </tr>
+        <tr>
+            <th>登録日時</th>
+            <td th:text="${user.registeredAt}"></td>
+        </tr>
+        <tr>
+            <th>更新日時</th>
+            <td th:text="${user.updatedAt}"></td>
+        </tr>
+        <tr>
+            <th>画像ファイル名</th>
+            <td th:text="${user.img}"></td>
+        </tr>
+        <tr>
+            <th>削除フラグ</th>
+            <td th:text="${user.deleteFlag}"></td>
+        </tr>
+    </table>
+
+    <div class="admin-action-btn">
+        <a class="btn-primary" th:href="@{/admin/user/update/{id}/(id=${user.id})}">編集する</a>
+        <a class="btn-primary" th:href="@{/admin/user/list}">一覧に戻る</a>
+    </div>
+
+</div>
+</html>

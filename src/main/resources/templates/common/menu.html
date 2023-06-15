@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}" xmlns:sec="http://wwwthymeleaf.org/extras/spring-security">
+<head>
+</head>
+<body>
+
+    <ul layout:fragment="menu">
+        <li>
+            <a th:href="@{/admin/manga/list}">作品</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/author/list}">著者</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/user/list}">ユーザー</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/review/list}">レビュー</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/uclist/list}">リスト</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/manga-author/list}">まんが著者</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/user-manga/list}">読書ステータス</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/index}">管理トップ</a>
+        </li>
+    </ul>
+
+</body>
+</html>

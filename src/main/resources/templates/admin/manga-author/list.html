@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h2>管理者用ページ</h2>
+    <h3>登録作品 一覧</h3>
+    <form method="get" th:action="@{/admin/manga-author/register}">
+        <input type="submit" value="新規登録"/>
+    </form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>作品ID</th>
+            <th>作品名</th>
+            <th>著者ID</th>
+            <th>著者名</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="malist : ${mangaauthorlist}">
+            <td th:text="${malist.id}"></td>
+            <td th:text="${malist.manga.id}"></td>
+            <td th:text="${malist.manga.title}"></td>
+            <td th:text="${malist.author.id}"></td>
+            <td th:text="${malist.author.name}"></td>
+            <td><a class="btn-primary" th:href="@{/admin/manga-author/detail/{id}/(id=${malist.id})}">詳細</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

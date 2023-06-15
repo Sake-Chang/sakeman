@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h2>管理者用ページ</h2>
+    <h3>登録作品 一覧</h3>
+    <form method="get" th:action="@{/admin/manga/register}">
+        <input type="submit" value="新規登録"/>
+    </form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>作品名</th>
+            <th>著者名</th>
+            <th>巻数</th>
+            <th>出版社</th>
+            <th>掲載誌</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="manga : ${mangalist}">
+            <td th:text="${manga.id}"></td>
+            <td th:text="${manga.title}"></td>
+            <td>
+                <th:block th:if="!${#lists.isEmpty(manga.mangaAuthors)}">
+                    <th:block th:each="mangaAuthors : ${manga.mangaAuthors}">
+                        <p th:text="${mangaAuthors.author.name}" />
+                    </th:block>
+                </th:block>
+            </td>
+            <td th:text="${manga.volume}"></td>
+            <td th:text="${manga.publisher}"></td>
+            <td th:text="${manga.publishedIn}"></td>
+            <td><a class="btn-primary" th:href="@{/admin/manga/detail/{id}/(id=${manga.id})}">詳細</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
