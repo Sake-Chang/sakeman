@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<!--/* 引数を受け取って呼ばれる（ object = ${}, ${} ） */-->
+<th:block layout:fragment="search-module(object)">
+
+<!-- 検索 -->
+<form th:action="@{/search}" method="post" th:object="${manga}">
+<table class="search-table">
+    <tr class="search-container" colspan="all">
+        <td class="select">
+            <span>すべて</span>
+            <span class="material-icons-outlined">arrow_drop_down</span>
+        </td>
+        <td class="search-box">
+            <input type="text" th:field="*{title}">
+            <button type="submit">
+                <span class="material-icons-outlined md-dedede">search</span>
+            </button>
+        </td>
+    </tr>
+</table>
+</form>
+
+</th:block> <!--/* layout:fragment */-->
+
+</html>

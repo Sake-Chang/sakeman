@@ -10,7 +10,7 @@
 .minimanga {
     width: 108px;
     background-color: #ffffff;
-    border: solid #dedede;
+    border: solid 1px #dedede;
     border-radius: 8px;
 }
 
@@ -101,7 +101,7 @@
     align-items: center;
     width: 89px;
     margin-bottom: 12px;
-    border: solid #dedede;
+    border: solid 1px #dedede;
     border-radius: 4px;
     text-align: center;
     padding: 4px 8px;

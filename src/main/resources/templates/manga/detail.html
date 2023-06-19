@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout}">
+
+<head>
+<link rel="stylesheet" th:href="@{/css/manga-list-module.css}">
+<link rel="stylesheet" th:href="@{/css/manga/review.css}">
+<link rel="stylesheet" th:href="@{/css/tab.css}">
+<title th:text="|${manga.title}の詳細情報・レビュー|"></title>
+</head>
+
+<div layout:fragment="content"> <!-- layoutに送る -->
+
+<!--/* まんがモジュールを呼び出し（${manga}を引数として渡す） */-->
+<div class="container" layout:include="module/manga-detail-module :: manga-detail-module(object='${manga}')"></div>
+
+<!--/* タグ */-->
+<div class="tag-container">
+    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+</div>
+
+<!--/* タブお試し */-->
+<div class="tab-wrap">
+    <input id="TAB-01" type="radio" name="TAB" class="tab-switch" checked="checked" />
+        <label class="tab-label" for="TAB-01">
+            <i class="uil uil-smile-squint-wink md-24"></i>
+            <span class="#">おすすめ情報</span>
+        </label>
+    <div class="tab-content">
+        <div class="#">
+<h3 style="text-align: center; color: #cccccc; padding: 80px 0;">今のところ おすすめ情報は ありません<br>このマンガが 気になってる人が<br>気に入りそうな マンガなどが<br>出るようになる予定ですけど また今度</h3><br>
+
+<div class="page-title">
+    <span class="material-icons-outlined md-24 page-title-icon">info</span>
+    <h4 th:text="|${manga.title}の詳細情報|"></h4>
+</div>
+    <table class="manga-info-table">
+        <tbody>
+            <tr>
+                <th>作品名</th>
+                <td class="data fst" th:text="${manga.title}"></td>
+            </tr>
+            <tr>
+                <td class="bar" colspan="6"></td>
+            </tr>
+            <tr>
+                <th>出版社</th>
+                <td class="data fst" th:text="${manga.publisher}"></td>
+            </tr>
+            <tr>
+                <td class="bar" colspan="6"></td>
+            </tr>
+            <tr>
+                <th>掲載誌</th>
+                <td class="data fst" th:text="${manga.publishedIn}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+    </div>
+    <input id="TAB-02" type="radio" name="TAB" class="tab-switch" />
+        <label class="tab-label" for="TAB-02">
+            <i class="uil uil-comment-lines md-24"></i>
+            <span class="#">レビュー</span>
+        </label>
+    <div class="tab-content">
+        <div class="page-title">
+            <span class="material-icons-outlined md-24 page-title-icon">chat</span>
+            <h3>みんなのレビュー</h3>
+        </div>
+
+        <!--/* レビューモジュールを呼び出し（${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}を引数として渡す） */-->
+        <div class="container" layout:include="module/review-list-module :: review-list-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}')"></div>
+    </div>
+
+</div>
+</div>
+
+</html>

@@ -78,24 +78,24 @@ public class User {
     private String img;
 
     /** review */
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Review> reviews;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Review> reviews;
 
     /** uclist */
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Uclist> uclists;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Uclist> uclists;
 
 //    /** user_manga（未使用） */
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
 //    private List<UserManga> userMangas;
 
     /** like */
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-//    private List<Like> Likes;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+    private List<Like> Likes;
 
     /** readStatus */
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-//    private List<ReadStatus> readStatus;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+    private List<ReadStatus> readStatus;
 
 
     @PrePersist

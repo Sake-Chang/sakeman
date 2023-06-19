@@ -2,7 +2,7 @@
 
 .prof-head {
     background-color: #ffffff;
-    border-bottom: solid #f0f0f0;
+    border-bottom: solid 1px #f0f0f0;
 }
 
 .user-cover img {
@@ -24,7 +24,7 @@
 }
 
 .my-menu-btn {
-    border: solid #dedede;
+    border: solid 1px #dedede;
     border-radius: 30px;
     width: fit-content;
     padding: 4px 16px;

@@ -8,15 +8,15 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     defer-datasource-initialization: true
   sql:
     init:
-      mode: always
+      mode: never
       encoding: UTF-8
-      data-locations: classpath:/schema/data-local.sql
+#      schema-locations: classpath:/schema/schema.sql
+#      data-locations: classpath:/schema/data.sql
       
-
 # AWS
 cloud:
   aws:

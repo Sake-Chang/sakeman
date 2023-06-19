@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+
+<head>
+<link rel="stylesheet" th:href="@{/css/manga/user.css}">
+<link rel="stylesheet" th:href="@{/css/manga/minilist.css}">
+</head>
+
+<div layout:fragment="content">
+
+<div class="prof-head">
+    <div class="user-cover">
+        <img th:src="@{/img/gucci_araki_02.jpeg}">
+    </div>
+
+    <a th:href="@{/user/{id}(id=${user.id})}">
+        <th:block th:if="${user.img != null}">
+            <img class="user-prof-img" th:src="@{/img/{path}/(path=${user.img})}">
+        </th:block>
+        <th:block th:unless="${user.img != null}">
+            <img class="user-prof-img" th:src="@{/img/default_img.png}">
+        </th:block>
+    </a>
+
+    <!--/* ユーザーボタンモジュールを呼び出し（${user}を引数として渡す） */-->
+    <div layout:include="module/btn/btn-user-prof :: btn-user-prof(object='${user}, ${followeelist}')"></div>
+
+    <div class="my-menu-head">
+        <span class="my-menu-username" th:text="${user.username}"></span>
+        <div class="counter-container">
+            <div class="counter">
+                <p class="material-icons-outlined md-24">list</p>
+                <p th:text="${user.uclists.size}"></p>
+            </div>
+            <div class="counter">
+                <p class="material-icons-outlined md-24">chat</p>
+                <p th:text="${user.reviews.size}"></p>
+            </div>
+        </div>
+    </div>
+    <div class="user-selfinfo" th:text="${user.selfIntro}"></div>
+</div>
+
+
+    <div class="tag-container">
+        <span class="tag">伝説のレビュワー2023</span><span class="tag">アーリーアダプター</span>
+        <span class="tag">ヤンキーまんが王</span><span class="tag">史上最も買いに行かせた男（or 女）</span>
+    </div>
+
+<!--/* タブ */-->
+<div class="tab-container">
+    <div class="tab">
+        <a class="tab-link" th:href="@{/user/{id}(id=${user.id})}">
+            <span class="material-icons-outlined md-24 link">bookmark_added</span>
+            <span class="#">気になる</span>
+        </a>
+    </div>
+    <div class="tab tab-current">
+        <a class="tab-link" th:href="@{/user/{id}/read(id=${user.id})}">
+            <span class="material-icons-outlined md-24 link">check_box</span>
+            <span class="#">読んだ</span>
+        </a>
+    </div>
+</div>
+
+<!--/* 本棚モジュールを呼び出し（${usermangalist}, ${wantlist}, ${readlist}を引数として渡す） */-->
+<div layout:include="module/shelf-card-module :: shelf-card-module(object='${usermangalist}, ${wantlist}, ${readlist}')"></div>
+
+</div>
+</html>

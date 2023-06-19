@@ -27,7 +27,7 @@ $(function(){
         console.log(readStatus);
             $.ajax({
                 type            : "PUT",
-                url             : '/readstatus2',
+                url             : '/sakeman/readstatus2',
                 contentType     : "application/json",
                 data            : JSON.stringify(readStatus),
                 dataType        : 'json',

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--
+         layout:decorate="~{common/layout}"
+ -->
+
+<head>
+<meta charset="UTF-8"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex" />
+
+<link rel="stylesheet" th:href="@{/css/normalize.css}">
+<link rel="stylesheet" th:href="@{/css/common/common.css}">
+<link rel="stylesheet" th:href="@{/css/common/login.css}">
+<link rel="stylesheet" th:href="@{/css/common/header.css}">
+<link rel="stylesheet" th:href="@{/css/common/footer.css}">
+
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+
+</head>
+
+<!--
+    <div layout:fragment="content">
+ -->
+ <body>
+ <main class="main">
+     <section class="main-content">
+
+    <div class="login-title">
+    <i class="uil uil-book-open"></i>
+    <h2>サケマン ログイン</h2>
+    </div>
+
+    <div class="welcome-message">
+        <p>いらっしゃいませ！</p>
+        <p>きょうもほがらかにまんがを楽しみましょう！</p>
+        <span class="err" th:if="${param.error}">ユーザ名かパスワードが違います・・・</span>
+    </div>
+
+    <div class="form-wrapper">
+    <form class="login-form" method="post" action="/login" th:action="@{/login}">
+        <label class="login-form-label" for="email">メールアドレス：</label>
+        <input class="login-input" type="text" id="email" name="email" value="75@gmail.com">
+        <label class="login-form-label" for="password">パスワード：</label>
+        <input class="login-input" type="text" id="password" name="password" value="ktaro">
+    <input class="login-btn" type="submit" name="loginRun" value="ログイン"/>
+    </form>
+    </div>
+
+    <div class="welcome-message">
+    <p>アカウントをお持ちでない方は新規登録をどうぞ！！<br>楽しいよ！！</p>
+    </div>
+    <div class="btn-signup"><a class="signup-btn-link" th:href="@{/signup}">新規登録</a></div>
+<!--
+    </div>
+-->
+</section>
+</main>
+</body>
+</html>

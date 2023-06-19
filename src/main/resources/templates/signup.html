@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--
+    layout:decorate="~{common/layout}">
+-->
+
+<head>
+<meta charset="UTF-8"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex" />
+
+<link rel="stylesheet" th:href="@{/css/normalize.css}">
+<link rel="stylesheet" th:href="@{/css/common/common.css}">
+<link rel="stylesheet" th:href="@{/css/common/login.css}">
+<link rel="stylesheet" th:href="@{/css/common/header.css}">
+<link rel="stylesheet" th:href="@{/css/common/footer.css}">
+
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+
+</head>
+
+<!--
+    <div layout:fragment="content">
+ -->
+ <body>
+ <main class="main">
+    <section class="main-content">
+
+    <div class="signup-title">
+    <i class="uil uil-user-square"></i>
+    <h2>ユーザー登録</h2>
+    </div>
+
+    <div class="welcome-message">
+        <p>いらっしゃいませ！</p>
+        <p>ユーザー登録すると楽しいですよ！！</p>
+        <p>さっそく登録してほがらかなまんがライフを！！</p>
+    </div>
+
+<div class="form-wrapper">
+<form class="signup-form" method="post" th:action="@{/signup}" th:object=${user}>
+    <label class="signup-form-label" for="username">ユーザー名</label><br>
+    <span th:errors="*{username}" class="err"></span>
+    <input class="signup-input" type="text" th:field="*{username}" th:errorclass="err" placeholder="日本語でも外国語でもOK！50文字まで！後で変更可！">
+
+    <label class="signup-form-label" for="email">メールアドレス</label><br>
+    <span th:errors="*{email}" class="err"></span>
+    <th:block th:if="${signupError}"><span class="err" th:text="${signupError}"></span></th:block>
+    <input class="signup-input" type="text" th:field="*{email}" th:errorclass="err" placeholder="ログインのときに使いますので忘れないでください！">
+
+    <label class="signup-form-label" for="password">パスワード</label><br>
+    <span th:errors="*{password}" class="err"></span>
+    <input class="signup-input" type="password" th:field="*{password}" th:errorclass="err" placeholder="こちらもログインのときに使います！">
+
+    <input class="signup-btn" type="submit" value="登録する"/>
+</form>
+</div>
+
+<!--
+    </div>
+-->
+</section>
+</main>
+</body>
+</html>

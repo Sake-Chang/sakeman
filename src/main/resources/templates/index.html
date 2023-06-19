@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout}">
+
+<head>
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+</head>
+
+<div layout:fragment="content">
+<div th:if="${success}" class="alert alert-success">[[${success}]]</div>
+<!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
+<div class="search" layout:include="module/search-module :: search-module(object='')"></div>
+
+<!--/* タブ */-->
+<div class="tab-container">
+    <div class="tab tab-current">
+        <a class="tab-link" th:href="@{/}">
+            <i class="uil uil-thumbs-up md-24"></i>
+            <span class="#">オススメ</span>
+        </a>
+    </div>
+    <div class="tab">
+        <a class="tab-link" th:href="@{/timeline}">
+            <i class="uil uil-comments md-24"></i>
+            <span class="#">タイムライン</span>
+        </a>
+    </div>
+</div>
+
+
+<div class="page-title">
+    <i class="uil uil-list-ul md-32 md-highlight"></i>
+    <h2>新着のリスト</h2>
+</div>
+
+<!--/* まんがリストモジュールを呼び出し（${uclistlist}を引数として渡す） */-->
+<div class="container-uclist" layout:include="module/uclist-list-module :: uclist-list-module(object='${uclistlist}')"></div>
+
+<!--/* もっとみるボタン */-->
+<div class="more-btn-container">
+    <button class="more-btn" th:attr="onClick='location.href=\''+@{/uclist}+'\''">
+            <span class="more-btn-text">もっとみる</span>
+<!--             <span class="material-icons-outlined md-32 md-595959">chevron_right</span>
+ -->    </button>
+</div>
+
+<div class="page-title">
+    <i class="uil uil-comment-lines md-32 md-highlight"></i>
+    <h2>新着のレビュー</h2>
+</div>
+
+<!--/* レビューリストモジュールを呼び出し（${reviewlist}を引数として渡す） */-->
+<div class="container-uclist" layout:include="module/review-list-module :: review-list-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist}, ${followeelist}')"></div>
+
+<!--/* もっとみるボタン */-->
+<div class="more-btn-container">
+    <button class="more-btn" th:attr="onClick='location.href=\''+@{/review}+'\''">
+            <span class="more-btn-text">もっとみる</span>
+    </button>
+</div>
+
+
+</div>
+
+</html>

@@ -10,7 +10,7 @@
 
 .card-outer-uclist {
     background-color: #ffffff;
-    border: solid #dedede;
+    border: solid 1px #dedede;
     border-radius: 8px;
     width: 100%;
     margin-bottom: 16px;
@@ -93,7 +93,7 @@
 .uclist-child {
     width: 108px;
     background-color: #ffffff;
-    border: solid #dedede;
+    border: solid 1px #dedede;
     border-radius: 8px;
     flex-shrink: 0;
 }

@@ -13,21 +13,21 @@
 
     <div class="header-logo">
         <a th:href="@{/}"><img th:src="@{/img/logo.png}" class="header-logo-img" alt="logo"></a>
-        <span class="header-logo-title">かけがえのないマンガを君に</span>
+        <span class="header-logo-title">Manga for you</span>
     </div>
     <nav class="header-nav">
         <ul class="header-nav-menu">
             <li class="header-nav-menu-item">
-                <div class="material-icons-outlined md-20"><a class="link-block" th:href="@{/admin/index}" sec:authorize-url="GET / 管理者">build_circle</a></div>
+                <div class=""><a class="link-block" th:href="@{/admin/index}" sec:authorize-url="GET / 管理者"><span class="material-icons-outlined md-20">build_circle</span></a></div>
             </li>
-<!--             <li class="header-nav-menu-mypage">
+             <li class="header-nav-menu-mypage">
                 <th:block sec:authorize="isAuthenticated()">
                     <a th:href="@{/user/{id}(id=${#authentication.principal.user.id})}">
                         <img class="header-user-img" th:src="@{/img/{path}(path=${#authentication.principal.user.img})}">
                     </a>
                 </th:block>
             </li>
- -->        </ul>
+        </ul>
     </nav>
 </header>
 

@@ -17,7 +17,7 @@ $(function(){
         console.log(manga);
             $.ajax({
                 type            : "PUT",
-                url             : '/readstatus',
+                url             : 'sakeman/readstatus',
                 contentType     : "application/json",
                 data            : JSON.stringify(manga),
                 dataType        : 'json',
@@ -62,7 +62,7 @@ $(function(){
         console.log(manga);
             $.ajax({
                 type            : "PUT",
-                url             : '/readstatus',
+                url             : 'sakeman/readstatus',
                 contentType     : "application/json",
                 data            : JSON.stringify(manga),
                 dataType        : 'json',

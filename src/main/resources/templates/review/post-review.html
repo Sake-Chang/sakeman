@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout}">
+
+<head>
+<title>レビュー登録</title>
+</head>
+
+<div layout:fragment="content">
+
+<div class="postpage-title">
+    <i class="uil uil-comment-edit md-24 md-highlight"></i>
+    <h2>レビューの投稿</h2>
+</div>
+
+<form class="post-review-form-container" method="post" th:action="@{/review/post}" th:object="${review}">
+
+    <label class="form-label" for="manga.id">レビューする作品</label>
+    <select class="select2" name="manga.id" th:errorclass="err">
+        <option value="" th:text="レビューする作品を選んでください"></option>
+        <option th:each="manga:${mangalist}"
+                th:value="${manga.id}"
+                th:text="${manga.title}">
+        </option>
+    </select><br>
+    <span th:errors="*{manga.id}" class="err"></span><br>
+
+    <label class="form-label" for="rating">お気に入り度（星をクリック！）</label>
+    <span th:errors="*{rating}" class="err"></span><br>
+<!--     <div class="rating-description">※ 星をクリックしてお気に入り度を入力しましょう！</div>
+ -->    <div class="rating-wrapper">
+        <input id="rating_1" type="radio" value="1" name="rating" th:errorclass="err">
+            <label for="rating_1"><span class="material-icons-outlined md-56 md-dedede">star</span></label>
+        <input id="rating_2" type="radio" value="2" name="rating" th:errorclass="err">
+            <label for="rating_2"><span class="material-icons-outlined md-56 md-dedede">star</span></label>
+        <input id="rating_3" type="radio" value="3" name="rating" th:errorclass="err">
+            <label for="rating_3"><span class="material-icons-outlined md-56 md-dedede">star</span></label>
+        <input id="rating_4" type="radio" value="4" name="rating" th:errorclass="err">
+            <label for="rating_4"><span class="material-icons-outlined md-56 md-dedede">star</span></label>
+        <input id="rating_5" type="radio" value="5" name="rating" th:errorclass="err">
+            <label for="rating_5"><span class="material-icons-outlined md-56 md-dedede">star</span></label>
+    </div>
+
+    <label class="form-label" for="title">レビュータイトル</label>
+    <span th:errors="*{title}" class="err"></span><br>
+    <input class="post-review-form-title" type="text" th:field="*{title}" placeholder="バシッといいタイトルお願いします！" th:errorclass="err">
+
+    <label class="form-label" for="content">レビュー本文</label>
+    <span th:errors="*{content}" class="err"></span><br>
+    <textarea class="post-review-form-content" th:field="*{content}" placeholder="個人的なメモでも良いですし、推し活的なものでも良いかもしれません。" th:errorclass="err"></textarea>
+
+    <input class="form-button" type="submit" value="投稿する" disabled="disabled">
+</form>
+
+</div>
+</html>

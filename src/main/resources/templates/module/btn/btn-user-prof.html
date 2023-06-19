@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<!--/* 引数を受け取って呼ばれる（ object = ${user} ） */-->
+<th:block layout:fragment="btn-user-prof(object)">
+
+<!--/* ユーザーボタン */-->
+<!--/* マイメニュー */-->
+<th:block th:if="${user.id} == ${#authentication.principal.user.id}">
+    <div class="dropdown">
+        <!--/* ボタン部分 */-->
+        <button class="dropdown__btn my-menu-btn">
+            <span class="material-icons-outlined md-24">pending</span>
+            <p>マイメニュー</p>
+        </button>
+        <!--/* リスト部分 */-->
+        <div class="dropdown__body mymenu">
+            <ul class="dropdown__list">
+                <li class="dropdown_item"><a class="link-block" th:href="@{/}">プロフィールの編集</a></li>
+                <li class="dropdown_item"><a class="link-block" th:href="@{/}">フォロワー・フォローした人をみる</a></li>
+                <li class="dropdown_item">
+                    <form method="post" th:action="@{/logout}">
+                        <button class="btn-logout" type="submit">ログアウト</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div> <!--/* ドロップダウン */-->
+</th:block>
+
+<!--/* フォロー */-->
+<th:block   th:unless="${user.id} == ${#authentication.principal.user.id}">
+    <div    class="my-menu-btn userfollow-toggle"
+            th:with="followeeId=${user.id}"
+            th:data-followee-user-id="${followeeId}">
+        <span   class="material-icons-outlined md-24"
+                th:classappend="${#lists.contains(followeelist, user.id)} ? 'md-highlight'"
+                th:text="${#lists.contains(followeelist, user.id)} ? 'person_outline' : 'person_add_alt'"></span>
+        <span   class="btn-user-follow-userpage-text"
+                th:classappend="${#lists.contains(followeelist, user.id)} ? 'md-highlight'"
+                th:text="${#lists.contains(followeelist, user.id)} ? 'フォロー中' : 'フォローする'"></span>
+    </div>
+</th:block>
+
+</th:block> <!--/* layout:fragment */-->
+
+</html>

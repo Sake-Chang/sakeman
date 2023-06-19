@@ -6,6 +6,7 @@
 
 *, *::before, *::after {
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 html {
@@ -123,7 +124,7 @@ input[type="submit"] :hover {
     column-gap: 8px;
     width: 100%;
     height: 40px;
-    border: solid #dedede;
+    border: solid 1px #dedede;
     border-radius: 20px;
     text-align: center;
     background-color: #ffffff;
@@ -202,7 +203,7 @@ input[type="submit"] :hover {
 
 .card-outer {
     background-color: #ffffff;
-    border: solid #dedede;
+    border: solid 1px #dedede;
     border-radius: 8px;
     padding: 16px;
     width: 100%;
@@ -316,7 +317,7 @@ h3 {
 }
 
 .main {
-    padding: 82px 0;
+    padding: 62px 0;
     display: flex;
     width: 100vw;
 }

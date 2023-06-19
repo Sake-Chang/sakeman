@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<!--/* 引数を受け取って呼ばれる（ object = ${reviewlist}, ${likelist} ） */-->
+<th:block layout:fragment="btn-like(object)">
+
+<!--/* btn-like */-->
+
+<div th:class="${#lists.contains(likelist, review.id)} ? 'btn-like like-toggle md-highlight' : 'btn-like like-toggle'" th:data-review-id="${review.id}">
+    <span class="material-icons-outlined md-24">favorite_border</span>
+    <span class="like-counter">[[${review.likes.size}]] いいね</span>
+</div>
+
+</th:block> <!--/* layout:fragment */-->
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{test/layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+    <div class="card-outer">
+        <div class="manga-module-head">
+            <div class="manga-module-calligrapy">
+                <img th:src="@{/img/{path}/(path = ${manga.calligraphy})}">
+            </div>
+            <div class="manga-module-basic">
+                <!--/* タイトル */-->
+                <a th:href="@{/manga/detail/{id}/(id=${manga.id})}">
+                <div class="manga-module-title" th:text="${manga.title}"></div>
+                </a>
+                <!--/* 著者 */-->
+                <th:block th:if="!${#lists.isEmpty(manga.mangaAuthors)}">
+                <th:block th:each="ma : ${manga.mangaAuthors}">
+                    <span class="manga-module-author" th:text="${ma.author.name}"></span>
+                </th:block>
+                </th:block>
+                <!--/* 巻数 */-->
+                <div class="manga-module-volume" th:text="|${manga.volume}巻|"></div>
+                <!--/* レーティング */-->
+                <div class="manga-module-rate">
+                    <th:block th:if="!${#lists.isEmpty(manga.reviews)}">
+                        <span class="material-icons-outlined md-32">star</span>
+                        <div class="manga-module-rating" th:with=rating=${#aggregates.avg(manga.reviews.![rating])} th:text="${#numbers.formatDecimal(rating, 0, 'COMMA', 2, 'POINT')}"></div>
+                    </th:block>
+                </div>
+                <!--/* レビュー */-->
+                <div class="manga-module-revmod">
+                    <span class="material-icons-outlined md-24 icon-color-blue">chat</span>
+                    <a th:href="@{/}"><span class="manga-module-reviews" th:text="|${manga.reviews.size}件のレビューをみる|"></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="manga-module-synopsis" th:text="${manga.synopsis}"></div>
+        <div class="inpage-link icon-color-blue">詳細情報へ</div>
+
+        <!--/* アクション */-->
+        <div class="btn-ia-container">
+            <div class="btn-ia">
+                <span class="material-icons-outlined md-24 btn-ia-text">shopping_cart</span>
+                <span class="btn-ia-text">ストアでみる</span>
+            </div>
+            <div class="btn-ia">
+                <span class="material-icons-outlined md-24 btn-ia-text">bookmark_add</span>
+                <span class="btn-ia-text">気になる！</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="tag-container">
+        <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+        <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+        <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+        <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+    </div>
+
+    <div class="tab-container">
+        <div class="tab tab-current">
+        <a class="tab-link" th:href="@{/manga/detail/{id}/(id=${manga.id})}">
+            <span class="material-icons-outlined md-24 gf-link">recommend</span>
+            <span class="#">おすすめ情報</span>
+        </a>
+        </div>
+        <div class="tab">
+        <a class="tab-link" th:href="@{/manga/detail/{id}/review/(id=${manga.id})}">
+            <span class="material-icons-outlined md-24 gf-link">chat</span>
+            <span class="#">レビュー</span>
+        </a>
+        </div>
+    </div>
+
+    <p></p><br>
+
+    <div class="#">
+        <table>
+            <tr>
+                <th>作品名</th>
+                <td th:text="${manga.title}"></td>
+            </tr>
+            <tr>
+                <th>出版社</th>
+                <td th:text="${manga.publisher}"></td>
+            </tr>
+            <tr>
+                <th>掲載誌</th>
+                <td th:text="${manga.publishedIn}"></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+</html>

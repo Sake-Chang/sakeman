@@ -16,7 +16,7 @@ $(function(){
         console.log(objUser);
             $.ajax({
                 type            : "PUT",
-                url             : '/follow',
+                url             : '/sakeman/follow',
                 contentType     : "application/json",
                 data            : JSON.stringify(objUser),
                 dataType        : 'json',

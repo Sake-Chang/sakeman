@@ -4,7 +4,7 @@
     border: none;
     width: 100vw;
     padding: 0 16px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .search-container {
@@ -15,7 +15,7 @@
 .select {
     display: inline-flex;
     align-items: center;
-    border: solid #dedede;
+    border: solid 1px #dedede;
     border-radius: 40px 0 0 40px;
     padding: 4px 4px 4px 16px;
     font-size: 14px;
@@ -26,7 +26,7 @@
 .search-box {
     display: flex;
     justify-content: space-between;
-    border: solid #dedede;
+    border: solid 1px #dedede;
     border-radius: 0 40px 40px 0;
     background-color: #ffffff;
     padding-right: 8px;

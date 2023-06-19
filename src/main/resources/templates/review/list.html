@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout}">
+
+<head>
+<link rel="stylesheet" th:href="@{/css/manga/list.css}">
+<link rel="stylesheet" th:href="@{/css/manga/review.css}">
+
+<title>まんが一覧</title>
+</head>
+
+<div layout:fragment="content">
+
+<!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
+<div class="search" layout:include="module/search-module :: search-module(object='')"></div>
+
+<!--/* タブ */-->
+<div class="tab-container">
+    <div class="tab tab-current">
+        <a class="tab-link" th:href="@{/review}">
+            <i class="uil uil-bolt md-24"></i>
+            <span class="#">新着順</span>
+        </a>
+    </div>
+    <div class="tab">
+        <a class="tab-link" th:href="@{/review/popular}">
+            <i class="uil uil-fire md-24"></i>
+            <span class="#">人気順</span>
+        </a>
+    </div>
+</div>
+
+<div class="page-title">
+    <i class="uil uil-comment-lines md-24 md-595959"></i>
+    <h2>みんなのレビュー</h2>
+</div>
+
+    <!--/* レビューリストモジュールを呼び出し（${reviewlist}を引数として渡す） */-->
+<div class="container" layout:include="module/review-list-module :: review-list-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist}, ${followeelist}')"></div>
+
+</div>
+</html>

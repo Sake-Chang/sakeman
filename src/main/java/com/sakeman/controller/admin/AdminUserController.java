@@ -20,8 +20,8 @@ import com.sakeman.service.UserService;
 public class AdminUserController {
     private final UserService service;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public AdminUserController(UserService service) {
         this.service = service;
@@ -47,17 +47,17 @@ public class AdminUserController {
         return "admin/user/register";
     }
 
-//    /** 登録処理 */
-//    @PostMapping("/register")
-//    public String postRegister(@Validated User user, BindingResult res, Model model) {
-//        if(res.hasErrors()) {
-//            return getRegister(user, model);
-//        }
-//        user.setDeleteFlag(0);
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        service.saveUser(user);
-//        return "redirect:/admin/user/list";
-//    }
+    /** 登録処理 */
+    @PostMapping("/register")
+    public String postRegister(@Validated User user, BindingResult res, Model model) {
+        if(res.hasErrors()) {
+            return getRegister(user, model);
+        }
+        user.setDeleteFlag(0);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        service.saveUser(user);
+        return "redirect:/admin/user/list";
+    }
 
     /** 編集画面を表示 */
     @GetMapping("update/{id}/")
@@ -66,13 +66,13 @@ public class AdminUserController {
         return "admin/user/update";
     }
 
-//    /** 編集処理 */
-//    @PostMapping("update/{id}/")
-//    public String updateUser(@PathVariable Integer id, @ModelAttribute User user, Model model) {
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        service.saveUser(user);
-//        return "redirect:/admin/user/list";
-//    }
+    /** 編集処理 */
+    @PostMapping("update/{id}/")
+    public String updateUser(@PathVariable Integer id, @ModelAttribute User user, Model model) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        service.saveUser(user);
+        return "redirect:/admin/user/list";
+    }
 
     /** 削除処理 */
     @GetMapping("delete/{id}/")

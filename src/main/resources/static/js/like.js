@@ -16,7 +16,7 @@ $(function(){
         console.log(review);
             $.ajax({
                 type            : "PUT",
-                url             : '/like',
+                url             : 'sakeman/like',
                 contentType     : "application/json",
                 data            : JSON.stringify(review),
                 dataType        : 'json',

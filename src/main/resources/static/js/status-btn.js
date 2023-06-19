@@ -16,7 +16,7 @@ $(function(){
         console.log(manga);
             $.ajax({
                 type            : "PUT",
-                url             : '/readstatus',
+                url             : 'sakeman/readstatus',
                 contentType     : "application/json",
                 data            : JSON.stringify(mangaId),
                 dataType        : 'json',

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout}">
+
+<head>
+<link rel="stylesheet" th:href="@{/css/manga-list-module.css}">
+<title>まんが一覧</title>
+</head>
+
+<div layout:fragment="content"> <!-- layoutに送る -->
+
+<!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
+<div class="search" layout:include="module/search-module :: search-module(object='')"></div>
+
+<!--/* タブ */-->
+<div class="tab-container">
+    <div class="tab">
+        <a class="tab-link" th:href="@{/manga}">
+            <i class="uil uil-bolt md-24"></i>
+            <span class="#">新着順</span>
+        </a>
+    </div>
+    <div class="tab tab-current">
+        <a class="tab-link" th:href="@{/manga/popular}">
+            <i class="uil uil-fire md-24"></i>
+            <span class="#">人気順</span>
+        </a>
+    </div>
+</div>
+
+<!-- 見出し -->
+<div class="page-title">
+    <i class="uil uil-book-open md-24 md-595959"></i>
+    <h2>まんが一覧</h2>
+</div>
+
+<!--/* まんがリストモジュールを呼び出し（${mangalist},${reviewlist}を引数として渡す） */-->
+<div class="container" layout:include="module/manga-list-module :: manga-list-module(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
+
+</div>
+
+</html>

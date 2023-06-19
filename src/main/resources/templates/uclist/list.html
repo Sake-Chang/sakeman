@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/manga/uclist.css}">
+    <link rel="stylesheet" th:href="@{/css/manga/minilist.css}">
+    <link rel="stylesheet" th:href="@{/css/common/common.css}">
+</head>
+
+<div layout:fragment="content"> <!-- layoutに送る -->
+
+<!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
+<div class="search" layout:include="module/search-module :: search-module(object='')"></div>
+
+<!--/* タブ */-->
+<div class="tab-container">
+    <div class="tab tab-current">
+        <a class="tab-link" th:href="@{/uclist}">
+            <i class="uil uil-bolt md-24"></i>
+            <span class="#">新着順</span>
+        </a>
+    </div>
+    <div class="tab">
+        <a class="tab-link" th:href="@{/uclist/popular}">
+            <i class="uil uil-fire md-24"></i>
+            <span class="#">人気順</span>
+        </a>
+    </div>
+</div>
+
+<!-- 見出し -->
+<div class="page-title">
+    <span class="material-icons-outlined md-32 page-title-icon">list</span>
+    <h2>みんなのリスト</h2>
+</div>
+
+<!--/* まんがリストモジュールを呼び出し（${uclistlist}を引数として渡す） */-->
+<div class="container-uclist" layout:include="module/uclist-list-module :: uclist-list-module(object='${uclistlist}')"></div>
+
+</div>
+
+</html>

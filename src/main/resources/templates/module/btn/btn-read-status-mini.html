@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<!--/* 引数を受け取って呼ばれる（ object = ${mangaId}, ${wantlist}, ${readlist} ） */-->
+<th:block layout:fragment="btn-read-status-mini(object)">
+
+<div class="btn-read-status-mini"
+     th:classappend="!${#lists.contains(readlist, mangaId)} ?
+                        (${#lists.contains(wantlist, mangaId)} ?
+                            'status-toggle-mini btn-highlight' :
+                            'status-toggle-mini')
+                        : 'btn-purple'" th:data-manga-id="${mangaId}">
+        <span   class="material-icons-outlined md-18 status-icon"
+                th:classappend="!${#lists.contains(readlist, mangaId)} ?
+                                (${#lists.contains(wantlist, mangaId)} ?
+                                        'md-ffffff' :
+                                        '' ):
+                                        'md-ffffff' "
+                th:text=    "!${#lists.contains(readlist, mangaId)} ?
+                             (${#lists.contains(wantlist, mangaId)} ?
+                                        'bookmark' :
+                                        'bookmark_add'):
+                                        'check_box' "></span>
+        <span   class="status-text"
+                th:classappend="!${#lists.contains(readlist, mangaId)} ?
+                                 (${#lists.contains(wantlist, mangaId)} ?
+                                        'md-ffffff' :
+                                        '' ):
+                                        'md-ffffff' "
+                th:text=        "!${#lists.contains(readlist, mangaId)} ?
+                                 (${#lists.contains(wantlist, mangaId)} ?
+                                       '気になる' :
+                                       '気になる'):
+                                       '読んだ！' "></span>
+</div>
+
+</th:block> <!--/* layout:fragment */-->
+
+</html>

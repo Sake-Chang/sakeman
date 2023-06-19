@@ -2,18 +2,18 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
   sql:
     init:
       mode: never
       encoding: UTF-8
-
-  jpa:
-    hibernate:
-      ddl-auto: none
-    defer-datasource-initialization: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
 
 # AWS
 cloud:
