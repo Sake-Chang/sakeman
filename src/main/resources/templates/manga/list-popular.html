@@ -15,28 +15,28 @@
 
 <!--/* タブ */-->
 <div class="tab-container">
-    <div class="tab">
-        <a class="tab-link" th:href="@{/manga}">
-            <i class="uil uil-bolt md-24"></i>
-            <span class="#">新着順</span>
-        </a>
-    </div>
-    <div class="tab tab-current">
-        <a class="tab-link" th:href="@{/manga/popular}">
-            <i class="uil uil-fire md-24"></i>
-            <span class="#">人気順</span>
-        </a>
-    </div>
+    <a class="tab-link" th:href="@{/manga}">
+        <div class="tab">
+            <i class="uil uil-bolt"></i>
+            <span class="tab-text">新着順</span>
+        </div>
+    </a>
+    <a class="tab-link" th:href="@{/manga/popular}">
+        <div class="tab tab-current">
+            <i class="uil uil-fire"></i>
+            <span class="tab-text">人気順</span>
+        </div>
+    </a>
 </div>
 
 <!-- 見出し -->
 <div class="page-title">
-    <i class="uil uil-book-open md-24 md-595959"></i>
+    <i class="uil uil-book-open md-24"></i>
     <h2>まんが一覧</h2>
 </div>
 
-<!--/* まんがリストモジュールを呼び出し（${mangalist},${reviewlist}を引数として渡す） */-->
-<div class="container" layout:include="module/manga-list-module :: manga-list-module(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
+<!--/* まんがカードモジュールを呼び出し */-->
+<div class="container" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
 
 </div>
 

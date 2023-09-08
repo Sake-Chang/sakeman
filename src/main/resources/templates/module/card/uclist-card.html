@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!--/* 引数を受け取って呼ばれる（ object = ${uclistlist} ） */-->
+<div layout:fragment="uclist-card(object)">
+
+<!-- <div class="container-uclist"> -->
+    <div class="card-outer-uclist" th:each="uclist : ${uclistlist}">
+        <div class="uclist-card-main">
+            <div class="card-head">
+                <div class="card-user">
+                    <a th:href="@{/user/{id}(id=${uclist.user.id})}">
+                        <img class="card-user-img" th:src="${#lists.isEmpty(uclist.user.img)} ?
+                                    @{https://sake-man.com/default_img.png} :
+                                    @{https://sake-man.com/{path}(path=${uclist.user.img})}">
+                    </a>
+                    <div class="card-user-text">
+                        <div class="card-user-name">
+                            <a th:href="@{/user/{id}(id=${uclist.user.id})}">[[${uclist.user.username}]]</a>
+                        </div>
+                        <div class="card-user-title">伝説級のレビュアー</div>
+                    </div>
+                </div>
+                <div class="uclist-card-counter-container">
+                    <div class="uclist-card-counter">
+                        <span class="material-icons-outlined md-24">favorite_border</span>
+                        <span>18</span>
+                    </div>
+                    <div class="uclist-card-counter">
+                        <span class="material-icons-outlined md-24">bookmark_added</span>
+                        <span>25</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-title" th:text="${uclist.title}"></div>
+            <div class="read-more-002">
+                <p class="card-description">[[${uclist.description}]]</p>
+                <label><input type="checkbox"/>続きを読む</label>
+            </div>
+        </div>
+
+        <div class="uclist-container">
+            <th:block th:if="!${#lists.isEmpty(uclist.uclistMangas)}" th:each="um : ${uclist.uclistMangas}">
+                <div class="uclist-child">
+                    <a th:href="@{/manga/{id}(id=${um.manga.id})}">
+                        <figure class="minimanga-module-calligrapy">
+                            <img th:src="@{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">
+                        </figure>
+                    </a>
+                    <div class="minimanga-module-body">
+                        <div class="minimanga-module-title">
+                            <a th:href="@{/manga/{id}(id=${um.manga.id})}">[[${um.manga.title}]]</a>
+                        </div>
+                        <div class="minimanga-module-author-container">
+                            <th:block th:if="!${#lists.isEmpty(um.manga.mangaAuthors)}" th:each="ma : ${um.manga.mangaAuthors}">
+                                <span class="minimanga-module-author">
+                                    <a th:href="@{/author/{id}(id=${ma.author.id})}">[[${ma.author.name}]]</a>
+                                </span>
+                            </th:block>
+                            <th:block th:if="${#lists.isEmpty(um.manga.mangaAuthors)}">
+                                <span class="minimanga-module-author">ー</span>
+                            </th:block>
+                        </div>
+                    <div class="minimanga-module-publication-container">
+                        <th:block th:if="${um.manga.completionFlag == 1}">
+                            <span class="minimanga-module-completion-flag">完結</span>
+                        </th:block>
+                        <div class="minimanga-module-volume" th:text="|${um.manga.volume}巻|"></div>
+                    </div>
+                    <div class="minimanga-module-meta">
+                        <div class="minimanga-module-rating">
+                            <th:block th:if="!${#lists.isEmpty(um.manga.reviews)}">
+                                <span class="material-icons-outlined md-18 md-star">star</span>
+                                <div class="minimanga-module-rating-text" th:with=rating=${#aggregates.avg(um.manga.reviews.![rating])} th:text="${#numbers.formatDecimal(rating, 0, 'COMMA', 2, 'POINT')}"></div>
+                            </th:block>
+                            <th:block th:if="${#lists.isEmpty(um.manga.reviews)}">
+                                <span class="material-icons-outlined md-18 md-AS">star</span>
+                                <div class="minimanga-module-rating-text disabled">0.00</div>
+                            </th:block>
+                        </div>
+                        <a th:href="@{/manga/review/{id}#reviews(id=${um.manga.id})}">
+                            <div class="minimanga-module-review">
+                                <i class="uil uil-comment-lines md-18 md-BK"></i>
+                                <div class="minimanga-module-review-text" th:text="${um.manga.reviews.size}"></div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!--/* 気になるボタンを呼び出し（${manga.id}, ${wantlist}, ${readlist}を引数として渡す） */-->
+                    <th:block class="" th:with="mangaId=${um.manga.id}" layout:include="module/btn/btn-read-status-mini :: btn-read-status-mini(object='${mangaId}, ${wantlist}, ${readlist}')"></th:block>
+
+                </div>
+            </div>
+            </th:block>
+        </div>
+    </div>
+</div>
+</html>

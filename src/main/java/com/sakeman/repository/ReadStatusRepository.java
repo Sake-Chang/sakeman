@@ -13,8 +13,8 @@ import com.sakeman.entity.User;
 
 
 public interface ReadStatusRepository extends JpaRepository<ReadStatus, Integer> {
-    public Optional<ReadStatus> findByUserAndManga(User user, Manga manga);
-    public List<ReadStatus> findByUserId(Integer userId);
-    public Optional<ReadStatus> findByUser(User user);
-    public List<ReadStatus> findByUserAndStatus(User user, Status status);
+    Optional<ReadStatus> findByUserAndManga(User user, Manga manga);
+    List<ReadStatus> findByUserId(Integer userId);
+    Optional<ReadStatus> findByUser(User user);
+    List<ReadStatus> findByUserAndStatus(User user, Status status);
 }

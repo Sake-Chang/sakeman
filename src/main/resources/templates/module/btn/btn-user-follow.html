@@ -11,8 +11,8 @@
         <div    class="userfollow-toggle"
                 th:with="followeeId=${userId}"
                 th:data-followee-user-id="${followeeId}">
-            <span   class="material-icons-outlined md-32 md-595959"
-                    th:classappend="${#lists.contains(followeelist, userId)} ? 'md-highlight'"
+            <span   class="material-icons-outlined md-32 md-BL"
+                    th:classappend="${#lists.contains(followeelist, userId)} ? 'md-HL'"
                     th:text="${#lists.contains(followeelist, userId)} ? 'person_outline' : 'person_add_alt'">
             </span>
         </div>

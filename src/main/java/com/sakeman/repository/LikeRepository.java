@@ -12,9 +12,9 @@ import com.sakeman.entity.User;
 
 
 public interface LikeRepository extends JpaRepository<Like, Integer> {
-    public Optional<Like> findByUserAndReview(User user, Review review);
-    public List<Like> findByUser(User user);
-    public List<Like> findByUserId(Integer userId);
-    public Optional<Like> findByReview(Review review);
-    public int countByReview(Review review);
+    Optional<Like> findByUserAndReview(User user, Review review);
+    List<Like> findByUser(User user);
+    List<Like> findByUserId(Integer userId);
+    Optional<Like> findByReview(Review review);
+    int countByReview(Review review);
 }

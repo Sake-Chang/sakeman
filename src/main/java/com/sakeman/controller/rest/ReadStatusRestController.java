@@ -35,7 +35,7 @@ public class ReadStatusRestController {
 
     }
 
-    @PutMapping("/sakeman/readstatus")
+    @PutMapping("/readstatus")
     @ResponseBody
     public int createReadStatus(@AuthenticationPrincipal UserDetail userDetail, @RequestBody Manga manga, Model model) {
         // UserIdとMangaIdを取得

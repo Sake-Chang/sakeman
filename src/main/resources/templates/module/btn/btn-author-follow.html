@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<!--/* 引数を受け取って呼ばれる（ object = ${user} ） */-->
+<th:block layout:fragment="btn-author-follow(object)">
+
+<!--/* ユーザーボタン */-->
+<!--/* フォロー */-->
+<div    class="my-menu-btn authorfollow-toggle"
+        th:with="authorId=${author.id}"
+        th:data-author-id="${authorId}">
+    <span   class="material-icons-outlined md-24"
+            th:classappend="${#lists.contains(authorlist, author.id)} ? 'md-HL'"
+            th:text="${#lists.contains(authorlist, author.id)} ? 'person_outline' : 'person_add_alt'"></span>
+    <span   class="btn-user-follow-userpage-text"
+            th:classappend="${#lists.contains(authorlist, author.id)} ? 'md-HL'"
+            th:text="${#lists.contains(authorlist, author.id)} ? 'フォロー中' : 'フォローする'"></span>
+</div>
+
+</th:block> <!--/* layout:fragment */-->
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+
+<head>
+<link rel="stylesheet" th:href="@{/css/manga/user.css}">
+<link rel="stylesheet" th:href="@{/css/manga/minilist.css}">
+</head>
+
+<div layout:fragment="content">
+
+<div class="user-prof-head">
+    <div class="author-cover" th:with="size=${#lists.size(mangalist)}">
+        <th:block th:if="${size lt 5}">
+        <th:block th:each="i : ${#numbers.sequence(0, size-1)}">
+            <figure class="">
+                <a th:href="@{/manga/{id}(id=${mangalist[i].manga.id})}">
+                <img class="testimg" th:src="@{https://sake-man.com/calligraphy/__${mangalist[i].manga.calligraphy}__}">
+                </a>
+            </figure>
+        </th:block>
+        </th:block>
+        <th:block th:if="${size ge 5}">
+        <th:block th:each="i : ${#numbers.sequence(0,4)}">
+            <figure class="">
+                <a th:href="@{/manga/{id}(id=${mangalist[i].manga.id})}">
+                <img class="testimg" th:src="@{https://sake-man.com/calligraphy/__${mangalist[i].manga.calligraphy}__}">
+                </a>
+            </figure>
+        </th:block>
+        </th:block>
+    </div>
+
+    <a th:href="@{/author/{id}(id=${author.id})}">
+        <th:block th:if="${mangalist != null}">
+            <img class="user-prof-img" th:src="@{https://sake-man.com/calligraphy/__${mangalist[0].manga.calligraphy}__}">
+        </th:block>
+        <th:block th:unless="${author.id != null}">
+            <img class="user-prof-img" th:src="@{https://sake-man.com/default_img.png}">
+        </th:block>
+    </a>
+
+    <!--/* ユーザーボタンモジュールを呼び出し（${user}を引数として渡す） */-->
+    <div layout:include="module/btn/btn-author-follow :: btn-author-follow(object='${author}, ${authorlist}')"></div>
+
+    <div class="userpage-head-container">
+        <span class="userpage-username" th:text="${author.name}"></span>
+        <div class="userpage-counter-container">
+            <div class="userpage-counter">
+                <i class="uil uil-book-open md-24"></i>
+                <span>作品数： [[${mangalist.size}]]</span>
+            </div>
+<!--
+            <div class="userpage-counter">
+                <i class="uil uil-comment-lines md-24"></i>
+                <span th:text="${user.reviews.size}"></span>
+            </div>
+-->
+        </div>
+    </div>
+    <div class="read-more-002">
+        <p class="userpage-selfintro">[[${author.profile}]]</p>
+        <label><input type="checkbox"/>続きを読む</label>
+    </div>
+</div>
+
+<!--/* タブ */-->
+<div class="tab-container">
+    <a class="tab-link" th:href="@{/author/{id}(id=${author.id})}">
+        <div class="tab tab-current">
+            <i class="uil uil-book-open"></i>
+            <span class="tab-text">作品一覧</span>
+        </div>
+    </a>
+    <a class="tab-link" th:href="@{/author/{id}(id=${author.id})}">
+        <div class="tab">
+            <i class="uil uil-sync"></i>
+            <span class="tab-text">web更新情報</span>
+        </div>
+    </a>
+</div>
+
+
+<!--/* 本棚モジュールを呼び出し（${usermangalist}, ${wantlist}, ${readlist}を引数として渡す） */-->
+<div class="container">
+<th:block th:each="mangalist : ${mangalist}">
+<div th:with="mangalist=${mangalist.manga}" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${wantlist}, ${readlist}')"></div>
+</th:block>
+</div>
+
+</div>
+</html>

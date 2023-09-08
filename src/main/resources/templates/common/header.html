@@ -12,18 +12,26 @@
 <header class="header" layout:fragment="header">
 
     <div class="header-logo">
-        <a th:href="@{/}"><img th:src="@{/img/logo.png}" class="header-logo-img" alt="logo"></a>
+        <a th:href="@{/}"><img th:src="@{https://sake-man.com/logo.png}" class="header-logo-img" alt="logo"></a>
         <span class="header-logo-title">Manga for you</span>
     </div>
     <nav class="header-nav">
         <ul class="header-nav-menu">
             <li class="header-nav-menu-item">
-                <div class=""><a class="link-block" th:href="@{/admin/index}" sec:authorize-url="GET / 管理者"><span class="material-icons-outlined md-20">build_circle</span></a></div>
+                <div class=""><a class="link-block" th:href="@{/admin/index}" sec:authorize-url="/admin"><span class="material-icons-outlined md-20">build_circle</span></a></div>
+            </li>
+            <li class="header-nav-menu-item">
+                <div class=""><a class="link-block" target="_blank" rel="noopener" th:href="@{https://www.amazon.co.jp/b?_encoding=UTF8&tag=sakeman-22&linkCode=ur2&linkId=ff532c90a47a0af1628b89dfc8ef7f3a&camp=247&creative=1211&node=2275256051}"><i class="uil uil-amazon md-24"></i></a></div>
             </li>
              <li class="header-nav-menu-mypage">
                 <th:block sec:authorize="isAuthenticated()">
                     <a th:href="@{/user/{id}(id=${#authentication.principal.user.id})}">
-                        <img class="header-user-img" th:src="@{/img/{path}(path=${#authentication.principal.user.img})}">
+                        <th:block th:if="${#authentication.principal.user.img != null}">
+                            <img class="header-user-img" th:src="@{https://sake-man.com/{path}(path=${#authentication.principal.user.img})}">
+                        </th:block>
+                        <th:block th:unless="${#authentication.principal.user.img != null}">
+                            <img th:src="@{https://sake-man.com/default_img.png}">
+                        </th:block>
                     </a>
                 </th:block>
             </li>

@@ -14,28 +14,28 @@
 
 <!--/* タブ */-->
 <div class="tab-container">
-    <div class="tab">
-        <a class="tab-link" th:href="@{/uclist}">
-            <i class="uil uil-bolt md-24"></i>
-            <span class="#">新着順</span>
-        </a>
-    </div>
-    <div class="tab tab-current">
-        <a class="tab-link" th:href="@{/uclist/popular}">
-            <i class="uil uil-fire md-24"></i>
-            <span class="#">人気順</span>
-        </a>
-    </div>
+    <a class="tab-link" th:href="@{/uclist}">
+        <div class="tab">
+            <i class="uil uil-bolt"></i>
+            <span class="tab-text">新着順</span>
+        </div>
+    </a>
+    <a class="tab-link" th:href="@{/uclist/popular}">
+        <div class="tab tab-current">
+            <i class="uil uil-fire"></i>
+            <span class="tab-text">人気順</span>
+        </div>
+    </a>
 </div>
 
 <!-- 見出し -->
 <div class="page-title">
-    <span class="material-icons-outlined md-32 page-title-icon">list</span>
+    <i class="uil uil-list-ul"></i>
     <h2>みんなのリスト</h2>
 </div>
 
 <!--/* まんがリストモジュールを呼び出し（${uclistlist}を引数として渡す） */-->
-<div class="container-uclist" layout:include="module/uclist-list-module :: uclist-list-module(object='${uclistlist}')"></div>
+<div class="container" layout:include="module/card/uclist-card :: uclist-card(object='${uclistlist}')"></div>
 
 </div>
 

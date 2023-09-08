@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout}">
+
+<head>
+<link rel="stylesheet" th:href="@{/css/manga-list-module.css}">
+<link rel="stylesheet" th:href="@{/css/manga/review.css}">
+<link rel="stylesheet" th:href="@{/css/tab.css}">
+<title th:text="|${manga.title}の詳細情報・レビュー|"></title>
+</head>
+
+<div layout:fragment="content"> <!-- layoutに送る -->
+
+<!--/* まんがリストモジュールを呼び出し（${mangalist},${reviewlist}を引数として渡す） */-->
+<div class="container" th:with="mangalist=${manga}" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
+
+<!--/* タグ */-->
+<div class="tag-container">
+    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+</div>
+
+<!--/* タブ */-->
+<div class="tab-container">
+    <a class="tab-link" th:href="@{/manga/{id}(id=${manga.id})}">
+        <div class="tab">
+            <i class="uil uil-arrow-growth"></i>
+            <span class="tab-text">オススメ情報</span>
+        </div>
+    </a>
+    <a class="tab-link" th:href="@{/manga/review/{id}(id=${manga.id})}">
+        <div class="tab tab-current">
+            <i class="uil uil-comment-lines"></i>
+            <span class="tab-text">みんなのレビュー</span>
+        </div>
+    </a>
+</div>
+
+
+    <div class="page-title">
+        <i class="uil uil-comment-lines"></i>
+        <h3 id="reviews">みんなのレビュー 一覧</h3>
+    </div>
+
+    <!--/* レビューモジュールを呼び出し（${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}を引数として渡す） */-->
+    <div class="container" layout:include="module/card/review-card-module :: review-card-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}')"></div>
+
+</div>
+
+</html>

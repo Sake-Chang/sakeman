@@ -1,10 +1,13 @@
 package com.sakeman.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sakeman.entity.Manga;
+import com.sakeman.entity.Uclist;
 import com.sakeman.entity.UclistManga;
 import com.sakeman.repository.UclistMangaRepository;
 
@@ -32,6 +35,11 @@ public class UclistMangaService {
         return uclistMangaRepository.findByUclistId(uclistId);
     }
 
+    /** uclistとmangaで検索して返す */
+    public Optional<UclistManga> findByUclistAndManga(Uclist uclist, Manga manga) {
+        return uclistMangaRepository.findByUclistAndManga(uclist, manga);
+    }
+
     /** 登録処理(1件) */
 //    @Transactional
     public UclistManga saveUclistManga(UclistManga uclistManga) {
@@ -42,6 +50,13 @@ public class UclistMangaService {
 //  @Transactional
   public List<UclistManga> saveUclistMangaAll(List<UclistManga> uclistMangas) {
       return uclistMangaRepository.saveAll(uclistMangas);
+  }
+
+  /** 削除
+ * @return */
+  @Transactional
+  public void deleteById(Integer id) {
+      uclistMangaRepository.deleteById(id);
   }
 
 }

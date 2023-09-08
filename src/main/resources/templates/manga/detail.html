@@ -12,8 +12,9 @@
 
 <div layout:fragment="content"> <!-- layoutに送る -->
 
-<!--/* まんがモジュールを呼び出し（${manga}を引数として渡す） */-->
-<div class="container" layout:include="module/manga-detail-module :: manga-detail-module(object='${manga}')"></div>
+
+<!--/* まんがリストモジュールを呼び出し（${mangalist},${reviewlist}を引数として渡す） */-->
+<div class="container" th:with="mangalist=${manga}" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
 
 <!--/* タグ */-->
 <div class="tag-container">
@@ -23,21 +24,49 @@
     <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
 </div>
 
-<!--/* タブお試し */-->
-<div class="tab-wrap">
-    <input id="TAB-01" type="radio" name="TAB" class="tab-switch" checked="checked" />
-        <label class="tab-label" for="TAB-01">
-            <i class="uil uil-smile-squint-wink md-24"></i>
-            <span class="#">おすすめ情報</span>
-        </label>
-    <div class="tab-content">
-        <div class="#">
-<h3 style="text-align: center; color: #cccccc; padding: 80px 0;">今のところ おすすめ情報は ありません<br>このマンガが 気になってる人が<br>気に入りそうな マンガなどが<br>出るようになる予定ですけど また今度</h3><br>
-
-<div class="page-title">
-    <span class="material-icons-outlined md-24 page-title-icon">info</span>
-    <h4 th:text="|${manga.title}の詳細情報|"></h4>
+<!--/* タブ */-->
+<div class="tab-container">
+    <a class="tab-link" th:href="@{/manga/{id}(id=${manga.id})}">
+        <div class="tab tab-current">
+            <i class="uil uil-arrow-growth"></i>
+            <span class="tab-text">オススメ情報</span>
+        </div>
+    </a>
+    <a class="tab-link" th:href="@{/manga/review/{id}(id=${manga.id})}">
+        <div class="tab">
+            <i class="uil uil-comment-lines"></i>
+            <span class="tab-text">みんなのレビュー</span>
+        </div>
+    </a>
 </div>
+
+    <div class="page-title">
+        <i class="uil uil-sync"></i>
+        <h4 th:text="|${manga.title}のWeb連載 更新情報|"></h4>
+    </div>
+
+<th:block th:if="!${infolist.isEmpty}">
+<!--/* インフォリストモジュールを呼び出し（${infolist}を引数として渡す） */-->
+<div class="container" layout:include="module/card/info-card-module :: info-card-module(object='${infolist}, ${likelist}')"></div>
+<!--/* もっとみるボタン */-->
+<div class="more-btn-container">
+    <button class="more-btn" th:attr="onClick='location.href=\''+@{/web-manga-update-info/manga/{id}(id=${manga.id})}+'\''">
+            <span class="more-btn-text">もっとみる</span>
+<!--             <span class="material-icons-outlined md-32 md-595959">chevron_right</span>
+ -->    </button>
+</div>
+</th:block>
+<th:block th:if="${infolist.isEmpty}">
+    <div class="notification">
+    <i class="uil uil-sad-cry md-24 md-7e7e7e"></i>
+    <span clas=""notification-text>Webでの連載情報はありません・・・</span>
+    </div>
+</th:block>
+
+    <div class="page-title">
+        <i class="uil uil-info-circle"></i>
+        <h4 th:text="|${manga.title}の詳細情報|"></h4>
+    </div>
     <table class="manga-info-table">
         <tbody>
             <tr>
@@ -60,25 +89,7 @@
             </tr>
         </tbody>
     </table>
-</div>
 
-    </div>
-    <input id="TAB-02" type="radio" name="TAB" class="tab-switch" />
-        <label class="tab-label" for="TAB-02">
-            <i class="uil uil-comment-lines md-24"></i>
-            <span class="#">レビュー</span>
-        </label>
-    <div class="tab-content">
-        <div class="page-title">
-            <span class="material-icons-outlined md-24 page-title-icon">chat</span>
-            <h3>みんなのレビュー</h3>
-        </div>
-
-        <!--/* レビューモジュールを呼び出し（${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}を引数として渡す） */-->
-        <div class="container" layout:include="module/review-list-module :: review-list-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}')"></div>
-    </div>
-
-</div>
 </div>
 
 </html>

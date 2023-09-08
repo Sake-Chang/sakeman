@@ -2,6 +2,9 @@ package com.sakeman.controller.admin;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,8 +40,9 @@ public class AdminMangaController {
 
     /** 一覧表示 */
     @GetMapping("list")
-    public String getList(Model model) {
-        model.addAttribute("mangalist", service.getMangaList());
+    public String getList(Model model,  @PageableDefault(page=0, size=100, sort= {"id"}, direction=Direction.ASC) Pageable pageable) {
+        model.addAttribute("pages", service.getMangaListPageable(pageable));
+        model.addAttribute("mangalist", service.getMangaListPageable(pageable).getContent());
         return "admin/manga/list";
         }
 

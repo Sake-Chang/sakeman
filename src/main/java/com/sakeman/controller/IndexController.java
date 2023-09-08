@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -62,13 +65,13 @@ public class IndexController {
 
     /** トップページを表示 */
     @GetMapping("/")
-    public String getList(@AuthenticationPrincipal UserDetail userDetail, @ModelAttribute Manga manga, Model model) {
-        model.addAttribute("reviewlist", reService.getReviewList());
+    public String getList(@AuthenticationPrincipal UserDetail userDetail, @ModelAttribute Manga manga, Model model, @PageableDefault(page=0, size=10, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
+        model.addAttribute("reviewlist", reService.getReviewListPageable(pageable));
         model.addAttribute("likelist", likeService.reviewIdListLikedByUser(userDetail));
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
         model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
         model.addAttribute("followeelist", ufService.followeeIdListFollowedByUser(userDetail));
-        model.addAttribute("uclistlist", uclService.getUclistList());
+        model.addAttribute("uclistlist", uclService.getUclistListPageable(pageable));
         return "index";
     }
 

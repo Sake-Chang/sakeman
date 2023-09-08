@@ -8,6 +8,10 @@
 
     <h2>管理者用ページ</h2>
     <h3>登録作品 一覧</h3>
+
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
     <form method="get" th:action="@{/admin/uclist/register}">
         <input type="submit" value="新規登録"/>
     </form>
@@ -32,9 +36,13 @@
                     </th:block>
                 </th:block>
             </td>
-            <td><a class="btn-primary" th:href="@{/admin/manga/detail/{id}/(id=${uclist.id})}">詳細</a></td>
+            <td><a class="btn-primary" th:href="@{/admin/uclist/update/{id}/(id=${uclist.id})}">詳細</a></td>
         </tr>
     </table>
+
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
 </div>
 </body>
 </html>

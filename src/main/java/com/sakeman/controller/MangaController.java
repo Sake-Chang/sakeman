@@ -1,6 +1,5 @@
 package com.sakeman.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -19,30 +18,31 @@ import com.sakeman.service.ReadStatusService;
 import com.sakeman.service.ReviewService;
 import com.sakeman.service.UserDetail;
 import com.sakeman.service.UserFollowService;
+import com.sakeman.service.WebLikeService;
+import com.sakeman.service.WebMangaFollowService;
+import com.sakeman.service.WebMangaUpdateInfoService;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Controller
 @RequestMapping("manga")
+@RequiredArgsConstructor
 public class MangaController {
     private final MangaService service;
     private final ReviewService revService;
     private final LikeService likeService;
     private final ReadStatusService rsService;
     private final UserFollowService ufService;
-
-
-    public MangaController(MangaService service, ReviewService revService, LikeService likeService, ReadStatusService rsService, UserFollowService ufService) {
-        this.service = service;
-        this.revService = revService;
-        this.likeService = likeService;
-        this.rsService = rsService;
-        this.ufService = ufService;
-    }
+    private final WebMangaUpdateInfoService infoService;
+    private final WebLikeService  webLikeService;
+    private final WebMangaFollowService wmfService;
 
     /** 一覧表示（新着順） **/
     @GetMapping("")
-    public String getListNew(@AuthenticationPrincipal UserDetail userDetail, Model model, @ModelAttribute Manga manga, @PageableDefault(page=0, size=20, sort= {"updatedAt"}, direction=Direction.DESC) Pageable pageable) {
-        model.addAttribute("mangalist", service.getMangaListPageable(pageable));
+    public String getListNew(@AuthenticationPrincipal UserDetail userDetail, Model model, @ModelAttribute Manga manga, @PageableDefault(page=0, size=20, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
+        model.addAttribute("pages", service.getMangaListPageable(pageable));
+        model.addAttribute("mangalist", service.getMangaListPageable(pageable).getContent());
         model.addAttribute("reviewlist", revService.getReviewList());
         model.addAttribute("likelist", likeService.reviewIdListLikedByUser(userDetail));
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
@@ -53,7 +53,8 @@ public class MangaController {
     /** 一覧表示（読みたい順） **/
     @GetMapping("/popular")
     public String getListPop(@AuthenticationPrincipal UserDetail userDetail, Model model, @ModelAttribute Manga manga, @PageableDefault(page=0, size=20, sort= {"readStatus"}, direction=Direction.DESC) Pageable pageable) {
-        model.addAttribute("mangalist", service.getMangaListPageable(pageable));
+        model.addAttribute("pages", service.getMangaListPageable(pageable));
+        model.addAttribute("mangalist", service.getMangaListPageable(pageable).getContent());
         model.addAttribute("reviewlist", revService.getReviewList());
         model.addAttribute("likelist", likeService.reviewIdListLikedByUser(userDetail));
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
@@ -61,16 +62,31 @@ public class MangaController {
         return "manga/list-popular";
     }
 
-    /** 詳細表示 */
+    /** 詳細表示（おすすめ） */
     @GetMapping("/{id}")
-    public String getDetail(@AuthenticationPrincipal UserDetail userDetail, @PathVariable("id") Integer id, Model model) {
+    public String getDetail(@AuthenticationPrincipal UserDetail userDetail, @PathVariable("id") Integer id, Model model, @PageableDefault(page=0, size=10, sort= {"updateAt"}, direction=Direction.DESC) Pageable pageable) {
+        model.addAttribute("manga", service.getManga(id));
+        model.addAttribute("infolist", infoService.findByMangaIdPageable(id, pageable).getContent());
+        model.addAttribute("likelist", likeService.reviewIdListLikedByUser(userDetail));
+        model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
+        model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
+        model.addAttribute("followeelist", ufService.followeeIdListFollowedByUser(userDetail));
+        model.addAttribute("likelist", webLikeService.webMangaUpdateInfoIdListWebLikedByUser(userDetail));
+        model.addAttribute("webmangafollowlist", wmfService.webMangaIdListLikedByUser(userDetail));
+
+        return "manga/detail";
+        }
+
+    /** 詳細表示（レビュー） */
+    @GetMapping("/review/{id}")
+    public String getDetailReview(@AuthenticationPrincipal UserDetail userDetail, @PathVariable("id") Integer id, Model model) {
         model.addAttribute("manga", service.getManga(id));
         model.addAttribute("reviewlist", revService.getReviewByMangaId(id));
         model.addAttribute("likelist", likeService.reviewIdListLikedByUser(userDetail));
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
         model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
         model.addAttribute("followeelist", ufService.followeeIdListFollowedByUser(userDetail));
-        return "manga/detail";
+        return "manga/detail-review";
         }
 
     @GetMapping("/minilist")
@@ -78,13 +94,5 @@ public class MangaController {
         model.addAttribute("mangalist", service.getMangaList());
         return "manga/minilist";
     }
-
-//    /** 作品ごとのレビューを表示 */
-//    @GetMapping("{id}/review")
-//    public String getDetailReviews(@PathVariable("id") Integer id, Model model) {
-//        model.addAttribute("reviewlist", revService.getReviewByMangaId(id));
-//        model.addAttribute("manga", service.getManga(id));
-//        return "manga/detail/review";
-//    }
 
 }

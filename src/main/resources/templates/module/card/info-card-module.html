@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!--/* 引数を受け取って呼ばれる（ object = ${infolist} ） */-->
+<div layout:fragment="info-card-module(object)">
+
+<!--/* カードモジュール */-->
+<div class="card-outer" th:each="info : ${infolist}">
+
+    <div class="card-head">
+        <div class="info-card-info">
+        <a th:href="@{/web-manga-update-info/media/{id}(id=${info.webMangaMedia.id})}">
+            <figure class="info-card-figure">
+            <img class="info-card-img" th:src="@{https://sake-man.com/__${info.webMangaMedia.logo}__}">
+            </figure>
+        </a>
+        <div class="info-card-text">
+            <div class="card-user-name">
+                <a th:href="@{/manga/{id}(id=${info.manga.id})}">[[*{info.titleString}]]</a>
+            </div>
+            <div class="info-module-head-sub">
+                <span th:if="*{info.freeFlag==1}" class="info-module-free">無料</span>
+                <span class="info-module-updateat" th:text="|*{#temporals.format(info.updateAt, 'yyyy/MM/dd HH:mm')} 更新|"></span>
+            </div>
+        </div>
+    </div>
+
+        <th:block class="" th:with="mangaId=${info.manga.id}" layout:include="module/btn/btn-web-manga-follow :: btn-web-manga-follow(object='${mangaId}, ${webmangafollowlist}')"></th:block>
+
+    </div>
+
+    <div class="info-module-main">
+        <div class="info-module-main-img">
+            <th:block th:if="${info.imgUrl != null}">
+                <a th:href="*{info.url}">
+                    <img th:src="*{info.imgUrl}">
+                </a>
+            </th:block>
+            <th:block th:unless="${info.imgUrl != null}">
+                <a th:href="*{info.url}">
+                    <img th:src="@{https://sake-man.com/noimage.jpg}">
+                </a>
+            </th:block>
+        </div>
+        <div class="info-module-main-text">
+            <span class="info-module-subtitle" th:text="*{info.subTitle}"></span>
+            <span class="info-module-author" th:text="*{info.authorString}"></span>
+        <div class="info-module-meta">
+            <div class="minimanga-module-rating">
+                <th:block th:if="!${#lists.isEmpty(info.manga.reviews)}">
+                    <span class="material-icons-outlined md-18 md-star">star</span>
+                    <div class="info-module-rating-text" th:with=rating=${#aggregates.avg(info.manga.reviews.![rating])} th:text="${#numbers.formatDecimal(rating, 0, 'COMMA', 2, 'POINT')}"></div>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(info.manga.reviews)}">
+                    <span class="material-icons-outlined md-18 md-AS">star</span>
+                    <div class="info-module-rating-text disabled">0.00</div>
+                </th:block>
+            </div>
+            <a th:href="@{/manga/review/{id}(id=${info.manga.id})}">
+                <div class="info-module-review">
+                    <i class="uil uil-comment-lines md-18 md-BK"></i>
+                    <div class="info-module-review-text">[[${info.manga.reviews.size}]]件</div>
+                </div>
+            </a>
+        </div>
+    </div>
+        </div>
+
+    <th:block th:if="${info.manga.id != 1}" class="manga-module-head">
+
+        <!--/* あらすじ */-->
+        <div class="read-more-002">
+            <p class="manga-card-synopsis">[[${info.manga.synopsis}]]</p>
+            <label><input type="checkbox"/>続きを読む</label>
+        </div>
+    </th:block>
+
+    <!--/* アクション */-->
+    <div class="manga-action">
+    <!--/* いいねボタンを呼び出し（${reviewlist}, ${likelist}を引数として渡す） */-->
+    <th:block class="" layout:include="module/btn/btn-weblike :: btn-weblike(object='${infolist}, ${likelist}')"></th:block>
+    <a class="btn-ia-container-info" th:href="*{info.url}" target="_blank" rel="noopener noreferrer">
+        <div class="btn-ia-container-info">
+            <i class="uil uil-book-open md-24 md-GR"></i>
+            <span class="btn-ia-text-info">いますぐ読む</span>
+        </div>
+    </a>
+    </div>
+
+</div> <!--/* outer */-->
+</div> <!--/* layout:fragment */-->
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+    <h2 th:text="|${info.titleString}の編集|"></h2>
+    <a class="btn-primary" th:href="@{/admin/web-manga-update-info/list}">一覧に戻る</a>
+
+    <form class="admin-form" th:method="post" th:action="@{/admin/web-manga-update-info/update/{id}/(id=${info.id})}" th:object="${info}">
+        <table>
+            <tr>
+                <th><label for="id">ID</label></th>
+                <td><input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}" th:field="*{id}"></td>
+            </tr>
+            <tr>
+                <th><label for="mediaName">メディア名</label></th>
+                <td><input type="text" th:field="*{mediaName}"></td>
+            </tr>
+            <tr>
+                <th><label for="webMangaMedia.id">メディアID</label></th>
+                <td><input type="text" th:field="*{webMangaMedia.id}"></td>
+            </tr>
+            <tr>
+                <th><label for="titleString">タイトル</label></th>
+                <td><input type="text" th:field="*{titleString}"></td>
+            </tr>
+            <tr>
+                <th><label for="manga.id">マンガID</label></th>
+                <td><input type="text" th:field="*{manga.id}"></input></td>
+            </tr>
+            <tr>
+                <th><label for="authoingrStr">著者</label></th>
+                <td><input type="text" th:field="*{authorString}"></td>
+            </tr>
+            <tr>
+                <th><label for="imgUrl">画像URL</label></th>
+                <td><input type="text" th:field="*{imgUrl}"></td>
+            </tr>
+            <tr>
+                <th><label for="subTitle">サブタイトル</label></th>
+                <td><input type="text" th:field="*{subTitle}"></td>
+            </tr>
+            <tr>
+                <th><label for="updateAt">更新日時</label></th>
+                <td><input type="text" th:field="*{updateAt}"></td>
+            </tr>
+            <tr>
+                <th><label for="url">URL</label></th>
+                <td><input type="text" th:field="*{url}"></td>
+            </tr>
+            <tr>
+                <th><label for="url">URL</label></th>
+                <td><input type="text" th:field="*{freeFlag}"></td>
+            </tr>
+        </table>
+        <input type="submit" value="更新">
+    </form>
+</div>
+</html>

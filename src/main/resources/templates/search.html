@@ -10,14 +10,33 @@
 
 <div layout:fragment="content"> <!-- layoutに送る -->
 
+<!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
+<div class="search" layout:include="module/search-module :: search-module(object='')"></div>
+
 <!-- 見出し -->
 <div class="page-title">
     <i class="uil uil-book-open md-24 md-595959"></i>
     <h2>検索結果</h2>
 </div>
 
+<th:block th:if="!${searchResult.isEmpty}">
 <!--/* まんがリストモジュールを呼び出し（${mangalist},${reviewlist}を引数として渡す） */-->
-<div class="container" th:with="mangalist=${searchResult}" layout:include="module/manga-list-module :: manga-list-module(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
+<div class="container" th:with="mangalist=${searchResult}" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
+<!--/* もっとみるボタン */-->
+<div class="more-btn-container">
+    <button class="more-btn" th:attr="onClick='location.href=\''+@{/web-manga-update-info/{id}(id=${manga.id})}+'\''">
+            <span class="more-btn-text">もっとみる</span>
+<!--             <span class="material-icons-outlined md-32 md-595959">chevron_right</span>
+ -->    </button>
+</div>
+</th:block>
+<th:block th:if="${searchResult.isEmpty}">
+    <div class="notification">
+    <i class="uil uil-sad-cry md-24 md-7e7e7e"></i>
+    <span clas=""notification-text>検索にヒットしませんでした・・・</span>
+    </div>
+</th:block>
+
 
 </div>
 

@@ -1,12 +1,16 @@
 package com.sakeman.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.sakeman.entity.User;
 
 
 public interface UserRepository extends JpaRepository<User, String> {
-    public User findByEmail(String email);
-    public User findById(Integer id);
+    User findByEmail(String email);
+    User findById(Integer id);
+    Page<User> findAll(Pageable pageable);
+
 
 }

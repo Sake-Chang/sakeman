@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+    <h2 th:text="|${mangaAuthor.id}の編集|"></h2>
+    <a class="btn-primary" th:href="@{/admin/manga-author/list}">一覧に戻る</a>
+
+    <form class="admin-form" th:method="post" th:action="@{/admin/manga-author/update/{id}/(id=${mangaAuthor.id})}" th:object="${mangaAuthor}">
+        <table>
+            <tr>
+                <th><label for="id">ID</label></th>
+                <td><input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}" th:field="*{id}"></td>
+            </tr>
+            <tr>
+                <th><label for="manga.id">作品ID</label></th>
+                <td><input type="text" th:field="*{manga.id}"></td>
+            </tr>
+
+            <tr>
+                <th><label for="author.id">著者ID</label></th>
+                <td><input type="text" th:field="*{author.id}"></td>
+            </tr>
+
+        </table>
+        <input type="submit" value="更新">
+    </form>
+</div>
+</html>

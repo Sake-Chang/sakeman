@@ -8,9 +8,245 @@
 
 <div layout:fragment="content">
 
+<div th:if="${success}" class="alert alert-success">[[${success}]]</div>
+
 <h2>管理画面トップ</h2>
 
-しっかり管理していきましょう！
+しっかり管理していきましょう！<br>
+
+<a target="_blank" href="https://www.amazon.co.jp/b?_encoding=UTF8&tag=sakeman-22&linkCode=ur2&linkId=ff532c90a47a0af1628b89dfc8ef7f3a&camp=247&creative=1211&node=2275256051">kindle</a><br><br>
+
+<p>URLで取得</p>
+<form th:action="@{/rssparse/getupdateinfo-individual}" method="post">
+    <input type="text" name="source" id="source" placeholder="URLを入力">
+    <input type="text" name="media" id="media" placeholder="メディアIDを入力">
+    <input type="submit" value="実行">
+</form>
+
+<p>rss基本</p>
+<div class="import-btn-container">
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://shonenjumpplus.com/rss">
+    <input type="submit" value="ジャンプ＋">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://tonarinoyj.jp/rss">
+    <input type="submit" value="となりのヤングジャンプ">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://www.sunday-webry.com/rss">
+    <input type="submit" value="サンデーうぇぶり">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://comic-days.com/rss">
+    <input type="submit" value="コミックDAYS">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://pocket.shonenmagazine.com/rss">
+    <input type="submit" value="マガポケ">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://magcomi.com/rss">
+    <input type="submit" value="MAGCOMI">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://comic-gardo.com/rss">
+    <input type="submit" value="コミックガルド">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo-free}" method="post">
+    <input type="hidden" name="source" id="source" value="https://kuragebunch.com/rss">
+    <input type="submit" value="くらげバンチ">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://feelweb.jp/rss">
+    <input type="submit" value="FEEL web">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://comic-trail.com/rss">
+    <input type="submit" value="コミックトレイル">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://comic-action.com/rss">
+    <input type="submit" value="webアクション">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://comicbushi-web.com/rss">
+    <input type="submit" value="コミックブシロードWEB">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://comicborder.com/rss">
+    <input type="submit" value="コミックボーダー">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://comic-ogyaaa.com/rss">
+    <input type="submit" value="COMIC OGYAAA!!">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://www.corocoro.jp/rss">
+    <input type="submit" value="週刊コロコロコミック">
+</form>
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://viewer.heros-web.com/rss">
+    <input type="submit" value="コミプレ">
+</form>
+
+<!-- 最新話は別だけどこのrssは無料のみ/のはずだったけど有料も混ざったので基本へ移動 -->
+<form th:action="@{/rssparse/getupdateinfo}" method="post">
+    <input type="hidden" name="source" id="source" value="https://comic-zenon.com/rss">
+    <input type="submit" value="ゼノン編集部">
+</form>
+</div>
+
+<p>rssちょっと変更</p>
+<div class="import-btn-container">
+<form th:action="@{/rssparse/getupdateinfo-YA}" method="post">
+    <input type="hidden" name="source" id="source" value="https://web-ace.jp/youngaceup/feed/rss/">
+    <input type="submit" value="ヤングエースUP">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo-GM}" method="post">
+    <input type="hidden" name="source" id="source" value="https://ganma.jp/api/1.0/top/rss">
+    <input type="submit" value="GANMA!">
+</form>
+
+<form th:action="@{/rssparse/getupdateinfo-MLW}" method="post">
+    <input type="hidden" name="source" id="source" value="https://mangalifewin.takeshobo.co.jp/rss20.php">
+    <input type="submit" value="まんがライフWIN">
+</form>
+</div>
+
+<p>スクレイピング</p>
+<div class="import-btn-container">
+<form th:action="@{/scrape/urasunday}" method="post">
+    <input type="submit" value="裏サンデー">
+</form>
+<form th:action="@{/scrape/comicwalker}" method="post">
+    <input type="submit" value="ComicWalker">
+</form>
+<form th:action="@{/scrape/web-comic-ganma}" method="post">
+    <input type="submit" value="Webコミックガンマ">
+</form>
+<form th:action="@{/scrape/comic-howl}" method="post">
+    <input type="submit" value="comicHOWL">
+</form>
+<form th:action="@{/scrape/getsuaku}" method="post">
+    <input type="submit" value="げつあく">
+</form>
+<form th:action="@{/scrape/alphapolis}" method="post">
+    <input type="submit" value="アルファポリス">
+</form>
+<form th:action="@{/scrape/mangabangcomics/{dow}(dow=0)}" method="post">
+    <input type="submit" value="マンガBANGコミックス（1）">
+</form>
+<form th:action="@{/scrape/mangabangcomics/{dow}(dow=1)}" method="post">
+    <input type="submit" value="マンガBANGコミックス（2）">
+</form>
+<form th:action="@{/scrape/booklista/{dow}(dow=0)}" method="post">
+    <input type="submit" value="ブックリスタ">
+</form>
+<form th:action="@{/scrape/corkstudio/{dow}(dow=0)}" method="post">
+    <input type="submit" value="コルクスタジオ">
+</form>
+</div>
+
+<p>スクレイピング（ビッコミ）</p>
+<div class="import-btn-container">
+<form th:action="@{/scrape/bigcomics/{dow}(dow=0)}" method="post">
+    <input type="submit" value="ビッコミ（月）">
+</form>
+<form th:action="@{/scrape/bigcomics/{dow}(dow=1)}" method="post">
+    <input type="submit" value="ビッコミ（火）">
+</form>
+<form th:action="@{/scrape/bigcomics/{dow}(dow=2)}" method="post">
+    <input type="submit" value="ビッコミ（水）">
+</form>
+<form th:action="@{/scrape/bigcomics/{dow}(dow=3)}" method="post">
+    <input type="submit" value="ビッコミ（木）">
+</form>
+<form th:action="@{/scrape/bigcomics/{dow}(dow=4)}" method="post">
+    <input type="submit" value="ビッコミ（金）">
+</form>
+<form th:action="@{/scrape/bigcomics/{dow}(dow=5)}" method="post">
+    <input type="submit" value="ビッコミ（土）">
+</form>
+<form th:action="@{/scrape/bigcomics/{dow}(dow=6)}" method="post">
+    <input type="submit" value="ビッコミ（日）">
+</form>
+<form th:action="@{/scrape/bigcomics/{dow}(dow=7)}" method="post">
+    <input type="submit" value="ビッコミ（読切）">
+</form>
+</div>
+
+<p>スクレイピング（ヤンチャン）</p>
+<div class="import-btn-container">
+<form th:action="@{/scrape/youngchampion/{dow}(dow=0)}" method="post">
+    <input type="submit" value="ヤンチャンWeb（月）">
+</form>
+<form th:action="@{/scrape/youngchampion/{dow}(dow=1)}" method="post">
+    <input type="submit" value="ヤンチャンWeb（火）">
+</form>
+<form th:action="@{/scrape/youngchampion/{dow}(dow=2)}" method="post">
+    <input type="submit" value="ヤンチャンWeb（水）">
+</form>
+<form th:action="@{/scrape/youngchampion/{dow}(dow=3)}" method="post">
+    <input type="submit" value="ヤンチャンWeb（木）">
+</form>
+<form th:action="@{/scrape/youngchampion/{dow}(dow=4)}" method="post">
+    <input type="submit" value="ヤンチャンWeb（金）">
+</form>
+<form th:action="@{/scrape/youngchampion/{dow}(dow=5)}" method="post">
+    <input type="submit" value="ヤンチャンWeb（土）">
+</form>
+<form th:action="@{/scrape/youngchampion/{dow}(dow=6)}" method="post">
+    <input type="submit" value="ヤンチャンWeb（日）">
+</form>
+<form th:action="@{/scrape/youngchampion/{dow}(dow=7)}" method="post">
+    <input type="submit" value="ヤンチャンWeb（読切）">
+</form>
+</div>
+
+<p>スクレイピング（ヤングアニマル）</p>
+<div class="import-btn-container">
+<form th:action="@{/scrape/younganimal/{dow}(dow=0)}" method="post">
+    <input type="submit" value="ヤングアニマルWeb（月）">
+</form>
+<form th:action="@{/scrape/younganimal/{dow}(dow=1)}" method="post">
+    <input type="submit" value="ヤングアニマルWeb（火）">
+</form>
+<form th:action="@{/scrape/younganimal/{dow}(dow=2)}" method="post">
+    <input type="submit" value="ヤングアニマルWeb（水）">
+</form>
+<form th:action="@{/scrape/younganimal/{dow}(dow=3)}" method="post">
+    <input type="submit" value="ヤングアニマルWeb（木）">
+</form>
+<form th:action="@{/scrape/younganimal/{dow}(dow=4)}" method="post">
+    <input type="submit" value="ヤングアニマルWeb（金）">
+</form>
+<form th:action="@{/scrape/younganimal/{dow}(dow=5)}" method="post">
+    <input type="submit" value="ヤングアニマルWeb（土）">
+</form>
+<form th:action="@{/scrape/younganimal/{dow}(dow=6)}" method="post">
+    <input type="submit" value="ヤングアニマルWeb（日）">
+</form>
+<form th:action="@{/scrape/younganimal/{dow}(dow=7)}" method="post">
+    <input type="submit" value="ヤングアニマルWeb（読切）">
+</form>
+</div>
 
 </div>
 </html>

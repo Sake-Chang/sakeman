@@ -27,7 +27,7 @@ $(function(){
         console.log(readStatus);
             $.ajax({
                 type            : "PUT",
-                url             : '/sakeman/readstatus2',
+                url             : '/readstatus2',
                 contentType     : "application/json",
                 data            : JSON.stringify(readStatus),
                 dataType        : 'json',
@@ -36,23 +36,23 @@ $(function(){
 
                 switch(status){
                     case "未登録"  :   $('.is-open').find('.status-icon').text('bookmark_add');
-                                      $('.is-open').find('.status-icon').removeClass('md-ffffff');
+                                      $('.is-open').find('.status-icon').removeClass('md-WH');
                                       $('.is-open').find('.status-text').text('気になる');
-                                      $('.is-open').find('.status-text').removeClass('md-ffffff');
+                                      $('.is-open').find('.status-text').removeClass('md-WH');
                                       $('.is-open').removeClass('btn-highlight');
                                       $('.is-open').removeClass('btn-purple');
                                       break;
                     case "気になる" :  $('.is-open').find('.status-icon').text('bookmark');
-                                      $('.is-open').find('.status-icon').addClass('md-ffffff');
+                                      $('.is-open').find('.status-icon').addClass('md-WH');
                                       $('.is-open').find('.status-text').text('気になる');
-                                      $('.is-open').find('.status-text').addClass('md-ffffff');
+                                      $('.is-open').find('.status-text').addClass('md-WH');
                                       $('.is-open').addClass('btn-highlight');
                                       $('.is-open').removeClass('btn-purple');
                                       break;
                     case "読んだ"  :   $('.is-open').find('.status-icon').text('check_box');
-                                      $('.is-open').find('.status-icon').addClass('md-ffffff');
+                                      $('.is-open').find('.status-icon').addClass('md-WH');
                                       $('.is-open').find('.status-text').text('読んだ');
-                                      $('.is-open').find('.status-text').addClass('md-ffffff');
+                                      $('.is-open').find('.status-text').addClass('md-WH');
                                       $('.is-open').removeClass('btn-highlight');
                                       $('.is-open').addClass('btn-purple');
                                       break;

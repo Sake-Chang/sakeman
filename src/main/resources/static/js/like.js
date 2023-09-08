@@ -16,14 +16,14 @@ $(function(){
         console.log(review);
             $.ajax({
                 type            : "PUT",
-                url             : 'sakeman/like',
+                url             : '/like',
                 contentType     : "application/json",
                 data            : JSON.stringify(review),
                 dataType        : 'json',
             }).done(function(data){
-                $this.toggleClass('md-highlight');
+                $this.toggleClass('md-HL');
                 console.log(data);
-                $this.children('.like-counter').text(data + " いいね");
+                $this.children('.btn-ia-text').text(data + " いいね");
             }).fail(function(jqXHR,testStatus,errorThrown){
                 alert('いいねできませんでした…');
             }).always(function(){

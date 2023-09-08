@@ -31,7 +31,7 @@ public class UclistService {
     }
 
     /** 1件を検索して返す */
-    public Uclist getManga(Integer id) {
+    public Uclist getUclist(Integer id) {
         return uclistRepository.findById(id).get();
     }
 

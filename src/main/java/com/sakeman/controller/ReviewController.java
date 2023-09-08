@@ -82,8 +82,8 @@ public class ReviewController {
     /** 新規登録（画面表示） */
     @GetMapping("/post")
     public String getRegister(@ModelAttribute Review review, Model model) {
-        List<Manga> mangalist = maService.getMangaList();
-        model.addAttribute("mangalist", mangalist);
+//        List<Manga> mangalist = maService.getMangaList();
+//        model.addAttribute("mangalist", mangalist);
         return "review/post-review";
     }
 

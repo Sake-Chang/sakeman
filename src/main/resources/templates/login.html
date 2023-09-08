@@ -29,7 +29,7 @@
      <section class="main-content">
 
     <div class="login-title">
-    <i class="uil uil-book-open"></i>
+    <i class="uil uil-book-open md-40"></i>
     <h2>サケマン ログイン</h2>
     </div>
 
@@ -42,9 +42,13 @@
     <div class="form-wrapper">
     <form class="login-form" method="post" action="/login" th:action="@{/login}">
         <label class="login-form-label" for="email">メールアドレス：</label>
-        <input class="login-input" type="text" id="email" name="email" value="75@gmail.com">
+        <input class="login-input" type="text" id="email" name="email">
         <label class="login-form-label" for="password">パスワード：</label>
-        <input class="login-input" type="text" id="password" name="password" value="ktaro">
+        <input class="login-input" type="text" id="password" name="password">
+        <div class="remember-me">
+            <input class="remember-me-checkbox" type="checkbox" id="remember-me" name="remember-me">
+            <label class="remember-me-text" for="remember-me">ログインしたままにする</label>
+        </div>
     <input class="login-btn" type="submit" name="loginRun" value="ログイン"/>
     </form>
     </div>

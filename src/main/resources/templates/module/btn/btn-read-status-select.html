@@ -22,9 +22,9 @@
                                     'check_box' "
               th:classappend="  !${#lists.contains(readlist, umlist.manga.id)} ?
                                 (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                     'md-ffffff' :
-                                     'md-highlight') :
-                                     'md-ffffff' "></span>
+                                     'md-WH' :
+                                     'md-HL') :
+                                     'md-WH' "></span>
         <span class="minimanga-kininaru status-text"
               th:text=" !${#lists.contains(readlist, umlist.manga.id)} ?
                         (${#lists.contains(wantlist, umlist.manga.id)} ?
@@ -33,8 +33,8 @@
                                      '読んだ！' "
               th:classappend="  !${#lists.contains(readlist, umlist.manga.id)} ?
                                 (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                      'md-ffffff' ):
-                                      'md-ffffff' "></span>
+                                      'md-WH' ):
+                                      'md-WH' "></span>
     </button>
     <!--/* リスト部分 */-->
     <div class="dropdown__body">

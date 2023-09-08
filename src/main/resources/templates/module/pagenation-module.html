@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!--/* 引数を受け取って呼ばれる（ object = ${pages} ） */-->
+<div layout:fragment="pagenation-module(object)">
+
+<!--/* ページネーションバー（Redmine参考） */-->
+<nav class="pagenation" aria-label="pagenation">
+
+<ul class="pagenation">
+        <!--/* 前のページ */-->
+        <li class="prev page-item" th:classappend="${pages.first} ? 'disabled'">
+            <a th:href="@{''(page=${pages.number - 1})}" class="prev page-item-text"
+               th:tabindex="${pages.first} ? -1" aria-label="Previous">
+               <i class="uil uil-angle-left-b" aria-hidden="true"></i>
+            </a>
+        </li>
+
+        <!--/* 最初のページ */-->
+        <li th:if="${pages.number gt 2}" class="page-item">
+            <a th:href="@{''(page=0)}" class="page-item-text">1</a>
+        </li>
+
+        <!--/* … */-->
+        <li th:if="${pages.number gt 3}" class="page-item dot">
+            <span class="page-item-text dot">…</span>
+        </li>
+
+        <th:block th:each="i : ${ #numbers.sequence(pages.number - 1, pages.number + 1) }">
+        <li th:if="${i ge 0 and i lt pages.totalPages}" class="page-item"
+            th:classappend="${i eq pages.number} ? 'current'">
+            <a th:href="@{''(page=${i})}" th:text="${i + 1}" class="page-item-text"
+            th:classappend="${i eq pages.number} ? 'current'"></a>
+        </li>
+        </th:block>
+
+        <!--/* … */-->
+        <li th:if="${pages.totalPages gt (pages.number + 4)}" class="page-item dot">
+            <span class="page-item-text dot">…</span>
+        </li>
+
+        <!--/* 最後のページ */-->
+        <li th:if="${pages.totalPages gt (pages.number + 3)}" class="page-item">
+            <a th:href="@{''(page=${pages.totalPages - 1})}" th:text="${pages.totalPages}"
+                class="page-item-text"></a>
+        </li>
+
+        <!--/* 次のページ */-->
+        <li class="next page-item" th:classappend="${pages.last} ? 'disabled'">
+            <a th:href="@{''(page=${pages.number + 1})}" class="next page-item-text"
+                th:tabindex="${pages.last} ? -1" aria-label="Next">
+                <i class="uil uil-angle-right-b" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+  </nav>
+</div>
+</html>

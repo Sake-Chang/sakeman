@@ -6,6 +6,9 @@
 
     <ul layout:fragment="menu">
         <li>
+            <a th:href="@{/admin/index}">管理トップ</a>
+        </li>
+        <li>
             <a th:href="@{/admin/manga/list}">作品</a>
         </li>
         <li>
@@ -26,8 +29,18 @@
         <li>
             <a th:href="@{/admin/user-manga/list}">読書ステータス</a>
         </li>
+        <br>
         <li>
-            <a th:href="@{/admin/index}">管理トップ</a>
+            <a th:href="@{/admin/web-manga-update-info/list}">更新情報</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/web-manga-update-info/list/modify}">更新情報・要修正</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/web-manga-media/list}">メディア</a>
+        </li>
+        <li>
+            <a th:href="@{/admin/web-manga-title-converter/list}">タイトル変換</a>
         </li>
     </ul>
 

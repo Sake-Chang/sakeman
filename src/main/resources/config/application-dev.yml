@@ -25,3 +25,5 @@ cloud:
     instance:
       data:
         enabled: true
+    s3:
+      endpoint: https://s3.ap-northeast-1.amazonaws.com

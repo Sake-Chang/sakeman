@@ -31,7 +31,7 @@
                 <th><label for="role">権限</label></th>
                 <td><select th:field="*{role}" th:errorclass="err">
                 <option value="" th:text="選択してください">
-                <option th:each="item:${T(com.techacademy.entity.User.Role).values()}" th:value="${item}" th:text="${item}">
+                <option th:each="item:${T(com.sakeman.entity.User.Role).values()}" th:value="${item}" th:text="${item}">
                 </select>
                 <span th:errors="*{role}" class="err"></span></td>
             </tr>

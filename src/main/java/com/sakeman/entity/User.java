@@ -1,6 +1,7 @@
 package com.sakeman.entity;
 
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +31,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
 
     public static enum Role {
         管理者, 一般
@@ -92,6 +93,10 @@ public class User {
     /** like */
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     private List<Like> Likes;
+
+    /** webLike */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+    private List<WebLike> webLikes;
 
     /** readStatus */
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)

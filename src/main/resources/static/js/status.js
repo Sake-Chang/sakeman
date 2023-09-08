@@ -17,7 +17,7 @@ $(function(){
         console.log(manga);
             $.ajax({
                 type            : "PUT",
-                url             : 'sakeman/readstatus',
+                url             : '/readstatus',
                 contentType     : "application/json",
                 data            : JSON.stringify(manga),
                 dataType        : 'json',
@@ -42,7 +42,7 @@ $(function(){
                     objMini.find('.status-icon').text('bookmark');
                 }
 
-                obj.toggleClass('md-highlight');
+                obj.toggleClass('md-HL');
                 if (obj.find('.status-icon').text() === 'bookmark') {
                     obj.find('.status-icon').text('bookmark_add');
                 } else {
@@ -62,7 +62,7 @@ $(function(){
         console.log(manga);
             $.ajax({
                 type            : "PUT",
-                url             : 'sakeman/readstatus',
+                url             : '/readstatus',
                 contentType     : "application/json",
                 data            : JSON.stringify(manga),
                 dataType        : 'json',
@@ -78,7 +78,7 @@ $(function(){
                 console.log(objMini);
                 console.log(obj);
 
-                objMini.children('span').toggleClass('md-ffffff');
+                objMini.children('span').toggleClass('md-WH');
                 objMini.toggleClass('btn-highlight');
                 if ($this.find('.status-icon').text() === 'bookmark') {
                     objMini.find('.status-icon').text('bookmark_add');
@@ -86,7 +86,7 @@ $(function(){
                     objMini.find('.status-icon').text('bookmark');
                 }
 
-                obj.toggleClass('md-highlight');
+                obj.toggleClass('md-HL');
                 if (obj.find('.status-icon').text() === 'bookmark') {
                     obj.find('.status-icon').text('bookmark_add');
                 } else {

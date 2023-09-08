@@ -28,15 +28,25 @@
 
     <tr>
         <th><label for="authorId">著者</label></th>
-        <td><select multiple="multiple" name="authorId">
+        <td>
+<!--
+            <select multiple="multiple" name="authorId">
             <option value="" th:text="選択してください"></option>
             <option th:each="authors:${authorlist}"
                     th:value="${authors.id}"
                     th:text="${authors.name}">
-            <!-- mangaAuthorsのidを登録してしまっている -->
+            mangaAuthorsのidを登録してしまっている
             </option>
             </select>
-            </td>
+-->
+        <select class="select2-author" multiple="multiple" name="authorId">
+        <option value="" th:text="著者名で検索！"></option>
+        </select><br>
+
+
+
+
+        </td>
     </tr>
 
 

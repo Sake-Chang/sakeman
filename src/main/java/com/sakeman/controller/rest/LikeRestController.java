@@ -35,7 +35,7 @@ public class LikeRestController {
 
     }
 
-    @PutMapping("/sakeman/like")
+    @PutMapping("/like")
     @ResponseBody
     public int createLike(@AuthenticationPrincipal UserDetail userDetail, @RequestBody Review review, Model model) {
 
@@ -45,12 +45,12 @@ public class LikeRestController {
         Review rev = revService.getReview(revId);
         Optional<Like> thislike = likeService.findByUserAndReview(user, rev);
 
-        // まだLikeしてない場合
+        // 既にLikeしてた場合
         if (thislike.isPresent()) {
             Integer id = thislike.get().getId();
             likeService.deleteById(id);
 
-        // すでにLikeしてた場合
+        // まだLikeしてない場合
         } else {
             Like like = new Like();
             like.setUser(user);

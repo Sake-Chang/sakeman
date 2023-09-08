@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<!--/* 引数を受け取って呼ばれる（ object = ${infolist}, ${likelist} ） */-->
+<th:block layout:fragment="btn-web-manga-follow(object)">
+
+<!--/* btn-web-manga-follow */-->
+<th:block   th:unless="${mangaId} == 1">
+    <div    class="web-manga-follow-toggle"
+                th:with="mangaId=${mangaId}"
+                th:data-manga-id="${mangaId}">
+            <span   class="material-icons-outlined md-24 md-GR"
+                    th:classappend="${#lists.contains(webmangafollowlist, mangaId)} ? 'md-HL'"
+                    th:text="${#lists.contains(webmangafollowlist, mangaId)} ? 'bookmark' : 'bookmark_add'">
+            </span>
+    </div>
+</th:block>
+
+
+</th:block> <!--/* layout:fragment */-->
+
+</html>

@@ -7,33 +7,36 @@
     <meta charset="UTF-8"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="noindex" />
-    <!-- 共通CSS -->
+    <!--/** 共通CSS */-->
     <link rel="stylesheet" th:href="@{/css/normalize.css}">
     <link rel="stylesheet" th:href="@{/css/common/common.css}">
     <link rel="stylesheet" th:href="@{/css/common/header.css}">
     <link rel="stylesheet" th:href="@{/css/common/footer.css}">
-    <link rel="stylesheet" th:href="@{/css/manga/list.css}">
+    <link rel="stylesheet" th:href="@{/css/common/login.css}">
+    <link rel="stylesheet" th:href="@{/css/manga/user.css}">
     <link rel="stylesheet" th:href="@{/css/manga/review.css}">
-    <link rel="stylesheet" th:href="@{/css/manga/uclist.css}">
-    <link rel="stylesheet" th:href="@{/css/manga/minilist.css}">
     <link rel="stylesheet" th:href="@{/css/test/mini-status-btn.css}">
     <link rel="stylesheet" th:href="@{/css/common/search-module.css}">
     <link rel="stylesheet" th:href="@{/css/postpage.css}">
-    <link rel="stylesheet" th:href="@{/css/shelf.css}">
 
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script th:src="@{/js/like.js}"></script>
-    <script th:src="@{/js/status.js}"></script>
-    <script th:src="@{/js/shelf-status-btn.js}"></script>
-    <script th:src="@{/js/userfollow.js}"></script>
-    <script th:src="@{/js/5-1-16.js}"></script>
-    <script th:src="@{/js/rating.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
+    <script th:src="@{/js/like.js}" defer></script>
+    <script th:src="@{/js/weblike.js}" defer></script>
+    <script th:src="@{/js/status.js}" defer></script>
+    <script th:src="@{/js/shelf-status-btn.js}" defer></script>
+    <script th:src="@{/js/authorfollow.js}" defer></script>
+    <script th:src="@{/js/userfollow.js}" defer></script>
+    <script th:src="@{/js/5-1-16.js}" defer></script>
+    <script th:src="@{/js/rating.js}" defer></script>
+    <script th:src="@{/js/webmangafollow.js}" defer></script>
+    <script type="text/javascript" language="javascript">var vc_pid = "889574329";</script>
+    <script type="text/javascript" src="//aml.valuecommerce.com/vcdal.js" async></script>
 
     <link rel="stylesheet" th:href="@{/css/select2.min.css}">
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/select2.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}" defer></script>
+    <script th:src="@{/js/select2.min.js}" defer></script>
 
     <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
@@ -44,10 +47,10 @@
 
 <body>
 
-<!-- ヘッダー -->
+<!--/** ヘッダー */-->
 <header layout:replace="~{common/header::header}"></header>
 
-<!-- メイン -->
+<!--/** メイン */-->
 <main class="main">
     <section class="main-content">
         <div layout:fragment="content"></div>
@@ -55,10 +58,10 @@
 
 </main>
 
-<!-- フッター -->
+<!--/** フッター */-->
 <footer layout:replace="~{common/footer::footer}"></footer>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfJo=" crossorigin="anonymous"></script>
-<script src="js/5-1-16.js"></script>
+<!--/** <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfJo=" crossorigin="anonymous"></script>
+<script src="js/5-1-16.js"></script> */-->
 </body>
 </html>

@@ -8,9 +8,10 @@
 
 <!--/* btn-like */-->
 
-<div th:class="${#lists.contains(likelist, review.id)} ? 'btn-like like-toggle md-highlight' : 'btn-like like-toggle'" th:data-review-id="${review.id}">
+<div    class="btn-ia like-toggle"
+        th:classappend="${#lists.contains(likelist, review.id)} ? 'md-HL'" th:data-review-id="${review.id}">
     <span class="material-icons-outlined md-24">favorite_border</span>
-    <span class="like-counter">[[${review.likes.size}]] いいね</span>
+    <span class="btn-ia-text">[[${review.likes.size}]] いいね</span>
 </div>
 
 </th:block> <!--/* layout:fragment */-->

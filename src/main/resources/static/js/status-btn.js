@@ -13,16 +13,16 @@ $(function(){
     status.on('click', function(){
         let $this = $(this);
         let mangaId = {id:$this.data('manga-id')};
-        console.log(manga);
+//        console.log(manga);
             $.ajax({
                 type            : "PUT",
-                url             : 'sakeman/readstatus',
+                url             : '/readstatus',
                 contentType     : "application/json",
                 data            : JSON.stringify(mangaId),
                 dataType        : 'json',
             }).done(function(data){
                 let $these = document.querySelectorAll('*[manga-id == mangaId]');
-                $these.toggleClass('md-highlight');
+                $these.toggleClass('md-HL');
                 if ($these.find('.status-icon').text() === 'bookmark') {
                     $these.find('.status-icon').text('bookmark_add');
                 } else {

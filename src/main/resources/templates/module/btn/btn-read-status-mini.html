@@ -15,9 +15,9 @@
         <span   class="material-icons-outlined md-18 status-icon"
                 th:classappend="!${#lists.contains(readlist, mangaId)} ?
                                 (${#lists.contains(wantlist, mangaId)} ?
-                                        'md-ffffff' :
+                                        'md-WH' :
                                         '' ):
-                                        'md-ffffff' "
+                                        'md-WH' "
                 th:text=    "!${#lists.contains(readlist, mangaId)} ?
                              (${#lists.contains(wantlist, mangaId)} ?
                                         'bookmark' :
@@ -26,9 +26,9 @@
         <span   class="status-text"
                 th:classappend="!${#lists.contains(readlist, mangaId)} ?
                                  (${#lists.contains(wantlist, mangaId)} ?
-                                        'md-ffffff' :
+                                        'md-WH' :
                                         '' ):
-                                        'md-ffffff' "
+                                        'md-WH' "
                 th:text=        "!${#lists.contains(readlist, mangaId)} ?
                                  (${#lists.contains(wantlist, mangaId)} ?
                                        '気になる' :

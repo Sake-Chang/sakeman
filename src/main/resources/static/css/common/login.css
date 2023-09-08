@@ -9,9 +9,6 @@
     justify-content: center;
 }
 
-.uil {
-    font-size: 40px;
-}
 
 table {
     width: 100%;
@@ -27,6 +24,7 @@ table {
 .form-wrapper {
     width: 100vw;
     padding: 0 16px;
+    margin-bottom: 16px;
 }
 
 .login-form,
@@ -95,4 +93,19 @@ button {
     text-align: center;
     text-decoration: none;
     margin: auto;
+}
+
+.remember-me {
+    display: flex;
+    align-content: center;
+    margin-bottom: 16px;
+    column-gap: 16px;
+}
+
+.remember-me-checkbox {
+    width: auto;
+}
+
+.remember-me-text {
+    font-size: 14px;
 }

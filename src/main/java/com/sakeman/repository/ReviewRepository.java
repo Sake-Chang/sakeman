@@ -10,7 +10,7 @@ import com.sakeman.entity.Review;
 
 
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
-    public List<Review> findByMangaId(Integer mangaId);
+    List<Review> findByMangaId(Integer mangaId);
     Page<Review> findAll(Pageable pageable);
 
 }

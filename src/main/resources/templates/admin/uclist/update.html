@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+    <h2 th:text="|リストID：${id}の編集|"></h2>
+    <a class="btn-primary" th:href="@{/admin/uclist/list}">一覧に戻る</a>
+
+    <form class="admin-form" th:method="post" th:action="@{/admin/uclist/update/{id}/(id=${uclist.id})}" th:object="${uclist}">
+        <table>
+            <tr>
+                <th><label for="id">ID</label></th>
+                <td><input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}" th:field="*{id}"></td>
+            </tr>
+            <tr>
+                <th><label for="user.id">投稿ユーザーID</label></th>
+                <td><input type="hidden" id="user.id" name="user.id" th:value="*{user.id}" th:text="*{user.id}" th:field="*{user.id}"></td>
+            </tr>
+            <tr>
+                <th><label for="user.username">投稿ユーザー名</label></th>
+                <td><input type="hidden" id="user.username" name="user.username" th:value="*{user.username}" th:text="*{user.username}" th:field="*{user.username}"></td>
+            </tr>
+
+            <tr>
+                <th><label for="mangaId">作品ID</label></th>
+                <td>
+                    <select class="select2" multiple="multiple" name="mangaId">
+                        <option value="" th:text="リストに入れる作品を選んでください！"></option>
+                        <th:block th:each="listmanga : *{uclistMangas}">
+                            <option selected th:value="${listmanga.manga.id}" th:text="${listmanga.manga.title}"></option>
+                        </th:block>
+                    </select><br>
+                    <span th:errors="*{id}" class="err"></span><br>
+                </td>
+            </tr>
+
+            <tr>
+                <th><label for="title">リストタイトル</label></th>
+                <td><input type="text" th:field="*{title}"></td>
+            </tr>
+            <tr>
+                <th><label for="description">リスト説明文</label></th>
+                <td><input type="text" th:field="*{description}"></td>
+            </tr>
+            <tr>
+                <th><label for="deleteFlag">削除フラグ</label></th>
+                <td><input type="text" th:field="*{deleteFlag}"></td>
+            </tr>
+        </table>
+        <input type="submit" value="更新">
+    </form>
+
+</div>
+</html>

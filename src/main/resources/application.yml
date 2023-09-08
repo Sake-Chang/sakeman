@@ -6,11 +6,27 @@ spring:
     name: sakeman
   config:
     import: 'aws-parameterstore:'
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      
+# UploadFileSaveDir
+#attached:
+#  file:
+#    path: 
 
 # Tomcat
+#server:
+#  servlet:
+#    context-path: /sakeman
+
+# セッション＆クッキー有効期限
 server:
   servlet:
-    context-path: /sakeman
+    session:
+      timeout: 86400
+      cookie:
+        max-age: 86400
 
 # AWS
 aws:

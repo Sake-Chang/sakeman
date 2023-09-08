@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+
+    <h2>管理者用ページ</h2>
+    <h3>Webマンガ更新情報 一覧</h3>
+        <a class="btn-primary" th:href="@{/admin/web-manga-update-info/register}">新規登録</a>
+
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>メディア名</th>
+                <th>メディアID</th>
+                <th>タイトル</th>
+                <th>マンガID</th>
+                <th>サブタイトル</th>
+                <th>著者名</th>
+                <th>操作</th>
+            </tr>
+            <tr th:each="info : ${infolist}">
+                <td th:text="${info.id}"></td>
+                <td th:text="${info.mediaName}"></td>
+                <td th:text="${info.webMangaMedia.id}"></td>
+                <td th:text="${info.titleString}"></td>
+                <td th:text="${info.manga.id}"></td>
+                <td th:text="${info.subTitle}"></td>
+                <td th:text="${info.authorString}"></td>
+                <td><a class="btn-primary" th:href="@{/admin/web-manga-update-info/update/{id}/(id=${info.id})}">編集</a></td>
+            </tr>
+        </table>
+
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
+
+</div>
+</html>

@@ -16,12 +16,12 @@ $(function(){
         console.log(objUser);
             $.ajax({
                 type            : "PUT",
-                url             : '/sakeman/follow',
+                url             : '/user/follow',
                 contentType     : "application/json",
                 data            : JSON.stringify(objUser),
                 dataType        : 'json',
             }).done(function(data){
-                $this.children().toggleClass('md-highlight');
+                $this.children().toggleClass('md-HL');
                 if ($this.children('.material-icons-outlined').text() === 'person_outline') {
                     $this.children('.material-icons-outlined').text('person_add_alt');
                     $this.children('.btn-user-follow-userpage-text').text('フォローする');

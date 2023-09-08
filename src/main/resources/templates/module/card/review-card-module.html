@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!--/* 引数を受け取って呼ばれる（ object = ${reviewlist} ） */-->
+<div layout:fragment="review-card-module(object)">
+
+<th:block th:if="${reviewlist.isEmpty}">
+    <div class="notification">
+    <p>レビューはまだないようです・・・<br><br>一番乗りでレビューを書いて<br>豪華賞品をゲットしよう！</p>
+    </div>
+</th:block>
+
+<!--/* カードモジュール */-->
+<div class="card-outer" th:each="review : ${reviewlist}">
+
+    <!--/* 投稿ユーザー情報 */-->
+    <div class="card-head">
+        <div class="card-user">
+            <a th:href="@{/user/{id}(id=${review.user.id})}">
+            <th:block th:if="${review.user.img != null}">
+            <img class="card-user-img" th:src="@{https://sake-man.com/{path}(path=${review.user.img})}">
+            </th:block>
+            <th:block th:unless="${review.user.img != null}">
+            <img class="card-user-img" th:src="@{https://sake-man.com/default_img.png}">
+            </th:block>
+            </a>
+            <div class="card-user-text">
+                <div class="card-user-name">
+                    <a th:href="@{/user/{id}(id=${review.user.id})}">[[${review.user.username}]]</a>
+                </div>
+                <div class="card-user-title">伝説級のレビュアー</div>
+            </div>
+        </div>
+        <!--/* フォローボタンを呼び出し（${reviewlist}, ${followeelist}を引数として渡す） */-->
+        <th:block class="" th:with="userId=${review.user.id}" layout:include="module/btn/btn-user-follow :: btn-user-follow(object='${userId}, ${reviewlist}, ${followeelist}')"></th:block>
+    </div>
+
+    <!--/* 対象作品情報 */-->
+    <a th:href="@{/manga/{id}(id=${review.manga.id})}">
+        <span class="review-card-title" th:text="${review.manga.title}"></span><br>
+    </a>
+    <th:block th:if="!${#lists.isEmpty(review.manga.mangaAuthors)}" th:each="authors:${review.manga.mangaAuthors}">
+        <a th:href="@{/author/{id}(id=${authors.author.id})}">
+            <span class="review-card-author">[[${authors.author.name}]]</span>
+        </a>
+    </th:block>
+    <th:block th:if="${#lists.isEmpty(review.manga.mangaAuthors)}">
+        <span class="review-card-author">ー</span>
+    </th:block>
+
+    <!--/* レーティング情報 */-->
+    <div class="review-card-rating-star" th:switch="${review.rating}">
+        <span th:case=1>
+            <span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star_outline</span><span class="material-icons-outlined md-20">star_outline</span><span class="material-icons-outlined md-20">star_outline</span><span class="material-icons-outlined md-20">star_outline</span>
+        </span>
+        <span th:case=2>
+            <span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star_outline</span><span class="material-icons-outlined md-20">star_outline</span><span class="material-icons-outlined md-20">star_outline</span>
+        </span>
+        <span th:case=3>
+            <span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star_outline</span><span class="material-icons-outlined md-20">star_outline</span>
+        </span>
+        <span th:case=4>
+            <span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star_outline</span>
+        </span>
+        <span th:case=5>
+            <span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star</span><span class="material-icons-outlined md-20">star</span>
+        </span>
+        <span th:case=* th:text="UNKNOWN"></span>
+    </div>
+
+    <!--/* レビュータイトル */-->
+    <div class="review-card-title" th:text="${review.title}"></div>
+
+    <!--/* レビュー本文 ＆ 書影画像 */-->
+    <div class="review-card-body">
+        <div class="read-more-003">
+            <p>[[${review.content}]]</p>
+            <label><input type="checkbox"/>...続きを読む</label>
+        </div>
+        <a th:href="@{/manga/{id}(id=${review.manga.id})}">
+            <figure class="review-card-calligraphy">
+            <img th:src="${#lists.isEmpty(review.manga.calligraphy)} ?
+                                    @{https://sake-man.com/noimage.jpg} :
+                                    @{https://sake-man.com/calligraphy/__${review.manga.calligraphy}__}">
+            </figure>
+        </a>
+    </div>
+
+    <!--/* アクションパーツ */-->
+    <div class="manga-action">
+        <!--/* いいねボタンを呼び出し（${reviewlist}, ${likelist}を引数として渡す） */-->
+        <th:block class="" layout:include="module/btn/btn-like :: btn-like(object='${reviewlist}, ${likelist}')"></th:block>
+        <!--/* 気になるボタンを呼び出し（${manga.id}, ${wantlist}, ${readlist}を引数として渡す） */-->
+        <th:block class="" th:with="mangaId=${review.manga.id}" layout:include="module/btn/btn-read-status :: btn-read-status(object='${mangaId}, ${wantlist}, ${readlist}')"></th:block>
+    </div>
+
+</div> <!--/* outer */-->
+</div> <!--/* layout:fragment */-->
+</html>

@@ -18,10 +18,12 @@
     <label class="form-label" for="mangaId">リストに追加する作品</label>
     <select class="select2" multiple="multiple" name="mangaId">
         <option value="" th:text="リストに入れる作品を選んでください！"></option>
+<!--
         <option th:each="manga:${mangalist}"
                 th:value="${manga.id}"
                 th:text="${manga.title}">
         </option>
+-->
     </select><br>
     <span th:errors="*{id}" class="err"></span><br>
 

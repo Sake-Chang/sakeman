@@ -135,3 +135,54 @@ h3 {
     justify-content: center;
     column-gap: 32px;
 }
+
+.pagination {
+    display: flex;
+    column-gap: 8px;
+    text-align: center;
+    margin: 15px 0;
+    font-size: 1rem;
+    list-style-type: none;
+}
+
+.import-btn-container {
+    display: flex;
+    column-gap: 16px;
+    width: 75vw;
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+    display: block;
+    width: 120px;
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 3px;
+    color: #FFF7F7;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: #7a42bf;
+}
+
+.btn-primary :hover,
+.btn-primary :focus {
+    background-color: #f29423;
+}
+
+.btn-secondary {
+    background-color: #cb6f10;
+}
+
+.btn-secondary :hover,
+.btn-secondary :focus {
+    background-color: #f29423;
+}
+

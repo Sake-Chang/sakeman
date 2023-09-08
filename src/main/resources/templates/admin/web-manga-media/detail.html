@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+    <h2 th:text="|${media.displayName}の詳細|"></h2>
+        <table>
+        <tr>
+            <th>ID</th>
+            <td th:text="${media.id}"></td>
+        </tr>
+        <tr>
+            <th>メディア名</th>
+            <td th:text="${media.name}"></td>
+        </tr>
+        <tr>
+            <th>表示名</th>
+            <td th:text="${media.displayName}"></td>
+        </tr>
+        <tr>
+            <th>ロゴ</th>
+            <td th:text="${media.logo}"></td>
+        </tr>
+        <tr>
+            <th>表示フラグ</th>
+            <td th:text="${media.displayFlag}"></td>
+        </tr>
+        <tr>
+            <th>削除フラグ</th>
+            <td th:text="${media.deleteFlag}"></td>
+        </tr>
+        <tr>
+            <th>登録日時</th>
+            <td th:text="${media.registeredAt}"></td>
+        </tr>
+        <tr>
+            <th>更新日時</th>
+            <td th:text="${media.updatedAt}"></td>
+        </tr>
+    </table>
+
+    <div class="admin-action-btn">
+        <a class="btn-primary" th:href="@{/admin/web-manga-media/update/{id}/(id=${media.id})}">編集する</a>
+        <a class="btn-primary" th:href="@{/admin/web-manga-media/list}">一覧に戻る</a>
+    </div>
+
+</div>
+</html>

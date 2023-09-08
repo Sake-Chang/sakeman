@@ -19,23 +19,19 @@ import com.sakeman.service.UserDetail;
 import com.sakeman.service.UserFollowService;
 import com.sakeman.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 
 @RestController
 @RequestMapping
+@RequiredArgsConstructor
 public class UserFollowRestController {
 
-    private LikeService likeService;
-    private UserService userService;
-    private UserFollowService ufService;
+    private final LikeService likeService;
+    private final UserService userService;
+    private final UserFollowService ufService;
 
-    public UserFollowRestController(LikeService likeService, UserService userService, UserFollowService ufService) {
-        this.likeService = likeService;
-        this.userService = userService;
-        this.ufService = ufService;
-
-    }
-
-    @PutMapping("/follow")
+    @PutMapping("/user/follow")
     @ResponseBody
     public int createLike(@AuthenticationPrincipal UserDetail userDetail, @RequestBody User objUser, Model model) {
 

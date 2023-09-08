@@ -1,6 +1,7 @@
 package com.sakeman.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -14,14 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sakeman.entity.Manga;
 import com.sakeman.repository.MangaRepository;
 
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class MangaService {
     private final MangaRepository mangaRepository;
-
-    public MangaService(MangaRepository repository) {
-        this.mangaRepository = repository;
-    }
 
     /** 全件を検索して返す **/
     public List<Manga> getMangaList() {
@@ -45,6 +44,10 @@ public class MangaService {
     /** 1件を検索して返す */
     public Manga getManga(Integer id) {
         return mangaRepository.findById(id).get();
+    }
+
+    public Optional<Manga> getMangaByTitle(String title) {
+        return mangaRepository.findByTitle(title);
     }
 
     /** 登録処理 */

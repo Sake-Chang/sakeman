@@ -81,6 +81,9 @@
 
 .header-nav-menu-mypage img {
     width: 36px;
+    height: 36px;
+    object-fit: cover;
     border-radius: 20px;
     margin-left: 16px;
+    border: solid 1px var(--AS);
 }

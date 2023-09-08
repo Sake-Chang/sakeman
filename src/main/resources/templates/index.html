@@ -15,28 +15,28 @@
 
 <!--/* タブ */-->
 <div class="tab-container">
-    <div class="tab tab-current">
-        <a class="tab-link" th:href="@{/}">
-            <i class="uil uil-thumbs-up md-24"></i>
-            <span class="#">オススメ</span>
-        </a>
-    </div>
-    <div class="tab">
-        <a class="tab-link" th:href="@{/timeline}">
-            <i class="uil uil-comments md-24"></i>
-            <span class="#">タイムライン</span>
-        </a>
-    </div>
+    <a class="tab-link" th:href="@{/}">
+        <div class="tab tab-current">
+            <i class="uil uil-arrow-growth"></i>
+            <span class="tab-text">オススメ</span>
+        </div>
+    </a>
+    <a class="tab-link" th:href="@{/web-manga-update-info}">
+        <div class="tab">
+            <i class="uil uil-sync"></i>
+            <span class="tab-text">Web連載 更新</span>
+        </div>
+    </a>
 </div>
 
 
 <div class="page-title">
-    <i class="uil uil-list-ul md-32 md-highlight"></i>
+    <i class="uil uil-list-ul"></i>
     <h2>新着のリスト</h2>
 </div>
 
 <!--/* まんがリストモジュールを呼び出し（${uclistlist}を引数として渡す） */-->
-<div class="container-uclist" layout:include="module/uclist-list-module :: uclist-list-module(object='${uclistlist}')"></div>
+<div class="container" layout:include="module/card/uclist-card :: uclist-card(object='${uclistlist}')"></div>
 
 <!--/* もっとみるボタン */-->
 <div class="more-btn-container">
@@ -47,12 +47,12 @@
 </div>
 
 <div class="page-title">
-    <i class="uil uil-comment-lines md-32 md-highlight"></i>
+    <i class="uil uil-comment-lines"></i>
     <h2>新着のレビュー</h2>
 </div>
 
 <!--/* レビューリストモジュールを呼び出し（${reviewlist}を引数として渡す） */-->
-<div class="container-uclist" layout:include="module/review-list-module :: review-list-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist}, ${followeelist}')"></div>
+<div class="container" layout:include="module/card/review-card-module :: review-card-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist}, ${followeelist}')"></div>
 
 <!--/* もっとみるボタン */-->
 <div class="more-btn-container">

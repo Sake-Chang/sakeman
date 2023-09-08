@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<!--/* 引数を受け取って呼ばれる（ object = ${infolist}, ${likelist} ） */-->
+<th:block layout:fragment="btn-weblike(object)">
+
+<!--/* btn-like */-->
+
+<div class="btn-ia weblike-toggle"
+        th:classappend="${#lists.contains(likelist, info.id)} ? 'md-HL'" th:data-info-id="${info.id}">
+    <span class="material-icons-outlined md-24">favorite_border</span>
+    <span class="btn-ia-text">[[${info.webLikes.size}]] いいね</span>
+</div>
+
+</th:block> <!--/* layout:fragment */-->
+
+</html>

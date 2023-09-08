@@ -1,5 +1,8 @@
 package com.sakeman.controller.admin;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,10 +27,18 @@ public class AdminAuthorController {
         this.service = service;
     }
 
+//    /** 一覧表示 */
+//    @GetMapping("list")
+//    public String getList(Model model) {
+//        model.addAttribute("authorlist", service.getAuthorList());
+//        return "admin/author/list";
+//        }
+
     /** 一覧表示 */
     @GetMapping("list")
-    public String getList(Model model) {
-        model.addAttribute("authorlist", service.getAuthorList());
+    public String getList(Model model,  @PageableDefault(page=0, size=100, sort= {"id"}, direction=Direction.ASC) Pageable pageable) {
+        model.addAttribute("pages", service.getAuthorListPageable(pageable));
+        model.addAttribute("authorlist", service.getAuthorListPageable(pageable).getContent());
         return "admin/author/list";
         }
 

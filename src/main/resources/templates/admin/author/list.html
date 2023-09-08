@@ -11,6 +11,10 @@
     <form method="get" th:action="@{/admin/author/register}">
         <input type="submit" value="新規登録"/>
     </form>
+
+    <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+    <div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
     <table>
         <tr>
             <th>ID</th>
@@ -31,5 +35,9 @@
             <td><a class="btn-primary" th:href="@{/admin/author/detail/{id}/(id=${author.id})}">詳細</a></td>
         </tr>
     </table>
+
+    <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+    <div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
 </div>
 </html>

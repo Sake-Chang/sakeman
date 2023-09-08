@@ -1,7 +1,10 @@
 package com.sakeman.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,6 +23,9 @@ import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +35,8 @@ import lombok.ToString;
 @Entity
 @Table(name = "manga")
 @ToString(exclude = {"reviews", "mangaAuthors", "uclistMangas"})
-public class Manga {
+@JsonIgnoreProperties({"titleKana", "registeredAt", "updatedAt", "displayFlag", "deleteFlag", "completionFlag", "volume", "publisher", "publishedIn", "synopsis", "calligraphy", "csid", "reviews", "mangaAuthors", "webMangaUpdateInfos", "uclistMangas", "readStatus"})
+public class Manga implements Serializable {
 
     /** フィールド */
 
@@ -58,6 +65,9 @@ public class Manga {
     @Column(name = "delete_flag", nullable = false)
     private Integer deleteFlag;
 
+    @Column(name = "completion_flag", nullable = true)
+    private Integer completionFlag;
+
     @Column(name = "volume", nullable = false)
     private Integer volume;
 
@@ -74,6 +84,9 @@ public class Manga {
     @Column(name = "calligraphy", nullable = true)
     private String calligraphy;
 
+    @Column(name = "csid")
+    private Integer csid;
+
     /** review */
     @OneToMany(mappedBy = "manga", cascade = CascadeType.ALL)
     private List<Review> reviews;
@@ -81,6 +94,10 @@ public class Manga {
     /** manga_author */
     @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
     private List<MangaAuthor> mangaAuthors;
+
+    /** webMangaUpdateInfo */
+    @OneToMany(mappedBy = "manga", cascade = CascadeType.ALL)
+    private List<WebMangaUpdateInfo> webMangaUpdateInfos;
 
     /** uclist_manga */
     @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
@@ -108,5 +125,13 @@ public class Manga {
     public void onPreUpdate() {
         setUpdatedAt(new Timestamp(System.currentTimeMillis()));
     }
+
+//    @JsonValue
+//    public Map<String, Object> toJson() {
+//        Map<String, Object> map = new LinkedHashMap<>();
+//        map.put("id", id);
+//        map.put("title", title);
+//        return map;
+//    }
 
 }

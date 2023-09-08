@@ -6,21 +6,19 @@
 <!--/* 引数を受け取って呼ばれる（ object = ${mangaId}, ${wantlist}, ${readlist} ） */-->
 <th:block layout:fragment="btn-read-status(object)">
 
-<div class="btn-read-status"
+<div class="btn-ia"
      th:classappend="!${#lists.contains(readlist, mangaId)} ?
                         (${#lists.contains(wantlist, mangaId)} ?
-                            'status-toggle md-highlight' :
+                            'status-toggle md-HL' :
                             'status-toggle')
-                        : 'md-superlight'" th:data-manga-id="${mangaId}">
-    <div class="">
+                        : 'md-PL'" th:data-manga-id="${mangaId}">
         <span class="material-icons-outlined md-24 status-icon" th:text="!${#lists.contains(readlist, mangaId)} ?
                             (${#lists.contains(wantlist, mangaId)} ?
                                 'bookmark' :
                                 'bookmark_add')
                             : 'check_box' ">
         </span>
-    </div>
-    <span class="status-text" th:text="!${#lists.contains(readlist, mangaId)} ?
+    <span class="btn-ia-text" th:text="!${#lists.contains(readlist, mangaId)} ?
                         (${#lists.contains(wantlist, mangaId)} ?
                             '気になる' :
                             '気になる')

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+<!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
+<div class="search" layout:include="module/search-module :: search-module(object='')"></div>
+
+<!--/* タブ */-->
+<div class="tab-container">
+    <a class="tab-link" th:href="@{/}">
+        <div class="tab">
+            <i class="uil uil-arrow-growth"></i>
+            <span class="tab-text">オススメ</span>
+        </div>
+    </a>
+    <a class="tab-link" th:href="@{/web-manga-update-info}">
+        <div class="tab tab-current">
+            <i class="uil uil-sync"></i>
+            <span class="tab-text">Web連載 更新</span>
+        </div>
+    </a>
+</div>
+
+<!-- 見出し -->
+<div class="page-title">
+    <i class="uil uil-book-open"></i>
+    <h2>Webマンガサイトの更新一覧</h2>
+</div>
+
+<div class="change-toggle">
+    <div class="change-toggle-btn"><a class="change-toggle-link" th:href="@{/web-manga-update-info}">すべて</a></div>
+    <div class="change-toggle-btn"><a class="change-toggle-link" th:href="@{/web-manga-update-info/today}">今日のみ<br>([[${todaylistsize}]]件)</a></div>
+    <div class="change-toggle-btn"><a class="change-toggle-link" th:href="@{/web-manga-update-info/free}">無料のみ</a></div>
+    <div class="change-toggle-btn-current"><a class="change-toggle-link" th:href="@{/web-manga-update-info/follow}">フォローのみ</a></div>
+</div>
+
+<div class="media-tag-container">
+    <th:block class="tag" th:each="media:${medialist}">
+        <div class="media-tag"><a th:href="@{/web-manga-update-info/media/{id}(id=${media.id})}">[[${media.displayName}]]</a></div>
+    </th:block>
+</div>
+<hr>
+
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
+<div class="container" layout:include="module/card/info-card-module :: info-card-module(object='${infolist}, ${likelist}')"></div>
+
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
+</div>
+</html>

@@ -54,7 +54,7 @@ public class UclistController {
 
     /** 一覧表示（人気順） */
     @GetMapping("/popular")
-    public String getListPopular(@AuthenticationPrincipal UserDetail userDetail, Model model, @ModelAttribute Manga manga, @PageableDefault(page=0, size=20, sort= {"description"}, direction=Direction.DESC) Pageable pageable) {
+    public String getListPopular(@AuthenticationPrincipal UserDetail userDetail, Model model, @ModelAttribute Manga manga, @PageableDefault(page=0, size=20, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
         model.addAttribute("uclistlist", service.getUclistListPageable(pageable));
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
         model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
@@ -64,8 +64,8 @@ public class UclistController {
     /** 新規登録（画面表示） */
     @GetMapping("/post")
     public String getRegister(@ModelAttribute Uclist uclist, Model model) {
-        List<Manga> mangalist =mangaService.getMangaList();
-        model.addAttribute("mangalist", mangalist);
+//        List<Manga> mangalist =mangaService.getMangaList();
+//        model.addAttribute("mangalist", mangalist);
         return "uclist/post-uclist";
     }
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+    <h2>タイトルコンバーター 新規登録</h2>
+    <a class="btn-primary" th:href="@{/admin/web-manga-title-converter/list}">一覧に戻る</a>
+    <form class="admin-form" method="post" th:action="@{/admin/web-manga-title-converter/register}" th:object="${webMangaTitleConverter}">
+        <table>
+            <tr>
+                <th><label for="titleString">入力タイトル</label></th>
+                <td><input type="text" th:field="*{titleString}" th:errorclass="err">
+                <span th:errors="*{titleString}" class="err"></span></td>
+            </tr>
+            <tr>
+                <th><label for="authorString">入力著者</label></th>
+                <td><input type="text" th:field="*{authorString}" th:errorclass="err">
+                <span th:errors="*{authorString}" class="err"></span></td>
+            </tr>
+            <tr>
+                <th><label for="manga.id">マンガID</label></th>
+                <td><input type="text" th:field="*{manga.id}" th:errorclass="err">
+                <span th:errors="*{manga.id}" class="err"></span></td>
+            </tr>
+        </table>
+        <input type="submit" value="登録">
+    </form>
+</div>
+</html>

@@ -19,27 +19,22 @@
     <label class="form-label" for="manga.id">レビューする作品</label>
     <select class="select2" name="manga.id" th:errorclass="err">
         <option value="" th:text="レビューする作品を選んでください"></option>
-        <option th:each="manga:${mangalist}"
-                th:value="${manga.id}"
-                th:text="${manga.title}">
-        </option>
     </select><br>
     <span th:errors="*{manga.id}" class="err"></span><br>
 
     <label class="form-label" for="rating">お気に入り度（星をクリック！）</label>
     <span th:errors="*{rating}" class="err"></span><br>
-<!--     <div class="rating-description">※ 星をクリックしてお気に入り度を入力しましょう！</div>
- -->    <div class="rating-wrapper">
+    <div class="rating-wrapper">
         <input id="rating_1" type="radio" value="1" name="rating" th:errorclass="err">
-            <label for="rating_1"><span class="material-icons-outlined md-56 md-dedede">star</span></label>
+            <label for="rating_1"><span class="material-icons-outlined">star</span></label>
         <input id="rating_2" type="radio" value="2" name="rating" th:errorclass="err">
-            <label for="rating_2"><span class="material-icons-outlined md-56 md-dedede">star</span></label>
+            <label for="rating_2"><span class="material-icons-outlined">star</span></label>
         <input id="rating_3" type="radio" value="3" name="rating" th:errorclass="err">
-            <label for="rating_3"><span class="material-icons-outlined md-56 md-dedede">star</span></label>
+            <label for="rating_3"><span class="material-icons-outlined">star</span></label>
         <input id="rating_4" type="radio" value="4" name="rating" th:errorclass="err">
-            <label for="rating_4"><span class="material-icons-outlined md-56 md-dedede">star</span></label>
+            <label for="rating_4"><span class="material-icons-outlined">star</span></label>
         <input id="rating_5" type="radio" value="5" name="rating" th:errorclass="err">
-            <label for="rating_5"><span class="material-icons-outlined md-56 md-dedede">star</span></label>
+            <label for="rating_5"><span class="material-icons-outlined">star</span></label>
     </div>
 
     <label class="form-label" for="title">レビュータイトル</label>
