@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div layout:fragment="webmanga-setting-form(object)">
+
+
+    <form class="webmanga-config" th:action="@{/web-manga-update-info}" method="post">
+        <div class="webmanga-genres-container">
+            <input type="checkbox" id="webmanga-settings-popup">
+            <label class="webmanga-setting-popup-open webmanga-settings" for="webmanga-settings-popup">
+                <span class="material-icons-outlined md-18 md-BL">tune</span>
+                <span class="webmanga-settings-text">マイセット</span>
+            </label>
+            <div class="webmanga-setting-popup-overlay">
+                <div class="webmanga-setting-popup-window">
+
+                    <th:block th:if="${#authorization.expression('isAnonymous()')}">
+                        <div class="notion-register">
+                            <div class="notion-text-container">
+                                <i class="uil uil-comment-exclamation md-16 md-PL"></i>
+                                <div class="notion-text">マイセット機能は会員限定の機能です<br>お気に入りのセッティングを保存することができます♫</div>
+                            </div>
+                            <a th:href="@{/signup}">
+                                <div class="btn-notion">会員登録はこちら</div>
+                            </a>
+                        </div>
+                    </th:block>
+
+                    <th:block th:unless="${#authorization.expression('isAnonymous()')}">
+                        <div class="webmanga-setting-popup-title-container">
+                            <div class="webmanga-setting-popup-title">[[${#authentication.principal.user.username}]]の設定</div>
+                            <button class="btn-filter-mini" type="submit">設定</button>
+                        </div>
+                    </th:block>
+                    <div class="webmanga-setting-popup-text">有料 / 無料</div>
+                    <div class="webmanga-settings-items">
+                        <div class="webmanga-settings-radio">
+                            <input class="" type="radio" id="free-paid" name="freeflag" value="0" th:checked="${freeflag==0}">
+                            <label for="free-paid">すべて</label>
+                        </div>
+                        <div class="webmanga-settings-radio">
+                            <input class="" type="radio" id="free-only" name="freeflag" value="1" th:checked="${freeflag==1}">
+                            <label for="free-only">無料のみ</label>
+                        </div>
+                    </div>
+                    <div class="webmanga-setting-popup-text">フォロー有無</div>
+                    <div class="webmanga-settings-items">
+                        <div class="webmanga-settings-radio">
+                            <input class="" type="radio" id="follow-nofollow" name="followflag" value="0" th:checked="${followflag == 0}">
+                            <label for="follow-nofollow">すべて</label>
+                        </div>
+                        <div class="webmanga-settings-radio">
+                            <input class="" type="radio" id="follow-only" name="followflag" value="1" th:checked="${followflag == 1}">
+                            <label for="follow-only">フォローのみ</label>
+                        </div>
+                    </div>
+                <!--
+                    <div class="webmanga-setting-popup-text">メディア</div>
+                        <div class="media-tag-container">
+               -->
+                            <th:block class="tag" th:each="media:${medialist}">
+               <!--
+                                <div class="media-tag"><a th:href="@{/web-manga-update-info/media/{id}(id=${media.id})}">[[${media.displayName}]]</a></div>
+               -->
+                            </th:block>
+               <!--
+                        </div>
+                -->
+                    <div class="webmanga-setting-popup-text">ジャンル（複数選択可）</div>
+                    <div class="webmanga-settings-items">
+                        <div class="webmanga-genres-item" th:each="genre:${genrelist}">
+                            <th:block th:with="genres=${genreflag}">
+                            <th:block th:with="id=${genre.id}">
+                            <th:block th:if="${#lists.isEmpty(genres)}">
+                                <label>
+                                    <input class="webmanga-genres-checkbox" type="checkbox" th:name="genres" th:id="${genre.id}" th:value="${genre.id}" th:text="${genre.name}">
+                                </label>
+                            </th:block>
+                            <th:block th:unless="${#lists.isEmpty(genres)}">
+                                <label>
+                                    <input class="webmanga-genres-checkbox" type="checkbox" th:name="genres" th:id="${genre.id}" th:value="${genre.id}" th:text="${genre.name}" th:checked="${#lists.contains(genres,id)}">
+                                </label>
+                            </th:block>
+                            </th:block>
+                            </th:block>
+                        </div>
+                    </div>
+
+                    <input class="btn-filter" type="submit" value="設定する" th:disabled="${#authorization.expression('isAnonymous()')}">
+
+<!--
+                    <label class="webmanga-setting-popup-close" for="webmanga-settings-popup">
+                        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                            <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                        </svg>
+                    </label>
+-->
+                </div>
+                <label class="webmanga-setting-popup-close" for="webmanga-settings-popup">
+                    <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                        <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                    </svg>
+                </label>
+            </div>
+
+<!--
+            <div class="webmanga-genres-item" th:each="genre:${genrelist}">
+                <th:block th:with="genres=${genreflag}">
+                    <th:block th:with="id=${genre.id}">
+                    <th:block th:if="${#lists.isEmpty(genres)}">
+                        <label>
+                            <input class="webmanga-genres-checkbox" type="checkbox" th:name="genres" th:id="${genre.id}" th:value="${genre.id}" th:text="${genre.name}">
+                        </label>
+                    </th:block>
+                    <th:block th:unless="${#lists.isEmpty(genres)}">
+                        <label>
+                            <input class="webmanga-genres-checkbox" type="checkbox" th:name="genres" th:id="${genre.id}" th:value="${genre.id}" th:text="${genre.name}" th:checked="${#lists.contains(genres,id)}">
+                        </label>
+                    </th:block>
+                    </th:block>
+                    </th:block>
+            </div>
+-->
+        </div>
+<!--
+        <input class="btn-filter" type="submit" value="絞り込み">
+-->
+    </form>
+
+
+
+
+</div>
+
+</html>

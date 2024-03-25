@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+    <h2>バッジ 新規登録</h2>
+    <a class="btn-primary" th:href="@{/admin/badge/list}">一覧に戻る</a>
+
+    <form class="admin-form" method="post" th:action="@{/admin/badge/register}" th:object="${badge}">
+    <table class="form-table">
+    <tr>
+        <th><label for="name">名称</label></th>
+        <td>
+            <input type="text" th:field="*{name}" th:errorclass="err">
+            <span th:errors="*{name}" class="err"></span>
+        </td>
+    </tr>
+    <tr>
+        <th><label for="description">説明文</label></th>
+        <td>
+            <textarea th:field="*{description}" th:errorclass="err"></textarea>
+            <span th:errors="*{description}" class="err"></span>
+        </td>
+    </tr>
+    </table>
+
+    <input type="submit" value="登録">
+    </form>
+
+</div>
+</html>

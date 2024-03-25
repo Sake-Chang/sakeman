@@ -44,7 +44,7 @@ public class ScrapeComichowlController {
         String rootUrl = "https://ichijin-plus.com/howl";
         Document doc = Jsoup.connect(rootUrl).get();
 
-        Elements lists = doc.selectXpath("//div[@class='sc-d3c447da-0 gMSqaP']/a");
+        Elements lists = doc.selectXpath("//div[@class='sc-dc093f5e-0 bANoZO']/a");
         for (Element list: lists) {
             String childUrl = list.attr("href");
             //System.out.println(childUrl);
@@ -61,13 +61,15 @@ public class ScrapeComichowlController {
         String mediaName = "comic HOWL";
         String titleStringRaw = doc.selectXpath("//h1").text();
         String titleString = Normalizer.normalize(titleStringRaw, Form.NFKC);
-        String authorString = doc.selectXpath("//div[@class='sc-155acf28-3 gEToCC']").text();
-        String urlAb = doc.selectXpath("//a[@class='sc-ecb78c8b-0 lnqYpo']").attr("href");
+        String authorString = doc.selectXpath("//div[@class='sc-2dab6c54-3 fksQjE']").text();
+        String urlAb = doc.selectXpath("//a[@class='sc-62edc9dd-0 fpVIpX']").attr("href");
         String url = "https://ichijin-plus.com" + urlAb;
-        String imgUrlRaw = doc.selectXpath("//div[@class='sc-ecb78c8b-2 llKFlx']/div[@class='sc-952d0b48-0 esfhwh']").html();
+        String imgUrlRaw = doc.selectXpath("//div[@class='sc-62edc9dd-2 jTAXoM']//div[@class='sc-952d0b48-0 esfhwh']").html();
+        System.out.println(imgUrlRaw);
         String imgUrl = imgUrlRaw.replace("<img alt=\"\" data-src=\"", "").replace("\" class=\"sc-952d0b48-1 iitnLG fade-in lazyload\">", "").trim();
-        String subTitle = doc.selectXpath("//span[@class='sc-ecb78c8b-6 dMXNOG']").text();
-        String updateRaw = doc.selectXpath("//div[contains(@class,'sc-ecb78c8b-1')]").text();
+        String subTitle = doc.selectXpath("//span[@class='sc-62edc9dd-6 hubKhX']").text();
+        String updateRaw = doc.selectXpath("//div[contains(@class,'sc-62edc9dd-1 jmlWUr')]").text();
+        System.out.println(updateRaw);
 
         LocalDateTime update;
         if (updateRaw.contains("日前")) {
@@ -80,17 +82,19 @@ public class ScrapeComichowlController {
             String updateMonth = (String)String.format("%02d", month);
             String updateDay = (String)String.format("%02d", day);
             String updateString = year + "/" + updateMonth + "/" +updateDay;
-            update = LocalDateTime.of(LocalDate.parse(updateString, DateTimeFormatter.ofPattern("yyyy/MM/dd")), LocalTime.of(0,0));
+            update = LocalDateTime.of(LocalDate.parse(updateString, DateTimeFormatter.ofPattern("yyyy/MM/dd")), LocalTime.of(11,0));
         } else if (updateRaw.contains("時間前")) {
             String updateReplace = updateRaw.replace("最新話", "").replace("時間前", "");
+            Integer timeDelta = Integer.parseInt(updateReplace);
             LocalDateTime now = LocalDateTime.now();
-            int year = now.getYear();
-            int month = now.getMonthValue();
-            int day = now.getDayOfMonth();
+            LocalDateTime udt = now.minusHours(timeDelta);
+            int year = udt.getYear();
+            int month = udt.getMonthValue();
+            int day = udt.getDayOfMonth();
             String updateMonth = (String)String.format("%02d", month);
             String updateDay = (String)String.format("%02d", day);
             String updateString = year + "/" + updateMonth + "/" +updateDay;
-            update = LocalDateTime.of(LocalDate.parse(updateString, DateTimeFormatter.ofPattern("yyyy/MM/dd")), LocalTime.of(0,0));
+            update = LocalDateTime.of(LocalDate.parse(updateString, DateTimeFormatter.ofPattern("yyyy/MM/dd")), LocalTime.of(11,0));
         } else {
             String updateReplace = updateRaw.replace("最新話", "");
             String[] updateSplit = updateReplace.split("/");
@@ -99,7 +103,7 @@ public class ScrapeComichowlController {
             String updateMonth = (String)String.format("%02d", month);
             String updateDay = (String)String.format("%02d", day);
             String updateString = updateSplit[0] + "/" + updateMonth + "/" +updateDay;
-            update = LocalDateTime.of(LocalDate.parse(updateString, DateTimeFormatter.ofPattern("yyyy/MM/dd")), LocalTime.of(0,0));
+            update = LocalDateTime.of(LocalDate.parse(updateString, DateTimeFormatter.ofPattern("yyyy/MM/dd")), LocalTime.of(11,0));
         }
 
         System.out.println("===============================");
@@ -119,6 +123,6 @@ public class ScrapeComichowlController {
             parseContents.put("imgUrl", imgUrl);
             parseContents.put("updateAt", update);
             parseContents.put("freeFlag", 1);
-//        saveService.saveRss(parseContents);
+        saveService.saveRss(parseContents);
     }
 }

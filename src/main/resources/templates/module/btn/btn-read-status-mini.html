@@ -2,39 +2,93 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-
 <!--/* 引数を受け取って呼ばれる（ object = ${mangaId}, ${wantlist}, ${readlist} ） */-->
 <th:block layout:fragment="btn-read-status-mini(object)">
 
-<div class="btn-read-status-mini"
-     th:classappend="!${#lists.contains(readlist, mangaId)} ?
-                        (${#lists.contains(wantlist, mangaId)} ?
-                            'status-toggle-mini btn-highlight' :
-                            'status-toggle-mini')
-                        : 'btn-purple'" th:data-manga-id="${mangaId}">
-        <span   class="material-icons-outlined md-18 status-icon"
-                th:classappend="!${#lists.contains(readlist, mangaId)} ?
-                                (${#lists.contains(wantlist, mangaId)} ?
-                                        'md-WH' :
-                                        '' ):
-                                        'md-WH' "
-                th:text=    "!${#lists.contains(readlist, mangaId)} ?
-                             (${#lists.contains(wantlist, mangaId)} ?
-                                        'bookmark' :
-                                        'bookmark_add'):
-                                        'check_box' "></span>
-        <span   class="status-text"
-                th:classappend="!${#lists.contains(readlist, mangaId)} ?
+<th:block sec:authorize="isAuthenticated()">
+    <div class="btn-read-status-mini"
+         th:classappend="!${#lists.contains(readlist, mangaId)} ?
+                            (${#lists.contains(wantlist, mangaId)} ?
+                                'status-toggle-mini btn-highlight' :
+                                'status-toggle-mini')
+                            : 'btn-purple'" th:data-manga-id="${mangaId}">
+            <span   class="material-icons-outlined md-18 status-icon"
+                    th:classappend="!${#lists.contains(readlist, mangaId)} ?
+                                    (${#lists.contains(wantlist, mangaId)} ?
+                                            'md-WH' :
+                                            '' ):
+                                            'md-WH' "
+                    th:text=    "!${#lists.contains(readlist, mangaId)} ?
                                  (${#lists.contains(wantlist, mangaId)} ?
-                                        'md-WH' :
-                                        '' ):
-                                        'md-WH' "
-                th:text=        "!${#lists.contains(readlist, mangaId)} ?
+                                            'bookmark' :
+                                            'bookmark_add'):
+                                            'check_box' "></span>
+            <span   class="status-text"
+                    th:classappend="!${#lists.contains(readlist, mangaId)} ?
+                                     (${#lists.contains(wantlist, mangaId)} ?
+                                            'md-WH' :
+                                            '' ):
+                                            'md-WH' "
+                    th:text=        "!${#lists.contains(readlist, mangaId)} ?
+                                     (${#lists.contains(wantlist, mangaId)} ?
+                                           '気になる' :
+                                           '気になる'):
+                                           '読んだ！' "></span>
+    </div>
+</th:block>
+
+<th:block sec:authorize="!isAuthenticated()">
+    <input type="checkbox" id="alert-popup4">
+    <label class="btn-read-status-mini alert-popup-open" for="alert-popup4"
+         th:classappend="!${#lists.contains(readlist, mangaId)} ?
+                            (${#lists.contains(wantlist, mangaId)} ?
+                                'btn-highlight' :
+                                '')
+                            : 'btn-purple'" th:data-manga-id="${mangaId}">
+            <span   class="material-icons-outlined md-18 status-icon"
+                    th:classappend="!${#lists.contains(readlist, mangaId)} ?
+                                    (${#lists.contains(wantlist, mangaId)} ?
+                                            'md-WH' :
+                                            '' ):
+                                            'md-WH' "
+                    th:text=    "!${#lists.contains(readlist, mangaId)} ?
                                  (${#lists.contains(wantlist, mangaId)} ?
-                                       '気になる' :
-                                       '気になる'):
-                                       '読んだ！' "></span>
-</div>
+                                            'bookmark' :
+                                            'bookmark_add'):
+                                            'check_box' "></span>
+            <span   class="status-text"
+                    th:classappend="!${#lists.contains(readlist, mangaId)} ?
+                                     (${#lists.contains(wantlist, mangaId)} ?
+                                            'md-WH' :
+                                            '' ):
+                                            'md-WH' "
+                    th:text=        "!${#lists.contains(readlist, mangaId)} ?
+                                     (${#lists.contains(wantlist, mangaId)} ?
+                                           '気になる' :
+                                           '気になる'):
+                                           '読んだ！' "></span>
+    </label>
+    <div class="alert-popup-overlay">
+        <div class="alert-popup-window">
+            <div class="alert-popup-container">
+                <i class="uil uil-comment-exclamation md-16 md-PL"></i>
+                <div class="alert-popup-text-container">
+                    <div class="alert-popup-text">本棚機能は会員限定の機能です！</div>
+                    <div class="alert-popup-text">会員登録するとマイページに本棚ができ、気になる作品や、読んだ作品などを整理することができます！</div>
+                </div>
+            </div>
+            <a th:href="@{/signup}">
+                <div class="btn-alert">会員登録する（無料）</div>
+            </a>
+            <label class="alert-popup-close" for="alert-popup4">
+                <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                    <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                </svg>
+            </label>
+        </div>
+    </div>
+</th:block>
 
 </th:block> <!--/* layout:fragment */-->
 

@@ -16,12 +16,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "web_manga_update_info")
+@ToString(exclude = {"webMangaMedia", "manga"})
 public class WebMangaUpdateInfo implements Serializable, Comparable<WebMangaUpdateInfo> {
 
     @Id

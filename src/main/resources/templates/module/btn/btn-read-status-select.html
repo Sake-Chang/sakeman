@@ -6,9 +6,13 @@
 <!--/* 引数を受け取って呼ばれる（ object = ${mangaId}, ${wantlist}, ${readlist} ） */-->
 <th:block layout:fragment="btn-read-status-select(object)">
 
-<div class="dropdown">
+
+<th:block sec:authorize="isAuthenticated()">
+
+<div class="dropdown margin-cancel">
     <!--/* ボタン部分 */-->
-    <button class="dropdown__btn minimanga-action"
+<!--<button class="dropdown__btn minimanga-action" -->
+    <div class="dropdown__btn btn-read-status-mini"
             th:classappend="!${#lists.contains(readlist, umlist.manga.id)} ?
                             (${#lists.contains(wantlist, umlist.manga.id)} ?
                                     'btn-highlight' :
@@ -23,9 +27,12 @@
               th:classappend="  !${#lists.contains(readlist, umlist.manga.id)} ?
                                 (${#lists.contains(wantlist, umlist.manga.id)} ?
                                      'md-WH' :
-                                     'md-HL') :
+                                     '' ) :
                                      'md-WH' "></span>
+<!--
         <span class="minimanga-kininaru status-text"
+-->
+        <span class="status-text"
               th:text=" !${#lists.contains(readlist, umlist.manga.id)} ?
                         (${#lists.contains(wantlist, umlist.manga.id)} ?
                                      '気になる' :
@@ -35,9 +42,10 @@
                                 (${#lists.contains(wantlist, umlist.manga.id)} ?
                                       'md-WH' ):
                                       'md-WH' "></span>
-    </button>
+<!--</button>-->
+    </div>
     <!--/* リスト部分 */-->
-    <div class="dropdown__body">
+    <div class="dropdown__body read-status-select">
         <ul class="dropdown__list">
             <th:block  th:each="item:${T(com.sakeman.entity.ReadStatus.Status).values()}">
                 <li class="dropdown__item" th:value="${item}" th:text="${item}" th:data-id="${umlist.id}"></li>
@@ -45,6 +53,74 @@
         </ul>
     </div>
 </div> <!--/* ドロップダウンボタン */-->
+</th:block>
+
+
+
+<th:block sec:authorize="!isAuthenticated()">
+    <input type="checkbox" id="alert-popup5">
+    <label class="dropdown margin-cancel alert-popup-open" for="alert-popup5">
+    <!--/* ボタン部分 */-->
+<!--<button class="dropdown__btn minimanga-action" -->
+    <div class="dropdown__btn_inactive btn-read-status-mini"
+            th:classappend="!${#lists.contains(readlist, umlist.manga.id)} ?
+                            (${#lists.contains(wantlist, umlist.manga.id)} ?
+                                    'btn-highlight' :
+                                    '' ):
+                                    'btn-purple' ">
+        <span class="material-icons-outlined md-18 status-icon"
+              th:text=  "!${#lists.contains(readlist, umlist.manga.id)} ?
+                         (${#lists.contains(wantlist, umlist.manga.id)} ?
+                                    'bookmark' :
+                                    'bookmark_add') :
+                                    'check_box' "
+              th:classappend="  !${#lists.contains(readlist, umlist.manga.id)} ?
+                                (${#lists.contains(wantlist, umlist.manga.id)} ?
+                                     'md-WH' :
+                                     '') :
+                                     'md-WH' "></span>
+<!--
+        <span class="minimanga-kininaru status-text"
+-->
+        <span class="status-text"
+              th:text=" !${#lists.contains(readlist, umlist.manga.id)} ?
+                        (${#lists.contains(wantlist, umlist.manga.id)} ?
+                                     '気になる' :
+                                     '気になる' ):
+                                     '読んだ！' "
+              th:classappend="  !${#lists.contains(readlist, umlist.manga.id)} ?
+                                (${#lists.contains(wantlist, umlist.manga.id)} ?
+                                      'md-WH' ):
+                                      'md-WH' "></span>
+<!--</button>-->
+    </div>
+
+</label> <!--/* ドロップダウンボタン */-->
+    <div class="alert-popup-overlay">
+        <div class="alert-popup-window">
+            <div class="alert-popup-container">
+                <i class="uil uil-comment-exclamation md-16 md-PL"></i>
+                <div class="alert-popup-text-container">
+                    <div class="alert-popup-text">本棚機能は会員限定の機能です！</div>
+                    <div class="alert-popup-text">会員登録するとマイページに本棚ができ、気になる作品や、読んだ作品などを整理することができます！</div>
+                </div>
+            </div>
+            <a th:href="@{/signup}">
+                <div class="btn-alert">会員登録する（無料）</div>
+            </a>
+            <label class="alert-popup-close" for="alert-popup5">
+                <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                    <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                </svg>
+            </label>
+        </div>
+    </div>
+
+
+
+</th:block>
+
 
 </th:block> <!--/* layout:fragment */-->
 

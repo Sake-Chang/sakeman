@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+
+    <h2>バッジ - ユーザー 新規登録</h2>
+    <a class="btn-primary" th:href="@{/admin/badge-user/list}">一覧に戻る</a>
+
+    <form class="admin-form" method="post" th:action="@{/admin/badge-user/register}">
+    <table class="form-table">
+    <tr>
+        <th><label for="badge">バッジ</label></th>
+        <td>
+            <input type="text" name="badge">
+        </td>
+        <!--
+        <td>
+            <select class="select2-badge" name="badge">
+                <option value="" th:text="バッジを選んでくださ"></option>
+                <th:block th:each="badge : ${allBadges}">
+                    <option th:value="${badge.id}" th:text="${badge.name}"></option>
+                </th:block>
+            </select><br>
+        </td>
+        -->
+    </tr>
+    <tr>
+        <th><label for="user">ユーザー</label></th>
+        <td>
+            <input type="text" name="user">
+        </td>
+        <!--
+        <td>
+            <select class="select2-user" name="user">
+                <option value="" th:text="ユーザーを選んでくださ"></option>
+                <th:block th:each="user : ${allUsers}">
+                    <option th:value="${user.id}" th:text="${user.username}"></option>
+                </th:block>
+            </select><br>
+            <span th:errors="*{id}" class="err"></span><br>
+        </td>
+        -->
+    </tr>
+    </table>
+
+    <input type="submit" value="登録">
+    </form>
+
+</div>
+</html>

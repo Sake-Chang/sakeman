@@ -64,7 +64,6 @@ public class UserDetail implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        // ユーザーが有効であればtrueを返す
-        return true;
+        return user.isEnabled();
     }
 }

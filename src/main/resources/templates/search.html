@@ -5,7 +5,7 @@
 
 <head>
 <link rel="stylesheet" th:href="@{/css/manga-list-module.css}">
-<title>まんが一覧</title>
+<title>[[${query}]]の検索結果 | サケマン</title>
 </head>
 
 <div layout:fragment="content"> <!-- layoutに送る -->
@@ -14,29 +14,42 @@
 <div class="search" layout:include="module/search-module :: search-module(object='')"></div>
 
 <!-- 見出し -->
-<div class="page-title">
-    <i class="uil uil-book-open md-24 md-595959"></i>
-    <h2>検索結果</h2>
-</div>
+<div class="container" th:with="text='「__${query}__」の検索結果 (__${searchResultPage.getTotalElements}__件)', class='uil-search'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+
 
 <th:block th:if="!${searchResult.isEmpty}">
-<!--/* まんがリストモジュールを呼び出し（${mangalist},${reviewlist}を引数として渡す） */-->
-<div class="container" th:with="mangalist=${searchResult}" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
-<!--/* もっとみるボタン */-->
-<div class="more-btn-container">
-    <button class="more-btn" th:attr="onClick='location.href=\''+@{/web-manga-update-info/{id}(id=${manga.id})}+'\''">
-            <span class="more-btn-text">もっとみる</span>
-<!--             <span class="material-icons-outlined md-32 md-595959">chevron_right</span>
- -->    </button>
-</div>
-</th:block>
-<th:block th:if="${searchResult.isEmpty}">
-    <div class="notification">
-    <i class="uil uil-sad-cry md-24 md-7e7e7e"></i>
-    <span clas=""notification-text>検索にヒットしませんでした・・・</span>
-    </div>
+    <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+    <div class="container" th:with="pages=${searchResultPage}" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+    <!--/* まんがリストモジュールを呼び出し（${mangalist},${reviewlist}を引数として渡す） */-->
+    <div class="container" th:with="mangalist=${searchResult}" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
+    <div class="container" th:with="pages=${searchResultPage}" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
 </th:block>
 
+<th:block th:if="${searchResult.isEmpty}">
+    <div th:with=" mode='text', message='検索にヒットしませんでした・・・'" layout:include="module/other/message-info-module :: message-info-module(object='')"></div>
+    <div th:with=" mode='text', message='他のキーワードも試してみてください'" layout:include="module/other/message-info-module :: message-info-module(object='')"></div>
+    <div class="container" th:with="text='こちらからも探してみませんか？', class='uil-search'" layout:include="module/other/page-title-module :: h3(object='')"></div>
+    <div class="btn-suggest-container">
+        <a class="btn-sugges-link" th:href="@{/uclist/list/recent}">
+            <div class="btn-suggest">
+                <i class="uil uil-list-ul md-WH md-24"></i>
+                <span class="btn-suggest-text">テーマごとのリストから探す</span>
+            </div>
+        </a>
+        <a class="btn-sugges-link" th:href="@{/webmanga-update-info}">
+            <div class="btn-suggest">
+                <i class="uil uil-sync md-WH md-24"></i>
+                <span class="btn-suggest-text">Webマンガサイトの更新情報から探す</span>
+            </div>
+        </a>
+        <a class="btn-sugges-link" th:href="@{/review/list/popular}">
+            <div class="btn-suggest">
+                <i class="uil uil-comment-lines md-WH md-24"></i>
+                <span class="btn-suggest-text">みんなのレビューから探す</span>
+            </div>
+        </a>
+    </div>
+</th:block>
 
 </div>
 

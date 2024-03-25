@@ -81,8 +81,26 @@ public class ReadStatusRestController {
     public int createReadStatus(@AuthenticationPrincipal UserDetail userDetail, @RequestBody ReadStatus readStatus, Model model) {
         // IdからreadStatusを取得
         ReadStatus rs = readStatusService.getReadStatus(readStatus.getId());
-        rs.setStatus(readStatus.getStatus());
-        readStatusService.saveReadStatus(rs);
+
+        User objuser = userDetail.getUser();
+        Manga objmanga = rs.getManga();
+        Optional<ReadStatus> OptionRS = readStatusService.findByUserAndManga(objuser, objmanga);
+
+        if (OptionRS.isEmpty()) {
+            ReadStatus newrs = new ReadStatus();
+            newrs.setStatus(readStatus.getStatus());
+            newrs.setUser(objuser);
+            newrs.setManga(objmanga);
+            readStatusService.saveReadStatus(newrs);
+        } else {
+            Integer id = OptionRS.get().getId();
+            // そのidでReadStatusを取得（rs）
+            ReadStatus existrs = readStatusService.getReadStatus(id);
+            existrs.setStatus(readStatus.getStatus());
+            existrs.setUser(objuser);
+            existrs.setManga(objmanga);
+            readStatusService.saveReadStatus(existrs);
+        }
 
         return 0;
     }

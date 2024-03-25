@@ -113,7 +113,7 @@ public class ScrapeComicwalkerController {
         String updateMonth = (String)String.format("%02d", month);
         String updateDay = (String)String.format("%02d", day);
         String updateString = updateSplit[0] + "/" + updateMonth + "/" +updateDay;
-        LocalDateTime update = LocalDateTime.of(LocalDate.parse(updateString, DateTimeFormatter.ofPattern("yyyy/MM/dd")), LocalTime.of(12,0));
+        LocalDateTime update = LocalDateTime.of(LocalDate.parse(updateString, DateTimeFormatter.ofPattern("yyyy/MM/dd")), LocalTime.of(11,0));
 
 //        System.out.println(titleString);
 //        System.out.println(authorString);
@@ -137,7 +137,7 @@ public class ScrapeComicwalkerController {
             } else if (mangaService.getMangaByTitle(titleString).isPresent()) {
                 info.setManga(mangaService.getMangaByTitle(titleString).get());
             } else {
-                info.setManga(mangaService.getManga(1));
+                info.setManga(mangaService.getManga(111111));
             }
             info.setSubTitle(subTitle);
             info.setAuthorString(authorString);

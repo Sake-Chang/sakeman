@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+
+<div layout:fragment="content">
+    <h2 th:text="|${tag.tagname}の編集|"></h2>
+    <a class="btn-primary" th:href="@{/admin/tag/list}">一覧に戻る</a>
+
+    <form class="admin-form" th:method="post" th:action="@{/admin/tag/update/{id}/(id=${tag.id})}" th:object="${tag}">
+        <table>
+            <tr>
+                <th><label for="tag.title">タグ名</label></th>
+                <td><input type="text" th:field="*{tagname}"></td>
+            </tr>
+            <tr>
+                <th><label for="genreId">ジャンルID</label></th>
+                <td>
+                    <select class="select2-genre" multiple="multiple" name="genreId">
+                        <option value="" th:text="ジャンルを選んでください"></option>
+                        <th:block th:each="item : *{genreTags}">
+                            <option selected th:value="${item.genre.id}" th:text="${item.genre.name}"></option>
+                        </th:block>
+                    </select><br>
+                    <span th:errors="*{id}" class="err"></span><br>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="更新する">
+    </form>
+
+</div>
+</html>

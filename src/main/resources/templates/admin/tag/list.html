@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h2>管理者用ページ</h2>
+    <h3>登録タグ 一覧</h3>
+    <form method="get" th:action="@{/admin/tag/register}">
+        <input type="submit" value="新規登録"/>
+    </form>
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>タグ名</th>
+        <!--
+            <th>タグづけされてる作品</th>
+        -->
+            <th>ジャンル</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="tag : ${taglist}">
+            <td th:text="${tag.id}"></td>
+            <td th:text="${tag.tagname}"></td>
+        <!--
+            <td>
+                <th:block th:if="!${#lists.isEmpty(tag.mangaTags)}">
+                    <th:block th:each="magaTag : ${tag.mangaTags}">
+                        <p th:text="${mangaTag.manga.title}" />
+                    </th:block>
+                </th:block>
+            </td>
+        -->
+            <td>
+                <th:block th:if="!${#lists.isEmpty(tag.genreTags)}">
+                    <th:block th:each="genreTag : ${tag.genreTags}">
+                        <p th:text="${genreTag.genre.name}" />
+                    </th:block>
+                </th:block>
+            </td>
+            <td>
+                <a class="btn-primary" th:href="@{/admin/tag/detail/{id}/(id=${tag.id})}">詳細</a>
+                <a class="btn-primary" th:href="@{/admin/tag/update/{id}/(id=${tag.id})}">編集</a>
+            </td>
+        </tr>
+    </table>
+
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
+
+
+
+</div>
+</body>
+</html>

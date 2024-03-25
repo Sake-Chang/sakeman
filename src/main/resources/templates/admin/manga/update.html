@@ -18,6 +18,7 @@
                 <th><label for="manga.titleKana">タイトルカナ</label></th>
                 <td><input type="text" th:field="*{titleKana}"></td>
             </tr>
+        <!--
             <tr>
                 <th><label for="manga.mangaAuthors.manga.id">著者ID</label></th>
                 <td><th:block th:if="!${#lists.isEmpty(manga.mangaAuthors)}">
@@ -34,7 +35,19 @@
                     </th:block>
                 </td>
             </tr>
-
+        -->
+            <tr>
+                <th><label for="authorId">著者ID</label></th>
+                <td>
+                    <select class="select2-author" multiple="multiple" name="authorId">
+                        <option value="" th:text="著者を選んでください"></option>
+                        <th:block th:each="item : *{mangaAuthors}">
+                            <option selected th:value="${item.author.id}" th:text="${item.author.name}"></option>
+                        </th:block>
+                    </select><br>
+                    <span th:errors="*{id}" class="err"></span><br>
+                </td>
+            </tr>
             <tr>
                 <th><label for="manga.volume">巻数</label></th>
                 <td><input type="text" th:field="*{volume}"></td>

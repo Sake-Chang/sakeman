@@ -4,10 +4,12 @@
         layout:decorate="~{common/layout}">
 
 <head>
-<link rel="stylesheet" th:href="@{/css/manga/list.css}">
-<link rel="stylesheet" th:href="@{/css/manga/review.css}">
-
-<title>まんが一覧</title>
+    <th:block th:if="${mangaobj == null}">
+        <title th:text="${tab}=='recent' ? 'まんがのレビュー一覧 (新着順) | サケマン' : 'まんがのレビュー一覧 (いいね数順) | サケマン' "></title>
+    </th:block>
+    <th:block th:unless="${mangaobj == null}">
+        <title th:text="${tab}=='recent' ? '__${mangaobj.title}__のレビュー一覧 (新着順) | サケマン' : '__${mangaobj.title}__のレビュー一覧 (いいね数順) | サケマン' "></title>
+    </th:block>
 </head>
 
 <div layout:fragment="content">
@@ -17,27 +19,45 @@
 
 <!--/* タブ */-->
 <div class="tab-container">
-    <a class="tab-link" th:href="@{/review}">
-        <div class="tab tab-current">
+    <th:block th:with="urlappend=${mangaobj != null} ? 'list-manga/' + ${mangaobj.id} : 'list'">
+    <a class="tab-link" th:href="@{/review/__${urlappend}__/recent}">
+        <div class="tab" th:classappend="${tab=='recent'} ? 'tab-current'">
             <i class="uil uil-bolt"></i>
             <span class="tab-text">新着順</span>
         </div>
     </a>
-    <a class="tab-link" th:href="@{/review/popular}">
-        <div class="tab">
+    <a class="tab-link" th:href="@{/review/__${urlappend}__/popular}">
+        <div class="tab" th:classappend="${tab=='popular'} ? 'tab-current'">
             <i class="uil uil-fire"></i>
-            <span class="tab-text">人気順</span>
+            <span class="tab-text">いいね数順</span>
         </div>
     </a>
 </div>
 
-<div class="page-title">
-    <i class="uil uil-comment-lines"></i>
-    <h2>みんなのレビュー</h2>
-</div>
+
+    <th:block th:with="textappend=${mangaobj != null} ? ${mangaobj.title} + 'の' : ''">
+        <div class="container" th:with="text='__${textappend}__レビュー一覧', class='uil-comment-lines'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+    </th:block>
+
+    <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+    <div class="container" th:with="pages=${reviewlistPages}" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
 
     <!--/* レビューリストモジュールを呼び出し（${reviewlist}を引数として渡す） */-->
-<div class="container" layout:include="module/card/review-card-module :: review-card-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist}, ${followeelist}')"></div>
+    <div class="container" layout:include="module/card/review-card-module :: review-card-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist}, ${followeelist}')"></div>
+    <div th:if="${reviewlist.isEmpty}" class="nolist-message-container">
+        <div th:if="${reviewlist.isEmpty}" class="tmp-container-2" th:with="mode='button', text1='この作品にはまだレビューがありません。', text2='一番のりでレビューしてみませんか？', text3='(会員登録［無料］が必要です)', btnText='この作品のレビューを書く', linkurl='@{/review/post/__${manga.id}__}'" layout:include="module/other/message-info-module :: message-info-module(object='')"></div>
+    </div>
+    <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+    <div class="container" th:with="pages=${reviewlistPages}" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
+
+    <th:block th:if="${mangaobj}!=null">
+        <div class="container" th:with="text='いいねが多いレビューはこちら', class='uil-comment-heart'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+        <!-- 人気のレビュー -->
+        <div class="container" th:with="reviewlist=${popReview}" layout:include="module/card/review-card-module :: review-card-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist}, ${followeelist}')"></div>
+        <!--/* もっとみるボタン */-->
+        <div class="container" th:with="linkurl='@{/review/list/popular}', pageobj = ${popReviewPages}" layout:include="module/btn/btn-see-more :: btn-see-more(object='${infolist}, ${linkurl}')"></div>
+    </th:block>
 
 </div>
 </html>

@@ -9,19 +9,22 @@
 <div class="card-outer" th:each="user:${userlist}">
     <div class="card-head">
         <div class="card-user">
-            <a th:href="@{/user/{id}(id=${user.id})}">
+            <a th:href="@{/user/{id}/want/grid(id=${user.id})}">
             <th:block th:if="${user.img != null}">
-            <img class="card-user-img" th:src="@{https://sake-man.com/{path}(path=${user.img})}">
+            <img class="card-user-img" th:src="@{https://sake-man.com/sakeman-user-upload/{path}(path=${user.img})}">
             </th:block>
             <th:block th:unless="${user.img != null}">
-            <img class="card-user-img" th:src="@{https://sake-man.com/default_img.png}" style ="background-color: #E1D8F0">
+            <img class="card-user-img" th:src="@{https://sake-man.com/system/default_img.png}" style ="background-color: #E1D8F0">
             </th:block>
             </a>
             <div class="card-user-text">
                 <div class="card-user-name">
-                    <a th:href="@{/user/{id}(id=${user.id})}">[[${user.username}]]</a>
+                    <a th:href="@{/user/{id}/want/grid(id=${user.id})}">[[${user.username}]]</a>
                 </div>
-                <div class="card-user-title">伝説級のレビュアー</div>
+                <div th:if="${!#lists.isEmpty(user.badgeusers)}" class="card-user-title">
+                    <th:block th:text="${user.badgeusers[0].badge.name}">
+                    </th:block>
+                </div>
             </div>
         </div>
         <!--/* フォローボタンを呼び出し（${reviewlist}, ${followeelist}を引数として渡す） */-->
@@ -47,12 +50,9 @@
     <div class="user-card-selfintro" th:text="${user.selfIntro}"></div>
 
     <!-- 読んだ本 -->
+    <!--
     <div class="user-card-shelf-container" th:with="readlist=${user.readStatus}">
         <th:block   th:if="!${#lists.isEmpty(readlist)}">
-        <!--
-        <th:block   th:each="i : ${#numbers.sequence(1,10)}"
-                    th:if="${readlist[i-1].status.toString() == '読んだ'}">
-        -->
         <th:block   th:each="i : ${#numbers.sequence(1,10)}">
             <figure class="user-card-shelf-calligraphy">
                 <a th:href="@{/manga/{id}(id=${readlist[i-1].manga.id})}">
@@ -62,6 +62,22 @@
         </th:block>
         </th:block>
     </div>
+    -->
+
+    <div class="user-card-shelf-container">
+        <th:block th:each="readlist:${#getReadManga.getReadManga(__${user.id}__)}">
+            <figure class="user-card-shelf-calligraphy">
+                <a th:href="@{/manga/detail/${readlist.id}__}">
+                    <img th:src="${#lists.isEmpty(readlist.manga.calligraphy)} ?
+                                     @{https://sake-man.com/system/noimage.jpg} :
+                                     @{https://sake-man.com/calligraphy/__${readlist.manga.calligraphy}__}">
+                </a>
+            </figure>
+        </th:block>
+    </div>
+
+
+
 </div> <!-- outer -->
 </div> <!--/* layout:fragment */-->
 </html>

@@ -6,7 +6,16 @@
 <head>
     <meta charset="UTF-8"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--
     <meta name="robots" content="noindex" />
+    -->
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NTMBZJ9R');</script>
+    <!-- End Google Tag Manager -->
     <!--/** 共通CSS */-->
     <link rel="stylesheet" th:href="@{/css/normalize.css}">
     <link rel="stylesheet" th:href="@{/css/common/common.css}">
@@ -15,6 +24,7 @@
     <link rel="stylesheet" th:href="@{/css/common/login.css}">
     <link rel="stylesheet" th:href="@{/css/manga/user.css}">
     <link rel="stylesheet" th:href="@{/css/manga/review.css}">
+    <link rel="stylesheet" th:href="@{/css/manga/minilist.css}">
     <link rel="stylesheet" th:href="@{/css/test/mini-status-btn.css}">
     <link rel="stylesheet" th:href="@{/css/common/search-module.css}">
     <link rel="stylesheet" th:href="@{/css/postpage.css}">
@@ -26,11 +36,16 @@
     <script th:src="@{/js/weblike.js}" defer></script>
     <script th:src="@{/js/status.js}" defer></script>
     <script th:src="@{/js/shelf-status-btn.js}" defer></script>
+    <script th:src="@{/js/shelf-status-btn-mini.js}" defer></script>
     <script th:src="@{/js/authorfollow.js}" defer></script>
     <script th:src="@{/js/userfollow.js}" defer></script>
     <script th:src="@{/js/5-1-16.js}" defer></script>
+    <script th:src="@{/js/loading-screen.js}" defer></script>
     <script th:src="@{/js/rating.js}" defer></script>
     <script th:src="@{/js/webmangafollow.js}" defer></script>
+    <script th:src="@{/js/checkbox.js}" defer></script>
+    <script th:src="@{/js/loading-screen.js}" defer></script>
+
     <script type="text/javascript" language="javascript">var vc_pid = "889574329";</script>
     <script type="text/javascript" src="//aml.valuecommerce.com/vcdal.js" async></script>
 
@@ -40,15 +55,37 @@
 
     <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
-<title></title>
+
+    <title></title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/common/5-1-16.css}">
+
+    <!-- Google tag (gtag.js) -->
+<!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DT6EL96017"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-DT6EL96017');
+    </script>
+-->
+
 </head>
 
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NTMBZJ9R"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
 <!--/** ヘッダー */-->
 <header layout:replace="~{common/header::header}"></header>
+
+<div id="loading-screen">
+    <div class="lds-dual-ring"></div>
+</div>
 
 <!--/** メイン */-->
 <main class="main">
@@ -63,5 +100,6 @@
 
 <!--/** <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfJo=" crossorigin="anonymous"></script>
 <script src="js/5-1-16.js"></script> */-->
+
 </body>
 </html>

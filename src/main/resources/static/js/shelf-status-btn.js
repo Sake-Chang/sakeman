@@ -14,6 +14,13 @@ $(function(){
         $this.toggleClass('is-open');
     });
 
+    // メニューを開閉
+    let statusbtn_mini = $('.dropdown__btn-mini');
+    statusbtn_mini.on('click', function(){
+        let $this = $(this);
+        $this.toggleClass('is-open');
+    });
+
     // ステータスを変更
     let item = $('.dropdown__item');
     item.on('click', function(){
@@ -51,7 +58,7 @@ $(function(){
                                       break;
                     case "読んだ"  :   $('.is-open').find('.status-icon').text('check_box');
                                       $('.is-open').find('.status-icon').addClass('md-WH');
-                                      $('.is-open').find('.status-text').text('読んだ');
+                                      $('.is-open').find('.status-text').text('読んだ！');
                                       $('.is-open').find('.status-text').addClass('md-WH');
                                       $('.is-open').removeClass('btn-highlight');
                                       $('.is-open').addClass('btn-purple');

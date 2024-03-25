@@ -20,44 +20,91 @@
 </form> -->
 
 
-<!-- ボタン用 -->
-<div class="create-post">
-    <i class="uil uil-edit md-24"></i>
+<!--
+        <div class="create-post">
+            <i class="uil uil-edit md-24"></i>
+        </div>
+        <nav id="g-nav">
+            <div id="g-nav-list">
+                <ul>
+                    <li><a th:href="@{/review/post}">レビューを書く</a></li>
+                    <li><a th:href="@{/uclist/post}">リストをつくる</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="circle-bg"></div>
+-->
+
+
+<div class="footer-container">
+    <figure class="footer-logo">
+        <img th:src="@{https://sake-man.com/system/logo_yoko_white_lined.png}">
+    </figure>
+    <small class="footer-credit">©️2024 Sakeman</small>
 </div>
-<nav id="g-nav">
-    <div id="g-nav-list">
-        <ul>
-            <li><a th:href="@{/review/post}">レビューを書く</a></li>
-            <li><a th:href="@{/uclist/post}">リストをつくる</a></li>
-        </ul>
-    </div>
-</nav>
-<!-- 円背景用 -->
-<div class="circle-bg"></div>
 
 
 <nav class="footer-nav">
     <ul class="footer-nav-menu">
         <li class="footer-nav-menu-item">
-            <a class="footer-nav-menu-item-a" th:href="@{/manga}">
+            <a class="footer-nav-menu-item-a" th:href="@{/manga/list/recent}">
                 <i class="uil uil-book-open md-24 md-595959"></i>
                 <p class="footer-nav-menu-item-text">まんが</p>
             </a>
         </li>
         <li class="footer-nav-menu-item">
-            <a class="footer-nav-menu-item-a" th:href="@{/review}">
+            <a class="footer-nav-menu-item-a" th:href="@{/review/list}">
                 <i class="uil uil-comment-lines md-24 md-595959"></i>
                 <p class="footer-nav-menu-item-text">レビュー</p>
             </a>
         </li>
         <li class="footer-nav-menu-item">
-            <a class="footer-nav-menu-item-a" th:href="@{/uclist}">
+            <input type="checkbox" id="post-popup">
+            <label  class="post-popup-open"  for="post-popup">
+                <div class="footer-nav-menu-item-a">
+                    <i class="uil uil-plus-circle md-24 md-595959"></i>
+                    <p class="footer-nav-menu-item-text">投稿</p>
+                </div>
+            </label>
+            <div class="post-popup-overlay">
+                <div class="post-popup-window">
+                    <div class="post-popup-container">
+                        <i class="uil uil-edit md-24 md-PL"></i>
+                        <div class="post-popup-text-container">
+                            <div class="post-popup-text">ありがとうございます！どちらを投稿しますか？？</div>
+                        </div>
+                    </div>
+                    <div class="post-popup-btn-container">
+                        <a th:href="@{/review/post}">
+                            <div class="btn-post">
+                                <i class="uil uil-comment-lines md-24 md-WH"></i>
+                                <div class="popup-btn-text">レビューを投稿する</div>
+                            </div>
+                        </a>
+                        <a th:href="@{/uclist/post}">
+                            <div class="btn-post">
+                                <i class="uil uil-list-ul md-24 md-WH"></i>
+                                <div class="popup-btn-text">リストを投稿する</div>
+                            </div>
+                        </a>
+                    </div>
+                    <label class="post-popup-close" for="post-popup">
+                        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                            <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                        </svg>
+                    </label>
+                </div>
+            </div>
+        </li>
+        <li class="footer-nav-menu-item">
+            <a class="footer-nav-menu-item-a" th:href="@{/uclist/list}">
                 <i class="uil uil-list-ul md-24 md-595959"></i>
                 <p class="footer-nav-menu-item-text">リスト</p>
             </a>
         </li>
         <li class="footer-nav-menu-item">
-            <a class="footer-nav-menu-item-a" th:href="@{/user}">
+            <a class="footer-nav-menu-item-a" th:href="@{/user/list}">
                 <i class="uil uil-user-circle md-24 md-595959"></i>
                 <p class="footer-nav-menu-item-text">ユーザー</p>
             </a>

@@ -1,10 +1,14 @@
 @charset "UTF-8";
 
+.search {
+    margin-bottom: 12px;
+}
+
 .search-table {
     border: none;
     width: 100vw;
     padding: 0 16px;
-    margin-bottom: 12px;
+    margin-bottom: 0;
 }
 
 .search-container {

@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -30,6 +31,7 @@ import lombok.ToString;
 @Table(name = "uclist_manga")
 @EqualsAndHashCode(exclude = {"manga", "uclist"})
 @ToString(exclude = {"manga", "uclist"})
+@Where(clause = "delete_flag=0")
 public class UclistManga {
 
     @Id
@@ -54,7 +56,7 @@ public class UclistManga {
     @Column(name = "updated_at", nullable = false)
     @LastModifiedDate
     private Timestamp updatedAt;
-    
+
     @Column(name = "delete_flag", nullable = false)
     private Integer deleteFlag;
 

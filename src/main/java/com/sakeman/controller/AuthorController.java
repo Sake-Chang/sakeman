@@ -1,10 +1,16 @@
 package com.sakeman.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,11 +25,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sakeman.entity.Author;
+import com.sakeman.entity.Manga;
 import com.sakeman.entity.MangaAuthor;
+import com.sakeman.entity.Review;
+import com.sakeman.entity.Uclist;
 import com.sakeman.service.AuthorFollowService;
 import com.sakeman.service.AuthorService;
+import com.sakeman.service.LikeService;
 import com.sakeman.service.MangaAuthorService;
+import com.sakeman.service.MangaService;
 import com.sakeman.service.ReadStatusService;
+import com.sakeman.service.ReviewService;
+import com.sakeman.service.UclistService;
 import com.sakeman.service.UserDetail;
 
 import lombok.RequiredArgsConstructor;
@@ -36,6 +49,10 @@ public class AuthorController {
     private final AuthorFollowService afService;
     private final MangaAuthorService maService;
     private final ReadStatusService rsService;
+    private final MangaService mangaService;
+    private final ReviewService revService;
+    private final UclistService uclService;
+    private final LikeService likeService;
 
     /** 一覧表示（Pageable） */
     @GetMapping("/list")
@@ -46,17 +63,60 @@ public class AuthorController {
         }
 
     /** 詳細表示 */
-    @GetMapping("/{id}")
-    public String getDetail(@PathVariable("id") Integer id, Model model, @AuthenticationPrincipal UserDetail userDetail) {
-        List<MangaAuthor> mangalist = maService.findByAuthorId(id);
-        Collections.shuffle(mangalist);
+    @GetMapping({"/{id}", "/{id}/{tab}"})
+    public String getDetail(@PathVariable("id") Integer id,
+                            @PathVariable(name = "tab", required = false) String tab,
+                            Model model,
+                            @AuthenticationPrincipal UserDetail userDetail,
+                            @PageableDefault(page=0, size=10, sort= {"readStatus"},
+                            direction=Direction.DESC) Pageable pageable) {
+
+        if (tab == null) tab = "info";
+        List<Manga> mangalistOrg = mangaService.getMangaByAuthorId(id);
+        Collections.shuffle(mangalistOrg);
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), mangalistOrg.size());
+
+        Page<Manga> mangalistPage = new PageImpl<>(mangalistOrg.subList(start, end), pageable, mangalistOrg.size());
 
         model.addAttribute("author", service.getAuthor(id));
-        model.addAttribute("mangalist", mangalist);
+        model.addAttribute("mangalistPage", mangalistPage);
+        model.addAttribute("mangalist", mangalistPage.getContent());
         model.addAttribute("authorlist", afService.authorIdListFollowedByUser(userDetail));
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
         model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
+        model.addAttribute("likelist", likeService.reviewIdListLikedByUser(userDetail));
+        model.addAttribute("tab", tab);
+
+        if (tab.equals("review")) {
+            Pageable pageableEd = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "updatedAt"));
+
+            Page<Review> reviewlistPage = revService.getDistinctByMangaMangaAuthorsAuthorId(id, pageableEd);
+            model.addAttribute("reviewlistPaage", reviewlistPage);
+            model.addAttribute("reviewlist", reviewlistPage.getContent());
+
+            Page<Uclist> uclistlistPage = uclService.gettDistinctByUclistMangasMangaMangaAuthorsAuthorId(id, pageableEd);
+            model.addAttribute("uclistlistPage", uclistlistPage);
+            model.addAttribute("uclistlist", uclistlistPage.getContent());
+        }
 
         return "author/detail";
         }
+
+//    旧バージョン。論理削除したマンガでエラーが出てた。
+//    mangalistは、MangaAuthorのリストからMangaのリストに変更。Templateも mangalist.manga.XXXからmangalist.XXXに修正
+//    @GetMapping("/{id}")
+//    public String getDetail(@PathVariable("id") Integer id, Model model, @AuthenticationPrincipal UserDetail userDetail) {
+//        List<MangaAuthor> mangalist = maService.findByAuthorId(id);
+//        Collections.shuffle(mangalist);
+//
+//        model.addAttribute("author", service.getAuthor(id));
+//        model.addAttribute("mangalist", mangalist);
+//        model.addAttribute("authorlist", afService.authorIdListFollowedByUser(userDetail));
+//        model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
+//        model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
+//
+//        return "author/detail";
+//        }
 }

@@ -4,45 +4,65 @@
         layout:decorate="~{common/layout}">
 
 <head>
-<link rel="stylesheet" th:href="@{/css/manga-list-module.css}">
-<title>まんが一覧</title>
+    <th:block th:if="${author}==null">
+        <title th:text="${tab}=='recent' ? 'まんが一覧 (新着順) | サケマン' : 'まんが一覧 (人気順) | サケマン' "></title>
+    </th:block>
+    <th:block th:if="${author}!=null">
+        <title th:text="${tab}=='recent' ? '__${author.name}__先生の作品一覧 (新着順) | サケマン' : '__${author.name}__先生の作品一覧 (人気順) | サケマン' "></title>
+    </th:block>
 </head>
 
-<div layout:fragment="content"> <!-- layoutに送る -->
+<div layout:fragment="content">
 
-<!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
-<div class="search" layout:include="module/search-module :: search-module(object='')"></div>
+    <!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
+    <div class="search" layout:include="module/search-module :: search-module(object='')"></div>
 
-<!--/* タブ */-->
-<div class="tab-container">
-    <a class="tab-link" th:href="@{/manga}">
-        <div class="tab tab-current">
-            <i class="uil uil-bolt"></i>
-            <span class="tab-text">新着順</span>
+    <!--/* タブ */-->
+    <div class="tab-container">
+        <th:block th:with="urlappend=${author != null} ? 'list-author/' + ${author.id} : 'list'">
+        <a class="tab-link" th:href="@{/manga/__${urlappend}__/recent}">
+            <div class="tab" th:classappend="${tab=='recent'} ? 'tab-current'">
+                <i class="uil uil-bolt"></i>
+                <span class="tab-text">新着順</span>
+            </div>
+        </a>
+        <a class="tab-link" th:href="@{/manga/__${urlappend}__/popular}">
+            <div class="tab" th:classappend="${tab=='popular'} ? 'tab-current'">
+                <i class="uil uil-fire"></i>
+                <span class="tab-text">人気順</span>
+            </div>
+        </a>
+        </th:block>
+    </div>
+
+   <!-- トグル -->
+<!--
+        <div class="change-toggle">
+            <th:block th:with="urlappend=${author != null} ? 'list-author/' + ${author.id} : 'list'">
+                <a class="tab-link" th:href="@{/manga/__${urlappend}__/recent}">
+                    <div class="change-toggle-btn" th:classappend="${tab=='recent'} ? 'current'">新着順</div>
+                </a>
+                <a class="tab-link" th:href="@{/manga/__${urlappend}__/popular}">
+                    <div class="change-toggle-btn" th:classappend="${tab=='popular'} ? 'current'">人気順</div>
+                </a>
+            </th:block>
         </div>
-    </a>
-    <a class="tab-link" th:href="@{/manga/popular}">
-        <div class="tab">
-            <i class="uil uil-fire"></i>
-            <span class="tab-text">人気順</span>
-        </div>
-    </a>
-</div>
+-->
 
-<!-- 見出し -->
-<div class="page-title">
-    <i class="uil uil-book-open md-24"></i>
-    <h2>まんが一覧</h2>
-</div>
+    <!-- 見出し -->
+        <th:block th:with="textappend=${author != null} ? ${author.name} + '先生の' : ''">
+            <div class="container" th:with="text='__${textappend}__まんが一覧', class='uil-book-open'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+        </th:block>
 
-<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+    <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+    <div class="container" th:with="pages=${mangaPages}" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
 
-<!--/* まんがカードモジュールを呼び出し */-->
-<div class="container" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
+    <!--/* まんがカードモジュールを呼び出し */-->
+    <div class="container" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
 
-<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+    <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+    <div class="container" th:with="pages=${mangaPages}" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
 </div>
 
 </html>

@@ -10,18 +10,22 @@
         <div class="uclist-card-main">
             <div class="card-head">
                 <div class="card-user">
-                    <a th:href="@{/user/{id}(id=${uclist.user.id})}">
+                    <a th:href="@{/user/{id}/want/grid(id=${uclist.user.id})}">
                         <img class="card-user-img" th:src="${#lists.isEmpty(uclist.user.img)} ?
-                                    @{https://sake-man.com/default_img.png} :
-                                    @{https://sake-man.com/{path}(path=${uclist.user.img})}">
+                                    @{https://sake-man.com/system/default_img.png} :
+                                    @{https://sake-man.com/sakeman-user-upload/{path}(path=${uclist.user.img})}">
                     </a>
                     <div class="card-user-text">
                         <div class="card-user-name">
-                            <a th:href="@{/user/{id}(id=${uclist.user.id})}">[[${uclist.user.username}]]</a>
+                            <a th:href="@{/user/{id}/want/grid(id=${uclist.user.id})}">[[${uclist.user.username}]]</a>
                         </div>
-                        <div class="card-user-title">伝説級のレビュアー</div>
+                        <div th:if="${!#lists.isEmpty(uclist.user.badgeusers)}" class="card-user-title">
+                            <th:block th:text="${uclist.user.badgeusers[0].badge.name}">
+                            </th:block>
+                        </div>
                     </div>
                 </div>
+<!--
                 <div class="uclist-card-counter-container">
                     <div class="uclist-card-counter">
                         <span class="material-icons-outlined md-24">favorite_border</span>
@@ -32,6 +36,12 @@
                         <span>25</span>
                     </div>
                 </div>
+-->
+                <div class="under-construction">
+                    <span class="material-icons-outlined md-24 md-AS">error_outline</span>
+                    <span class="under-construction-text">ここ開発中</span>
+                </div>
+
             </div>
             <div class="card-title" th:text="${uclist.title}"></div>
             <div class="read-more-002">
@@ -43,14 +53,19 @@
         <div class="uclist-container">
             <th:block th:if="!${#lists.isEmpty(uclist.uclistMangas)}" th:each="um : ${uclist.uclistMangas}">
                 <div class="uclist-child">
-                    <a th:href="@{/manga/{id}(id=${um.manga.id})}">
+                    <th:block th:with="manga=${um.manga}" layout:include="module/btn/btn-manga-info-uclist :: btn-manga-info-uclist(object='${manga}')"></th:block>
+                    <div class="uclist-child-figure">
+                    <a th:href="@{/manga/detail/__${um.manga.id}__}">
                         <figure class="minimanga-module-calligrapy">
-                            <img th:src="@{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">
-                        </figure>
+                            <img th:src="${#lists.isEmpty(um.manga.calligraphy)} ?
+                                         @{https://sake-man.com/system/noimage.jpg} :
+                                         @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">                        </figure>
                     </a>
+                    <th:block th:with="manga=${um.manga}" layout:include="module/btn/btn-store-circle :: btn-store-circle(object='${manga}')"></th:block>
+                    </div>
                     <div class="minimanga-module-body">
                         <div class="minimanga-module-title">
-                            <a th:href="@{/manga/{id}(id=${um.manga.id})}">[[${um.manga.title}]]</a>
+                            <a th:href="@{/manga/detail/__${um.manga.id}__}">[[${um.manga.title}]]</a>
                         </div>
                         <div class="minimanga-module-author-container">
                             <th:block th:if="!${#lists.isEmpty(um.manga.mangaAuthors)}" th:each="ma : ${um.manga.mangaAuthors}">
@@ -95,5 +110,7 @@
             </th:block>
         </div>
     </div>
+
+
 </div>
 </html>

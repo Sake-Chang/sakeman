@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -40,10 +41,12 @@ public class MangaAuthor {
     /** 作品：manga_id */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="manga_id", referencedColumnName = "id")
+    @Where(clause = "delete_flag=0")
     private Manga manga;
 
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
+    @Where(clause = "delete_flag=0")
     private Author author;
 
     @Column(name = "registered_at", nullable = false, updatable = false)

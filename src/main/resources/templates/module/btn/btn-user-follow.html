@@ -7,17 +7,50 @@
 <th:block layout:fragment="btn-user-follow(object)">
 
 <!--/* btn-user-follow */-->
-    <th:block   th:unless="${userId} == ${#authentication.principal.user.id}">
-        <div    class="userfollow-toggle"
-                th:with="followeeId=${userId}"
-                th:data-followee-user-id="${followeeId}">
-            <span   class="material-icons-outlined md-32 md-BL"
-                    th:classappend="${#lists.contains(followeelist, userId)} ? 'md-HL'"
-                    th:text="${#lists.contains(followeelist, userId)} ? 'person_outline' : 'person_add_alt'">
-            </span>
-        </div>
+
+    <th:block sec:authorize="isAuthenticated()">
+
+        <th:block   th:unless="${userId} == ${#authentication.principal.user.id}">
+            <div    class="userfollow-toggle"
+                    th:with="followeeId=${userId}"
+                    th:data-followee-user-id="${followeeId}">
+                <span   class="material-icons-outlined md-28 md-GR"
+                        th:classappend="${#lists.contains(followeelist, userId)} ? 'md-HL'"
+                        th:text="${#lists.contains(followeelist, userId)} ? 'person_outline' : 'person_add_alt'">
+                </span>
+            </div>
+        </th:block>
     </th:block>
 
+    <th:block sec:authorize="!isAuthenticated()">
+
+        <input type="checkbox" id="alert-popup6">
+        <label    class="alert-popup-open" for="alert-popup6">
+            <span   class="material-icons-outlined md-28 md-GR"
+                    th:text="person_add_alt">
+            </span>
+        </label>
+        <div class="alert-popup-overlay">
+            <div class="alert-popup-window">
+                <div class="alert-popup-container">
+                    <i class="uil uil-comment-exclamation md-16 md-PL"></i>
+                    <div class="alert-popup-text-container">
+                        <div class="alert-popup-text">ユーザーフォローは会員限定の機能です！</div>
+                        <div class="alert-popup-text">会員登録をしてユーザーをフォローし、たくさんマン友を作ろう！</div>
+                    </div>
+                </div>
+                <a th:href="@{/signup}">
+                    <div class="btn-alert">会員登録する（無料）</div>
+                </a>
+                <label class="alert-popup-close" for="alert-popup6">
+                    <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                        <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                    </svg>
+                </label>
+            </div>
+        </div>
+    </th:block>
 
 </th:block> <!--/* layout:fragment */-->
 

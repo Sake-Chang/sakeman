@@ -13,22 +13,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sakeman.entity.Author;
+import com.sakeman.entity.Badge;
+import com.sakeman.entity.Genre;
 import com.sakeman.entity.Manga;
+import com.sakeman.entity.Tag;
+import com.sakeman.entity.User;
 import com.sakeman.service.AuthorService;
+import com.sakeman.service.BadgeService;
+import com.sakeman.service.GenreService;
 import com.sakeman.service.MangaService;
+import com.sakeman.service.TagService;
+import com.sakeman.service.UserService;
+
+import lombok.RequiredArgsConstructor;
 
 
 @RestController
 @RequestMapping
+@RequiredArgsConstructor
 public class Select2RestController {
 
-    private MangaService maService;
-    private AuthorService authService;
+    private final MangaService maService;
+    private final AuthorService authService;
+    private final TagService tagService;
+    private final GenreService genreService;
+    private final UserService userService;
+    private final BadgeService badgeService;
 
-    public Select2RestController(MangaService maService, AuthorService authService) {
-        this.maService = maService;
-        this.authService = authService;
-    }
 
     @GetMapping("/getsearch")
     @ResponseBody
@@ -36,7 +47,8 @@ public class Select2RestController {
         Manga manga = new Manga();
         manga.setTitle(q);
         List<Manga> searchResult = maService.getSearchResult(manga);
-//        model.addAttribute("searchResult", maService.getSearchResult(manga));
+
+//        List<Manga> searchResult = maService.getLikeSearch(q);
 
         return searchResult;
     }
@@ -51,5 +63,46 @@ public class Select2RestController {
 
         return searchResult;
     }
+
+    @GetMapping("/getsearchtag")
+    @ResponseBody
+    public List<Tag> select2SearchTag(@RequestParam String q, Model model){
+        Tag tag = new Tag();
+        tag.setTagname(q);
+        List<Tag> searchResult = tagService.getSearchResult(tag);
+
+        return searchResult;
+    }
+
+    @GetMapping("/getsearchgenre")
+    @ResponseBody
+    public List<Genre> select2SearchGenre(@RequestParam String q, Model model){
+        Genre genre = new Genre();
+        genre.setName(q);
+        List<Genre> searchResult = genreService.getSearchResult(genre);
+
+        return searchResult;
+    }
+
+    @GetMapping("/getsearchuser")
+    @ResponseBody
+    public List<User> select2SearchUser(@RequestParam String q, Model model){
+        User user = new User();
+        user.setUsername(q);
+        List<User> searchResult = userService.getSearchResult(user);
+
+        return searchResult;
+    }
+
+    @GetMapping("/getsearchbadge")
+    @ResponseBody
+    public List<Badge> select2SearchBadge(@RequestParam String q, Model model){
+        Badge badge = new Badge();
+        badge.setName(q);
+        List<Badge> searchResult = badgeService.getSearchResult(badge);
+
+        return searchResult;
+    }
+
 
 }

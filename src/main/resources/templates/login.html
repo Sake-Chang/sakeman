@@ -18,7 +18,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-
+<title>ログイン | サケマン</title>
 </head>
 
 <!--
@@ -26,17 +26,30 @@
  -->
  <body>
  <main class="main">
-     <section class="main-content">
+     <section class="main-content-login">
 
-    <div class="login-title">
-    <i class="uil uil-book-open md-40"></i>
-    <h2>サケマン ログイン</h2>
+<div th:if="${success}" class="alert alert-success">[[${success}]]</div>
+
+    <figure class="signup-logo-fig">
+        <img class="signup-logo" th:src="@{https://sake-man.com/system/logo_yoko_lined.png}">
+    </figure>
+
+    <div class="bordered-box">
+        <div class="signup-title">
+            <h2>ログイン</h2>
+        </div>
     </div>
 
     <div class="welcome-message">
+        <!--
         <p>いらっしゃいませ！</p>
         <p>きょうもほがらかにまんがを楽しみましょう！</p>
-        <span class="err" th:if="${param.error}">ユーザ名かパスワードが違います・・・</span>
+        -->
+        <th:block th:if="${param.error}">
+            <span class="err" th:if="${param.message.contains('badcredentialsex')}">ユーザーが存在しないか、またはパスワードが正しくありません。</span>
+            <span class="err" th:if="${param.message.contains('disabledex')}">メールアドレス認証が完了していないか、アカウントが無効です。</span>
+            <span class="err" th:if="${param.message.contains('unknownerror')}">予期しない認証エラーが発生しました。</span>
+        </th:block>
     </div>
 
     <div class="form-wrapper">
@@ -44,7 +57,7 @@
         <label class="login-form-label" for="email">メールアドレス：</label>
         <input class="login-input" type="text" id="email" name="email">
         <label class="login-form-label" for="password">パスワード：</label>
-        <input class="login-input" type="text" id="password" name="password">
+        <input class="login-input" type="password" id="password" name="password">
         <div class="remember-me">
             <input class="remember-me-checkbox" type="checkbox" id="remember-me" name="remember-me">
             <label class="remember-me-text" for="remember-me">ログインしたままにする</label>
@@ -52,6 +65,8 @@
     <input class="login-btn" type="submit" name="loginRun" value="ログイン"/>
     </form>
     </div>
+
+    <a class="login-password-reset" th:href="@{/password-reset}">パスワードをお忘れですか？</a>
 
     <div class="welcome-message">
     <p>アカウントをお持ちでない方は新規登録をどうぞ！！<br>楽しいよ！！</p>

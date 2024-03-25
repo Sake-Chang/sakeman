@@ -13,6 +13,9 @@
 .post-review-form-container,
 .post-uclist-form-container {
     padding: 0 16px;
+    width: 100vw;
+    max-width: 600px;
+    margin-bottom: 32px;
 }
 
 .form-label {
@@ -90,6 +93,15 @@ input[type="radio"]:checked + label img {
     border: none;
     border-radius: 4px;
     background-color: #7a42bf
+}
+
+.form-button:disabled {
+    color: var(--GR);
+    padding: 4px 16px;
+    margin: 0 auto;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--AS)
 }
 
 

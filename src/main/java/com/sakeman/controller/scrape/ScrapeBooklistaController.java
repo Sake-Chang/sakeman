@@ -10,9 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.FormElement;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,18 +26,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sakeman.service.ScrapeConvertService;
 import com.sakeman.service.WebMangaUpdateInfoSaveService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("scrape")
 public class ScrapeBooklistaController {
-
     private final WebMangaUpdateInfoSaveService saveService;
     private final ScrapeConvertService convertService;
-    public ScrapeBooklistaController (WebMangaUpdateInfoSaveService saveService, ScrapeConvertService convertService) {
-        this.saveService = saveService;
-        this.convertService = convertService;
-    }
 
     /** 設定 */
+    String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36";
+    String LOGIN_FORM_URL = "https://studio.booklista.co.jp/signin";
+    String USERNAME = "ngrqspcial@gmail.com";
+    String PASSWORD = "Wakuwaku@@56";
+
     String mediaName = "booklistaSTUDIOweb";
     String flashComment = "booklistaSTUDIOwebの更新情報が登録されました！";
     List<String> rootUrls = new ArrayList<>() {
@@ -47,13 +52,12 @@ public class ScrapeBooklistaController {
     String additionalUrl = "";
     String listsXpath = "//div[@class='series-box-vertical']/a";
 
-
     /** Xpath */
     String titleStringXpath = "//h1/span[not(contains(@class, 'g-hidden'))]";
     String authorStringXpath = "//div[@class='series-h-credit-user']";
     String urlXpath = "//a";
     String imgUrlXpath = "//source[contains(@media, '(max-width: 767px)')]";
-    String subTitleXpath = "//span[@class='series-ep-list-item-h-text']";
+    String subTitleXpath = "//span[contains(@class, 'series-ep-list-item-h-text')]";
     String updateXpath = "//time";
     String freeFlagXpath1 = "/descendant::div[@class='series-ep-list-symbols']//div[@class='free-icon-new-container']";
     String freeFlagXpath2 = "/descendant::div[@class='series-ep-list-symbols']//img";
@@ -62,28 +66,38 @@ public class ScrapeBooklistaController {
     /** メソッド */
     @PostMapping("/booklista/{dow}")
     public String scrape(RedirectAttributes attrs, @PathVariable("dow") Integer dow) throws IOException {
+        Map<String, String> COOKIES = login();
+
         String rootUrl = rootUrls.get(dow);
-        Document doc = Jsoup.connect(rootUrl).get();
+        Document doc = Jsoup.connect(rootUrl).userAgent(USER_AGENT).cookies(COOKIES).get();
         Elements lists = doc.selectXpath(listsXpath);
+
+        List<Map> contentsList = new ArrayList<>();
+
         for (Element list: lists) {
             String childUrl = list.attr("href");
             if (childUrl.equals("")) {
                 continue;
             }
-            scrapeChild(childUrl);
+            List<Map> contentsListChild = scrapeChild(childUrl, COOKIES);
+            contentsList.addAll(contentsListChild);
         }
+        saveService.saveAllRss(contentsList);
+
         attrs.addFlashAttribute("success", flashComment);
         return "redirect:/admin/index";
     }
 
-    public void scrapeChild(String childUrl) throws IOException {
+    public List<Map> scrapeChild(String childUrl, Map<String, String> COOKIES) throws IOException {
         String linkUrl = childUrl + "?s=1" ;
-        Document doc = Jsoup.connect(linkUrl).get();
+        Document doc = Jsoup.connect(linkUrl).userAgent(USER_AGENT).cookies(COOKIES).get();
 
         String titleString = convertService.getText(doc, titleStringXpath);
         String authorString = convertService.getText(doc, authorStringXpath);
 
         Elements lists = doc.selectXpath("//div[@class='series-ep-list']/div");
+
+        List<Map> contentsListChild = new ArrayList<>();
         for (int i = 0; i < lists.size(); i++) {
             String html = lists.get(i).html();
             Document document = Jsoup.parse(html);
@@ -112,8 +126,9 @@ public class ScrapeBooklistaController {
                 parseContents.put("imgUrl", imgUrl);
                 parseContents.put("updateAt", update);
                 parseContents.put("freeFlag", freeFlag);
-            saveService.saveRss(parseContents);
-        }
+            contentsListChild.add(parseContents);
+            }
+        return contentsListChild;
     }
 
 
@@ -143,6 +158,50 @@ public class ScrapeBooklistaController {
                 Integer freeFlag = 0;
                 return freeFlag;
             }
+        }
+    }
+
+    public Map<String, String> login() throws IOException{
+        // ログインページを取得
+        Connection.Response loginFormResponse = Jsoup.connect(LOGIN_FORM_URL)
+                                                    .method(Connection.Method.GET)
+                                                    .userAgent(USER_AGENT)
+                                                    .execute();
+        Map<String, String> COOKIES = loginFormResponse.cookies();
+        COOKIES.put("login_success_redirect_url", "https://studio.booklista.co.jp/?logout");
+        COOKIES.put("Path", "/");
+
+        // フォームを取得
+        FormElement loginForm = (FormElement)loginFormResponse.parse()
+                                                    .selectXpath("//form").first();
+        checkElement("Login Form", loginForm);
+        // ユーザー名欄を取得＆値をセット
+        Element loginField = loginForm.selectXpath("//input[@name='username']").first();
+        checkElement("Login Field", loginField);
+        loginField.val(USERNAME);
+        // パスワード欄を取得＆値をセット
+        Element passwordField = loginForm.selectXpath("//input[@name='password']").first();
+        checkElement("Password Field", passwordField);
+        passwordField.val(PASSWORD);
+        // ログイン実行
+        Connection.Response loginActionResponse = loginForm.submit()
+                                    .cookies(COOKIES)
+                                    .userAgent(USER_AGENT)
+                                    .execute();
+        //System.out.println(loginActionResponse.parse().html());
+
+        System.out.println(loginActionResponse.statusCode());
+        COOKIES.putAll(loginActionResponse.cookies());
+        COOKIES.put("login_success_redirect_url", "");
+        COOKIES.put("Max-Age", "0");
+        COOKIES.put("Expires", "Thu, 01-Jan-1970 00:00:10 GMT");
+
+        return COOKIES;
+    }
+
+    public static void checkElement(String name, Element elem) {
+        if (elem == null) {
+        throw new RuntimeException("Unable to find " + name);
         }
     }
 }

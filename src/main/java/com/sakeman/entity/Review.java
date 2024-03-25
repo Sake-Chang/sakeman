@@ -22,8 +22,11 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,6 +37,7 @@ import lombok.ToString;
 @Table(name = "review")
 @EqualsAndHashCode(exclude = {"manga", "user"})
 @ToString(exclude = {"manga", "user"})
+@Where(clause = "delete_flag=0")
 public class Review {
 
     /** フィールド */
@@ -78,6 +82,7 @@ public class Review {
     /** ユーザー：user_id */
     @ManyToOne
     @JoinColumn(name ="user_id", referencedColumnName = "id", nullable = true)
+    @JsonBackReference
     private User user;
 
     /** いいね：like_id */

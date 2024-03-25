@@ -8,6 +8,7 @@
     padding: 4px 8px;
     justify-content: space-between;
     margin-bottom: 12px;
+    width: 100%;
 }
 
 .btn-read-status-mini > .status-text {

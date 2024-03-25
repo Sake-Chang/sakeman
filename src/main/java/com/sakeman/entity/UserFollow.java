@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -40,11 +42,13 @@ public class UserFollow {
     /** フォロワー（フォローした人） */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="follower_user_id", referencedColumnName = "id")
+    @JsonBackReference
     private User follower;
 
     /** フォロイー（フォローされた人） */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "followee_user_id", referencedColumnName = "id")
+    @JsonBackReference
     private User followee;
 
     @Column(name = "registered_at", nullable = false, updatable = false)

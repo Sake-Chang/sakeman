@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h2>管理者用ページ</h2>
+    <h3>登録ジャンル 一覧</h3>
+    <form method="get" th:action="@{/admin/genre/register}">
+        <input type="submit" value="新規登録"/>
+    </form>
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>ジャンル名</th>
+        <!--
+            <th>タグづけされてる作品</th>
+        -->
+            <th>タグ</th>
+            <th>表示順</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="genre : ${genrelist}">
+            <td th:text="${genre.id}"></td>
+            <td th:text="${genre.name}"></td>
+        <!--
+            <td>
+                <th:block th:if="!${#lists.isEmpty(tag.mangaTags)}">
+                    <th:block th:each="magaTag : ${tag.mangaTags}">
+                        <p th:text="${mangaTag.manga.title}" />
+                    </th:block>
+                </th:block>
+            </td>
+        -->
+            <td>
+                <th:block th:if="!${#lists.isEmpty(genre.genreTags)}">
+                    <th:block th:each="genreTag : ${genre.genreTags}">
+                        <p th:text="${genreTag.tag.tagname}" />
+                    </th:block>
+                </th:block>
+            </td>
+            <td th:text="${genre.displayOrder}"></td>
+            <td>
+                <a class="btn-primary" th:href="@{/admin/genre/detail/{id}/(id=${genre.id})}">詳細</a>
+                <a class="btn-primary" th:href="@{/admin/genre/update/{id}/(id=${genre.id})}">編集</a>
+            </td>
+        </tr>
+    </table>
+
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
+
+
+
+</div>
+</body>
+</html>

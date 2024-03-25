@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: space-between;
     position: fixed;
-    z-index: 2;
+    z-index: 999;
     width: 100%;
     background-color: #FFFFFF;
     color: #595959;
@@ -41,14 +41,14 @@
 -------------------------------------------------- */
 
 .header {
-    padding: 8px 16px;
+    padding: 8px 12px;
     border-bottom: solid 1px #e0e0e0;
     max-width: 100%;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .header-logo-img {
-    height: 24px;
+    height: 36px;
 }
 
 .header-logo-title {
@@ -79,11 +79,14 @@
     color: #595959;
 }
 
+.header-nav-menu-mypage {
+    margin-left: 16px;
+}
+
 .header-nav-menu-mypage img {
     width: 36px;
     height: 36px;
     object-fit: cover;
     border-radius: 20px;
-    margin-left: 16px;
     border: solid 1px var(--AS);
 }

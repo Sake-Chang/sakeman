@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<!--/* 引数を受け取って呼ばれる（ object = ${user} ） */-->
+<th:block layout:fragment="btn-manga-info(object)">
+
+<!--/* まんがインフォ */-->
+<div class="dropdown manga-info">
+    <!--/* ボタン部分 */-->
+    <button class="dropdown__btn manga-info-btn" th:if="${info.manga.id != 111111}">
+        <i class="uil uil-info-circle md-24"></i>
+    </button>
+    <!--/* リスト部分 */-->
+    <div class="dropdown__body manga-info">
+
+        <!--/* 既存タグ */-->
+        <div class="info-tag-container">
+            <th:block th:if="!${#lists.isEmpty(info.manga.mangaTags)}" th:each=" ma : ${info.manga.mangaTags}">
+                <span class="tag2"># [[${ma.tag.tagname}]]</span>
+            </th:block>
+        </div>
+
+        <th:block sec:authorize="isAuthenticated()">
+            <form class="manga-info-form" method="post" th:action="@{/tag/register/{id}(id=${info.manga.id})}">
+                <div class="tag-register-container">
+                    <select class="select2-tag" multiple="multiple" name="tagName">
+                        <option value=""></option>
+                    </select>
+                        <button class="tag-register-btn" type="submit">
+                            <i class="uil uil-plus-circle md-24"></i>
+                        </button>
+                </div>
+            </form>
+        </th:block>
+
+        <th:block sec:authorize="!isAuthenticated()">
+            <input type="checkbox" id="alert-popup10">
+            <label class="alert-popup-open"  for="alert-popup10">
+                <div class="manga-info-form">
+                    <div class="tag-register-container">
+                        <div class="tag-selectbox-dummy">タグを登録する</div>
+                        <button class="tag-register-btn" type="submit" disabled>
+                            <i class="uil uil-plus-circle md-24"></i>
+                        </button>
+                    </div>
+                </div>
+            </label>
+
+            <div class="alert-popup-overlay">
+                <div class="alert-popup-window">
+                    <div class="alert-popup-container">
+                        <i class="uil uil-comment-exclamation md-16 md-PL"></i>
+                        <div class="alert-popup-text-container">
+                            <div class="alert-popup-text">タグの設定は会員限定の機能です！</div>
+                        </div>
+                    </div>
+                    <a th:href="@{/signup}">
+                        <div class="btn-alert">会員登録する（無料）</div>
+                    </a>
+                    <label class="alert-popup-close" for="alert-popup10">
+                        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                            <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                        </svg>
+                    </label>
+                </div>
+            </div>
+
+        </th:block>
+
+
+        <span class="small-text">既に登録されているタグも自分用としてさらに登録できます</span>
+    </div>
+</div> <!--/* ドロップダウン */-->
+
+</th:block> <!--/* layout:fragment */-->
+
+</html>

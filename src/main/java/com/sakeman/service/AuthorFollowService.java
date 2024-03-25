@@ -36,14 +36,16 @@ public class AuthorFollowService {
 
     /** ログインユーザーがFollowしているUserのIDのリストを作成して返す */
     public List<Integer> authorIdListFollowedByUser(@AuthenticationPrincipal UserDetail userDetail){
-        /** ログインユーザーIDでLikeを取得 */
-        List<AuthorFollow> followlist = afRepository.findByUser(userDetail.getUser());
-
-        /** ログインユーザーがLikeしているReviewのIDを入れるリストを用意 */
+        List<AuthorFollow> followlist = new ArrayList<>();
         List<Integer> authorIdList = new ArrayList<Integer>();
-        /** ログインユーザーがしているLikeのリストから順番にreviewIdを取得して新しいリストに追加 */
-        /** ログインユーザーがLikeしているReviewのIDのリストが完成 */
-        followlist.forEach(i -> authorIdList.add(i.getAuthor().getId()));
+        if (userDetail != null) {
+            /** ログインユーザーIDでLikeを取得 */
+            followlist = afRepository.findByUser(userDetail.getUser());
+
+            /** ログインユーザーがしているLikeのリストから順番にreviewIdを取得して新しいリストに追加 */
+            /** ログインユーザーがLikeしているReviewのIDのリストが完成 */
+            followlist.forEach(i -> authorIdList.add(i.getAuthor().getId()));
+        }
 
         return authorIdList;
     }

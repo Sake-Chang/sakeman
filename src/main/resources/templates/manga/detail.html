@@ -7,7 +7,7 @@
 <link rel="stylesheet" th:href="@{/css/manga-list-module.css}">
 <link rel="stylesheet" th:href="@{/css/manga/review.css}">
 <link rel="stylesheet" th:href="@{/css/tab.css}">
-<title th:text="|${manga.title}の詳細情報・レビュー|"></title>
+    <title>[[${manga.title}]]の詳細情報・レビュー | サケマン"</title>
 </head>
 
 <div layout:fragment="content"> <!-- layoutに送る -->
@@ -18,55 +18,116 @@
 
 <!--/* タグ */-->
 <div class="tag-container">
-    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
-    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
-    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
-    <span class="tag"># ダミー</span><span class="tag"># ダミー</span>
+    <th:block th:if="!${#lists.isEmpty(manga.mangaTags)}" th:each=" ma : ${manga.mangaTags}">
+        <span class="tag"># [[${ma.tag.tagname}]]</span>
+    </th:block>
+
+    <th:block sec:authorize="isAuthenticated()">
+        <form class="manga-info-form" method="post" th:action="@{/tag/register/{id}(id=${manga.id})}">
+            <div class="tag-register-container">
+                <select class="select2-tag" multiple="multiple" name="tagName">
+                    <option value=""></option>
+                </select>
+                <button class="tag-register-btn" type="submit">
+                    <i class="uil uil-plus-circle md-24"></i>
+                </button>
+            </div>
+        </form>
+     </th:block>
+
+     <th:block sec:authorize="!isAuthenticated()">
+        <input type="checkbox" id="alert-popup11">
+        <label class="alert-popup-open wd-100"  for="alert-popup11">
+            <div class="manga-info-form">
+                <div class="tag-register-container">
+                    <div class="tag-selectbox-dummy">タグを登録する</div>
+                    <button class="tag-register-btn" type="submit" disabled>
+                        <i class="uil uil-plus-circle md-24"></i>
+                    </button>
+                </div>
+            </div>
+        </label>
+
+        <div class="alert-popup-overlay">
+            <div class="alert-popup-window">
+                <div class="alert-popup-container">
+                    <i class="uil uil-comment-exclamation md-16 md-PL"></i>
+                    <div class="alert-popup-text-container">
+                        <div class="alert-popup-text">タグの設定は会員限定の機能です！</div>
+                    </div>
+                </div>
+                <a th:href="@{/signup}">
+                    <div class="btn-alert">会員登録する（無料）</div>
+                </a>
+                <label class="alert-popup-close" for="alert-popup11">
+                    <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                        <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                    </svg>
+                </label>
+            </div>
+        </div>
+
+    </th:block>
+
+
+        <span class="small-text">既に登録されているタグも自分用としてさらに登録できます</span>
+
 </div>
 
 <!--/* タブ */-->
 <div class="tab-container">
-    <a class="tab-link" th:href="@{/manga/{id}(id=${manga.id})}">
-        <div class="tab tab-current">
+    <a class="tab-link" th:href="@{/manga/detail/__${manga.id}__/info}">
+        <div class="tab" th:classappend="${tab == 'info'} ? 'tab-current'">
             <i class="uil uil-arrow-growth"></i>
             <span class="tab-text">オススメ情報</span>
         </div>
     </a>
-    <a class="tab-link" th:href="@{/manga/review/{id}(id=${manga.id})}">
-        <div class="tab">
+    <a class="tab-link" th:href="@{/manga/detail/__${manga.id}__/review}">
+        <div class="tab" th:classappend="${tab == 'review'} ? 'tab-current'">
             <i class="uil uil-comment-lines"></i>
             <span class="tab-text">みんなのレビュー</span>
         </div>
     </a>
 </div>
 
-    <div class="page-title">
-        <i class="uil uil-sync"></i>
-        <h4 th:text="|${manga.title}のWeb連載 更新情報|"></h4>
-    </div>
+<th:block th:if="${tab == 'info'}">
 
-<th:block th:if="!${infolist.isEmpty}">
-<!--/* インフォリストモジュールを呼び出し（${infolist}を引数として渡す） */-->
-<div class="container" layout:include="module/card/info-card-module :: info-card-module(object='${infolist}, ${likelist}')"></div>
-<!--/* もっとみるボタン */-->
-<div class="more-btn-container">
-    <button class="more-btn" th:attr="onClick='location.href=\''+@{/web-manga-update-info/manga/{id}(id=${manga.id})}+'\''">
-            <span class="more-btn-text">もっとみる</span>
-<!--             <span class="material-icons-outlined md-32 md-595959">chevron_right</span>
- -->    </button>
-</div>
-</th:block>
-<th:block th:if="${infolist.isEmpty}">
-    <div class="notification">
-    <i class="uil uil-sad-cry md-24 md-7e7e7e"></i>
-    <span clas=""notification-text>Webでの連載情報はありません・・・</span>
-    </div>
-</th:block>
+    <!-- Web連載更新情報 -->
+    <div class="container" th:with="text='Web連載 更新情報', class='uil-sync'" layout:include="module/other/page-title-module :: h2(object='${text}')"></div>
 
-    <div class="page-title">
-        <i class="uil uil-info-circle"></i>
-        <h4 th:text="|${manga.title}の詳細情報|"></h4>
-    </div>
+    <th:block th:if="!${infolist.isEmpty}">
+        <!--/* インフォリストモジュールを呼び出し（${infolist}を引数として渡す） */-->
+        <div class="container" layout:include="module/card/info-card-module :: info-card-module(object='${infolist}, ${likelist}')"></div>
+        <!--/* もっとみるボタン */-->
+        <div class="container" th:with="linkurl='@{/web-manga-update-info/manga/__${manga.id}__}', pageobj = ${infopage}" layout:include="module/btn/btn-see-more :: btn-see-more(object='${infolist}, ${linkurl}')"></div>
+    </th:block>
+    <th:block th:if="${infolist.isEmpty}">
+        <div th:with=" mode='text', message='この作品はWeb連載されていません。'" layout:include="module/other/message-info-module :: message-info-module(object='${mode}, ${message}')"></div>
+    </th:block>
+
+
+    <!-- 同じ著者の作品 -->
+    <div class="container" th:with="text='同じ著者の作品', class='uil-book-open'" layout:include="module/other/page-title-module :: h2(object='${text}')"></div>
+
+    <th:block th:if="!${allList.isEmpty}" th:each=" item : ${allList}">
+        <th:block th:if="!${item[1].isEmpty}">
+            <th:block th:if="${#lists.size(allList) > 1}">
+                <div class="container" th:with="text='__${item[2].name}__先生の作品', class='uil-caret-right'" layout:include="module/other/page-title-module :: h3(object='${text}, ${class}')"></div>
+            </th:block>
+
+            <!--/* まんがカードモジュールを呼び出し（${infolist}を引数として渡す） */-->
+            <div class="container" th:with="mangalist=${item[1]}" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>
+            <!--/* もっとみるボタン */-->
+            <div class="container" th:with="linkurl='@{/manga/list-author/__${item[2].id}__}', pageobj = ${item[0]}" layout:include="module/btn/btn-see-more :: btn-see-more(object='${infolist}, ${linkurl}')"></div>
+        </th:block>
+    </th:block>
+    <th:block th:if="${allList.isEmpty}">
+        <div th:with=" mode='text', message='この作品の著者が登録されていません。'" layout:include="module/other/message-info-module :: message-info-module(object='${mode}, ${message}')"></div>
+    </th:block>
+
+    <div class="container" th:with="text='__${manga.title}__の詳細情報', class='uil-info-circle'" layout:include="module/other/page-title-module :: h2(object='${text}')"></div>
+
     <table class="manga-info-table">
         <tbody>
             <tr>
@@ -89,7 +150,46 @@
             </tr>
         </tbody>
     </table>
+</th:block>
 
+<th:block th:if="${tab == 'review'}">
+    <!-- レビュー一覧 -->
+    <div class="container" th:with="text='この作品のレビュー一覧', class='uil-comment-lines'" layout:include="module/other/page-title-module :: h2(object='${text}')"></div>
+
+    <!--/* レビューモジュールを呼び出し（${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}を引数として渡す） */-->
+    <div th:if="!${reviewlist.isEmpty}" class="container" layout:include="module/card/review-card-module :: review-card-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}')"></div>
+    <!--/* もっとみるボタン */-->
+    <div class="container" th:with="linkurl='@{/review/list-manga/__${manga.id}__}', pageobj = ${reviewpage}" layout:include="module/btn/btn-see-more :: btn-see-more(object='${infolist}, ${linkurl}')"></div>
+
+    <div th:if="${reviewlist.isEmpty}" class="tmp-container-2" th:with="mode='button', text1='この作品にはまだレビューがありません。', text2='一番のりでレビューしてみませんか？', text3='(会員登録［無料］が必要です)', btnText='この作品のレビューを書く', linkurl='@{/review/post/__${manga.id}__}'" layout:include="module/other/message-info-module :: message-info-module(object='')"></div>
+
+
+    <!-- リスト一覧 -->
+    <div    class="container"
+            th:with="  text='この作品が入っているリスト一覧',
+                       class='uil-list-ul'"
+            layout:include="module/other/page-title-module :: h2(object='${text}')">
+    </div>
+
+    <!--/* リストモジュールを呼び出し（${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}を引数として渡す） */-->
+    <div    th:if="!${uclistlist.isEmpty}"
+            class="container"
+            layout:include="module/card/uclist-card :: uclist-card(object='${uclistlist}')">
+    </div>
+    <!--/* もっとみるボタン */-->
+    <div    class="container"
+            th:with="linkurl='@{/uclist/list-manga/__${manga.id}__}', pageobj = ${uclpage}" layout:include="module/btn/btn-see-more :: btn-see-more(object='${infolist}, ${linkurl}')"></div>
+
+    <div    th:if="${uclistlist.isEmpty}"
+            class="tmp-container-2"
+            th:with="   mode='button',
+                        text1='この作品が入ったリストはまだありません。',
+                        text2='この作品を含めたリストを作ってみませんか？',
+                        text3='(会員登録［無料］が必要です)',
+                        btnText='リストを作ってみる',
+                        linkurl='@{/uclist/post}'"
+            layout:include="module/other/message-info-module :: message-info-module(object='')">
+    </div>
 </div>
 
 </html>

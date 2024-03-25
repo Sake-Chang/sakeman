@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -40,6 +42,7 @@ public class Like {
     /** ユーザー：user_id */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="user_id", referencedColumnName = "id")
+    @JsonBackReference
     private User user;
 
     /** ユーザー：review_id */

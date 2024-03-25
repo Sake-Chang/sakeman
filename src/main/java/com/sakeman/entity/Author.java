@@ -17,6 +17,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -30,6 +31,7 @@ import lombok.ToString;
 @Table(name = "author")
 @ToString(exclude = {"mangaAuthors"})
 @JsonIgnoreProperties({"nameKana", "profile", "registeredAt", "updatedAt", "displayFlag", "deleteFlag", "img", "mangaAuthors"})
+@Where(clause = "delete_flag=0")
 public class Author {
 
     /** フィールド */

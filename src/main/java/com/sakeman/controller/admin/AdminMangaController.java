@@ -1,6 +1,10 @@
 package com.sakeman.controller.admin;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -17,26 +21,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sakeman.entity.Author;
+import com.sakeman.entity.GenreTag;
 import com.sakeman.entity.Manga;
 import com.sakeman.entity.MangaAuthor;
 import com.sakeman.service.AuthorService;
 import com.sakeman.service.MangaAuthorService;
 import com.sakeman.service.MangaService;
+import com.sakeman.service.StringUtilService;
+
+import lombok.RequiredArgsConstructor;
 
 
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("admin/manga")
 public class AdminMangaController {
     private final MangaService service;
     private final AuthorService authService;
     private final MangaAuthorService maService;
-
-    public AdminMangaController(MangaService service, AuthorService authService, MangaAuthorService maService) {
-        this.service = service;
-        this.authService = authService;
-        this.maService = maService;
-    }
+    private final StringUtilService utilService;
 
     /** 一覧表示 */
     @GetMapping("list")
@@ -63,22 +67,36 @@ public class AdminMangaController {
 
     /** 登録処理 */
     @PostMapping("/register")
-    public String postRegister(@Validated Manga manga, @RequestParam("authorId") List<Integer> authorIds, BindingResult res, Model model) {
+    @Transactional
+    public String postRegister(@Validated Manga manga, @RequestParam("authorName") List<String> authorNames, BindingResult res, Model model) {
         if(res.hasErrors()) {
             return getRegister(manga, model);
         }
         /** 作品を保存 */
+        manga.setTitleCleanse(utilService.cleanse(manga.getTitle()));
         manga.setDeleteFlag(0);
         manga.setDisplayFlag(1);
         service.saveManga(manga);
 
         /** mangaAuthorを作成＆保存 */
-        for(Integer i=0; i < authorIds.size(); i++) {
-            Integer authorId = authorIds.get(i);
+        for(Integer i=0; i < authorNames.size(); i++) {
+            String authorName = authorNames.get(i);
+            List<Author> thisAuthors = authService.findByName(authorName);
+
             MangaAuthor ma = new MangaAuthor();
-            ma.setAuthor(authService.getAuthor(authorId));
             ma.setManga(manga);
-            maService.saveMangaAuthor(ma);
+            if (thisAuthors.size() != 0) {
+                ma.setAuthor(thisAuthors.get(0));
+                maService.saveMangaAuthor(ma);
+            } else {
+                Author author = new Author();
+                author.setName(authorName);
+                author.setDeleteFlag(0);
+                authService.saveAuthor(author);
+
+                ma.setAuthor(author);
+                maService.saveMangaAuthor(ma);
+            }
         }
 
         return "redirect:/admin/manga/list";
@@ -93,8 +111,38 @@ public class AdminMangaController {
 
     /** 編集処理 */
     @PostMapping("update/{id}/")
-    public String updateManga(@PathVariable Integer id, @ModelAttribute Manga manga, Model model) {
+    public String updateManga(@PathVariable Integer id, @ModelAttribute Manga manga, @RequestParam("authorId") List<Integer> authorIds, Model model) {
+        manga.setTitleCleanse(utilService.cleanse(manga.getTitle()));
         service.saveManga(manga);
+
+        // 既存のmangaAuthorを取得
+        List<MangaAuthor> mangaAuthors = maService.findByMangaId(id);
+        // 空のリストを用意（含まれるauthorIdのリスト）
+        List<Integer> authorlist = new ArrayList<>();
+        // 既存のMangaAuthorを回しながらauthorIdをauthorIdsに追加
+        for(int i=0; i<mangaAuthors.size(); i++) {
+            Integer authorId = mangaAuthors.get(i).getAuthor().getId();
+            authorlist.add(authorId);
+        }
+        List<Integer> aids = new ArrayList<>(new HashSet<>(authorlist));
+
+        // 既存のリスト(ml)に含まれるかをチェックしてなければ登録
+        for(int j=0; j < authorIds.size(); j++) {
+            Integer authorId = authorIds.get(j);
+            if (!aids.contains(authorId)) {
+                MangaAuthor ma = new MangaAuthor();
+                ma.setAuthor(authService.getAuthor(authorId));
+                ma.setManga(manga);
+                maService.saveMangaAuthor(ma);
+            }
+        }
+        for(int k=0; k<aids.size(); k++) {
+            Integer authorId2 = aids.get(k);
+            if (!authorIds.contains(authorId2)) {
+                Integer deleteId = maService.findByMangaAndAuthor(service.getManga(id), authService.getAuthor(authorId2)).get().getId();
+                maService.deleteById(deleteId);
+            }
+        }
         return "redirect:/admin/manga/list";
     }
 

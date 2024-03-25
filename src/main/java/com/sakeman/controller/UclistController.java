@@ -2,9 +2,14 @@ package com.sakeman.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +17,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sakeman.entity.Manga;
+import com.sakeman.entity.Review;
 import com.sakeman.entity.Uclist;
 import com.sakeman.entity.UclistManga;
 import com.sakeman.service.MangaService;
@@ -26,44 +33,81 @@ import com.sakeman.service.UclistMangaService;
 import com.sakeman.service.UclistService;
 import com.sakeman.service.UserDetail;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Controller
 @RequestMapping("uclist")
+@RequiredArgsConstructor
 public class UclistController {
-
     private final UclistService service;
     private final MangaService mangaService;
     private final UclistMangaService umService;
     private final ReadStatusService rsService;
 
-    public UclistController(UclistService service, MangaService mangaService, UclistMangaService umService, ReadStatusService rsService) {
-        this.service = service;
-        this.mangaService = mangaService;
-        this.umService = umService;
-        this.rsService = rsService;
-    }
+    /** 一覧表示 (全件) */
+    @GetMapping({"/list", "/list/{tab}"})
+    public String getList(@AuthenticationPrincipal UserDetail userDetail,
+                          @ModelAttribute Manga manga,
+                          @PathVariable(name="tab", required=false) String tab,
+                          Integer page,
+                          Model model) {
 
-    /** 一覧表示（新着順） */
-    @GetMapping("")
-    public String getListNew(@AuthenticationPrincipal UserDetail userDetail, Model model, @ModelAttribute Manga manga, @PageableDefault(page=0, size=20, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
-        model.addAttribute("uclistlist", service.getUclistListPageable(pageable));
+        if (tab==null) tab = "recent";
+        if (page==null) page = 0;
+        Manga mangaobj = null;
+
+        Pageable pageable = getPageable(tab, page);
+        Page<Uclist> uclListPages = service.getUclistListPageable(pageable);
+
+        model.addAttribute("uclistlistPages", uclListPages);
+        model.addAttribute("uclistlist", uclListPages.getContent());
+
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
         model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
+        model.addAttribute("tab", tab);
+        model.addAttribute("mangaobj", mangaobj);
+
         return "uclist/list";
         }
 
     /** 一覧表示（人気順） */
-    @GetMapping("/popular")
-    public String getListPopular(@AuthenticationPrincipal UserDetail userDetail, Model model, @ModelAttribute Manga manga, @PageableDefault(page=0, size=20, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
-        model.addAttribute("uclistlist", service.getUclistListPageable(pageable));
+    @GetMapping({"/list-manga/{manga-id}", "/list-manga/{manga-id}/{tab}"})
+    public String getListManga(@AuthenticationPrincipal UserDetail userDetail,
+                               @ModelAttribute Manga manga,
+                               @PathVariable(name="manga-id", required=true) Integer mangaId,
+                               @PathVariable(name="tab", required=false) String tab,
+                               Integer page,
+                               Model model) {
+
+        if (tab==null) tab = "recent";
+        if (page==null) page = 0;
+        Manga mangaobj = mangaService.getManga(mangaId);
+
+        Pageable pageable = getPageable(tab, page);
+        Page<Uclist> uclistlistPages = service.getByMangaIdPageable(mangaId, pageable);
+
+        model.addAttribute("uclistlistPages", uclistlistPages);
+        model.addAttribute("uclistlist", uclistlistPages.getContent());
+
+//        /** いいねが多いレビューも返す */
+//        Pageable pageablePop = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "likes"));
+//        Page<Review> popReviewPages = service.getReviewListPageable(pageablePop);
+//        model.addAttribute("popReviewPages", popReviewPages);
+//        model.addAttribute("popReview", popReviewPages.getContent());
+
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
         model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
-        return "uclist/list-popular";
+        model.addAttribute("tab", tab);
+        model.addAttribute("mangaobj", mangaobj);
+
+        return "uclist/list";
         }
 
     /** 新規登録（画面表示） */
     @GetMapping("/post")
-    public String getRegister(@ModelAttribute Uclist uclist, Model model) {
+//    @PreAuthorize("isAuthenticated")
+    public String getRegister(@ModelAttribute Uclist uclist, Model model, RedirectAttributes attrs) {
 //        List<Manga> mangalist =mangaService.getMangaList();
 //        model.addAttribute("mangalist", mangalist);
         return "uclist/post-uclist";
@@ -71,9 +115,10 @@ public class UclistController {
 
     /** 登録処理 */
     @PostMapping("/post")
+    @PreAuthorize("isAuthenticated")
     public String postRegister(@Validated Uclist uclist, BindingResult res, @AuthenticationPrincipal UserDetail userDetail, @RequestParam("mangaId") List<Integer> mangaIds, Model model, RedirectAttributes attrs) {
         if(res.hasErrors()) {
-            return getRegister(uclist, model);
+            return getRegister(uclist, model, attrs);
         }
         uclist.setDeleteFlag(0);
         uclist.setUser(userDetail.getUser());
@@ -90,6 +135,24 @@ public class UclistController {
 
         attrs.addFlashAttribute("success", "リストが登録されました！");
         return "redirect:/";
+    }
+
+    /** Pageableオブジェクトの取得 */
+    public Pageable getPageable(String tab, int page) {
+        Pageable pageable;
+        if (tab == null) tab = "recent";
+        switch (tab) {
+            case "recent":
+                pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "registeredAt"));
+                break;
+//            case "popular":
+//                pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "likes"));
+//                break;
+            default:
+                pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "registeredAt"));
+                break;
+        }
+        return pageable;
     }
 
 }

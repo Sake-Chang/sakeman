@@ -9,6 +9,20 @@
 
 <div layout:fragment="content">
 
+<div class="tmp-container" th:if="${#authorization.expression('isAnonymous()')}">
+    <th:block th:if="${#authorization.expression('isAnonymous()')}">
+        <div class="notion-register">
+            <div class="notion-text-container">
+                <i class="uil uil-comment-exclamation md-16 md-PL"></i>
+                <div class="notion-text">リストの作成は会員限定の機能です</div>
+            </div>
+            <a th:href="@{/signup}">
+                <div class="btn-notion">会員登録はこちら</div>
+            </a>
+        </div>
+    </th:block>
+</div>
+
 <div class="postpage-title">
     <i class="uil uil-comment-edit md-24 md-highlight"></i>
     <h2>リストの作成</h2>
@@ -35,7 +49,7 @@
     <span th:errors="*{description}"></span>
     <textarea class="post-uclist-form-description" th:field="*{description}" placeholder="個人的なメモでも良いですし、推し活的なものでも良いかもしれません。(任意項目)"></textarea>
 
-    <input class="form-button" type="submit" value="投稿する" disabled="disabled">
+    <input class="form-button" type="submit" value="投稿する" th:disabled="${#authorization.expression('isAnonymous()')}">
 </form>
 
 </div>

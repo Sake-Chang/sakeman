@@ -8,16 +8,25 @@
 <!--/* カードモジュール */-->
 <div class="card-outer" th:each="info : ${infolist}">
 
+<!--/* インフォボタン */-->
+<th:block class="btn-manga-info" layout:include="module/btn/btn-manga-info :: btn-manga-info(object='${infolist}')"></th:block>
+
+
     <div class="card-head">
         <div class="info-card-info">
-        <a th:href="@{/web-manga-update-info/media/{id}(id=${info.webMangaMedia.id})}">
+        <a th:href="@{/web-manga-update-info/media/__${info.webMangaMedia.id}__}">
             <figure class="info-card-figure">
-            <img class="info-card-img" th:src="@{https://sake-man.com/__${info.webMangaMedia.logo}__}">
+            <img class="info-card-img" th:src="@{https://sake-man.com/media_logo/__${info.webMangaMedia.logo}__}">
             </figure>
         </a>
         <div class="info-card-text">
             <div class="card-user-name">
-                <a th:href="@{/manga/{id}(id=${info.manga.id})}">[[*{info.titleString}]]</a>
+                <th:block th:if="${info.manga.id==111111}">
+                    <a>[[*{info.titleString}]]</a>
+                </th:block>
+                <th:block th:unless="${info.manga.id==111111}">
+                    <a th:href="@{/manga/detail/__${info.manga.id}__}">[[*{info.titleString}]]</a>
+                </th:block>
             </div>
             <div class="info-module-head-sub">
                 <span th:if="*{info.freeFlag==1}" class="info-module-free">無料</span>
@@ -26,7 +35,7 @@
         </div>
     </div>
 
-        <th:block class="" th:with="mangaId=${info.manga.id}" layout:include="module/btn/btn-web-manga-follow :: btn-web-manga-follow(object='${mangaId}, ${webmangafollowlist}')"></th:block>
+    <th:block class="" th:with="mangaId=${info.manga.id}" layout:include="module/btn/btn-web-manga-follow :: btn-web-manga-follow(object='${mangaId}, ${webmangafollowlist}')"></th:block>
 
     </div>
 
@@ -39,31 +48,33 @@
             </th:block>
             <th:block th:unless="${info.imgUrl != null}">
                 <a th:href="*{info.url}">
-                    <img th:src="@{https://sake-man.com/noimage.jpg}">
+                    <img th:src="@{https://sake-man.com/system/noimage.jpg}">
                 </a>
             </th:block>
         </div>
         <div class="info-module-main-text">
             <span class="info-module-subtitle" th:text="*{info.subTitle}"></span>
             <span class="info-module-author" th:text="*{info.authorString}"></span>
-        <div class="info-module-meta">
-            <div class="minimanga-module-rating">
-                <th:block th:if="!${#lists.isEmpty(info.manga.reviews)}">
-                    <span class="material-icons-outlined md-18 md-star">star</span>
-                    <div class="info-module-rating-text" th:with=rating=${#aggregates.avg(info.manga.reviews.![rating])} th:text="${#numbers.formatDecimal(rating, 0, 'COMMA', 2, 'POINT')}"></div>
-                </th:block>
-                <th:block th:if="${#lists.isEmpty(info.manga.reviews)}">
-                    <span class="material-icons-outlined md-18 md-AS">star</span>
-                    <div class="info-module-rating-text disabled">0.00</div>
-                </th:block>
-            </div>
-            <a th:href="@{/manga/review/{id}(id=${info.manga.id})}">
-                <div class="info-module-review">
-                    <i class="uil uil-comment-lines md-18 md-BK"></i>
-                    <div class="info-module-review-text">[[${info.manga.reviews.size}]]件</div>
+        <th:block th:unless="${info.manga.id==111111}">
+            <div class="info-module-meta">
+                <div class="minimanga-module-rating">
+                    <th:block th:if="!${#lists.isEmpty(info.manga.reviews)}">
+                        <span class="material-icons-outlined md-18 md-star">star</span>
+                        <div class="info-module-rating-text" th:with=rating=${#aggregates.avg(info.manga.reviews.![rating])} th:text="${#numbers.formatDecimal(rating, 0, 'COMMA', 2, 'POINT')}"></div>
+                    </th:block>
+                    <th:block th:if="${#lists.isEmpty(info.manga.reviews)}">
+                        <span class="material-icons-outlined md-18 md-AS">star</span>
+                        <div class="info-module-rating-text disabled">0.00</div>
+                    </th:block>
                 </div>
-            </a>
-        </div>
+                <a th:href="@{/review/list-manga/__${info.manga.id}__}">
+                    <div class="info-module-review">
+                        <i class="uil uil-comment-lines md-18 md-BK"></i>
+                        <div class="info-module-review-text">[[${info.manga.reviews.size}]]件</div>
+                    </div>
+                </a>
+            </div>
+        </th:block>
     </div>
         </div>
 
@@ -71,7 +82,7 @@
 
         <!--/* あらすじ */-->
         <div class="read-more-002">
-            <p class="manga-card-synopsis">[[${info.manga.synopsis}]]</p>
+            <p class="manga-card-synopsis" th:classappend="${info.manga.id==111111} ? '__as'">[[${info.manga.synopsis}]]</p>
             <label><input type="checkbox"/>続きを読む</label>
         </div>
     </th:block>

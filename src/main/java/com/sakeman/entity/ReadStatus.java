@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,7 +35,7 @@ import lombok.ToString;
 @EqualsAndHashCode(exclude = {"user", "manga"})
 @ToString(exclude = {"user", "manga"})
 public class ReadStatus {
-    
+
     public static enum Status {
         未登録, 気になる, 読んだ
     }
@@ -42,7 +44,7 @@ public class ReadStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    
+
     @Column(name = "read_status")
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -50,13 +52,14 @@ public class ReadStatus {
     /** ユーザー：user_id */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="user_id", referencedColumnName = "id")
+    @JsonBackReference
     private User user;
 
     /** 作品：manga_id */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "manga_id", referencedColumnName = "id")
     private Manga manga;
-    
+
     /**　押された場所 */
     @Column(name = "push_at")
     private String pushAt;

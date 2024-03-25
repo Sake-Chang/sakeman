@@ -8,16 +8,53 @@
 
 <!--/* ユーザーボタン */-->
 <!--/* フォロー */-->
-<div    class="my-menu-btn authorfollow-toggle"
-        th:with="authorId=${author.id}"
-        th:data-author-id="${authorId}">
-    <span   class="material-icons-outlined md-24"
-            th:classappend="${#lists.contains(authorlist, author.id)} ? 'md-HL'"
-            th:text="${#lists.contains(authorlist, author.id)} ? 'person_outline' : 'person_add_alt'"></span>
-    <span   class="btn-user-follow-userpage-text"
-            th:classappend="${#lists.contains(authorlist, author.id)} ? 'md-HL'"
-            th:text="${#lists.contains(authorlist, author.id)} ? 'フォロー中' : 'フォローする'"></span>
-</div>
+
+<th:block sec:authorize="isAuthenticated()">
+<!--*/
+<th:block th:unless="${#lists.isEmpty(authorlist)}">
+/*-->
+    <div    class="my-menu-btn authorfollow-toggle"
+            th:with="authorId=${author.id}"
+            th:data-author-id="${authorId}">
+        <span   class="material-icons-outlined md-24"
+                th:classappend="${#lists.contains(authorlist, author.id)} ? 'md-HL'"
+                th:text="${#lists.contains(authorlist, author.id)} ? 'person_outline' : 'person_add_alt'"></span>
+        <p      th:classappend="${#lists.contains(authorlist, author.id)} ? 'md-HL'"
+                th:text="${#lists.contains(authorlist, author.id)} ? 'フォロー中' : 'フォローする'"></p>
+    </div>
+</th:block>
+
+<th:block sec:authorize="!isAuthenticated()">
+<!--*/
+<th:block th:if="${#lists.isEmpty(followeelist)}">
+/*-->
+    <input type="checkbox" id="alert-popup1">
+    <label    class="alert-popup-open" for="alert-popup1">
+        <div class="my-menu-btn">
+            <span   class="material-icons-outlined md-24" th:text="person_add_alt"></span>
+            <p      class="btn-user-follow-userpage-text" th:text="フォローする"></p>
+        </div>
+    </label>
+    <div class="alert-popup-overlay">
+        <div class="alert-popup-window">
+            <div class="alert-popup-container">
+                <i class="uil uil-comment-exclamation md-16 md-PL"></i>
+                <div class="alert-popup-text-container">
+                    <div class="alert-popup-text">著者フォローは会員限定の機能です！</div>
+                </div>
+            </div>
+            <a th:href="@{/signup}">
+                <div class="btn-alert">会員登録する（無料）</div>
+            </a>
+            <label class="alert-popup-close" for="alert-popup1">
+                <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                    <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                </svg>
+            </label>
+        </div>
+    </div>
+</th:block>
 
 </th:block> <!--/* layout:fragment */-->
 

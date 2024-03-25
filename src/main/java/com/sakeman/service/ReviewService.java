@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sakeman.entity.Manga;
 import com.sakeman.entity.Review;
 import com.sakeman.repository.ReviewRepository;
 
@@ -37,6 +38,16 @@ public class ReviewService {
     /** マンガIDで検索して返す */
     public List<Review> getReviewByMangaId(Integer id) {
         return reviewRepository.findByMangaId(id);
+    }
+
+    /** マンガIDで検索して返す(Pageable) */
+    public Page<Review> getReviewByMangaIdPageable(Integer id, Pageable pageable) {
+        return reviewRepository.findByMangaId(id, pageable);
+    }
+
+    /** 著者で検索 **/
+    public Page<Review> getDistinctByMangaMangaAuthorsAuthorId(Integer aId, Pageable pageable) {
+        return reviewRepository.findDistinctByMangaMangaAuthorsAuthorId(aId, pageable);
     }
 
     /** 登録処理 */

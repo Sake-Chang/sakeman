@@ -7,12 +7,41 @@
 <th:block layout:fragment="btn-like(object)">
 
 <!--/* btn-like */-->
+<th:block sec:authorize="isAuthenticated()">
+    <div    class="btn-ia like-toggle"
+            th:classappend="${#lists.contains(likelist, review.id)} ? 'md-HL'" th:data-review-id="${review.id}">
+        <span class="material-icons-outlined md-24">favorite_border</span>
+        <span class="btn-ia-text">[[${review.likes.size}]] いいね</span>
+    </div>
+</th:block>
 
-<div    class="btn-ia like-toggle"
-        th:classappend="${#lists.contains(likelist, review.id)} ? 'md-HL'" th:data-review-id="${review.id}">
-    <span class="material-icons-outlined md-24">favorite_border</span>
-    <span class="btn-ia-text">[[${review.likes.size}]] いいね</span>
-</div>
+<th:block sec:authorize="!isAuthenticated()">
+    <input type="checkbox" id="alert-popup2">
+    <label  class="btn-ia alert-popup-open"  for="alert-popup2"
+            th:classappend="${#lists.contains(likelist, review.id)} ? 'md-HL'" th:data-review-id="${review.id}">
+        <span class="material-icons-outlined md-24">favorite_border</span>
+        <span class="btn-ia-text">[[${review.likes.size}]] いいね</span>
+    </label>
+    <div class="alert-popup-overlay">
+        <div class="alert-popup-window">
+            <div class="alert-popup-container">
+                <i class="uil uil-comment-exclamation md-16 md-PL"></i>
+                <div class="alert-popup-text-container">
+                    <div class="alert-popup-text">いいね！は会員限定の機能です！</div>
+                </div>
+            </div>
+            <a th:href="@{/signup}">
+                <div class="btn-alert">会員登録する（無料）</div>
+            </a>
+            <label class="alert-popup-close" for="alert-popup2">
+                <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                    <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                </svg>
+            </label>
+        </div>
+    </div>
+</th:block>
 
 </th:block> <!--/* layout:fragment */-->
 

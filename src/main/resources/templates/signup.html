@@ -15,10 +15,9 @@
 <link rel="stylesheet" th:href="@{/css/common/login.css}">
 <link rel="stylesheet" th:href="@{/css/common/header.css}">
 <link rel="stylesheet" th:href="@{/css/common/footer.css}">
-
-    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-
+<link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet">
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+<title>ユーザー登録 | サケマン</title>
 </head>
 
 <!--
@@ -26,18 +25,28 @@
  -->
  <body>
  <main class="main">
-    <section class="main-content">
+    <section class="main-content-login">
+    <div th:if="${success}" class="alert alert-success">[[${success}]]</div>
 
-    <div class="signup-title">
-    <i class="uil uil-user-square"></i>
-    <h2>ユーザー登録</h2>
+    <figure class="signup-logo-fig">
+        <img class="signup-logo" th:src="@{https://sake-man.com/system/logo_yoko_lined.png}">
+    </figure>
+
+    <div class="bordered-box">
+        <div class="signup-title">
+            <h2>ユーザー登録</h2>
+        </div>
     </div>
 
+
+
+<!--
     <div class="welcome-message">
         <p>いらっしゃいませ！</p>
         <p>ユーザー登録すると楽しいですよ！！</p>
         <p>さっそく登録してほがらかなまんがライフを！！</p>
     </div>
+-->
 
 <div class="form-wrapper">
 <form class="signup-form" method="post" th:action="@{/signup}" th:object=${user}>

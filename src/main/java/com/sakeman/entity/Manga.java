@@ -20,6 +20,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -34,8 +35,9 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = "manga")
-@ToString(exclude = {"reviews", "mangaAuthors", "uclistMangas"})
-@JsonIgnoreProperties({"titleKana", "registeredAt", "updatedAt", "displayFlag", "deleteFlag", "completionFlag", "volume", "publisher", "publishedIn", "synopsis", "calligraphy", "csid", "reviews", "mangaAuthors", "webMangaUpdateInfos", "uclistMangas", "readStatus"})
+@ToString(exclude = {"reviews", "mangaAuthors", "uclistMangas", "webMangaFollows"})
+@JsonIgnoreProperties({"titleKana", "registeredAt", "updatedAt", "displayFlag", "deleteFlag", "completionFlag", "volume", "publisher", "publishedIn", "synopsis", "calligraphy", "csid", "reviews", "mangaAuthors", "mangaTags", "webMangaUpdateInfos", "webMangaFollows", "uclistMangas", "readStatus"})
+@Where(clause = "delete_flag=0")
 public class Manga implements Serializable {
 
     /** フィールド */
@@ -47,6 +49,9 @@ public class Manga implements Serializable {
 
     @Column(name = "title", nullable = false)
     private String title;
+
+    @Column(name = "title_cleanse", nullable = true)
+    private String titleCleanse;
 
     @Column(name = "title_kana")
     private String titleKana;
@@ -94,6 +99,14 @@ public class Manga implements Serializable {
     /** manga_author */
     @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
     private List<MangaAuthor> mangaAuthors;
+
+    /** webMangaFollows */
+    @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
+    private List<WebMangaFollow> webMangaFollows;
+
+    /** manga_tag */
+    @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
+    private List<MangaTag> mangaTags;
 
     /** webMangaUpdateInfo */
     @OneToMany(mappedBy = "manga", cascade = CascadeType.ALL)

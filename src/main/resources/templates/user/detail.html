@@ -2,75 +2,102 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
 
 <head>
-<link rel="stylesheet" th:href="@{/css/manga/user.css}">
-<link rel="stylesheet" th:href="@{/css/manga/minilist.css}">
+    <title>[[${user.username}]]のページ</title>
 </head>
 
 <div layout:fragment="content">
 
-<div class="user-prof-head">
-    <div class="user-cover">
-        <img th:src="@{https://sake-man.com/gucci_araki_02.jpeg}">
-    </div>
+    <div class="user-prof-head">
+        <!--/* カバーを呼び出し */-->
+        <div layout:include="module/other/user-cover :: user-cover(object='${user}, ${statuslist}')"></div>
 
-    <a th:href="@{/user/{id}(id=${user.id})}">
-        <th:block th:if="${user.img != null}">
-            <img class="user-prof-img" th:src="@{https://sake-man.com/__${user.img}__}">
-            <!-- /img/{path}/(path=${user.img}) -->
-        </th:block>
-        <th:block th:unless="${user.img != null}">
-            <img class="user-prof-img" th:src="@{https://sake-man.com/default_img.png}">
-        </th:block>
-    </a>
+        <a th:href="@{/user/{id}(id=${user.id})}">
+            <th:block th:if="${user.img != null}">
+                <img class="user-prof-img" th:src="@{https://sake-man.com/sakeman-user-upload/__${user.img}__}">
+                <!-- /img/{path}/(path=${user.img}) -->
+            </th:block>
+            <th:block th:unless="${user.img != null}">
+                <img class="user-prof-img" th:src="@{https://sake-man.com/system/default_img.png}">
+            </th:block>
+        </a>
 
-    <!--/* ユーザーボタンモジュールを呼び出し（${user}を引数として渡す） */-->
-    <div layout:include="module/btn/btn-user-prof :: btn-user-prof(object='${user}, ${followeelist}')"></div>
+        <!--/* ユーザープロフィールボタンを呼び出し */-->
+        <div layout:include="module/btn/btn-user-prof :: btn-user-prof(object='${user}, ${followeelist}')"></div>
 
-
-    <div class="userpage-head-container">
-        <span class="userpage-username" th:text="${user.username}"></span>
-        <div class="userpage-counter-container">
-            <div class="userpage-counter">
-                <i class="uil uil-list-ul md-24"></i>
-                <span th:text="${user.uclists.size}"></span>
+        <div class="userpage-head-container">
+            <span class="userpage-username" th:text="${user.username}"></span>
+            <div class="userpage-counter-container">
+                <div class="userpage-counter">
+                    <i class="uil uil-list-ul md-24"></i>
+                    <span th:text="${user.uclists.size}"></span>
+                </div>
+                <div class="userpage-counter">
+                    <i class="uil uil-comment-lines md-24"></i>
+                    <span th:text="${user.reviews.size}"></span>
+                </div>
             </div>
-            <div class="userpage-counter">
-                <i class="uil uil-comment-lines md-24"></i>
-                <span th:text="${user.reviews.size}"></span>
+        </div>
+        <div class="read-more-002">
+            <p class="userpage-selfintro">[[${user.selfIntro}]]</p>
+            <label><input type="checkbox"/>続きを読む</label>
+        </div>
+    </div>
+
+    <div th:if="${!#lists.isEmpty(badgelist)}" class="tag-container" th:each="badgeuser : ${badgelist}">
+        <span class="tag" th:text="${badgeuser.badge.name}"></span>
+    </div>
+
+    <!--/* タブ */-->
+    <div class="tab-container">
+        <a class="tab-link" th:href="@{/user/{id}/want/grid(id=${user.id})}">
+            <div class="tab" th:classappend="${tab == 'want'} ? 'tab-current' : ''">
+                <i class="material-icons-outlined md-24">bookmark_added</i>
+                <span class="tab-text">気になる ([[${wantpages.totalElements}]])</span>
             </div>
-        </div>
-    </div>
-    <div class="read-more-002">
-        <p class="userpage-selfintro">[[${user.selfIntro}]]</p>
-        <label><input type="checkbox"/>続きを読む</label>
-    </div>
-</div>
-
-
-    <div class="tag-container">
-        <span class="tag">伝説のレビュワー2023</span><span class="tag">アーリーアダプター</span>
-        <span class="tag">ヤンキーまんが王</span><span class="tag">史上最も買いに行かせた男（or 女）</span>
+        </a>
+        <a class="tab-link" th:href="@{/user/{id}/read/grid(id=${user.id})}">
+            <div class="tab" th:classappend="${tab == 'read'} ? 'tab-current' : ''">
+                <i class="material-icons-outlined md-24">check_box</i>
+                <span class="tab-text">読んだ ([[${readpages.totalElements}]])</span>
+            </div>
+        </a>
     </div>
 
-<!--/* タブ */-->
-<div class="tab-container">
-    <a class="tab-link" th:href="@{/user/{id}(id=${user.id})}">
-        <div class="tab tab-current">
-            <i class="material-icons-outlined md-24">bookmark_added</i>
-            <span class="tab-text">気になる</span>
-        </div>
-    </a>
-    <a class="tab-link" th:href="@{/user/{id}/read(id=${user.id})}">
-        <div class="tab">
-            <i class="material-icons-outlined md-24">check_box</i>
-            <span class="tab-text">読んだ</span>
-        </div>
-    </a>
-</div>
+<!--
+    <div class="shelf-form-container">
+        <a th:href="@{/user/{id}/{tab}/grid(id=${user.id})(tab=${tab})}">
+            <span class="material-icons-outlined shelf-form-icon current">grid_view</span>
+        </a>
+        <a th:href="@{/user/{id}/{tab}/list(id=${user.id})(tab=${tab})}">
+            <span class="material-icons-outlined shelf-form-icon">view_agenda</span>
+        </a>
+    </div>
+-->
 
+    <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+    <th:block th:if="${tab} == 'want'">
+        <div th:with="pages=${wantpages}" class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+    </th:block>
+    <th:block th:if="${tab} == 'read'">
+        <div th:with="pages=${readpages}" class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+    </th:block>
 
-<!--/* 本棚モジュールを呼び出し（${usermangalist}, ${wantlist}, ${readlist}を引数として渡す） */-->
-<div layout:include="module/card/shelf-card-module :: shelf-card-module(object='${usermangalist}, ${wantlist}, ${readlist}')"></div>
+    <!--/* 本棚モジュールを呼び出し（${userwantlist}, ${wantlist}, ${readlist}を引数として渡す） */-->
+    <th:block th:if="${tab} == 'want'">
+        <div th:with="usermangalist=${userwantlist}" layout:include="module/card/shelf-card-module :: shelf-card-module(object='${user}, ${usermangalist}, ${wantlist}, ${readlist}, ${tab}')"></div>
+    </th:block>
+    <th:block th:if="${tab} == 'read'">
+        <div th:with="usermangalist=${userreadlist}" layout:include="module/card/shelf-card-module :: shelf-card-module(object='${user}, ${usermangalist}, ${wantlist}, ${readlist}. ${tab}')"></div>
+    </th:block>
+
+    <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+    <th:block th:if="${tab} == 'want'">
+        <div th:with="pages=${wantpages}" class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+    </th:block>
+    <th:block th:if="${tab} == 'read'">
+        <div th:with="pages=${readpages}" class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+    </th:block>
+
 
 </div>
 </html>

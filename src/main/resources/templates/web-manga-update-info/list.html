@@ -2,6 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
 
 <head>
+    <title>Webまんがサイトの更新情報一覧 | サケマン</title>
+    <!--
+    <th:block th:if="${mangaobj==null}">
+        <title th:text="${media==null} ? 'Webまんがサイトの更新情報一覧 | サケマン' : '__${media.displayName}__の更新情報一覧 | サケマン' "></title>
+    </th:block>
+    <th:block th:if="${mangaobj!=null}">
+        <title th:text="__${mangaobj.title}__の更新情報一覧 | サケマン"></title>
+    </th:block>
+    -->
+
 </head>
 
 <div layout:fragment="content">
@@ -18,7 +28,7 @@
         </div>
     </a>
     <a class="tab-link" th:href="@{/web-manga-update-info}">
-        <div class="tab tab-current">
+        <div class="tab tab-current tab-webmanga" th:data-custom-content="本日__${todaylistsize}__件">
             <i class="uil uil-sync"></i>
             <span class="tab-text">Web連載 更新</span>
         </div>
@@ -26,25 +36,14 @@
 </div>
 
 <!-- 見出し -->
+<th:block th:with=" textappend= ${mangaobj != null} ? ${mangaobj.title} :
+                               (${media != null} ? ${media.displayName} :
+                                'Webまんがサイト') ">
+    <div class="container" th:with="text='__${textappend}__の更新一覧', class='uil-sync'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+</th:block>
 
-<div class="page-title">
-    <i class="uil uil-book-open"></i>
-    <h2>Webマンガサイトの更新一覧</h2>
-</div>
 
-<div class="change-toggle">
-    <div class="change-toggle-btn-current"><a class="change-toggle-link" th:href="@{/web-manga-update-info}">すべて</a></div>
-    <div class="change-toggle-btn"><a class="change-toggle-link" th:href="@{/web-manga-update-info/today}">今日のみ<br>([[${todaylistsize}]]件)</a></div>
-    <div class="change-toggle-btn"><a class="change-toggle-link" th:href="@{/web-manga-update-info/free}">無料のみ</a></div>
-    <div class="change-toggle-btn"><a class="change-toggle-link" th:href="@{/web-manga-update-info/follow}">フォローのみ</a></div>
-</div>
-
-<div class="media-tag-container">
-    <th:block class="tag" th:each="media:${medialist}">
-        <div class="media-tag"><a th:href="@{/web-manga-update-info/media/{id}(id=${media.id})}">[[${media.displayName}]]</a></div>
-    </th:block>
-</div>
-<hr>
+<div layout:include="module/other/webmanga-setting-form :: webmanga-setting-form(object='${followflag}, ${freeflag}, ${medialist}, ${genrelist}, ${genreflag}, ${webmangafollowlist}')"></div>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
 <div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
@@ -55,5 +54,5 @@
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
 <div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
 
-</div>
+<!--</div>-->
 </html>

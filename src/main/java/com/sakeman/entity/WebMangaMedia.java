@@ -1,6 +1,7 @@
 package com.sakeman.entity;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -28,7 +30,8 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = "web_manga_media")
-//@ToString(exclude = {"reviews", "mangaAuthors", "uclistMangas"})
+@ToString(exclude = {"webMangaUpdateInfos"})
+@Where(clause = "delete_flag=0")
 public class WebMangaMedia {
 
     /** フィールド */
@@ -63,6 +66,10 @@ public class WebMangaMedia {
 
     @Column(name = "rss")
     private String rss;
+
+    @Column(name= "recent_update_at")
+    private LocalDateTime recentUpdateAt;
+
 
     /** webMangaUpdateInfo */
     @OneToMany(mappedBy = "webMangaMedia", cascade = CascadeType.ALL)

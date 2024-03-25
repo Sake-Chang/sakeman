@@ -7,7 +7,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -21,12 +23,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class RssParseService {
     private final WebMangaUpdateInfoSaveService saveService;
-    public RssParseService(WebMangaUpdateInfoSaveService saveService) {
-        this.saveService = saveService;
-    }
 
     /** 1. 基本形 */
     public void getUpdateInfo(String source) throws ParserConfigurationException, SAXException, IOException {
@@ -37,6 +39,8 @@ public class RssParseService {
         Document document = builder.parse(source);
         Element channel = document.getDocumentElement();        //ルート要素取得
         NodeList items = channel.getElementsByTagName("item");  //各item取得
+
+        List<Map> pcsList = new ArrayList<>();
 
         for (int i = 0; i < items.getLength(); i++) {
             Element item = (Element) items.item(i);
@@ -49,9 +53,37 @@ public class RssParseService {
                 parseContents.put("imgUrl", getImgUrl(item, "enclosure"));
                 parseContents.put("updateAt", getLocalDateTime(item, "pubDate", "UTC"));
                 parseContents.put("freeFlag", getFreeFlag(item, "giga:freeTermStartDate"));
-            saveService.saveRss(parseContents);
+            pcsList.add(parseContents);
         }
+        saveService.saveAllRss(pcsList);
+
     }
+
+//    保存用（いじる前）
+//    public void getUpdateInfo(String source) throws ParserConfigurationException, SAXException, IOException {
+//        /** 設定 */
+//        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//        DocumentBuilder builder = factory.newDocumentBuilder();
+//
+//        Document document = builder.parse(source);
+//        Element channel = document.getDocumentElement();        //ルート要素取得
+//        NodeList items = channel.getElementsByTagName("item");  //各item取得
+//
+//        for (int i = 0; i < items.getLength(); i++) {
+//            Element item = (Element) items.item(i);
+//            Map<String, Object> parseContents = new HashMap<>();
+//                parseContents.put("mediaName", getText(channel, "title"));
+//                parseContents.put("titleString", getText(item, "description"));
+//                parseContents.put("subTitle", getText(item, "title"));
+//                parseContents.put("authorString", getText(item, "author"));
+//                parseContents.put("url", getText(item, "link"));
+//                parseContents.put("imgUrl", getImgUrl(item, "enclosure"));
+//                parseContents.put("updateAt", getLocalDateTime(item, "pubDate", "UTC"));
+//                parseContents.put("freeFlag", getFreeFlag(item, "giga:freeTermStartDate"));
+//            saveService.saveRss(parseContents);
+//        }
+//    }
+
 
     /** 1ーb. 基本形（個別URL） */
     public void getUpdateInfo(String source, String media) throws ParserConfigurationException, SAXException, IOException {
@@ -235,6 +267,7 @@ public class RssParseService {
     /** 3. UTC -> LocalDateTimeに変換 */
     private LocalDateTime getLocalDateTime(Element item, String tagName, String timeZone) {
         String updateString = getText(item, tagName);
+        System.out.println(updateString);
         LocalDateTime updateAt = ZonedDateTime
                 .parse(updateString, DateTimeFormatter.RFC_1123_DATE_TIME.withZone(ZoneId.of(timeZone)))
                 .withZoneSameInstant(ZoneId.of("Asia/Tokyo"))

@@ -7,7 +7,7 @@
 <th:block layout:fragment="search-module(object)">
 
 <!-- 検索 -->
-<form th:action="@{/search}" method="post" th:object="${manga}">
+<form th:action="@{/search}" method="get" th:object="${manga}">
 <table class="search-table">
     <tr class="search-container" colspan="all">
         <td class="select">

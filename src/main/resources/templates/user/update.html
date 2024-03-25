@@ -4,7 +4,7 @@
         layout:decorate="~{common/layout}">
 
 <head>
-<title>プロフィールの編集</title>
+    <title>プロフィールの編集</title>
 </head>
 
 <div layout:fragment="content">
@@ -15,20 +15,23 @@
 </div>
 
 <div class="form-wrapper">
-    <form class="login-form" enctype="multipart/form-data" th:method="post" th:action="@{/user/update/__${user.id}__}" th:object="${user}">
+    <form class="login-form" enctype="multipart/form-data" th:method="post" th:action="@{/user/update/{id}(id=${user.id})}" th:object="${user}">
         <input type="hidden" id="id" name="id" th:value="*{id}">
+
         <label class="login-form-label" for="username">ユーザーネーム：</label><br>
         <input class="login-input" type="text" th:field="*{username}"><br>
+
         <label class="login-form-label" for="selfIntro">自己紹介文：</label><br>
         <textarea class="prof-update-selfIntro" th:field="*{selfIntro}"></textarea><br>
+
         <label class="login-form-label" for="img">プロフィール画像：</label><br>
         <div class="prof-update-imgfile">
-            <img class="prof-update-img" th:src="@{https://sake-man.com/{src}(src=${user.img})}">
+            <img class="prof-update-img" th:src="@{https://sake-man.com/sakeman-user-upload/{src}(src=${user.img})}">
             <input class="prof-update-file" type="file" name="fileContents">
         </div>
         <input type="submit" value="更新">
     </form>
+    <a th:href="@{/password-reset}">パスワードの変更はこちら</a>
     </div>
-    <a class="btn-primary" th:href="@{/user/list}">戻る</a>
 </div>
 </html>

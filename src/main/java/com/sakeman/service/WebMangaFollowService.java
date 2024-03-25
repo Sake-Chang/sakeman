@@ -52,16 +52,18 @@ public class WebMangaFollowService {
     }
 
     /** ログインユーザーがLikeしているReviewのIDのリストを作成して返す */
+    @Transactional
     public List<Integer> webMangaIdListLikedByUser(@AuthenticationPrincipal UserDetail userDetail){
-        /** ログインユーザーIDでLikeを取得 */
-        List<WebMangaFollow> followlist = repository.findByUserId(userDetail.getUser().getId());
-
-        /** ログインユーザーがWebMangaFollowしているMangaのIDを入れるリストを用意 */
         List<Integer> mangaIdList = new ArrayList<Integer>();
-        /** ログインユーザーがしているLikeのリストから順番にmangaIdを取得して新しいリストに追加 */
-        /** ログインユーザーがLikeしているReviewのIDのリストが完成 */
-        followlist.forEach(i -> mangaIdList.add(i.getManga().getId()));
+        if (userDetail != null) {
+            /** ログインユーザーIDでLikeを取得 */
+            List<WebMangaFollow> followlist = repository.findByUserId(userDetail.getUser().getId());
 
+            /** ログインユーザーがWebMangaFollowしているMangaのIDを入れるリストを用意 */
+            /** ログインユーザーがしているLikeのリストから順番にmangaIdを取得して新しいリストに追加 */
+            /** ログインユーザーがLikeしているReviewのIDのリストが完成 */
+            followlist.forEach(i -> mangaIdList.add(i.getManga().getId()));
+        }
         return mangaIdList;
     }
 

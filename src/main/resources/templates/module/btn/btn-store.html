@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<!--/* 引数を受け取って呼ばれる（ object = ${mangaId}, ${wantlist}, ${readlist} ） */-->
+<th:block layout:fragment="btn-store(object)">
+
+    <!--/* ボタン部分 */-->
+    <button class="dropdown__btn btn-ia-container-store">
+        <span class="material-icons-outlined md-24">shopping_cart</span>
+        <span class="btn-ia-text-info">ストアでみる</span>
+    </button>
+    <!--/* リスト部分 */-->
+    <div class="dropdown__body store-list" th:with="mangaTitle=${manga.title}">
+        <ul class="store-btn-list">
+            <li class="store-btn-list-item">
+                <a class="btn-ia-container-info" target="_blank" rel="noopener" th:href="@{https://www.amazon.co.jp/b?_encoding=UTF8&tag=sakeman-22&linkCode=ur2&linkId=ff532c90a47a0af1628b89dfc8ef7f3a&camp=247&creative=1211&node=2275256051}">
+                    <figure class="store-figure">
+                        <img class="store-logo" th:src="@{https://sake-man.com/store_logo/kindle_logo.jpg}">
+                    </figure>
+                </a>
+            </li>
+
+            <li class="store-btn-list-item">
+                <a class="btn-ia-container-info" target="_blank" rel="noopener nofollow" th:href="@{//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3701716&pid=889573818&vc_url=https%3A%2F%2Febookjapan.yahoo.co.jp%2Fsearch%2F%3Fkeyword%3D{titleEncoded}%26dealerid%3D30064%26utm_source%3Dasp%26utm_medium%3Dvc%26utm_campaign%3Drate(titleEncoded=${#percentEncode.percentEncode({mangaTitle})})}">
+                    <figure class="store-figure">
+                        <img class="store-logo" th:src="@{https://sake-man.com/store_logo/ebook_logo.jpg}">
+                    </figure>
+                </a>
+            </li>
+            <li class="store-btn-list-item">
+                <a class="btn-ia-container-info" target="_blank" rel="noopener" th:href="@{https://bookwalker.jp/search/?qcat=&word={title}(title=${manga.title})}">
+                    <figure class="store-figure">
+                        <img class="store-logo" th:src="@{https://sake-man.com/store_logo/bookwalker_logo.jpg}">
+                    </figure>
+                </a>
+            </li>
+            <li class="store-btn-list-item">
+                <a class="btn-ia-container-info" target="_blank" rel="noopener" th:href="@{https://www.cmoa.jp/search/result/?header_word={title}(title=${#percentEncode.percentEncode({mangaTitle})})}">
+                    <figure class="store-figure">
+                        <img class="store-logo" th:src="@{https://sake-man.com/store_logo/cmoa_logo.jpg}">
+                    </figure>
+                </a>
+            </li>
+            <li class="store-btn-list-item">
+                <a class="btn-ia-container-info" target="_blank" rel="noopener" th:href="@{https://renta.papy.co.jp/renta/sc/frm/search?suggest=on(word=${manga.title})}">
+                    <figure class="store-figure">
+                        <img class="store-logo" th:src="@{https://sake-man.com/store_logo/renta_logo.jpg}">
+                    </figure>
+                </a>
+            </li>
+            <li class="store-btn-list-item">
+                <a class="btn-ia-container-info" target="_blank" rel="noopener" th:href="@{https://honto.jp/ebook/search_10{title}.html?srchf=1&tbty=0(title=${manga.title})}">
+                    <figure class="store-figure">
+                        <img class="store-logo" th:src="@{https://sake-man.com/store_logo/honto_logo.jpg}">
+                    </figure>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</th:block> <!--/* layout:fragment */-->
+
+</html>

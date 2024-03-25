@@ -18,8 +18,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 import lombok.ToString;
@@ -28,6 +31,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "uclist")
 @ToString(exclude = {"user", "uclistMangas"})
+@Where(clause = "delete_flag=0")
 public class Uclist {
 
     /** フィールド */
@@ -63,6 +67,7 @@ public class Uclist {
     /** ユーザー：user_id */
     @ManyToOne
     @JoinColumn(name ="user_id", referencedColumnName = "id", nullable = true)
+    @JsonBackReference
     private User user;
 
 

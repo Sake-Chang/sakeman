@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!--/* 引数を受け取って呼ばれる（ object = ${} ） */-->
+<div layout:fragment="user-cover(object)">
+    <div class="user-cover">
+        <div class="author-cover" th:with="size=${#lists.size(statuslist)}">
+            <th:block th:if="${size == 0}">
+                <div class="author-cover" layout:include="module/other/user-cover :: user-cover-zero(object='${user}, ${statuslist}')"></div>
+            </th:block>
+            <th:block th:if="${size gt 0 and size lt 5}">
+                <div class="author-cover" layout:include="module/other/user-cover :: user-cover-short(object='${user}, ${statuslist}')"></div>
+            </th:block>
+            <th:block th:if="${size ge 5}">
+                <div class="author-cover" layout:include="module/other/user-cover :: user-cover-enough(object='${user}, ${statuslist}')"></div>
+            </th:block>
+        </div>
+    </div>
+</div> <!--/* layout:fragment */-->
+
+
+<!-- 本棚登録数がゼロの場合 -->
+<div layout:fragment="user-cover-zero(object)">
+    <div class="default-user-cover">
+        <img class="default-user-cover-logo" th:src="@{https://sake-man.com/system/logo_yoko_white_lined.png}">
+        <p class="default-user-cover-text">会員No.[[${#numbers.formatInteger(user.id, 8)}]]</p>
+        <th:block sec:authorize="isAuthenticated()">
+        <th:block th:if="${user.id} == ${#authentication.principal.user.id}">
+            <div class="default-user-cover-notice-container">
+                <span class="material-icons-outlined md-16 md-LV">info</span>
+                <span class="default-user-cover-notice">本棚に作品を登録すると ここにも表示されます</span>
+            </div>
+        </th:block>
+        </th:block>
+    </div>
+</div>
+
+<!-- 本棚登録数が1~5の場合 -->
+<div layout:fragment="user-cover-short(object)">
+    <th:block th:each="i : ${#numbers.sequence(0, size-1)}">
+        <figure class="">
+            <a th:href="@{/manga/detail/__${statuslist[i].manga.id}__}">
+                <img class="testimg" th:src="${#lists.size(statuslist[i].manga.calligraphy)==0} ?
+                                     @{https://sake-man.com/system/noimage.jpg} :
+                                     @{https://sake-man.com/calligraphy/__${statuslist[i].manga.calligraphy}__}">
+            </a>
+        </figure>
+    </th:block>
+</div>
+
+<!-- 本棚登録数が5以上の場合 -->
+<div layout:fragment="user-cover-enough(object)">
+    <th:block th:each="i : ${#numbers.sequence(0,4)}">
+        <figure class="">
+            <a th:href="@{/manga/detail/__${statuslist[i].manga.id}__}">
+                <img class="testimg" th:src="@{https://sake-man.com/calligraphy/__${statuslist[i].manga.calligraphy}__}">
+            </a>
+        </figure>
+    </th:block>
+</div>
+
+</html>

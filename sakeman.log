@@ -1,0 +1,330 @@
+2024/03/25 21:08:25 INFO  [restartedMain] - Starting SakemanApplication using Java 17.0.7 on sakaihideakinoMacBook-Air.local with PID 6790 (/Users/hideaki_sakai/Documents/workspace/sakeman/target/classes started by hideaki_sakai in /Users/hideaki_sakai/Documents/workspace/sakeman)
+2024/03/25 21:08:25 INFO  [restartedMain] - The following 1 profile is active: "local"
+2024/03/25 21:08:25 INFO  [restartedMain] - Loading property from AWS Parameter Store with name: /config/sakeman_local/, optional: false
+2024/03/25 21:08:25 INFO  [restartedMain] - Loading property from AWS Parameter Store with name: /config/sakeman/, optional: false
+2024/03/25 21:08:25 INFO  [restartedMain] - Loading property from AWS Parameter Store with name: /config/application_local/, optional: false
+2024/03/25 21:08:25 INFO  [restartedMain] - Loading property from AWS Parameter Store with name: /config/application/, optional: false
+2024/03/25 21:08:25 INFO  [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024/03/25 21:08:25 INFO  [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024/03/25 21:08:26 INFO  [restartedMain] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024/03/25 21:08:27 INFO  [restartedMain] - Finished Spring Data repository scanning in 102 ms. Found 22 JPA repository interfaces.
+2024/03/25 21:08:27 INFO  [restartedMain] - BeanFactory id=e3541cc4-d161-39f4-aa16-ae50f4122069
+2024/03/25 21:08:27 INFO  [restartedMain] - Bean 'credentialsProvider' of type [com.amazonaws.auth.AWSCredentialsProviderChain] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024/03/25 21:08:27 INFO  [restartedMain] - Tomcat initialized with port(s): 8080 (http) 8009 (http)
+2024/03/25 21:08:27 INFO  [restartedMain] - Initializing ProtocolHandler ["ajp-nio-127.0.0.1-8009"]
+2024/03/25 21:08:27 INFO  [restartedMain] - Starting service [Tomcat]
+2024/03/25 21:08:27 INFO  [restartedMain] - Starting Servlet engine: [Apache Tomcat/9.0.76]
+2024/03/25 21:08:27 INFO  [restartedMain] - Initializing Spring embedded WebApplicationContext
+2024/03/25 21:08:27 INFO  [restartedMain] - Root WebApplicationContext: initialization completed in 2167 ms
+2024/03/25 21:08:28 INFO  [restartedMain] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024/03/25 21:08:28 INFO  [restartedMain] - HHH000412: Hibernate ORM core version 5.6.15.Final
+2024/03/25 21:08:28 INFO  [restartedMain] - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024/03/25 21:08:28 INFO  [restartedMain] - HikariPool-1 - Starting...
+2024/03/25 21:08:28 INFO  [restartedMain] - HikariPool-1 - Start completed.
+2024/03/25 21:08:28 INFO  [restartedMain] - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2024/03/25 21:08:30 INFO  [restartedMain] - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024/03/25 21:08:30 INFO  [restartedMain] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024/03/25 21:08:32 WARN  [restartedMain] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024/03/25 21:08:32 INFO  [restartedMain] - Adding welcome page template: index
+2024/03/25 21:08:32 INFO  [restartedMain] - Exposing 1 endpoint(s) beneath base path '/actuator'
+2024/03/25 21:08:32 INFO  [restartedMain] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@29904d5b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3a709047, org.springframework.security.web.context.SecurityContextPersistenceFilter@46a986da, org.springframework.security.web.header.HeaderWriterFilter@2478e59f, org.springframework.security.web.csrf.CsrfFilter@3f2e818f, org.springframework.security.web.authentication.logout.LogoutFilter@7980c827, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3bd48558, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1cf3dad1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@30c0bd70, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@410240df, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@69a72b6e, org.springframework.security.web.session.SessionManagementFilter@35e20d23, org.springframework.security.web.access.ExceptionTranslationFilter@10742a7, org.springframework.security.web.access.intercept.AuthorizationFilter@52fa9960]
+2024/03/25 21:08:33 INFO  [restartedMain] - LiveReload server is running on port 35729
+2024/03/25 21:08:33 INFO  [restartedMain] - Starting ProtocolHandler ["ajp-nio-127.0.0.1-8009"]
+2024/03/25 21:08:33 INFO  [restartedMain] - Tomcat started on port(s): 8080 (http) 8009 (http) with context path ''
+2024/03/25 21:08:33 INFO  [restartedMain] - Started SakemanApplication in 10.336 seconds (JVM running for 11.456)
+2024/03/25 21:08:36 INFO  [RMI TCP Connection(3)-127.0.0.1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024/03/25 21:08:36 INFO  [RMI TCP Connection(3)-127.0.0.1] - Initializing Servlet 'dispatcherServlet'
+2024/03/25 21:08:36 INFO  [RMI TCP Connection(3)-127.0.0.1] - Completed initialization in 4 ms
+2024/03/25 21:09:09 INFO  [File Watcher] - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024/03/25 21:09:09 INFO  [Thread-5] - Pausing ProtocolHandler ["ajp-nio-127.0.0.1-8009"]
+2024/03/25 21:09:09 INFO  [Thread-5] - Stopping service [Tomcat]
+2024/03/25 21:09:09 INFO  [Thread-5] - Destroying Spring FrameworkServlet 'dispatcherServlet'
+2024/03/25 21:09:09 INFO  [Thread-5] - Stopping ProtocolHandler ["ajp-nio-127.0.0.1-8009"]
+2024/03/25 21:09:09 INFO  [Thread-5] - Destroying ProtocolHandler ["ajp-nio-127.0.0.1-8009"]
+2024/03/25 21:09:09 INFO  [Thread-5] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024/03/25 21:09:09 INFO  [Thread-5] - HikariPool-1 - Shutdown initiated...
+2024/03/25 21:09:09 INFO  [Thread-5] - HikariPool-1 - Shutdown completed.
+2024/03/25 21:09:10 INFO  [restartedMain] - Starting SakemanApplication using Java 17.0.7 on sakaihideakinoMacBook-Air.local with PID 6790 (/Users/hideaki_sakai/Documents/workspace/sakeman/target/classes started by hideaki_sakai in /Users/hideaki_sakai/Documents/workspace/sakeman)
+2024/03/25 21:09:10 INFO  [restartedMain] - The following 1 profile is active: "local"
+2024/03/25 21:09:10 INFO  [restartedMain] - Loading property from AWS Parameter Store with name: /config/sakeman_local/, optional: false
+2024/03/25 21:09:10 INFO  [restartedMain] - Loading property from AWS Parameter Store with name: /config/sakeman/, optional: false
+2024/03/25 21:09:10 INFO  [restartedMain] - Loading property from AWS Parameter Store with name: /config/application_local/, optional: false
+2024/03/25 21:09:10 INFO  [restartedMain] - Loading property from AWS Parameter Store with name: /config/application/, optional: false
+2024/03/25 21:09:11 INFO  [restartedMain] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024/03/25 21:09:11 INFO  [restartedMain] - Finished Spring Data repository scanning in 76 ms. Found 22 JPA repository interfaces.
+2024/03/25 21:09:11 INFO  [restartedMain] - BeanFactory id=ab0ecc6e-0172-3d57-8a58-13e9888ed730
+2024/03/25 21:09:11 INFO  [restartedMain] - Bean 'credentialsProvider' of type [com.amazonaws.auth.AWSCredentialsProviderChain] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024/03/25 21:09:11 INFO  [restartedMain] - Tomcat initialized with port(s): 8080 (http) 8009 (http)
+2024/03/25 21:09:11 INFO  [restartedMain] - Initializing ProtocolHandler ["ajp-nio-127.0.0.1-8009"]
+2024/03/25 21:09:11 INFO  [restartedMain] - Starting service [Tomcat]
+2024/03/25 21:09:11 INFO  [restartedMain] - Starting Servlet engine: [Apache Tomcat/9.0.76]
+2024/03/25 21:09:11 INFO  [restartedMain] - Initializing Spring embedded WebApplicationContext
+2024/03/25 21:09:11 INFO  [restartedMain] - Root WebApplicationContext: initialization completed in 1180 ms
+2024/03/25 21:09:12 INFO  [restartedMain] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024/03/25 21:09:12 INFO  [restartedMain] - HikariPool-2 - Starting...
+2024/03/25 21:09:12 INFO  [restartedMain] - HikariPool-2 - Start completed.
+2024/03/25 21:09:12 INFO  [restartedMain] - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2024/03/25 21:09:13 INFO  [restartedMain] - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024/03/25 21:09:13 INFO  [restartedMain] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024/03/25 21:09:14 WARN  [restartedMain] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024/03/25 21:09:15 INFO  [restartedMain] - Adding welcome page template: index
+2024/03/25 21:09:15 INFO  [restartedMain] - Exposing 1 endpoint(s) beneath base path '/actuator'
+2024/03/25 21:09:15 INFO  [restartedMain] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@29b8cd0c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6131a685, org.springframework.security.web.context.SecurityContextPersistenceFilter@49529f3b, org.springframework.security.web.header.HeaderWriterFilter@2902279c, org.springframework.security.web.csrf.CsrfFilter@276b4e6d, org.springframework.security.web.authentication.logout.LogoutFilter@adc1950, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@48844fe, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@662d0ee3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5e2bfb7d, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@6fd1dbbc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@e55e537, org.springframework.security.web.session.SessionManagementFilter@34b7a7e6, org.springframework.security.web.access.ExceptionTranslationFilter@79508aa, org.springframework.security.web.access.intercept.AuthorizationFilter@5ad54c0]
+2024/03/25 21:09:15 INFO  [restartedMain] - LiveReload server is running on port 35729
+2024/03/25 21:09:15 INFO  [restartedMain] - Starting ProtocolHandler ["ajp-nio-127.0.0.1-8009"]
+2024/03/25 21:09:15 INFO  [restartedMain] - Tomcat started on port(s): 8080 (http) 8009 (http) with context path ''
+2024/03/25 21:09:15 INFO  [restartedMain] - Started SakemanApplication in 5.806 seconds (JVM running for 53.591)
+2024/03/25 21:09:15 INFO  [restartedMain] - Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+   SentryAutoConfiguration matched:
+      - @ConditionalOnProperty (sentry.dsn) matched (OnPropertyCondition)
+
+   SentryAutoConfiguration.HubConfiguration#sentryOptionsConfiguration matched:
+      - @ConditionalOnMissingBean (names: sentryOptionsConfiguration; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SentryAutoConfiguration.HubConfiguration.ContextTagsEventProcessorConfiguration matched:
+      - @ConditionalOnClass found required class 'org.slf4j.MDC' (OnClassCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryCheckInAspectsConfiguration matched:
+      - @ConditionalOnClass found required class 'org.aspectj.lang.ProceedingJoinPoint' (OnClassCondition)
+      - @ConditionalOnProperty (sentry.enable-aot-compatibility=false) matched (OnPropertyCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryCheckInAspectsConfiguration.SentryCheckInPointcutAutoConfiguration matched:
+      - @ConditionalOnMissingBean (names: sentryCheckInPointcut; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryErrorAspectsConfiguration matched:
+      - @ConditionalOnClass found required class 'org.aspectj.lang.ProceedingJoinPoint' (OnClassCondition)
+      - @ConditionalOnProperty (sentry.enable-aot-compatibility=false) matched (OnPropertyCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryErrorAspectsConfiguration.SentryCaptureExceptionParameterPointcutAutoConfiguration matched:
+      - @ConditionalOnMissingBean (names: sentryCaptureExceptionParameterPointcut; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryPerformanceAspectsConfiguration matched:
+      - @ConditionalOnClass found required class 'org.aspectj.lang.ProceedingJoinPoint' (OnClassCondition)
+      - AnyNestedCondition 1 matched 2 did not; NestedCondition on SentryAutoConfiguration.SentryTracingCondition.SentryTracesSamplerBeanCondition @ConditionalOnBean (types: io.sentry.SentryOptions$TracesSamplerCallback; SearchStrategy: all) did not find any beans of type io.sentry.SentryOptions$TracesSamplerCallback; NestedCondition on SentryAutoConfiguration.SentryTracingCondition.SentryTracesSampleRateCondition @ConditionalOnProperty (sentry.traces-sample-rate) matched; NestedCondition on SentryAutoConfiguration.SentryTracingCondition.SentryEnableTracingCondition @ConditionalOnProperty (sentry.enable-tracing) did not find property 'sentry.enable-tracing' (SentryAutoConfiguration.SentryTracingCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryPerformanceAspectsConfiguration.SentrySpanPointcutAutoConfiguration matched:
+      - @ConditionalOnMissingBean (names: sentrySpanPointcut; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryPerformanceAspectsConfiguration.SentryTransactionPointcutAutoConfiguration matched:
+      - @ConditionalOnMissingBean (names: sentryTransactionPointcut; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryPerformanceRestTemplateConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.client.RestTemplate' (OnClassCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryWebMvcConfiguration matched:
+      - found 'session' scope (OnWebApplicationCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryWebMvcConfiguration#sentryExceptionResolver matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.servlet.HandlerExceptionResolver' (OnClassCondition)
+      - @ConditionalOnMissingBean (types: io.sentry.spring.SentryExceptionResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryWebMvcConfiguration#sentrySpringFilter matched:
+      - @ConditionalOnMissingBean (names: sentrySpringFilter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryWebMvcConfiguration#sentryTracingFilter matched:
+      - @ConditionalOnMissingBean (names: sentryTracingFilter; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryWebMvcConfiguration#sentryUserFilter matched:
+      - @ConditionalOnBean (types: io.sentry.spring.SentryUserProvider; SearchStrategy: all) found beans 'httpServletRequestSentryUserProvider', 'springSecuritySentryUserProvider' (OnBeanCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryWebMvcConfiguration#transactionNameProvider matched:
+      - @ConditionalOnMissingBean (types: io.sentry.spring.tracing.TransactionNameProvider; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryWebMvcConfiguration.SentrySecurityConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.security.core.context.SecurityContextHolder' (OnClassCondition)
+
+
+Negative matches:
+-----------------
+
+   SentryAutoConfiguration.HubConfiguration.ApacheHttpClientTransportFactoryAutoconfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.sentry.transport.apache.ApacheHttpClientTransportFactory' (OnClassCondition)
+
+   SentryAutoConfiguration.HubConfiguration.GraphqlConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'io.sentry.graphql.SentryGraphqlExceptionHandler', 'org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter', 'graphql.GraphQLError' (OnClassCondition)
+
+   SentryAutoConfiguration.HubConfiguration.OpenTelemetryLinkErrorEventProcessorConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.sentry.opentelemetry.OpenTelemetryLinkErrorEventProcessor' (OnClassCondition)
+
+   SentryAutoConfiguration.HubConfiguration.QuartzConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'io.sentry.quartz.SentryJobListener', 'org.quartz.core.QuartzScheduler' (OnClassCondition)
+
+   SentryAutoConfiguration.HubConfiguration.SentryPerformanceWebClientConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.reactive.function.client.WebClient' (OnClassCondition)
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+2024/03/25 21:10:53 INFO  [http-nio-8080-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024/03/25 21:10:53 INFO  [http-nio-8080-exec-1] - Initializing Servlet 'dispatcherServlet'
+2024/03/25 21:10:53 INFO  [http-nio-8080-exec-1] - Completed initialization in 7 ms
+2024/03/25 21:10:55 WARN  [http-nio-8080-exec-1] - The layout:include/data-layout-include processor is deprecated and will be removed in the next major version of the layout dialect.  Use the layout:insert/data-layout-insert processor instead.  See https://github.com/ultraq/thymeleaf-layout-dialect/issues/107 for more information.
+2024/03/25 21:10:55 WARN  [http-nio-8080-exec-1] - Fragment expression "module/search-module :: search-module(object='')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:10:55 WARN  [http-nio-8080-exec-1] - Fragment expression "module/other/page-title-module :: h2(object='')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:10:55 WARN  [http-nio-8080-exec-1] - Fragment expression "module/card/uclist-card :: uclist-card(object='${uclistlist}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:10:55 WARN  [http-nio-8080-exec-1] - Fragment expression "module/btn/btn-manga-info-uclist :: btn-manga-info-uclist(object='${manga}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:10:55 WARN  [http-nio-8080-exec-1] - Fragment expression "module/btn/btn-store-circle :: btn-store-circle(object='${manga}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:10:55 WARN  [http-nio-8080-exec-1] - Fragment expression "module/btn/btn-read-status-mini :: btn-read-status-mini(object='${mangaId}, ${wantlist}, ${readlist}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:10:58 WARN  [http-nio-8080-exec-1] - Fragment expression "module/btn/btn-see-more :: btn-see-more(object='')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:10:58 WARN  [http-nio-8080-exec-1] - Fragment expression "module/card/review-card-module :: review-card-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist}, ${followeelist}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:10:58 WARN  [http-nio-8080-exec-1] - Fragment expression "module/btn/btn-user-follow :: btn-user-follow(object='${userId}, ${reviewlist}, ${followeelist}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:10:58 WARN  [http-nio-8080-exec-1] - Fragment expression "module/btn/btn-like :: btn-like(object='${reviewlist}, ${likelist}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:10:58 WARN  [http-nio-8080-exec-1] - Fragment expression "module/btn/btn-read-status :: btn-read-status(object='${mangaId}, ${wantlist}, ${readlist}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:11:06 WARN  [http-nio-8080-exec-4] - Fragment expression "module/other/webmanga-setting-form :: webmanga-setting-form(object='${followflag}, ${freeflag}, ${medialist}, ${genrelist}, ${genreflag}, ${webmangafollowlist}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:11:06 WARN  [http-nio-8080-exec-4] - Fragment expression "module/pagenation-module :: pagenation-module(object='${pages}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:11:07 WARN  [http-nio-8080-exec-4] - Fragment expression "module/card/info-card-module :: info-card-module(object='${infolist}, ${likelist}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:11:07 WARN  [http-nio-8080-exec-4] - Fragment expression "module/btn/btn-manga-info :: btn-manga-info(object='${infolist}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:11:07 WARN  [http-nio-8080-exec-4] - Fragment expression "module/btn/btn-web-manga-follow :: btn-web-manga-follow(object='${mangaId}, ${webmangafollowlist}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:11:07 WARN  [http-nio-8080-exec-4] - Fragment expression "module/btn/btn-weblike :: btn-weblike(object='${infolist}, ${likelist}')" is being wrapped as a Thymeleaf 3 fragment expression (~{...}) for backwards compatibility purposes.  This wrapping will be dropped in the next major version of the expression processor, so please rewrite as a Thymeleaf 3 fragment expression to future-proof your code.  See https://github.com/thymeleaf/thymeleaf/issues/451 for more information.
+2024/03/25 21:14:11 ERROR [http-nio-8080-exec-8] - An internal error occurred while trying to authenticate the user.
+org.springframework.security.authentication.InternalAuthenticationServiceException: User account is not enabled
+	at org.springframework.security.authentication.dao.DaoAuthenticationProvider.retrieveUser(DaoAuthenticationProvider.java:109)
+	at org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider.authenticate(AbstractUserDetailsAuthenticationProvider.java:133)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:201)
+	at org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.attemptAuthentication(UsernamePasswordAuthenticationFilter.java:85)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:227)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.csrf.CsrfFilter.doFilterInternal(CsrfFilter.java:132)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at io.sentry.spring.tracing.SentryTracingFilter.doFilterWithTransaction(SentryTracingFilter.java:106)
+	at io.sentry.spring.tracing.SentryTracingFilter.doFilterInternal(SentryTracingFilter.java:86)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at io.sentry.spring.SentrySpringFilter.doFilterInternal(SentrySpringFilter.java:71)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.springframework.security.authentication.DisabledException: User account is not enabled
+	at com.sakeman.service.UserDetailService.loadUserByUsername(UserDetailService.java:28)
+	at org.springframework.security.authentication.dao.DaoAuthenticationProvider.retrieveUser(DaoAuthenticationProvider.java:94)
+	... 73 common frames omitted
+2024/03/25 21:16:48 INFO  [RMI TCP Connection(14)-127.0.0.1] - Application shutdown requested.
+2024/03/25 21:16:48 INFO  [RMI TCP Connection(14)-127.0.0.1] - Pausing ProtocolHandler ["ajp-nio-127.0.0.1-8009"]
+2024/03/25 21:16:48 INFO  [RMI TCP Connection(14)-127.0.0.1] - Stopping service [Tomcat]
+2024/03/25 21:16:48 INFO  [RMI TCP Connection(14)-127.0.0.1] - Destroying Spring FrameworkServlet 'dispatcherServlet'
+2024/03/25 21:16:48 WARN  [RMI TCP Connection(14)-127.0.0.1] - The web application [ROOT] appears to have started a thread named [SentryExecutorServiceThreadFactory-0] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.7/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.7/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+ java.base@17.0.7/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+ java.base@17.0.7/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+ java.base@17.0.7/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+ java.base@17.0.7/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+ java.base@17.0.7/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1170)
+ java.base@17.0.7/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17.0.7/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.7/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.7/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.7/java.lang.Thread.run(Thread.java:833)
+2024/03/25 21:16:48 WARN  [RMI TCP Connection(14)-127.0.0.1] - The web application [ROOT] appears to have started a thread named [SentryHostnameCache-0] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.7/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.7/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+ java.base@17.0.7/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+ java.base@17.0.7/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+ java.base@17.0.7/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+ java.base@17.0.7/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+ java.base@17.0.7/java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:435)
+ java.base@17.0.7/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.7/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.7/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.7/java.lang.Thread.run(Thread.java:833)
+2024/03/25 21:16:48 WARN  [RMI TCP Connection(14)-127.0.0.1] - The web application [ROOT] appears to have started a thread named [SentryAsyncConnection-0] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.7/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.7/java.util.concurrent.locks.LockSupport.park(LockSupport.java:341)
+ java.base@17.0.7/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block(AbstractQueuedSynchronizer.java:506)
+ java.base@17.0.7/java.util.concurrent.ForkJoinPool.unmanagedBlock(ForkJoinPool.java:3463)
+ java.base@17.0.7/java.util.concurrent.ForkJoinPool.managedBlock(ForkJoinPool.java:3434)
+ java.base@17.0.7/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1623)
+ java.base@17.0.7/java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:435)
+ java.base@17.0.7/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.7/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.7/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.7/java.lang.Thread.run(Thread.java:833)
+2024/03/25 21:16:48 INFO  [RMI TCP Connection(14)-127.0.0.1] - Stopping ProtocolHandler ["ajp-nio-127.0.0.1-8009"]
+2024/03/25 21:16:48 INFO  [RMI TCP Connection(14)-127.0.0.1] - Destroying ProtocolHandler ["ajp-nio-127.0.0.1-8009"]
+2024/03/25 21:16:48 INFO  [RMI TCP Connection(14)-127.0.0.1] - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024/03/25 21:16:48 INFO  [RMI TCP Connection(14)-127.0.0.1] - HikariPool-2 - Shutdown initiated...
+2024/03/25 21:16:48 INFO  [RMI TCP Connection(14)-127.0.0.1] - HikariPool-2 - Shutdown completed.

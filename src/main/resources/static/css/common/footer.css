@@ -7,7 +7,7 @@
     position: fixed;
     right: 16px;
     bottom: 56px;
-    z-index: 2;
+    z-index: 100;
     color: #7a42bf;
     font-weight: 700;
     z-index: 999;
@@ -19,10 +19,11 @@
     position: fixed;
     left: 0;
     bottom: 0;
-    z-index: 2;
+    z-index: 999;
     color: #aaaaaa;
     font-weight: 700;
     border-top: solid 1px #e0e0e0;
+    padding: 2px 0;
 }
 
 .footer-nav-menu {

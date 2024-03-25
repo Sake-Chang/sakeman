@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!--/* 引数を受け取って呼ばれる（ object = ${} ） */-->
+<div layout:fragment="message-info-module(object)">
+        <!-- 文字のみ -->
+        <th:block th:if="${mode == 'text'}">
+            <div class="nolist-message-container short">
+                <span class="manga-detail-note-text">[[${message}]]</span>
+            </div>
+        </th:block>
+        <!-- ボタンあり -->
+        <th:block th:if="${mode == 'button'}">
+            <div class="notion-register">
+                <div class="notion-text-container ">
+                    <i class="uil uil-comment-exclamation md-18 md-PL"></i>
+                    <div class="col-container">
+                        <div class="suggest-text bld">[[${text1}]]</div>
+                        <div class="suggest-text">[[${text2}]]</div>
+                        <div class="suggest-text">[[${text3}]]</div>
+                    </div>
+                </div>
+                <a class="link-pl" th:href="__${linkurl}__">
+                    <div class="btn-notion">[[${btnText}]]</div>
+                </a>
+            </div>
+        </th:block>
+</div> <!--/* layout:fragment */-->
+
+</html>

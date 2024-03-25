@@ -9,7 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.sakeman.entity.User;
 import com.sakeman.entity.WebMangaUpdateInfo;
+import com.sakeman.service.UserDetail;
 
 
 public interface WebMangaUpdateInfoRepository extends JpaRepository<WebMangaUpdateInfo, Integer> {
@@ -24,5 +26,19 @@ public interface WebMangaUpdateInfoRepository extends JpaRepository<WebMangaUpda
     Page<WebMangaUpdateInfo> findByFreeFlag(Integer freeFlag, Pageable pageable);
     Page<WebMangaUpdateInfo> findByUpdateAtGreaterThanEqual(LocalDateTime today, Pageable pageable);
     List<WebMangaUpdateInfo> findByUpdateAtGreaterThanEqual(LocalDateTime today);
+
+    Page<WebMangaUpdateInfo> findDistinctByMangaMangaTagsTagIdIn(List<Integer> tagIds, Pageable pageable);
+    Page<WebMangaUpdateInfo> findDistinctByMangaMangaTagsTagGenreTagsGenreIdIn(List<Integer> genreIds, Pageable pageable);
+
+    /** 有料無料・ジャンル・フォローで絞り込み */
+    Page<WebMangaUpdateInfo> findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagInAndMangaWebMangaFollowsUserId(List<Integer> genreIds, List<Integer> freeflags, Integer userId, Pageable pageable);
+    /** 有料無料・フォローで絞り込み */
+    Page<WebMangaUpdateInfo> findDistinctByFreeFlagInAndMangaWebMangaFollowsUserId(List<Integer> freeflags, Integer userId, Pageable pageable);
+    /** 有料無料・ジャンルで絞り込み */
+    Page<WebMangaUpdateInfo> findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagIn(List<Integer> genreIds, List<Integer> freeflags, Pageable pageable);
+    /** 有料無料で絞り込み */
+    Page<WebMangaUpdateInfo> findByFreeFlagIn(List<Integer> freeflags, Pageable pageable);
+
+    Optional<WebMangaUpdateInfo> findByTitleStringAndSubTitle(String titleString, String subTitle);
 
 }

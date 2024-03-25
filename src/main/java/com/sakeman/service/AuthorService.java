@@ -34,6 +34,7 @@ public class AuthorService {
     }
 
     /** 検索結果 */
+    @Transactional
     public List<Author> getSearchResult(Author author) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching() // and条件
@@ -50,6 +51,11 @@ public class AuthorService {
     /** 著者名で検索して返す */
     public List<Author> findByName(String name) {
         return authorRepository.findByName(name);
+    }
+
+    /** まんがから検索 */
+    public List<Author> getByManga(Manga manga) {
+        return authorRepository.findByMangaAuthorsManga(manga);
     }
 
     /** 登録処理 */

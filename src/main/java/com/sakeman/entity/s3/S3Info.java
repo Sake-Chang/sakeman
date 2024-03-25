@@ -11,7 +11,9 @@ import lombok.ToString;
 @ToString
 public class S3Info {
 //    @Value("${bucket.name}")
-    @Value("sakeman-s3-img")
+//    @Value("${bucket.name.upload}")
+//    @Value("sakeman-user-upload")
+    @Value("sakeman-s3-img/sakeman-user-upload")
     private String bucketName;
 
 }

@@ -50,14 +50,16 @@ public class LikeService {
 
     /** ログインユーザーがLikeしているReviewのIDのリストを作成して返す */
     public List<Integer> reviewIdListLikedByUser(@AuthenticationPrincipal UserDetail userDetail){
-        /** ログインユーザーIDでLikeを取得 */
-        List<Like> likes = likeRepository.findByUserId(userDetail.getUser().getId());
+        List<Integer> reviewIdList = new ArrayList<>();
+        if (userDetail != null) {
+            /** ログインユーザーIDでLikeを取得 */
+            List<Like> likes = likeRepository.findByUserId(userDetail.getUser().getId());
 
-        /** ログインユーザーがLikeしているReviewのIDを入れるリストを用意 */
-        List<Integer> reviewIdList = new ArrayList<Integer>();
-        /** ログインユーザーがしているLikeのリストから順番にreviewIdを取得して新しいリストに追加 */
-        /** ログインユーザーがLikeしているReviewのIDのリストが完成 */
-        likes.forEach(i -> reviewIdList.add(i.getReview().getId()));
+            /** ログインユーザーがLikeしているReviewのIDを入れるリストを用意 */
+            /** ログインユーザーがしているLikeのリストから順番にreviewIdを取得して新しいリストに追加 */
+            /** ログインユーザーがLikeしているReviewのIDのリストが完成 */
+            likes.forEach(i -> reviewIdList.add(i.getReview().getId()));
+        }
 
         return reviewIdList;
     }

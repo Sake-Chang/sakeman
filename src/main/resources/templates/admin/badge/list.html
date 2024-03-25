@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <h2>管理者用ページ</h2>
+    <h3>バッジ 一覧</h3>
+    <form method="get" th:action="@{/admin/badge/register}">
+        <input type="submit" value="新規登録"/>
+    </form>
+
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>バッジ名</th>
+            <th>説明</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="badge : ${badgelist}">
+            <td th:text="${badge.id}"></td>
+            <td th:text="${badge.name}"></td>
+            <td th:text="${badge.description}"></td>
+            <td>
+                <a class="btn-primary" th:href="@{/admin/badge/detail/{id}/(id=${badge.id})}">詳細</a>
+                <a class="btn-primary" th:href="@{/admin/badge/update/{id}/(id=${badge.id})}">編集</a>
+            </td>
+        </tr>
+    </table>
+
+<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
+
+
+
+</div>
+</body>
+</html>

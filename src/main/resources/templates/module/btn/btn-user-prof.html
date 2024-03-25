@@ -7,40 +7,74 @@
 <th:block layout:fragment="btn-user-prof(object)">
 
 <!--/* ユーザーボタン */-->
-<!--/* マイメニュー */-->
-<th:block th:if="${user.id} == ${#authentication.principal.user.id}">
-    <div class="dropdown">
-        <!--/* ボタン部分 */-->
-        <button class="dropdown__btn my-menu-btn">
-            <span class="material-icons-outlined md-24">pending</span>
-            <p>マイメニュー</p>
-        </button>
-        <!--/* リスト部分 */-->
-        <div class="dropdown__body mymenu">
-            <ul class="dropdown__list">
-                <li class="dropdown_item"><a class="dropdown_item_text" th:href="@{/user/update/{id}(id=${user.id})}">プロフィールの編集</a></li>
-                <li class="dropdown_item"><a class="dropdown_item_text" th:href="@{/}">フォロワー・フォローした人をみる</a></li>
-                <li class="dropdown_item">
-                    <form method="post" th:action="@{/logout}">
-                        <button class="btn-logout" type="submit">ログアウト</button>
-                    </form>
-                </li>
-            </ul>
+
+<th:block sec:authorize="isAuthenticated()">
+    <!--/* マイメニュー */-->
+    <th:block th:if="${user.id} == ${#authentication.principal.user.id}">
+        <div class="dropdown">
+            <!--/* ボタン部分 */-->
+            <button class="dropdown__btn my-menu-btn">
+                <span class="material-icons-outlined md-24">pending</span>
+                <p>マイメニュー</p>
+            </button>
+            <!--/* リスト部分 */-->
+            <div class="dropdown__body mymenu">
+                <ul class="dropdown__list">
+                    <li class="dropdown_item"><a class="dropdown_item_text" th:href="@{/user/update/{id}(id=${user.id})}">プロフィールの編集</a></li>
+                    <li class="dropdown_item"><a class="dropdown_item_text" th:href="@{/}">フォロワー・フォローした人をみる</a></li>
+                    <li class="dropdown_item">
+                        <form method="post" th:action="@{/logout}">
+                            <button class="btn-logout" type="submit">ログアウト</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div> <!--/* ドロップダウン */-->
+    </th:block>
+
+    <!--/* フォロー */-->
+    <th:block   th:unless="${user.id} == ${#authentication.principal.user.id}">
+        <div    class="my-menu-btn userfollow-toggle"
+                th:with="followeeId=${user.id}"
+                th:data-followee-user-id="${followeeId}">
+            <span   class="material-icons-outlined md-24"
+                    th:classappend="${#lists.contains(followeelist, user.id)} ? 'md-HL'"
+                    th:text="${#lists.contains(followeelist, user.id)} ? 'person_outline' : 'person_add_alt'"></span>
+            <p      class="btn-user-follow-userpage-text"
+                    th:classappend="${#lists.contains(followeelist, user.id)} ? 'md-HL'"
+                    th:text="${#lists.contains(followeelist, user.id)} ? 'フォロー中' : 'フォローする'"></p>
         </div>
-    </div> <!--/* ドロップダウン */-->
+    </th:block>
 </th:block>
 
-<!--/* フォロー */-->
-<th:block   th:unless="${user.id} == ${#authentication.principal.user.id}">
-    <div    class="my-menu-btn userfollow-toggle"
-            th:with="followeeId=${user.id}"
-            th:data-followee-user-id="${followeeId}">
-        <span   class="material-icons-outlined md-24"
-                th:classappend="${#lists.contains(followeelist, user.id)} ? 'md-HL'"
-                th:text="${#lists.contains(followeelist, user.id)} ? 'person_outline' : 'person_add_alt'"></span>
-        <span   class="btn-user-follow-userpage-text"
-                th:classappend="${#lists.contains(followeelist, user.id)} ? 'md-HL'"
-                th:text="${#lists.contains(followeelist, user.id)} ? 'フォロー中' : 'フォローする'"></span>
+<th:block sec:authorize="!isAuthenticated()">
+
+    <input type="checkbox" id="alert-popup7">
+    <label    class="alert-popup-open" for="alert-popup7">
+        <div    class="my-menu-btn">
+            <span   class="material-icons-outlined md-24" th:text="person_add_alt"></span>
+            <p      class="btn-user-follow-userpage-text" th:text="フォローする"></p>
+        </div>
+    </label>
+    <div class="alert-popup-overlay">
+        <div class="alert-popup-window">
+            <div class="alert-popup-container">
+                <i class="uil uil-comment-exclamation md-16 md-PL"></i>
+                <div class="alert-popup-text-container">
+                    <div class="alert-popup-text">ユーザーフォローは会員限定の機能です！</div>
+                    <div class="alert-popup-text">会員登録をしてユーザーをフォローし、たくさんマン友を作ろう！</div>
+                </div>
+            </div>
+            <a th:href="@{/signup}">
+                <div class="btn-alert">会員登録する（無料）</div>
+            </a>
+            <label class="alert-popup-close" for="alert-popup7">
+                <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                    <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                </svg>
+            </label>
+        </div>
     </div>
 </th:block>
 

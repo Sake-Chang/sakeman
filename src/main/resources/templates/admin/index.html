@@ -15,13 +15,76 @@
 しっかり管理していきましょう！<br>
 
 <a target="_blank" href="https://www.amazon.co.jp/b?_encoding=UTF8&tag=sakeman-22&linkCode=ur2&linkId=ff532c90a47a0af1628b89dfc8ef7f3a&camp=247&creative=1211&node=2275256051">kindle</a><br><br>
-
+<form th:action="@{/admin/title-cleanse}" method="post">
+    <input type="text" name="start" id="start" placeholder="開始id">
+    <input type="text" name="end" id="end" placeholder="終了id">
+    <input type="submit" value="タイトルクレンジング">
+</form>
+<!--
 <p>URLで取得</p>
 <form th:action="@{/rssparse/getupdateinfo-individual}" method="post">
     <input type="text" name="source" id="source" placeholder="URLを入力">
     <input type="text" name="media" id="media" placeholder="メディアIDを入力">
     <input type="submit" value="実行">
 </form>
+-->
+
+<p>スクレイピング</p>
+<div class="import-btn-container">
+<form th:action="@{/scrape/urasunday}" method="post">
+    <input type="submit" value="裏サンデー">
+</form>
+<form th:action="@{/scrape/comicwalker}" method="post">
+    <input type="submit" value="ComicWalker">
+</form>
+<form th:action="@{/scrape/getsuaku}" method="post">
+    <input type="submit" value="げつあく">
+</form>
+<form th:action="@{/scrape/alphapolis}" method="post">
+    <input type="submit" value="アルファポリス">
+</form>
+<form th:action="@{/scrape/piecomics}" method="post">
+    <input type="submit" value="PIE COMICS">
+</form>
+<form th:action="@{/scrape/booklista/{dow}(dow=0)}" method="post">
+    <input type="submit" value="ブックリスタ">
+</form>
+<form th:action="@{/scrape/corkstudio/{dow}(dow=0)}" method="post">
+    <input type="submit" value="コルクスタジオ">
+</form>
+<!--
+<form th:action="@{/scrape/peep}" method="post">
+    <input type="submit" value="peep">
+</form>
+<form th:action="@{/scrape/comicfuz}" method="post">
+    <input type="submit" value="COMIC FUZ">
+</form>
+-->
+</div>
+
+<p>スクレイピング（路草・熱帯）</p>
+<div class="import-btn-container">
+<form th:action="@{/scrape/michikusa/{no}(no=0)}" method="post">
+    <input type="submit" value="路草（1）">
+</form>
+<form th:action="@{/scrape/michikusa/{no}(no=1)}" method="post">
+    <input type="submit" value="路草（2）">
+</form>
+<form th:action="@{/scrape/michikusa/{no}(no=2)}" method="post">
+    <input type="submit" value="路草（3）">
+</form>
+<form th:action="@{/scrape/michikusa/{no}(no=3)}" method="post">
+    <input type="submit" value="路草（4）">
+</form>
+<form th:action="@{/scrape/comicnettai/{no}(no=0)}" method="post">
+    <input type="submit" value="コミック熱帯（1）">
+</form>
+<form th:action="@{/scrape/comicnettai/{no}(no=1)}" method="post">
+    <input type="submit" value="コミック熱帯（2）">
+</form>
+</div>
+
+<br><hr><br>
 
 <p>rss基本</p>
 <div class="import-btn-container">
@@ -130,40 +193,6 @@
 </form>
 </div>
 
-<p>スクレイピング</p>
-<div class="import-btn-container">
-<form th:action="@{/scrape/urasunday}" method="post">
-    <input type="submit" value="裏サンデー">
-</form>
-<form th:action="@{/scrape/comicwalker}" method="post">
-    <input type="submit" value="ComicWalker">
-</form>
-<form th:action="@{/scrape/web-comic-ganma}" method="post">
-    <input type="submit" value="Webコミックガンマ">
-</form>
-<form th:action="@{/scrape/comic-howl}" method="post">
-    <input type="submit" value="comicHOWL">
-</form>
-<form th:action="@{/scrape/getsuaku}" method="post">
-    <input type="submit" value="げつあく">
-</form>
-<form th:action="@{/scrape/alphapolis}" method="post">
-    <input type="submit" value="アルファポリス">
-</form>
-<form th:action="@{/scrape/mangabangcomics/{dow}(dow=0)}" method="post">
-    <input type="submit" value="マンガBANGコミックス（1）">
-</form>
-<form th:action="@{/scrape/mangabangcomics/{dow}(dow=1)}" method="post">
-    <input type="submit" value="マンガBANGコミックス（2）">
-</form>
-<form th:action="@{/scrape/booklista/{dow}(dow=0)}" method="post">
-    <input type="submit" value="ブックリスタ">
-</form>
-<form th:action="@{/scrape/corkstudio/{dow}(dow=0)}" method="post">
-    <input type="submit" value="コルクスタジオ">
-</form>
-</div>
-
 <p>スクレイピング（ビッコミ）</p>
 <div class="import-btn-container">
 <form th:action="@{/scrape/bigcomics/{dow}(dow=0)}" method="post">
@@ -245,6 +274,22 @@
 </form>
 <form th:action="@{/scrape/younganimal/{dow}(dow=7)}" method="post">
     <input type="submit" value="ヤングアニマルWeb（読切）">
+</form>
+</div>
+
+<p>スクレイピング（その他）</p>
+<div class="import-btn-container">
+<form th:action="@{/scrape/mangabangcomics/{dow}(dow=0)}" method="post">
+    <input type="submit" value="マンガBANGコミックス（1）">
+</form>
+<form th:action="@{/scrape/mangabangcomics/{dow}(dow=1)}" method="post">
+    <input type="submit" value="マンガBANGコミックス（2）">
+</form>
+<form th:action="@{/scrape/web-comic-ganma}" method="post">
+    <input type="submit" value="Webコミックガンマ">
+</form>
+<form th:action="@{/scrape/comic-howl}" method="post">
+    <input type="submit" value="comicHOWL">
 </form>
 </div>
 

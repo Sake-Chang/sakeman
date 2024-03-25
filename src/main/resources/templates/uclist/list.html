@@ -2,9 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
 
 <head>
+    <!--
     <link rel="stylesheet" th:href="@{/css/manga/uclist.css}">
-    <link rel="stylesheet" th:href="@{/css/manga/minilist.css}">
-    <link rel="stylesheet" th:href="@{/css/common/common.css}">
+    -->
+    <th:block th:if="${mangaobj==null}">
+        <title th:text="${tab}=='recent' ? 'リスト一覧 (新着順) | サケマン' : 'リスト一覧 (人気順) | サケマン' "></title>
+    </th:block>
+    <th:block th:if="${mangaobj!=null}">
+        <title th:text="${tab}=='recent' ? '__${mangaobj.title}__を含むリスト一覧 (新着順) | サケマン' : '__${mangaobj.title}__を含むリスト一覧 (人気順) | サケマン' "></title>
+    </th:block>
 </head>
 
 <div layout:fragment="content"> <!-- layoutに送る -->
@@ -14,28 +20,39 @@
 
 <!--/* タブ */-->
 <div class="tab-container">
-    <a class="tab-link" th:href="@{/uclist}">
-        <div class="tab tab-current">
+    <th:block th:with="urlappend=${mangaobj != null} ? 'list-manga/' + ${mangaobj.id} : 'list'">
+    <a class="tab-link" th:href="@{/uclist/__${urlappend}__/recent}">
+        <div class="tab" th:classappend="${tab=='recent'} ? 'tab-current'">
             <i class="uil uil-bolt"></i>
             <span class="tab-text">新着順</span>
         </div>
     </a>
-    <a class="tab-link" th:href="@{/uclist/popular}">
-        <div class="tab">
+    <a class="tab-link">
+        <div class="tab" th:classappend="${tab=='popular'} ? 'tab-current'">
+            <!--
             <i class="uil uil-fire"></i>
-            <span class="tab-text">人気順</span>
+            -->
+            <span class="material-icons-outlined md-24 md-AS">error_outline</span>
+            <span class="tab-text md-AS">ここ開発中</span>
         </div>
     </a>
 </div>
 
 <!-- 見出し -->
-<div class="page-title">
-    <i class="uil uil-list-ul"></i>
-    <h2>みんなのリスト</h2>
-</div>
+    <th:block th:with="textappend=${mangaobj != null} ? ${mangaobj.title} + 'を含む' : ''">
+        <div class="container" th:with="text='__${textappend}__リスト一覧', class='uil-list-ul'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+    </th:block>
 
-<!--/* まんがリストモジュールを呼び出し（${uclistlist}を引数として渡す） */-->
-<div class="container" layout:include="module/card/uclist-card :: uclist-card(object='${uclistlist}')"></div>
+    <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+    <div class="container" th:with="pages=${uclistlistPages}" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+    <!--/* リストモジュールを呼び出し（${uclistlist}を引数として渡す） */-->
+    <div class="container" layout:include="module/card/uclist-card :: uclist-card(object='${uclistlist}')"></div>
+    <div th:if="${uclistlist.isEmpty}" class="nolist-message-container">
+        <div th:if="${uclistlist.isEmpty}" class="tmp-container-2" th:with="mode='button', text1='この作品を含むリストはまだありません。', text2='リストを作っててみませんか？', text3='(会員登録［無料］が必要です)', btnText='リストを作ってみる', linkurl='@{/uclist/post}'" layout:include="module/other/message-info-module :: message-info-module(object='')"></div>
+    </div>
+    <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
+    <div class="container" th:with="pages=${uclistlistPages}" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+
 
 </div>
 

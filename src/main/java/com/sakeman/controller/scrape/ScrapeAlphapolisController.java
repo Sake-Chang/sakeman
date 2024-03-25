@@ -57,6 +57,9 @@ public class ScrapeAlphapolisController {
         Elements lists = doc.selectXpath(listsXpath);
         for (Element list: lists) {
             String childUrl = list.attr("href");
+            if (childUrl == "/manga/official/571000385") {
+                continue;
+            }
             //System.out.println(childUrl);
             scrapeChild(childUrl);
         }
@@ -74,6 +77,9 @@ public class ScrapeAlphapolisController {
         String imgUrl = getImgUrl(doc, imgUrlXpath);
         String subTitle = convertService.getText(doc, subTitleXpath);
         LocalDateTime update = getUpdate(doc, updateXpath);
+        if (update.getYear() == 1975) {
+            return;
+        }
 
         System.out.println("===============================");
         System.out.println(titleString);
@@ -116,11 +122,17 @@ public class ScrapeAlphapolisController {
     public LocalDateTime getUpdate(Element doc, String updateXpath) {
         String updateRaw = doc.selectXpath(updateXpath).text();
         String updateReplace = updateRaw.replace("更新", "").replace(".", "/");
+        if (updateReplace.isEmpty()) {
+            LocalDateTime update = LocalDateTime.of(1975, 1, 1, 1, 1);
+            return update;
+        } else {
+
 //        String updateYear = updateSplit[0];
 //        String updateMonth = (String)String.format("%02d", updateSplit[1]);
 //        String updateDay = (String)String.format("%02d", updateSplit[2]);
 //        String updateString = updateYear + "/" + updateMonth + "/" +updateDay;
-        LocalDateTime update = LocalDateTime.of(LocalDate.parse(updateReplace, DateTimeFormatter.ofPattern("yyyy/MM/dd")), LocalTime.of(12,0));
-        return update;
+            LocalDateTime update = LocalDateTime.of(LocalDate.parse(updateReplace, DateTimeFormatter.ofPattern("yyyy/MM/dd")), LocalTime.of(12,0));
+            return update;
+        }
     }
 }

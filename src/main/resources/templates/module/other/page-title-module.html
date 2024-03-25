@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div layout:fragment="h2(object)">
+    <div class="page-title">
+        <i class="uil md-24 md-HL" th:classappend="__${class}__"></i>
+        <h2 th:text="${text}"></h2>
+    </div>
+</div>
+
+<div layout:fragment="h3(object)">
+    <div class="page-title">
+        <i class="uil md-20 md-HL" th:classappend="__${class}__"></i>
+        <h3 th:text="${text}"></h3>
+    </div>
+</div>
+
+</html>

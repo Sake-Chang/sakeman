@@ -1,6 +1,7 @@
 package com.sakeman.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,7 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sakeman.entity.Author;
+import com.sakeman.entity.Genre;
+import com.sakeman.entity.GenreTag;
+import com.sakeman.entity.Manga;
 import com.sakeman.entity.MangaAuthor;
+import com.sakeman.entity.Tag;
 import com.sakeman.repository.MangaAuthorRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +49,11 @@ public class MangaAuthorService {
         return mangaAuthorRepository.findByAuthorId(authorId);
     }
 
+    /** genreとtagで検索して返す */
+    public Optional<MangaAuthor> findByMangaAndAuthor(Manga manga, Author author) {
+        return mangaAuthorRepository.findByMangaAndAuthor(manga, author);
+    }
+
     /** 登録処理(1件) */
 //    @Transactional
     public MangaAuthor saveMangaAuthor(MangaAuthor mangaAuthor) {
@@ -54,6 +64,13 @@ public class MangaAuthorService {
 //  @Transactional
   public List<MangaAuthor> saveMangaAuthorAll(List<MangaAuthor> mangaAuthors) {
       return mangaAuthorRepository.saveAll(mangaAuthors);
+  }
+
+  /** 削除
+ * @return */
+  @Transactional
+  public void deleteById(Integer id) {
+      mangaAuthorRepository.deleteById(id);
   }
 
 }

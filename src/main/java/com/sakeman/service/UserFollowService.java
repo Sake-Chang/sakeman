@@ -34,15 +34,16 @@ public class UserFollowService {
 
     /** ログインユーザーがFollowしているUserのIDのリストを作成して返す */
     public List<Integer> followeeIdListFollowedByUser(@AuthenticationPrincipal UserDetail userDetail){
-        /** ログインユーザーIDでLikeを取得 */
-        List<UserFollow> followlist = ufRepository.findByFollower(userDetail.getUser());
+        List<Integer> followeeIdList = new ArrayList<>();
+        if (userDetail != null) {
+            /** ログインユーザーIDでLikeを取得 */
+            List<UserFollow> followlist = ufRepository.findByFollower(userDetail.getUser());
 
-        /** ログインユーザーがLikeしているReviewのIDを入れるリストを用意 */
-        List<Integer> followeeIdList = new ArrayList<Integer>();
-        /** ログインユーザーがしているLikeのリストから順番にreviewIdを取得して新しいリストに追加 */
-        /** ログインユーザーがLikeしているReviewのIDのリストが完成 */
-        followlist.forEach(i -> followeeIdList.add(i.getFollowee().getId()));
-
+            /** ログインユーザーがLikeしているReviewのIDを入れるリストを用意 */
+            /** ログインユーザーがしているLikeのリストから順番にreviewIdを取得して新しいリストに追加 */
+            /** ログインユーザーがLikeしているReviewのIDのリストが完成 */
+            followlist.forEach(i -> followeeIdList.add(i.getFollowee().getId()));
+        }
         return followeeIdList;
     }
 

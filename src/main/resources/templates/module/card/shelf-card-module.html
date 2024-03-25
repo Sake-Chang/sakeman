@@ -5,19 +5,25 @@
 <!--/* 引数を受け取って呼ばれる（ object = ${} ） */-->
 <div layout:fragment="shelf-card-module(object)">
 
-<div class="shelf-container">
-    <th:block th:if="!${#lists.isEmpty(usermangalist)}" th:each="um : ${usermangalist}">
-        <div class="uclist-child">
-            <a th:href="@{/manga/{id}(id=${um.manga.id})}">
-                <figure class="minimanga-module-calligrapy">
-                    <img th:src="@{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">
-                </figure>
-            </a>
+    <th:block  th:if="!${#lists.isEmpty(usermangalist)}">
+    <div class="shelf-container">
+        <div class="uclist-child" th:each="um : ${usermangalist}">
+            <div class="uclist-child-figure">
+                <a th:href="@{/manga/detail/__${um.manga.id}__}">
+                    <figure class="minimanga-module-calligrapy">
+                        <img th:src="${#lists.isEmpty(um.manga.calligraphy)} ?
+                                     @{https://sake-man.com/system/noimage.jpg} :
+                                     @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">
+                    </figure>
+                </a>
+                                    <th:block th:with="manga=${um.manga}" layout:include="module/btn/btn-store-circle :: btn-store-circle(object='${manga}')"></th:block>
+
+            </div>
 
             <div class="minimanga-module-body">
 
                 <div class="minimanga-module-title">
-                    <a th:href="@{/manga/{id}(id=${um.manga.id})}">[[${um.manga.title}]]</a>
+                    <a th:href="@{/manga/detail/__${um.manga.id}__}">[[${um.manga.title}]]</a>
                 </div>
                 <div class="minimanga-module-author-container">
                     <th:block th:if="!${#lists.isEmpty(um.manga.mangaAuthors)}" th:each="ma : ${um.manga.mangaAuthors}">
@@ -48,7 +54,7 @@
                             <div class="minimanga-module-rating-text disabled">0.00</div>
                         </th:block>
                     </div>
-                    <a th:href="@{/}">
+                    <a th:href="@{/manga/review/{id}#reviews(id=${um.manga.id})}">
                         <div class="minimanga-module-review">
                             <i class="uil uil-comment-lines md-18 md-BK"></i>
                             <div class="minimanga-module-review-text" th:text="${um.manga.reviews.size}"></div>
@@ -59,8 +65,67 @@
                 <th:block class="" th:with="umlist=${um}" layout:include="module/btn/btn-read-status-select :: btn-read-status-select(object='${usermangalist}, ${wantlist}, ${readlist}')"></th:block>
             </div>
         </div>
+    </div>
     </th:block>
-</div>
+
+
+    <th:block th:if="${#lists.isEmpty(usermangalist)}">
+        <div class="nolist-message-container">
+            <th:block th:if="${tab} == 'want'">
+                <th:block sec:authorize="isAuthenticated()">
+                    <th:block th:if="${user.id==#authentication.principal.user.id}">
+                        <div class="tmp-container-2">
+                            <div class="notion-register">
+                                <div class="notion-text-container">
+                                    <i class="uil uil-comment-exclamation md-18 md-PL"></i>
+                                    <div class="col-container">
+                                        <div class="suggest-text">「気になる」しているまんがはありません。</div>
+                                        <div class="suggest-text">オススメコンテンツから、気になるまんがを見つけて、きがるに「気になる」登録してみましょう！</div>
+                                    </div>
+                                </div>
+                                <a th:href="@{/}">
+                                    <div class="btn-notion">オススメコンテンツへ</div>
+                                </a>
+                            </div>
+                        </div>
+                    </th:block>
+                    <th:block th:unless="${user.id==#authentication.principal.user.id}">
+                        <span class="nolist-message-text">[[${user.username}]]が<br>「気になる」した まんがは<br>今はありません。</span>
+                    </th:block>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <span class="nolist-message-text">[[${user.username}]]が<br>「気になる」した まんがは<br>今はありません。</span>
+                </th:block>
+            </th:block>
+
+            <th:block th:if="${tab} == 'read'">
+                <th:block sec:authorize="isAuthenticated()">
+                    <th:block th:if="${user.id==#authentication.principal.user.id}">
+                        <div class="tmp-container-2">
+                            <div class="notion-register">
+                                <div class="notion-text-container">
+                                    <i class="uil uil-comment-exclamation md-18 md-PL"></i>
+                                    <div class="col-container">
+                                        <div class="suggest-text">「読んだ」しているまんがはありません。</div>
+                                        <div class="suggest-text">「気になる」したまんがで、もう読んだものがあれば、ステータスを「読んだ」に変更してみましょう！</div>
+                                    </div>
+                                </div>
+                                <a th:href="@{/}">
+                                    <div class="btn-notion">オススメコンテンツへ</div>
+                                </a>
+                            </div>
+                        </div>
+                    </th:block>
+                    <th:block th:unless="${user.id==#authentication.principal.user.id}">
+                        <span class="nolist-message-text">[[${user.username}]]が<br>「読んだ」した まんがは<br>今はありません。</span>
+                    </th:block>
+                </th:block>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <span class="nolist-message-text">[[${user.username}]]が<br>「読んだ」した まんがは<br>今はありません。</span>
+                </th:block>
+            </th:block>
+        </div>
+    </th:block>
 
 </div> <!--/* layout:fragment */-->
 </html>

@@ -4,6 +4,7 @@
 <head>
 <link rel="stylesheet" th:href="@{/css/manga/user.css}">
 <link rel="stylesheet" th:href="@{/css/manga/minilist.css}">
+    <title>[[${author.name}]]の詳細情報・レビュー | サケマン"</title>
 </head>
 
 <div layout:fragment="content">
@@ -13,8 +14,8 @@
         <th:block th:if="${size lt 5}">
         <th:block th:each="i : ${#numbers.sequence(0, size-1)}">
             <figure class="">
-                <a th:href="@{/manga/{id}(id=${mangalist[i].manga.id})}">
-                <img class="testimg" th:src="@{https://sake-man.com/calligraphy/__${mangalist[i].manga.calligraphy}__}">
+                <a th:href="@{/manga/{id}(id=${mangalist[i].id})}">
+                <img class="testimg" th:src="@{https://sake-man.com/calligraphy/__${mangalist[i].calligraphy}__}">
                 </a>
             </figure>
         </th:block>
@@ -22,24 +23,24 @@
         <th:block th:if="${size ge 5}">
         <th:block th:each="i : ${#numbers.sequence(0,4)}">
             <figure class="">
-                <a th:href="@{/manga/{id}(id=${mangalist[i].manga.id})}">
-                <img class="testimg" th:src="@{https://sake-man.com/calligraphy/__${mangalist[i].manga.calligraphy}__}">
+                <a th:href="@{/manga/{id}(id=${mangalist[i].id})}">
+                <img class="testimg" th:src="@{https://sake-man.com/calligraphy/__${mangalist[i].calligraphy}__}">
                 </a>
             </figure>
         </th:block>
         </th:block>
     </div>
 
-    <a th:href="@{/author/{id}(id=${author.id})}">
+    <a th:href="@{/author/__${author.id}}">
         <th:block th:if="${mangalist != null}">
-            <img class="user-prof-img" th:src="@{https://sake-man.com/calligraphy/__${mangalist[0].manga.calligraphy}__}">
+            <img class="user-prof-img" th:src="@{https://sake-man.com/calligraphy/__${mangalist[0].calligraphy}__}">
         </th:block>
-        <th:block th:unless="${author.id != null}">
+        <th:block th:unless="${mangalist != null}">
             <img class="user-prof-img" th:src="@{https://sake-man.com/default_img.png}">
         </th:block>
     </a>
 
-    <!--/* ユーザーボタンモジュールを呼び出し（${user}を引数として渡す） */-->
+    <!--/* フォローモジュールを呼び出し（${user}を引数として渡す） */-->
     <div layout:include="module/btn/btn-author-follow :: btn-author-follow(object='${author}, ${authorlist}')"></div>
 
     <div class="userpage-head-container">
@@ -65,27 +66,71 @@
 
 <!--/* タブ */-->
 <div class="tab-container">
-    <a class="tab-link" th:href="@{/author/{id}(id=${author.id})}">
-        <div class="tab tab-current">
+    <a class="tab-link" th:href="@{/author/__${author.id}__/info}">
+        <div class="tab" th:classappend="${tab == 'info'} ? 'tab-current' ">
             <i class="uil uil-book-open"></i>
             <span class="tab-text">作品一覧</span>
         </div>
     </a>
-    <a class="tab-link" th:href="@{/author/{id}(id=${author.id})}">
-        <div class="tab">
-            <i class="uil uil-sync"></i>
-            <span class="tab-text">web更新情報</span>
+    <a class="tab-link" th:href="@{/author/__${author.id}__/review}">
+        <div class="tab" th:classappend="${tab == 'review'} ? 'tab-current' ">
+            <i class="uil uil-comment-lines"></i>
+            <span class="tab-text">レビュー・リスト</span>
         </div>
     </a>
 </div>
 
 
-<!--/* 本棚モジュールを呼び出し（${usermangalist}, ${wantlist}, ${readlist}を引数として渡す） */-->
-<div class="container">
-<th:block th:each="mangalist : ${mangalist}">
-<div th:with="mangalist=${mangalist.manga}" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${wantlist}, ${readlist}')"></div>
-</th:block>
-</div>
+    <!--/* infotab */-->
+    <th:block th:if="${tab == 'info'}">
+        <div class="container" th:with="text='__${author.name}__先生のまんが一覧 (__${mangalistPage.totalElements}__作品)', class='uil-book-open'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+
+        <th:block th:if="!${mangalist.isEmpty}">
+            <div class="container" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${wantlist}, ${readlist}')"></div>
+            <div class="container" th:with="linkurl='@{/manga/list-author/__${author.id}__/recent}', pageobj = ${mangalistPage}" layout:include="module/btn/btn-see-more :: btn-see-more(object='')"></div>
+        </th:block>
+    </th:block>
+
+    <!--/* infotab */-->
+    <th:block th:if="${tab == 'review'}">
+        <div class="container" th:with="text='__${author.name}__先生作品のレビュー一覧', class='uil-comment_lines'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+
+        <!--/* レビューモジュールを呼び出し（${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}を引数として渡す） */-->
+        <div th:if="!${reviewlist.isEmpty}" class="container" layout:include="module/card/review-card-module :: review-card-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}')"></div>
+        <!--/* もっとみるボタン */-->
+        <!-- /**リンク先のページ（著者ごとのレビュー一覧ページ）が必要
+        <div class="container" th:with="linkurl='@{/review/list-manga/__${manga.id}__}', pageobj = ${reviewpage}" layout:include="module/btn/btn-see-more :: btn-see-more(object='${infolist}, ${linkurl}')"></div>
+        -->
+        <div th:if="${reviewlist.isEmpty}" class="tmp-container-2" th:with="mode='button', text1='この先生の作品にはまだレビューがありません。', text2='一番のりでレビューしてみませんか？', text3='(会員登録［無料］が必要です)', btnText='レビューを書く', linkurl='@{/review/post}'" layout:include="module/other/message-info-module :: message-info-module(object='')"></div>
+
+            <div    class="container"
+            th:with="  text='この作品が入っているリスト一覧',
+                       class='uil-list-ul'"
+            layout:include="module/other/page-title-module :: h2(object='${text}')">
+    </div>
+
+    <!--/* リストモジュールを呼び出し（${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}を引数として渡す） */-->
+    <div    th:if="!${uclistlist.isEmpty}"
+            class="container"
+            layout:include="module/card/uclist-card :: uclist-card(object='${uclistlist}')">
+    </div>
+    <!--/* もっとみるボタン */-->
+    <!--
+    <div    class="container"
+            th:with="linkurl='@{/uclist/list-manga/__${manga.id}__}', pageobj = ${uclpage}" layout:include="module/btn/btn-see-more :: btn-see-more(object='${infolist}, ${linkurl}')"></div>
+    -->
+    <div    th:if="${uclistlist.isEmpty}"
+            class="tmp-container-2"
+            th:with="   mode='button',
+                        text1='この先生の作品が入ったリストはまだありません。',
+                        text2='この先生の作品を含めたリストを作ってみませんか？',
+                        text3='(会員登録［無料］が必要です)',
+                        btnText='リストを作ってみる',
+                        linkurl='@{/uclist/post}'"
+            layout:include="module/other/message-info-module :: message-info-module(object='')">
+    </div>
+
+    </th:block>
 
 </div>
 </html>

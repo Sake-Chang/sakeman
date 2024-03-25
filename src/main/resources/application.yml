@@ -9,6 +9,22 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
+  mail:
+    host: email-smtp.ap-northeast-1.amazonaws.com
+    port: 587
+    username: AKIAW6VS2R4SDWJ6L4EU
+    password: BLbQJ1LV6YkJG2nSUMoiKAEsdOpku4+/O+l1iDIvymro
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        from: info@sake-man.com
+
+sentry:
+  dsn: https://214beeb8ed0c0fb4ee1de18ac9c3fda9@o4506971402993664.ingest.us.sentry.io/4506971405811712
+  traces-sample-rate: 1.0
       
 # UploadFileSaveDir
 #attached:

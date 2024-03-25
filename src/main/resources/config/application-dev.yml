@@ -2,6 +2,15 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 0
+      idle-timeout: 100000
+      max-lifetime: 3000000
+      read-only: false
+      connection-init-sql: "SET SESSION sql_mode='TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY'"
+    
   jpa:
     show-sql: false
     hibernate:
@@ -14,6 +23,10 @@ spring:
     init:
       mode: never
       encoding: UTF-8
+
+logging:
+  level:
+    root: error
 
 # AWS
 cloud:

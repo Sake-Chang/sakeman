@@ -52,16 +52,17 @@ public class WebLikeService {
     }
 
     /** ログインユーザーがLikeしているReviewのIDのリストを作成して返す */
+    @Transactional
     public List<Integer> webMangaUpdateInfoIdListWebLikedByUser(@AuthenticationPrincipal UserDetail userDetail){
-        /** ログインユーザーIDでLikeを取得 */
-        List<WebLike> webLikes = webLikeRepository.findByUserId(userDetail.getUser().getId());
-
-        /** ログインユーザーがLikeしているReviewのIDを入れるリストを用意 */
-        List<Integer> webMangaUpdateInfoIdList = new ArrayList<Integer>();
-        /** ログインユーザーがしているLikeのリストから順番にreviewIdを取得して新しいリストに追加 */
-        /** ログインユーザーがLikeしているReviewのIDのリストが完成 */
-        webLikes.forEach(i -> webMangaUpdateInfoIdList.add(i.getWebMangaUpdateInfo().getId()));
-
+        List<Integer> webMangaUpdateInfoIdList = new ArrayList<>();
+        if (userDetail != null) {
+            /** ログインユーザーIDでLikeを取得 */
+            List<WebLike> webLikes = webLikeRepository.findByUserId(userDetail.getUser().getId());
+            /** ログインユーザーがLikeしているReviewのIDを入れるリストを用意 */
+            /** ログインユーザーがしているLikeのリストから順番にreviewIdを取得して新しいリストに追加 */
+            /** ログインユーザーがLikeしているReviewのIDのリストが完成 */
+            webLikes.forEach(i -> webMangaUpdateInfoIdList.add(i.getWebMangaUpdateInfo().getId()));
+        }
         return webMangaUpdateInfoIdList;
     }
 
