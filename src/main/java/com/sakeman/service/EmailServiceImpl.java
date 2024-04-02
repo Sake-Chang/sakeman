@@ -11,17 +11,33 @@ public class EmailServiceImpl implements EmailService {
     private JavaMailSender javaMailSender;
 
     @Override
-    public void sendVerificationEmail(String to, String verificationLink) {
+    public void sendUserVerificationEmail(String to, String verificationLink) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setFrom("サケマン運営 <info@sake-man.com>");
-        message.setSubject("【サケマン】仮登録完了のお知らせ");
+        message.setSubject("【サケマン】登録完了用リンクのご案内");
         message.setText(
                 "この度はサケマンにご登録いただき、ありがとうございます！\n"
-                + "現在はまだ仮登録の状態です。\n"
-                + "以下のリンクをクリックして本登録をお願いします。\n"
+                + "現在はまだ登録は完了していません。\n"
+                + "以下のリンクをクリックして登録を完了してください。\n"
                 + verificationLink
                 + "\n\n※このメールは、サケマンへ登録された方に自動送信しています。本メールにお心当りがない場合は、誠に恐れ入りますが弊社サポートまでお問い合わせくださいますようお願いいたします。\n"
+                + "※このメールに記載されたURLの有効期限は1時間です。有効期限切れの場合は、お手数ですが上記リンクから改めて手続を行ってください。");
+        javaMailSender.send(message);
+    }
+
+    @Override
+    public void sendNewEmailVerificationEmail(String to, String verificationLink) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setFrom("サケマン運営 <info@sake-man.com>");
+        message.setSubject("【サケマン】メール認証用リンクのご案内");
+        message.setText(
+                "いつもサケマンをご利用いただき、ありがとうございます！\n"
+                + "現在はメールアドレスの変更は完了していません。\n"
+                + "以下のリンクをクリックしてメールアドレスの変更を完了してください。\n"
+                + verificationLink
+                + "\n\n※このメールにお心当りがない場合は、URLにアクセスせず、本メールを破棄していただきますようお願いいたします。\n"
                 + "※このメールに記載されたURLの有効期限は1時間です。有効期限切れの場合は、お手数ですが上記リンクから改めて手続を行ってください。");
         javaMailSender.send(message);
     }

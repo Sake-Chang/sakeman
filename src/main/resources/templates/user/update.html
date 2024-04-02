@@ -10,28 +10,35 @@
 <div layout:fragment="content">
 
 <div class="prof-update-title">
-    <i class="uil uil-user-circle md-36"></i>
+    <i class="uil uil-user-circle md-36 md-BK"></i>
     <h2>プロフィールの編集</h2>
 </div>
 
 <div class="form-wrapper">
-    <form class="login-form" enctype="multipart/form-data" th:method="post" th:action="@{/user/update/{id}(id=${user.id})}" th:object="${user}">
+    <form class="crud-userprof-form" enctype="multipart/form-data" th:method="post" th:action="@{/user/update/{id}(id=${user.id})}" th:object="${user}">
         <input type="hidden" id="id" name="id" th:value="*{id}">
 
-        <label class="login-form-label" for="username">ユーザーネーム：</label><br>
-        <input class="login-input" type="text" th:field="*{username}"><br>
+        <label class="crud-userprof-form-label" for="username">ユーザーネーム：</label><br>
+        <input class="crud-userprof-form-input" type="text" th:field="*{username}"><br>
 
-        <label class="login-form-label" for="selfIntro">自己紹介文：</label><br>
+        <label class="crud-userprof-form-label" for="selfIntro">自己紹介文：</label><br>
         <textarea class="prof-update-selfIntro" th:field="*{selfIntro}"></textarea><br>
 
-        <label class="login-form-label" for="img">プロフィール画像：</label><br>
+        <label class="crud-userprof-form-label" for="img">プロフィール画像：</label><br>
         <div class="prof-update-imgfile">
             <img class="prof-update-img" th:src="@{https://sake-man.com/sakeman-user-upload/{src}(src=${user.img})}">
             <input class="prof-update-file" type="file" name="fileContents">
         </div>
-        <input type="submit" value="更新">
+        <input class="crud-userprof-btn" type="submit" value="更新">
     </form>
-    <a th:href="@{/password-reset}">パスワードの変更はこちら</a>
+    </div>
+    <div class="link-container">
+    <a th:href="@{/update-password}">
+        <div class="user-update-link">パスワードの変更はこちら</div>
+    </a>
+    <a th:href="@{/update-email}">
+        <div class="user-update-link">メールアドレスの変更はこちら</div>
+    </a>
     </div>
 </div>
 </html>

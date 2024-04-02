@@ -50,7 +50,7 @@ public class ReviewController {
                           Model model) {
 
         if (tab==null) tab = "recent";
-        if (page==null) page = 0;
+        if (page==null || page < 0) page = 0;
         Manga mangaobj = null;
 
         Pageable pageable = getPageable(tab, page);
@@ -79,7 +79,7 @@ public class ReviewController {
                                Model model) {
 
         if (tab==null) tab = "recent";
-        if (page==null) page = 0;
+        if (page==null || page < 0) page = 0;
         Manga mangaobj = mangaService.getManga(mangaId);
 
         Pageable pageable = getPageable(tab, page);

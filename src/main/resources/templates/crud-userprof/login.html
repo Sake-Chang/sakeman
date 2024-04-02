@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout-crud-userprof}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/common/common.css}">
+    <link rel="stylesheet" th:href="@{/css/common/login.css}">
+
+    <title>ログイン | サケマン</title>
+</head>
+
+<th:block layout:fragment="content">
+
+    <div class="crud-userprof-title-bordered">
+        <div class="crud-userprof-title">
+            <h2>ログイン</h2>
+        </div>
+    </div>
+
+    <div th:if="${success}" class="alert-success" th:utext="${success}"></div>
+
+    <div th:if="${param.error}" class="crud-userprof-message">
+        <span class="err" th:if="${param.message.contains('badcredentialsex')}">メールアドレスまたはパスワードが正しくありません。</span>
+        <span class="err" th:if="${param.message.contains('disabledex')}">メールアドレス認証が完了していないか、アカウントが無効です。</span>
+        <span class="err" th:if="${param.message.contains('unknownerror')}">予期しない認証エラーが発生しました。</span>
+    </div>
+
+    <form class="crud-userprof-form" method="post" action="/login" th:action="@{/login}">
+        <div class="crud-userprof-labelbox">
+            <label class="crud-userprof-form-label" for="email">メールアドレス：</label>
+        </div>
+        <input class="crud-userprof-form-input" type="text" id="email" name="email">
+        <div class="crud-userprof-labelbox">
+            <label class="crud-userprof-form-label" for="password">パスワード：</label>
+        </div>
+        <input class="crud-userprof-form-input" type="password" id="password" name="password">
+        <div class="remember-me">
+            <input class="remember-me-checkbox" type="checkbox" id="remember-me" name="remember-me">
+            <label class="remember-me-text" for="remember-me">ログインしたままにする</label>
+        </div>
+        <input class="crud-userprof-btn" type="submit" name="loginRun" value="ログイン"/>
+    </form>
+
+    <a class="to-password-reset-link" th:href="@{/reset-password-request}">パスワードをお忘れですか？</a>
+
+    <div class="to-signup-container">
+        <p class="to-signup-text">アカウントをお持ちでない方は新規登録をどうぞ!!</p>
+        <a class="to-signup-link" th:href="@{/signup}">
+            <div class="btn-to-signup">新規登録</div>
+        </a>
+    </div>
+
+</th:block>
+</html>
+
+
+
+

@@ -1,5 +1,7 @@
 package com.sakeman.service;
 
+import java.util.Optional;
+
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,14 +21,13 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException(email + " Not Found"));
 
-        if (user == null) {
-            throw new UsernameNotFoundException(email + "Not Found");
-        }
         if (!user.isEnabled()) {
             throw new DisabledException("User account is not enabled");
         }
         return new UserDetail(user);
     }
+
 }

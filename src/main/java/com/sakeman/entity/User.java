@@ -70,6 +70,9 @@ public class User implements Serializable {
     @Email(message = "ちゃんとしたメールアドレスをお願いします！")
     private String email;
 
+    @Column(name = "new_email")
+    private String newEmail;
+
     @Column(name = "password", nullable = false)
     @NotBlank(message = "空白はNGです！")
     private String password;

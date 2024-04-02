@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout-crud-userprof}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/common/common.css}">
+    <link rel="stylesheet" th:href="@{/css/common/login.css}">
+
+    <title>メールアドレス変更 | サケマン</title>
+</head>
+
+<th:block layout:fragment="content">
+
+    <div class="crud-userprof-title-bordered">
+        <div class="crud-userprof-title">
+            <h2>メールアドレスの変更</h2>
+        </div>
+    </div>
+
+    <div class="crud-userprof-message">
+        <p>以下のフォームを入力して「変更する」ボタンを押してください。
+        <br>認証用メールを送信しますので、メールの内容に沿って手続を進めてください。
+        <br>認証手続が完了するまでメールアドレスは変更されません。</p>
+    </div>
+
+    <form class="crud-userprof-form" method="post" th:action="@{/update-email}" th:object="${updateEmailForm}">
+        <div class="crud-userprof-labelbox">
+            <label class="crud-userprof-form-label" for="email">新しいメールアドレス :</label>
+            <span th:errors="*{email}" class="crud-userprof-err"></span>
+        </div>
+        <input class="crud-userprof-form-input" type="text" th:field="*{email}">
+
+        <div class="crud-userprof-labelbox">
+            <label class="crud-userprof-form-label" for="password">パスワード :</label>
+            <span th:errors="*{password}" class="crud-userprof-err"></span>
+        </div>
+        <input class="crud-userprof-form-input" type="password" th:field="*{password}">
+
+        <input class="crud-userprof-btn" type="submit" value="変更する">
+    </form>
+
+</th:block>
+</html>

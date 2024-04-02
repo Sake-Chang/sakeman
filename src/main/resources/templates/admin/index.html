@@ -34,9 +34,6 @@
 <form th:action="@{/scrape/urasunday}" method="post">
     <input type="submit" value="裏サンデー">
 </form>
-<form th:action="@{/scrape/comicwalker}" method="post">
-    <input type="submit" value="ComicWalker">
-</form>
 <form th:action="@{/scrape/getsuaku}" method="post">
     <input type="submit" value="げつあく">
 </form>
@@ -45,12 +42,6 @@
 </form>
 <form th:action="@{/scrape/piecomics}" method="post">
     <input type="submit" value="PIE COMICS">
-</form>
-<form th:action="@{/scrape/booklista/{dow}(dow=0)}" method="post">
-    <input type="submit" value="ブックリスタ">
-</form>
-<form th:action="@{/scrape/corkstudio/{dow}(dow=0)}" method="post">
-    <input type="submit" value="コルクスタジオ">
 </form>
 <!--
 <form th:action="@{/scrape/peep}" method="post">
@@ -285,11 +276,20 @@
 <form th:action="@{/scrape/mangabangcomics/{dow}(dow=1)}" method="post">
     <input type="submit" value="マンガBANGコミックス（2）">
 </form>
+<form th:action="@{/scrape/booklista/{dow}(dow=0)}" method="post">
+    <input type="submit" value="ブックリスタ">
+</form>
+<form th:action="@{/scrape/corkstudio/{dow}(dow=0)}" method="post">
+    <input type="submit" value="コルクスタジオ">
+</form>
 <form th:action="@{/scrape/web-comic-ganma}" method="post">
     <input type="submit" value="Webコミックガンマ">
 </form>
 <form th:action="@{/scrape/comic-howl}" method="post">
     <input type="submit" value="comicHOWL">
+</form>
+<form th:action="@{/scrape/comicwalker}" method="post">
+    <input type="submit" value="ComicWalker">
 </form>
 </div>
 

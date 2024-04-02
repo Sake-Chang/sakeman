@@ -2,6 +2,7 @@ package com.sakeman.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,18 +38,23 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
+    /** 全件検索 (ページング) **/
+    public Page<User> getEnabledUserListPageable(boolean bool, Pageable pageable){
+        return userRepository.findByIsEnabled(bool, pageable);
+    }
+
     /** ユーザーIDで検索 */
     public User getUser(Integer id) {
         return userRepository.findById(id);
     }
 
     /** Emailで検索 **/
-    public User getByEmail(String email) {
+    public Optional<User> getByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     /** verificationTokenで検索 **/
-    public User getByVerificationToken(String verificationToken) {
+    public Optional<User> getByVerificationToken(String verificationToken) {
         return userRepository.findByVerificationToken(verificationToken);
     }
 
@@ -62,22 +68,7 @@ public class UserService {
         return userRepository.findAll(Example.of(user, matcher));
     }
 
-    public String getVerificationLink(HttpServletRequest request, String token) {
-        // ベースURLの取得
-        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-        // リンクの構築
-        return baseUrl + "/verify?token=" + token;
-    }
-
-    public String getPasswordResetLink(HttpServletRequest request, String token) {
-        // ベースURLの取得
-        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-        // リンクの構築
-        return baseUrl + "/password-reset/reset-form?token=" + token;
-    }
-
-    /* CREATE・UPDATE系 */
-    /** ユーザーの新規登録 */
+    /** ユーザーの保存 */
     @Transactional
     public User saveUser (User user) {
         return userRepository.save(user);
@@ -91,16 +82,6 @@ public class UserService {
         user.setWebMangaSettingsFreeflag(freeflag);
         user.setWebMangaSettingsFollowflag(followflag);
         return userRepository.save(user);
-    }
-
-
-    /** 認証系 **/
-    // トークンが有効であるかを確認
-    public boolean isValidUserToken(User user) {
-        return user != null &&  //ユーザーが存在しない
-                User.VerificationTokenStatus.VALID.equals(user.getVerificationTokenStatus()) && //トークンが無効
-                user.getVerificationTokenExpiration() != null &&    //トークンが期限切れ
-                !new Date().after(user.getVerificationTokenExpiration());   //
     }
 
 }

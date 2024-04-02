@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout-crud-userprof}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/common/common.css}">
+    <link rel="stylesheet" th:href="@{/css/common/login.css}">
+
+    <title>[[${title}]] | サケマン</title>
+</head>
+
+<th:block layout:fragment="content">
+
+    <div class="crud-userprof-title-bordered">
+        <div class="crud-userprof-title">
+            <h2>[[${h2}]]</h2>
+        </div>
+    </div>
+
+    <div class="crud-userprof-message">
+        <p th:utext="${text}"></p>
+    </div>
+
+    <a th:href="@{/}">トップページへ</a>
+
+</th:block>
+</html>

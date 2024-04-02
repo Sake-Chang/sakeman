@@ -104,19 +104,4 @@ public class AuthorController {
         return "author/detail";
         }
 
-//    旧バージョン。論理削除したマンガでエラーが出てた。
-//    mangalistは、MangaAuthorのリストからMangaのリストに変更。Templateも mangalist.manga.XXXからmangalist.XXXに修正
-//    @GetMapping("/{id}")
-//    public String getDetail(@PathVariable("id") Integer id, Model model, @AuthenticationPrincipal UserDetail userDetail) {
-//        List<MangaAuthor> mangalist = maService.findByAuthorId(id);
-//        Collections.shuffle(mangalist);
-//
-//        model.addAttribute("author", service.getAuthor(id));
-//        model.addAttribute("mangalist", mangalist);
-//        model.addAttribute("authorlist", afService.authorIdListFollowedByUser(userDetail));
-//        model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
-//        model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
-//
-//        return "author/detail";
-//        }
 }

@@ -552,7 +552,7 @@ h2 > i {
 
 /* アイコンの色を変更するためのルール */
 .md-WH { color: var(--WH); }
-.md-BL { color: var(--BL); }
+.md-BK { color: var(--BK); }
 .md-GR { color: var(--GR); }
 .md-AS { color: var(--AS); }
 .md-HL { color: var(--HL); }
@@ -2548,4 +2548,21 @@ input[id^=post-popup]:checked ~ .post-popup-overlay {
     background: red;
     font-size: 10px;
 
+}
+
+.link-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    row-gap: 8px;
+    margin-bottom: 32px;
+}
+
+.user-update-link {
+    font-size: 14px;
+    line-height: normal;
+}
+
+.form-wrapper {
+    padding: 0 16px;
 }

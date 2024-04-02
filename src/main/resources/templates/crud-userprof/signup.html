@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout-crud-userprof}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/common/common.css}">
+    <link rel="stylesheet" th:href="@{/css/common/login.css}">
+
+    <title>ユーザー登録 | サケマン</title>
+</head>
+
+<th:block layout:fragment="content">
+
+    <div class="crud-userprof-title-bordered">
+        <div class="crud-userprof-title">
+            <h2>ユーザー登録</h2>
+        </div>
+    </div>
+
+    <form class="crud-userprof-form" method="post" th:action="@{/signup}" th:object=${signupForm}>
+        <div class="crud-userprof-labelbox">
+            <label class="crud-userprof-form-label" for="username">ユーザー名 :</label>
+            <span th:errors="*{username}" class="crud-userprof-err"></span>
+        </div>
+        <input class="crud-userprof-form-input" type="text" th:field="*{username}" placeholder="日本語でも外国語でもOK！50文字まで！後で変更可！">
+
+        <div class="crud-userprof-labelbox">
+            <label class="crud-userprof-form-label" for="email">メールアドレス :</label>
+            <span th:errors="*{email}" class="crud-userprof-err"></span>
+        </div>
+        <input class="crud-userprof-form-input" type="text" th:field="*{email}" placeholder="ログインのときに使いますので忘れないでください！">
+
+        <div class="crud-userprof-labelbox">
+            <label class="crud-userprof-form-label" for="password">パスワード :</label>
+            <span th:errors="*{password}" class="crud-userprof-err"></span>
+        </div>
+        <input class="crud-userprof-form-input" type="password" th:field="*{password}" placeholder="こちらもログインのときに使います！">
+
+        <input class="crud-userprof-btn" type="submit" value="登録する"/>
+    </form>
+
+</th:block>
+</html>

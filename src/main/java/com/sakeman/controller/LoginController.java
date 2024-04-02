@@ -11,6 +11,6 @@ public class LoginController {
         model.addAttribute("title", "ログイン｜サケマン");
         model.addAttribute("lib", "login::lib");
         model.addAttribute("main", "login::main");
-        return "login";
+        return "crud-userprof/login";
     }
 }

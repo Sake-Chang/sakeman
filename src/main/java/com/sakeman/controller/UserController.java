@@ -1,14 +1,9 @@
 package com.sakeman.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,12 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +26,6 @@ import com.sakeman.entity.ReadStatus;
 import com.sakeman.entity.ReadStatus.Status;
 import com.sakeman.entity.User;
 import com.sakeman.service.BadgeUserService;
-import com.sakeman.service.EmailServiceImpl;
 import com.sakeman.service.ReadStatusService;
 import com.sakeman.service.ReviewService;
 import com.sakeman.service.S3Service;
@@ -54,9 +44,7 @@ public class UserController {
     private final UserFollowService ufService;
     private final ReviewService revService;
     private final BadgeUserService buService;
-    private final PasswordEncoder passwordEncoder;
     private final S3Service s3Service;
-    private final EmailServiceImpl emailService;
 
     /** 一覧表示 */
     @GetMapping({"/list", "/list/{tab}"})
@@ -76,8 +64,9 @@ public class UserController {
             pageable = PageRequest.of(page, 20, Sort.by(Sort.Direction.DESC, "id"));
         }
 
-        model.addAttribute("pages", service.getUserListPageable(pageable));
-        model.addAttribute("userlist", service.getUserListPageable(pageable).getContent());
+        Page<User> userEnabledPage = service.getEnabledUserListPageable(true, pageable);
+        model.addAttribute("pages", userEnabledPage);
+        model.addAttribute("userlist", userEnabledPage.getContent());
         model.addAttribute("followeelist", ufService.followeeIdListFollowedByUser(userDetail));
         model.addAttribute("reviewlist", revService.getReviewList());
         model.addAttribute("tab", tab);
@@ -120,46 +109,6 @@ public class UserController {
         return "user/detail";
     }
 
-    /** 新規登録（画面表示） */
-    @GetMapping("register")
-    public String getRegister(@ModelAttribute User user, Model model) {
-        return "user/register";
-    }
-
-    /** 新規登録 (登録処理 メール認証なし) */
-//    @PostMapping("/register")
-//    public String postRegister(@Validated User user, BindingResult res, Model model) {
-//        if(res.hasErrors()) {
-//            return getRegister(user, model);
-//        }
-//        user.setDeleteFlag(0);
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        service.saveUser(user);
-//        return "redirect:user/list";
-//    }
-
-    /** 新規登録 (登録処理 メール認証あり) */
-//    @PostMapping("/register")
-//    public String postRegister(@Validated User user, BindingResult res, Model model, HttpServletRequest request) {
-//        if(res.hasErrors()) {
-//            return getRegister(user, model);
-//        }
-//        user.setDeleteFlag(0);
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        user.setEnabled(false);
-//        user.setVerificationToken(UUID.randomUUID().toString());
-//        service.saveUser(user);
-//
-//        User regUser = service.getByEmail(user.getEmail());
-//
-//        // メール認証用のリンク
-//        String verificationLink = service.getVerificationLink(request, regUser.getVerificationToken());
-//        // メール送信
-//        emailService.sendVerificationEmail(user.getEmail(), verificationLink);
-//
-//        return "redirect:user/list";
-//    }
-
     /** 編集画面を表示 */
     @GetMapping("update/{id}")
     public String getUpdate(@PathVariable("id") Integer id, Model model) {
@@ -191,12 +140,4 @@ public class UserController {
         return "redirect:/user/{id}/want/grid";
     }
 
-    /** 削除処理 */
-    @GetMapping("delete/{id}/")
-    public String deleteUser(@PathVariable("id") Integer id, @ModelAttribute User user, Model model) {
-        User usr = service.getUser(id);
-        usr.setDeleteFlag(1);
-        service.saveUser(usr);
-        return "redirect:/user/list";
-    }
 }
