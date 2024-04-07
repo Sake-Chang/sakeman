@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.sakeman.entity.Manga;
 import com.sakeman.entity.Review;
 import com.sakeman.entity.Uclist;
+import com.sakeman.form.SearchbarForm;
 import com.sakeman.service.LikeService;
 import com.sakeman.service.MangaService;
 import com.sakeman.service.ReadStatusService;
@@ -44,7 +45,7 @@ public class IndexController {
 
     /** トップページを表示 */
     @GetMapping("/")
-    public String getList(@AuthenticationPrincipal UserDetail userDetail, @ModelAttribute Manga manga, Model model, @PageableDefault(page=0, size=10, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
+    public String getList(@AuthenticationPrincipal UserDetail userDetail, Model model, @PageableDefault(page=0, size=10, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
         Page<Uclist> uclPage = uclService.getUclistListPageable(pageable);
         Page<Review> reviewPage = reService.getReviewListPageable(pageable);
 
@@ -81,9 +82,8 @@ public class IndexController {
 //    }
 
     @GetMapping("/search")
-    public String getSearchResult(@ModelAttribute Manga manga, @AuthenticationPrincipal UserDetail userDetail, Model model, @PageableDefault(page=0, size=20, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
-        String query = manga.getTitle();
-        String[] keywords = query.split("[ 　]+");
+    public String getSearchResult(@ModelAttribute SearchbarForm searchbarForm, @AuthenticationPrincipal UserDetail userDetail, Model model, @PageableDefault(page=0, size=20, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
+        String[] keywords = searchbarForm.getKeywords();
         Page<Manga> searchResultPage = maService.searchManga(keywords, pageable);
         model.addAttribute("searchResultPage", searchResultPage);
         model.addAttribute("searchResult", searchResultPage.getContent());
@@ -91,7 +91,7 @@ public class IndexController {
         model.addAttribute("likelist", likeService.reviewIdListLikedByUser(userDetail));
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
         model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
-        model.addAttribute("query", query);
+        model.addAttribute("query", String.join(" ", keywords));
         return "search";
     }
 
@@ -100,55 +100,6 @@ public class IndexController {
     public String getAdmin() {
         return "admin/index";
     }
-
-//    /** 新規ユーザー登録（画面表示） */
-//    @GetMapping("signup")
-//    public String getSignup(@ModelAttribute User user, Model model) {
-//        return "signup";
-//    }
-//
-//    /** 新規ユーザー登録（登録処理） */
-//    @PostMapping("/signup")
-//    public String postSignup(@Validated User user, BindingResult res, Model model, HttpServletRequest request, RedirectAttributes attrs) {
-//        if(res.hasErrors()) {
-//            return getSignup(user, model);
-//        }
-//        try {
-//            String rowpass = user.getPassword();
-//
-//            user.setDeleteFlag(0);
-//            user.setPassword(passwordEncoder.encode(user.getPassword()));
-//            user.setRole(User.Role.一般);
-//
-//            // 追加ここから
-//            user.setEnabled(false);
-//            Date expirationDate = new Date(System.currentTimeMillis() + 3600000);
-//            user.setVerificationToken(UUID.randomUUID().toString());
-//            user.setVerificationTokenStatus(User.VerificationTokenStatus.VALID);
-//            user.setVerificationTokenExpiration(expirationDate);
-//            // 追加ここまで
-//
-//            userService.saveUser(user);
-//
-//            // 追加ここから
-//            User regUser = userService.getByEmail(user.getEmail());
-//            // メール認証用のリンク
-//            String verificationLink = userService.getVerificationLink(request, regUser.getVerificationToken());
-//            // メール送信
-//            emailService.sendVerificationEmail(user.getEmail(), verificationLink);
-//            // 追加ここまで
-//
-//        } catch (DataAccessException e) {
-//            model.addAttribute("signupError", "このメールアドレスは既に登録されています。");
-//            return "signup";
-//        }
-//        return "redirect:/confirm";
-//    }
-//
-//    @GetMapping("/confirm")
-//    public String cofirm() {
-//        return "confirm";
-//    }
 
 }
 

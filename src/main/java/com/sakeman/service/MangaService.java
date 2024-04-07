@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sakeman.entity.Author;
 import com.sakeman.entity.Manga;
+import com.sakeman.exception.ResourceNotFoundException;
 import com.sakeman.repository.MangaRepository;
 import com.sakeman.repository.MangaSpecifications;
 
@@ -83,6 +84,11 @@ public class MangaService {
     /** 1件を検索して返す */
     public Manga getManga(Integer id) {
         return mangaRepository.findById(id).get();
+    }
+
+    public Manga getMangaOrThrow(Integer id) {
+        return mangaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Manga not found with id " + id));
     }
 
     public Optional<Manga> getMangaByTitle(String title) {

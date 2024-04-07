@@ -169,6 +169,17 @@ h2 > i {
     justify-content: center;
 }
 
+.main-content {
+    min-height: calc(100vh - 70px);
+    margin-bottom: -150px;
+}
+
+.main-content:after {
+  content: "";
+  display: block;
+  height: 150px; /* これもフッターの高さに合わせて調整 */
+}
+
 .container {
     width: 100vw;
     max-width: 1280px;

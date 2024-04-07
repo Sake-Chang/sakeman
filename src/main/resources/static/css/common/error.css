@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.error-container {
+    padding: 40px 16px 0;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    max-width: 560px;
+    margin: auto;
+    margin-bottom: 36px;
+    text-align: center;
+}
+
