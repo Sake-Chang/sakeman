@@ -136,7 +136,7 @@ public class MangaController {
         if (tab==null) tab = "info";
         Page<WebMangaUpdateInfo> infolistPage = infoService.findByMangaIdPageable(id, pageable);
 
-        model.addAttribute("manga", service.getMangaOrThrow(id));
+        model.addAttribute("manga", service.getManga(id));
         model.addAttribute("infopage", infolistPage);
         model.addAttribute("infolist", infolistPage.getContent());
         model.addAttribute("likelist", likeService.reviewIdListLikedByUser(userDetail));

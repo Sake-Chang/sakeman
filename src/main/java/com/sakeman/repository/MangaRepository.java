@@ -15,7 +15,6 @@ import com.sakeman.entity.Manga;
 public interface MangaRepository extends JpaRepository<Manga, Integer> {
     Page<Manga> findAll(Pageable pageable);
     Optional<Manga> findByTitle(String title);
-    Optional<Manga> findById(Integer id);
     List<Manga> findByTitleLike(String string);
     List<Manga> findByTitleCleanse(String titleCleanse);
     List<Manga> findByIdBetween(int start, int end);

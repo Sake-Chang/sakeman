@@ -7,7 +7,7 @@
 <th:block layout:fragment="search-module(object)">
 
 <!-- 検索 -->
-<form th:action="@{/search}" method="get" th:object="${searchbarForm}">
+<form th:action="@{/search}" method="get" th:object="${manga}">
 <table class="search-table">
     <tr class="search-container" colspan="all">
         <td class="select">
@@ -15,7 +15,7 @@
             <span class="material-icons-outlined">arrow_drop_down</span>
         </td>
         <td class="search-box">
-            <input type="text" th:field="*{inputKeyword}">
+            <input type="text" th:field="*{title}">
             <button type="submit">
                 <span class="material-icons-outlined md-dedede">search</span>
             </button>
