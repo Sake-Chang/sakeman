@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.sakeman.media.YoungChampion;
 import com.sakeman.service.ScrapeConvertService;
 import com.sakeman.service.WebMangaUpdateInfoSaveService;
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/common/common.css}">
+    <link rel="stylesheet" th:href="@{/css/common/error.css}">
+
+    <title>403エラー | サケマン</title>
+</head>
+
+<th:block layout:fragment="content">
+
+    <!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
+    <div class="search" layout:include="module/search-module :: search-module(object='')"></div>
+
+    <div class="error-container">
+        <div class="crud-userprof-title-bordered">
+            <div class="crud-userprof-title">
+                <h2>アクセスが許可されていません</h2>
+            </div>
+        </div>
+
+        <div class="crud-userprof-message">
+            <p>このページへのアクセスが許可されていません</p>
+        </div>
+
+        <a th:href="@{/}">トップページへ</a>
+    </div>
+
+
+
+</th:block>
+</html>
