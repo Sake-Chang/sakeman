@@ -39,6 +39,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.ToString;
 
+@SuppressWarnings("serial")
 @Data
 @Entity
 @Table(name = "user")
@@ -142,6 +143,14 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     @JsonManagedReference
     private List<WebMangaFollow> webMangaFollows;
+
+    // ユーザーがフォローしている人のリスト
+    @OneToMany(mappedBy = "follower")
+    private List<UserFollow> followings;
+
+    // ユーザーをフォローしている人のリスト
+    @OneToMany(mappedBy = "followee")
+    private List<UserFollow> followers;
 
     // 配列バージョン
 //    @Column(name = "web_manga_settings_genre", nullable = true)

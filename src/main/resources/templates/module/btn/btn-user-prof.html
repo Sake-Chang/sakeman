@@ -21,7 +21,7 @@
             <div class="dropdown__body mymenu">
                 <ul class="dropdown__list">
                     <li class="dropdown_item"><a class="dropdown_item_text" th:href="@{/user/update/{id}(id=${user.id})}">プロフィールの編集</a></li>
-                    <li class="dropdown_item"><a class="dropdown_item_text" th:href="@{/}">フォロワー・フォローした人をみる</a></li>
+                    <li class="dropdown_item"><a class="dropdown_item_text" th:href="@{/user/__${user.id}__/followings}">フォロワー・フォローした人をみる</a></li>
                     <li class="dropdown_item">
                         <form method="post" th:action="@{/logout}">
                             <button class="btn-logout" type="submit">ログアウト</button>

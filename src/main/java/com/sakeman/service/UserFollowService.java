@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,16 @@ public class UserFollowService {
     /** followerで検索 */
     public List<UserFollow> findByFollower(User follower) {
         return ufRepository.findByFollower(follower);
+    }
+
+    /** follower_id で検索 */
+    public Page<UserFollow> findByFollowerIdOrderByRegisteredAt(Integer id, Pageable pageable) {
+        return ufRepository.findByFollowerIdOrderByRegisteredAt(id, pageable);
+    }
+
+    /** followee_id で検索 */
+    public Page<UserFollow> findByFolloweeIdOrderByRegisteredAt(Integer id, Pageable pageable) {
+        return ufRepository.findByFolloweeIdOrderByRegisteredAt(id, pageable);
     }
 
     /** follower & followeeで検索 */

@@ -30,8 +30,8 @@ import lombok.ToString;
 //@Getter
 @Entity
 @Table(name = "user_follow")
-@EqualsAndHashCode(exclude = "user")
-@ToString(exclude = "user")
+//@EqualsAndHashCode(exclude = "user")
+//@ToString(exclude = "user")
 public class UserFollow {
 
     @Id

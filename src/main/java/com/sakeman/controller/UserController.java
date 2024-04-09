@@ -25,6 +25,7 @@ import com.sakeman.entity.Manga;
 import com.sakeman.entity.ReadStatus;
 import com.sakeman.entity.ReadStatus.Status;
 import com.sakeman.entity.User;
+import com.sakeman.entity.UserFollow;
 import com.sakeman.service.BadgeUserService;
 import com.sakeman.service.ReadStatusService;
 import com.sakeman.service.ReviewService;
@@ -108,6 +109,31 @@ public class UserController {
         model.addAttribute("badgelist", buService.getByUserId(id));
         return "user/detail";
     }
+
+    /** 一覧表示 (フォロワー・フォロイー) */
+    @GetMapping("/{id}/{tab}")
+    public String getFollowUaer(@AuthenticationPrincipal UserDetail userDetail,
+                                @PathVariable(name="id") Integer id,
+                                @PathVariable(name="tab") String tab,
+                                @PageableDefault(page=0, size=20) Pageable pageable,
+                                Model model) {
+
+        Page<User> userListPage = null;
+        if (tab.equals("followings")) {
+            userListPage = service.getFollowingsByUserId(id, pageable);
+        } else if (tab.equals("followers")) {
+            userListPage = service.getFollowersByUserId(id, pageable);
+        }
+
+        model.addAttribute("pages", userListPage);
+        model.addAttribute("userlist", userListPage.getContent());
+        model.addAttribute("followeelist", ufService.followeeIdListFollowedByUser(userDetail));
+        model.addAttribute("reviewlist", revService.getReviewList());
+        model.addAttribute("tab", tab);
+        model.addAttribute("user", service.getUser(id));
+
+        return "user/list";
+        }
 
     /** 編集画面を表示 */
     @GetMapping("update/{id}")

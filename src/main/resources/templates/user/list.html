@@ -2,7 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
 
 <head>
+    <!--*/
     <title th:text="${tab == 'veteran'} ? 'ユーザー一覧 (ベテラン勢) | サケマン' : 'ユーザー一覧 (ルーキー) | サケマン' "></title>
+    /*-->
+    <title th:switch="${tab}">
+        <th:block th:case="'veteran'">ユーザー一覧 (ベテラン勢) | サケマン</th:block>
+        <th:block th:case="'rookie'">ユーザー一覧 (ルーキー) | サケマン</th:block>
+        <th:block th:case="'followings'">フォローしてる人一覧 | サケマン</th:block>
+        <th:block th:case="'followers'">フォローされてる人一覧 | サケマン</th:block>
+    </title>
 </head>
 
 <div layout:fragment="content">
@@ -11,28 +19,54 @@
 <div class="search" layout:include="module/search-module :: search-module(object='')"></div>
 
 <!--/* タブ */-->
-<div class="tab-container">
-    <a class="tab-link" th:href="@{/user/list/veteran}">
-        <div class="tab" th:classappend="${tab == 'veteran'} ? 'tab-current'">
-            <i class="uil uil-bolt"></i>
-            <span class="tab-text">ベテラン勢</span>
-        </div>
-    </a>
-    <a class="tab-link" th:href="@{/user/list/rookie}">
-        <div class="tab" th:classappend="${tab == 'rookie'} ? 'tab-current'">
-            <i class="uil uil-fire"></i>
-            <span class="tab-text">ルーキー</span>
-        </div>
-    </a>
-</div>
+<th:block th:if="${tab == 'veteran' or tab == 'rookie'}">
+    <div class="tab-container">
+        <a class="tab-link" th:href="@{/user/list/veteran}">
+            <div class="tab" th:classappend="${tab == 'veteran'} ? 'tab-current'">
+                <i class="uil uil-bolt"></i>
+                <span class="tab-text">ベテラン勢</span>
+            </div>
+        </a>
+        <a class="tab-link" th:href="@{/user/list/rookie}">
+            <div class="tab" th:classappend="${tab == 'rookie'} ? 'tab-current'">
+                <i class="uil uil-fire"></i>
+                <span class="tab-text">ルーキー</span>
+            </div>
+        </a>
+    </div>
+</th:block>
 
-<div class="container" th:with="text='ユーザー一覧', class='uil-user-circle'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+<th:block th:if="${tab == 'followings' or tab == 'followers'}">
+    <div class="tab-container">
+        <a class="tab-link" th:href="@{/user/__${user.id}__/followings}">
+            <div class="tab" th:classappend="${tab == 'followings'} ? 'tab-current'">
+                <i class="uil uil-bolt"></i>
+                <span class="tab-text">フォローしてる人</span>
+            </div>
+        </a>
+        <a class="tab-link" th:href="@{/user/__${user.id}__/followers}">
+            <div class="tab" th:classappend="${tab == 'followers'} ? 'tab-current'">
+                <i class="uil uil-fire"></i>
+                <span class="tab-text">フォローされてる人</span>
+            </div>
+        </a>
+    </div>
+</th:block>
+
+<th:block th:switch="${tab}">
+    <div th:case="'followings'" class="container" th:with="text='フォローしてる人一覧', class='uil-user-circle'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+    <div th:case="'followers'" class="container" th:with="text='フォローされてる人一覧', class='uil-user-circle'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+    <div th:case="*" class="container" th:with="text='ユーザー一覧', class='uil-user-circle'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+</th:block>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
 <div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
 
 <!--/* ユーザーリストモジュールを呼び出し（${reviewlist}を引数として渡す） */-->
 <div class="container" layout:include="module/card/user-card :: user-card(object='${mangalist}, ${userlist}, ${userId}, ${reviewlist}, ${followeelist}')"></div>
+
+<div th:if="${userlist.isEmpty and tab == 'followings'}" class="tmp-container-2" th:with="mode='text', message='フォローしている人はまだいません。'" layout:include="module/other/message-info-module :: message-info-module(object='')"></div>
+<div th:if="${userlist.isEmpty and tab == 'followers'}" class="tmp-container-2" th:with="mode='text', message='フォローしている人はまだいません。'" layout:include="module/other/message-info-module :: message-info-module(object='')"></div>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
 <div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>

@@ -68,6 +68,16 @@ public class UserService {
         return userRepository.findAll(Example.of(user, matcher));
     }
 
+    /** フォローしている人の検索 */
+    public Page<User> getFollowingsByUserId(Integer id, Pageable pageable) {
+        return userRepository.findFollowingsByUserId(id, pageable);
+    }
+
+    /** フォローされている人の検索 */
+    public Page<User> getFollowersByUserId(Integer id, Pageable pageable) {
+        return userRepository.findFollowersByUserId(id, pageable);
+    }
+
     /** ユーザーの保存 */
     @Transactional
     public User saveUser (User user) {
