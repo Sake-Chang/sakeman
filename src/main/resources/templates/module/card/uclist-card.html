@@ -94,7 +94,7 @@
                                 <div class="minimanga-module-rating-text disabled">0.00</div>
                             </th:block>
                         </div>
-                        <a th:href="@{/manga/review/{id}#reviews(id=${um.manga.id})}">
+                        <a th:href="@{/review/list-manga/__${um.manga.id}__}">
                             <div class="minimanga-module-review">
                                 <i class="uil uil-comment-lines md-18 md-BK"></i>
                                 <div class="minimanga-module-review-text" th:text="${um.manga.reviews.size}"></div>

@@ -1,10 +1,7 @@
 package com.sakeman.controller;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,23 +13,16 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.sakeman.entity.Author;
 import com.sakeman.entity.Manga;
-import com.sakeman.entity.MangaAuthor;
 import com.sakeman.entity.Review;
 import com.sakeman.entity.Uclist;
 import com.sakeman.service.AuthorFollowService;
 import com.sakeman.service.AuthorService;
 import com.sakeman.service.LikeService;
-import com.sakeman.service.MangaAuthorService;
 import com.sakeman.service.MangaService;
 import com.sakeman.service.ReadStatusService;
 import com.sakeman.service.ReviewService;
@@ -47,7 +37,6 @@ import lombok.RequiredArgsConstructor;
 public class AuthorController {
     private final AuthorService service;
     private final AuthorFollowService afService;
-    private final MangaAuthorService maService;
     private final ReadStatusService rsService;
     private final MangaService mangaService;
     private final ReviewService revService;

@@ -23,12 +23,12 @@ public class CustomErrorController implements ErrorController {
                 model.addAttribute("errorMessage", "The requested page was not found.");
                 return "error/404";
             }
-//            else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-//                // 500 Internal Server Error
-//                model.addAttribute("errorCode", "500");
-//                model.addAttribute("errorMessage", "An internal server error occurred.");
-//                return "error/500";
-//            }
+            else if (statusCode == HttpStatus.FORBIDDEN.value()) {
+                // 403 Forbidden
+                model.addAttribute("errorCode", "403");
+                model.addAttribute("errorMessage", "You do not have permission to access this page.");
+                return "error/403";
+            }
             // その他のエラーコードに対する処理をここに追加
         }
         // デフォルトエラーページ

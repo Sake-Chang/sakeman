@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -136,6 +137,7 @@ public class UserController {
         }
 
     /** 編集画面を表示 */
+    @PreAuthorize("#id == authentication.principal.user.id")
     @GetMapping("update/{id}")
     public String getUpdate(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("user", service.getUser(id));
@@ -143,6 +145,7 @@ public class UserController {
     }
 
     /** 編集処理 */
+    @PreAuthorize("#id == authentication.principal.user.id")
     @PostMapping("/update/{id}")
     //@Transactional
     public String updateUser(@PathVariable Integer id, @ModelAttribute User user, Model model, @RequestParam("fileContents") MultipartFile fileContents) {
