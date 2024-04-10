@@ -40,7 +40,7 @@ public class WebMangaFollow {
     /** ユーザー：user_id */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="user_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("user-webMangaFollow")
     private User user;
 
     /** マンガ：manga_id */

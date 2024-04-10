@@ -47,7 +47,7 @@ public class WebLikeRestController {
         Integer infoId = info.getId();
         User user = userService.getUser(userId);
         WebMangaUpdateInfo webMangaUpdateInfo = infoService.getWebMangaUpdateInfo(infoId);
-        Optional<WebLike> thisweblike = webLikeService.findByUserAndWebMangaUpdateInfo(user, info);
+        Optional<WebLike> thisweblike = webLikeService.findByUserAndWebMangaUpdateInfo(user, webMangaUpdateInfo);
 
         // 既にLikeしてた場合
         if (thisweblike.isPresent()) {

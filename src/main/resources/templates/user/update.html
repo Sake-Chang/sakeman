@@ -15,18 +15,22 @@
 </div>
 
 <div class="form-wrapper">
-    <form class="crud-userprof-form" enctype="multipart/form-data" th:method="post" th:action="@{/user/update/{id}(id=${user.id})}" th:object="${user}">
+    <form class="crud-userprof-form" enctype="multipart/form-data" th:method="post" th:action="@{/user/update/{id}(id=${editUserProfForm.id})}" th:object="${editUserProfForm}">
         <input type="hidden" id="id" name="id" th:value="*{id}">
+        <input type="hidden" id="img" name="img" th:value="*{img}">
 
         <label class="crud-userprof-form-label" for="username">ユーザーネーム：</label><br>
+        <span th:errors="*{username}" class="crud-userprof-err"></span>
         <input class="crud-userprof-form-input" type="text" th:field="*{username}"><br>
 
         <label class="crud-userprof-form-label" for="selfIntro">自己紹介文：</label><br>
+        <span th:errors="*{selfIntro}" class="crud-userprof-err"></span>
         <textarea class="prof-update-selfIntro" th:field="*{selfIntro}"></textarea><br>
 
-        <label class="crud-userprof-form-label" for="img">プロフィール画像：</label><br>
+        <label class="crud-userprof-form-label" for="fileContents">プロフィール画像：</label><br>
+        <span th:errors="*{fileContents}" class="crud-userprof-err"></span>
         <div class="prof-update-imgfile">
-            <img class="prof-update-img" th:src="@{https://sake-man.com/sakeman-user-upload/{src}(src=${user.img})}">
+            <img class="prof-update-img" th:src="@{https://sake-man.com/sakeman-user-upload/{src}(src=*{img})}">
             <input class="prof-update-file" type="file" name="fileContents">
         </div>
         <input class="crud-userprof-btn" type="submit" value="更新">

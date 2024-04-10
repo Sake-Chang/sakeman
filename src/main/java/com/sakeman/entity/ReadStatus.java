@@ -52,7 +52,7 @@ public class ReadStatus {
     /** ユーザー：user_id */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="user_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("user-readStatus")
     private User user;
 
     /** 作品：manga_id */

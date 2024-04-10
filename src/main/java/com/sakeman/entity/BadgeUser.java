@@ -46,7 +46,7 @@ public class BadgeUser {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @Where(clause = "delete_flag=0")
-    @JsonBackReference
+    @JsonBackReference("user-badgeuser")
     private User user;
 
     @Column(name = "registered_at", nullable = false, updatable = false)

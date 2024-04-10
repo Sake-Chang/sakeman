@@ -42,13 +42,13 @@ public class UserFollow {
     /** フォロワー（フォローした人） */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="follower_user_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("user-follower")
     private User follower;
 
     /** フォロイー（フォローされた人） */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "followee_user_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("user-followee")
     private User followee;
 
     @Column(name = "registered_at", nullable = false, updatable = false)

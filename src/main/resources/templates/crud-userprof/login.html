@@ -30,10 +30,12 @@
     <form class="crud-userprof-form" method="post" action="/login" th:action="@{/login}">
         <div class="crud-userprof-labelbox">
             <label class="crud-userprof-form-label" for="email">メールアドレス：</label>
+            <span th:errors="*{email}" class="crud-userprof-err"></span>
         </div>
         <input class="crud-userprof-form-input" type="text" id="email" name="email">
         <div class="crud-userprof-labelbox">
             <label class="crud-userprof-form-label" for="password">パスワード：</label>
+            <span th:errors="*{password}" class="crud-userprof-err"></span>
         </div>
         <input class="crud-userprof-form-input" type="password" id="password" name="password">
         <div class="remember-me">

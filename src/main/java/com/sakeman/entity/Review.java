@@ -82,7 +82,7 @@ public class Review {
     /** ユーザー：user_id */
     @ManyToOne
     @JoinColumn(name ="user_id", referencedColumnName = "id", nullable = true)
-    @JsonBackReference
+    @JsonBackReference("user-review")
     private User user;
 
     /** いいね：like_id */

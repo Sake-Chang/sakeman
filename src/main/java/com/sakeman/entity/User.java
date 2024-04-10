@@ -104,6 +104,7 @@ public class User implements Serializable {
 
     @Column(name = "self_intro", nullable = true)
     @Type(type = "text")
+    @Size(max = 500, message = "500文字以下でお願いします！")
     private String selfIntro;
 
     @Column(name = "img", nullable = true)
@@ -111,45 +112,47 @@ public class User implements Serializable {
 
     /** review */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("user-review")
     private List<Review> reviews;
 
     /** uclist */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("user-uclist")
     private List<Uclist> uclists;
 
     /** like */
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    @JsonManagedReference
+    @JsonManagedReference("user-like")
     private List<Like> Likes;
 
     /** webLike */
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    @JsonManagedReference
+    @JsonManagedReference("user-webLike")
     private List<WebLike> webLikes;
 
     /** readStatus */
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    @JsonManagedReference
+    @JsonManagedReference("user-readStatus")
     private List<ReadStatus> readStatus;
 
     /** badge_user */
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    @JsonManagedReference
+    @JsonManagedReference("user-badgeuser")
     private List<BadgeUser> badgeusers;
 
     /** badge_user */
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    @JsonManagedReference
+    @JsonManagedReference("user-webMangaFollow")
     private List<WebMangaFollow> webMangaFollows;
 
     // ユーザーがフォローしている人のリスト
     @OneToMany(mappedBy = "follower")
+    @JsonManagedReference("user-follower")
     private List<UserFollow> followings;
 
     // ユーザーをフォローしている人のリスト
     @OneToMany(mappedBy = "followee")
+    @JsonManagedReference("user-followee")
     private List<UserFollow> followers;
 
     // 配列バージョン

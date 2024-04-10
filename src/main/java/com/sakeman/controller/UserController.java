@@ -11,9 +11,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +33,9 @@ import com.sakeman.entity.ReadStatus;
 import com.sakeman.entity.ReadStatus.Status;
 import com.sakeman.entity.User;
 import com.sakeman.entity.UserFollow;
+import com.sakeman.form.EditUserProfForm;
 import com.sakeman.service.BadgeUserService;
+import com.sakeman.service.ImageValidationService;
 import com.sakeman.service.ReadStatusService;
 import com.sakeman.service.ReviewService;
 import com.sakeman.service.S3Service;
@@ -47,6 +55,7 @@ public class UserController {
     private final ReviewService revService;
     private final BadgeUserService buService;
     private final S3Service s3Service;
+    private final ImageValidationService ivService;
 
     /** 一覧表示 */
     @GetMapping({"/list", "/list/{tab}"})
@@ -138,35 +147,58 @@ public class UserController {
 
     /** 編集画面を表示 */
     @PreAuthorize("#id == authentication.principal.user.id")
-    @GetMapping("update/{id}")
+    @GetMapping("/update/{id}")
     public String getUpdate(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("user", service.getUser(id));
+        User thisUser = service.getUser(id);
+        EditUserProfForm form = new EditUserProfForm();
+        form.setId(id);
+        form.setImg(thisUser.getImg());
+        form.setUsername(thisUser.getUsername());
+        form.setSelfIntro(thisUser.getSelfIntro());
+        model.addAttribute("editUserProfForm", form);
         return "user/update";
     }
 
     /** 編集処理 */
     @PreAuthorize("#id == authentication.principal.user.id")
     @PostMapping("/update/{id}")
-    //@Transactional
-    public String updateUser(@PathVariable Integer id, @ModelAttribute User user, Model model, @RequestParam("fileContents") MultipartFile fileContents) {
-        User thisuser = service.getUser(id);
-        thisuser.setUsername(user.getUsername());
-        thisuser.setSelfIntro(user.getSelfIntro());
-
-        /** 画像アップロード */
-        /** ファイル名生成 */
-        String originalName = fileContents.getOriginalFilename();
-        String ext = originalName.substring(originalName.lastIndexOf("."));
-        String newFileName = "uid" + id + "/userprofimg_" + id + ext;
-
-        if (!fileContents.isEmpty()) {
-            s3Service.upload(fileContents, newFileName);
-            thisuser.setImg(newFileName);
+    @Transactional
+//    public String updateUser(@PathVariable Integer id, @ModelAttribute User user, Model model, @RequestParam("fileContents") MultipartFile fileContents) {
+    public String updateUser(@PathVariable Integer id, @Validated EditUserProfForm form, BindingResult res, Model model) {
+        MultipartFile file = form.getFileContents();
+        if (!file.isEmpty()) {
+            ivService.isValidFormat(file, res);
+            ivService.isValidSize(file, res);
         }
 
-        service.saveUser(thisuser);
+        if (res.hasErrors()) {
+            model.addAttribute("editUserProfForm", form);
+            return "user/update";
+        } else {
+            User thisuser = service.getUser(id);
+            thisuser.setUsername(form.getUsername());
+            thisuser.setSelfIntro(form.getSelfIntro());
 
-        return "redirect:/user/{id}/want/grid";
+            /** 画像アップロード */
+            /** ファイル名生成 */
+            if (!file.isEmpty()) {
+
+                String originalName = file.getOriginalFilename();
+                String ext = originalName.substring(originalName.lastIndexOf("."));
+                String newFileName = "uid" + id + "/userprofimg_" + System.currentTimeMillis() + ext;
+
+                s3Service.upload(file, newFileName);
+                thisuser.setImg(newFileName);
+            }
+
+            service.saveUser(thisuser);
+
+            UserDetail updatedUserDetail = new UserDetail(thisuser);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(updatedUserDetail, null, updatedUserDetail.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            return "redirect:/user/{id}/want/grid";
+        }
     }
 
 }

@@ -67,7 +67,7 @@ public class Uclist {
     /** ユーザー：user_id */
     @ManyToOne
     @JoinColumn(name ="user_id", referencedColumnName = "id", nullable = true)
-    @JsonBackReference
+    @JsonBackReference("user-uclist")
     private User user;
 
 

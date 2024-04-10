@@ -42,7 +42,7 @@ public class Like {
     /** ユーザー：user_id */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="user_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("user-like")
     private User user;
 
     /** ユーザー：review_id */
