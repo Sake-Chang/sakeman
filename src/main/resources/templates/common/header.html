@@ -10,7 +10,7 @@
 <body>
 
 <header class="header" layout:fragment="header">
-
+    <div class="header-wrapper">
     <div class="header-logo">
         <a th:href="@{/}"><img th:src="@{https://sake-man.com/system/logo_yoko_lined.png}" class="header-logo-img" alt="logo"></a>
         <!--
@@ -25,7 +25,10 @@
             <li class="header-nav-menu-item">
                 <div class=""><a class="link-block" target="_blank" rel="noopener" th:href="@{https://www.amazon.co.jp/b?_encoding=UTF8&tag=sakeman-22&linkCode=ur2&linkId=ff532c90a47a0af1628b89dfc8ef7f3a&camp=247&creative=1211&node=2275256051}"><i class="uil uil-amazon md-24"></i></a></div>
             </li>
-             <li class="header-nav-menu-mypage">
+            <li class="header-nav-menu-item">
+                <div id="search-icon" class=""><i class="uil uil-search md-24"></i></div>
+            </li>
+            <li class="header-nav-menu-mypage">
                 <th:block sec:authorize="isAuthenticated()">
                     <a th:href="@{/user/{id}/want/grid(id=${#authentication.principal.user.id})}">
                         <th:block th:if="${#authentication.principal.user.img != null}">
@@ -45,7 +48,11 @@
             </li>
         </ul>
     </nav>
+    </div>
+    <div class="search" layout:include="module/search-module :: search-module(object='')"></div>
 </header>
+
+
 
 </body>
 </html>

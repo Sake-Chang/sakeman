@@ -157,13 +157,19 @@ h2 > i {
 }
 
 
+.space-8px {
+    padding-top: 8px;
+}
 
+.space-16px {
+    padding-top: 16px;
+}
 
 /* --------------------------------------------------
     Global Classes
 -------------------------------------------------- */
 .main {
-    padding: 70px 0 0;
+    padding: 53px 0 0;
     display: flex;
     width: 100vw;
     justify-content: center;
@@ -185,7 +191,8 @@ h2 > i {
     max-width: 1280px;
     display: flex;
     flex-direction: column;
-    padding: 0 8px;
+    padding-left: 8px;
+    padding-right: 8px;
     margin-bottom: 16px;
     row-gap: 16px;
 }
@@ -495,13 +502,13 @@ h2 > i {
 
 .tab-current::after {
     background-color: var(--PL);
-    border-radius: 2px;
+    border-radius: 3px;
     content: "";
     display: block;
-    height: 1.5px;
-    width: 80%;
+    height: 2.5px;
+    width: 66%;
     position: absolute;
-    left: 10%;
+    left: 17%;
     bottom: 0px;
 }
 

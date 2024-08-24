@@ -27,7 +27,7 @@
         <span class="err" th:if="${param.message.contains('unknownerror')}">予期しない認証エラーが発生しました。</span>
     </div>
 
-    <form class="crud-userprof-form" method="post" action="/login" th:action="@{/login}">
+    <form class="crud-userprof-form" method="post" action="/login" th:action="@{/login}" th:object="${user}">
         <div class="crud-userprof-labelbox">
             <label class="crud-userprof-form-label" for="email">メールアドレス：</label>
             <span th:errors="*{email}" class="crud-userprof-err"></span>

@@ -45,9 +45,12 @@ public class SecurityConfig {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()   //CSS等はOK
                         .antMatchers("/signup").permitAll()
                         .mvcMatchers("/admin/**").hasAnyAuthority("管理者")
+                        .antMatchers("/actuator/**").hasAnyAuthority("管理者")  // Actuatorには認証が必要
                         .anyRequest().permitAll()
 //                        .anyRequest().authenticated()    // その他はログイン必要
-        ).rememberMe(me -> me.key("Unique and Secret SAKEMAN"));
+        ).rememberMe(me -> me.key("Unique and Secret SAKEMAN")
+        ).httpBasic();  // HTTP Basic認証を有効にする
+
 
         return http.build();
     }

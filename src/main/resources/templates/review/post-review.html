@@ -7,7 +7,7 @@
 <title>レビュー登録</title>
 </head>
 
-<div layout:fragment="content">
+<div layout:fragment="content" class="space-16px">
 
 <div class="tmp-container" th:if="${#authorization.expression('isAnonymous()')}">
     <th:block th:if="${#authorization.expression('isAnonymous()')}">

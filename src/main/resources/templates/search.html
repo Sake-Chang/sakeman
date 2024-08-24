@@ -8,10 +8,7 @@
 <title>[[${query}]]の検索結果 | サケマン</title>
 </head>
 
-<div layout:fragment="content"> <!-- layoutに送る -->
-
-<!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
-<div class="search" layout:include="module/search-module :: search-module(object='')"></div>
+<div layout:fragment="content" class="space-16px"> <!-- layoutに送る -->
 
 <!-- 見出し -->
 <div class="container" th:with="text='「__${query}__」の検索結果 (__${searchResultPage.getTotalElements}__件)', class='uil-search'" layout:include="module/other/page-title-module :: h2(object='')"></div>

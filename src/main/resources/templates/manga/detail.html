@@ -10,8 +10,7 @@
     <title>[[${manga.title}]]の詳細情報・レビュー | サケマン"</title>
 </head>
 
-<div layout:fragment="content"> <!-- layoutに送る -->
-
+<div layout:fragment="content" class="space-8px"> <!-- layoutに送る -->
 
 <!--/* まんがリストモジュールを呼び出し（${mangalist},${reviewlist}を引数として渡す） */-->
 <div class="container" th:with="mangalist=${manga}" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${reviewlist}, ${likelist}, ${wantlist}, ${readlist}')"></div>

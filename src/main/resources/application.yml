@@ -43,6 +43,10 @@ server:
       timeout: 86400
       cookie:
         max-age: 86400
+  compression:
+    enabled: true  # 圧縮を有効にする
+    mime-types: text/html, text/xml, text/plain, text/css, text/javascript, application/javascript, application/json  # 圧縮対象のMIMEタイプ
+    min-response-size: 1024 
 
 # AWS
 aws:
@@ -52,3 +56,16 @@ aws:
     prefix: /config
     profileSeparator: _
     failFast: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'  # すべてのエンドポイントを公開
+  endpoint:
+    health:
+      show-details: when-authorized  # 認証されたユーザーにのみ詳細を表示
+    metrics:
+      enabled: true  # metrics エンドポイントを有効化
+    httptrace:
+      enabled: true  # httptrace エンドポイントを有効化

@@ -14,7 +14,9 @@
 <div layout:fragment="content">
 <div th:if="${success}" class="alert alert-success">[[${success}]]</div>
 <!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
+<!--
 <div class="search" layout:include="module/search-module :: search-module(object='')"></div>
+-->
 
 <!--/* タブ */-->
 <div class="tab-container">

@@ -16,6 +16,8 @@ spring:
       encoding: UTF-8
 #      schema-locations: classpath:/schema/schema.sql
 #      data-locations: classpath:/schema/data.sql
+  thymeleaf:
+    cache: false
       
 # AWS
 cloud:
