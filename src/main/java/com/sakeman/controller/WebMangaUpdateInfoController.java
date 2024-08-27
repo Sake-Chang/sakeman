@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -114,27 +115,32 @@ public class WebMangaUpdateInfoController {
 
             /** 有料無料で絞り込み */
             if (genres.size()==0 && followflag==0) {
-                model.addAttribute("pages", webService.getFilteredInfoListPageable(freeflagsSetting, pageable));
-                model.addAttribute("infolist", webService.getFilteredInfoListPageable(freeflagsSetting, pageable).getContent());
+                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(freeflagsSetting, pageable);
+                model.addAttribute("pages", result);
+                model.addAttribute("infolist", result.getContent());
             /** 有料無料・フォローで絞り込み */
             } else if (genres.size()==0 && followflag==1) {
-                model.addAttribute("pages", webService.getFilteredInfoListPageable(freeflagsSetting, thisUserId, pageable));
-                model.addAttribute("infolist", webService.getFilteredInfoListPageable(freeflagsSetting, thisUserId, pageable).getContent());
+                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(freeflagsSetting, thisUserId, pageable);
+                model.addAttribute("pages", result);
+                model.addAttribute("infolist", result.getContent());
             /** 有料無料・ジャンルで絞り込み */
             } else if (genres.size()!=0 && followflag==0) {
-                model.addAttribute("pages", webService.getFilteredInfoListPageable(genres, freeflagsSetting, pageable));
-                model.addAttribute("infolist", webService.getFilteredInfoListPageable(genres, freeflagsSetting, pageable).getContent());
+                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, pageable);
+                model.addAttribute("pages", result);
+                model.addAttribute("infolist", result.getContent());
             /** 有料無料・ジャンル・フォローで絞り込み */
             } else {
-                model.addAttribute("pages", webService.getFilteredInfoListPageable(genres, freeflagsSetting, thisUserId, pageable));
-                model.addAttribute("infolist", webService.getFilteredInfoListPageable(genres, freeflagsSetting, thisUserId, pageable).getContent());
+                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, thisUserId, pageable);
+                model.addAttribute("pages", result);
+                model.addAttribute("infolist", result.getContent());
             }
         } else {
             genres = new ArrayList<Integer>();
             freeflag = 0;
             followflag = 0;
-            model.addAttribute("pages",  webService.getInfoListPageable(pageable));
-            model.addAttribute("infolist", webService.getInfoListPageable(pageable).getContent());
+            Page<WebMangaUpdateInfo> result = webService.getInfoListPageable(pageable);
+            model.addAttribute("pages", result);
+            model.addAttribute("infolist", result.getContent());
         }
 
         model.addAttribute("likelist", webLikeService.webMangaUpdateInfoIdListWebLikedByUser(userDetail));
