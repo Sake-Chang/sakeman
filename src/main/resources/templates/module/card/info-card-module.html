@@ -16,7 +16,7 @@
         <div class="info-card-info">
         <a th:href="@{/web-manga-update-info/media/__${info.webMangaMedia.id}__}">
             <figure class="info-card-figure">
-            <img class="info-card-img" th:src="@{https://sake-man.com/media_logo/__${info.webMangaMedia.logo}__}">
+            <img class="info-card-img" th:src="@{https://sake-man.com/media_logo/__${info.webMangaMedia.logo}__}" loading="lazy">
             </figure>
         </a>
         <div class="info-card-text">
@@ -43,12 +43,12 @@
         <div class="info-module-main-img">
             <th:block th:if="${info.imgUrl != null}">
                 <a th:href="*{info.url}">
-                    <img th:src="*{info.imgUrl}">
+                    <img th:src="*{info.imgUrl}" loading="lazy">
                 </a>
             </th:block>
             <th:block th:unless="${info.imgUrl != null}">
                 <a th:href="*{info.url}">
-                    <img th:src="@{https://sake-man.com/system/noimage.jpg}">
+                    <img th:src="@{https://sake-man.com/system/noimage.jpg}" loading="lazy">
                 </a>
             </th:block>
         </div>

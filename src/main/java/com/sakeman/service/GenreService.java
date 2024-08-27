@@ -2,6 +2,8 @@ package com.sakeman.service;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -32,6 +34,7 @@ public class GenreService {
     }
 
     /** 全件を表示順で返す **/
+    @Cacheable("genreListOrdered")
     public List<Genre> getGenreListOrdered() {
         return repository.findAllByOrderByDisplayOrder();
     }
@@ -62,6 +65,7 @@ public class GenreService {
 
     /** 登録処理 */
     @Transactional
+    @CacheEvict(value = "genreListOrdered", allEntries = true)
     public Genre saveGenre (Genre genre) {
         return repository.save(genre);
     }

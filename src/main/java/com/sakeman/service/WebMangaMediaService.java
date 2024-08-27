@@ -3,6 +3,8 @@ package com.sakeman.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
@@ -27,6 +29,7 @@ public class WebMangaMediaService {
     }
 
     /** 全件を検索して返す **/
+    @Cacheable("mediaList")
     public List<WebMangaMedia> getWebMangaMediaList() {
         return webMangaMediaRepository.findAll();
     }
@@ -47,6 +50,7 @@ public class WebMangaMediaService {
 
     /** 登録処理 */
 //    @Transactional
+    @CacheEvict(value = "mediaList", allEntries = true)
     public WebMangaMedia saveWebMangaMedia (WebMangaMedia webMangaMedia) {
         return webMangaMediaRepository.save(webMangaMedia);
     }
