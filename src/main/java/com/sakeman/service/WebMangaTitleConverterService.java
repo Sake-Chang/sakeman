@@ -16,27 +16,29 @@ import com.sakeman.entity.WebMangaUpdateInfo;
 import com.sakeman.repository.LikeRepository;
 import com.sakeman.repository.WebMangaTitleConverterRepository;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Service
+@RequiredArgsConstructor
 public class WebMangaTitleConverterService {
 
     private final WebMangaTitleConverterRepository repository;
 
-    public WebMangaTitleConverterService(WebMangaTitleConverterRepository repository) {
-        this.repository = repository;
-    }
-
     /** 全件を検索して返す **/
+    @Transactional(readOnly = true)
     public List<WebMangaTitleConverter> getConverterList() {
         return repository.findAll();
     }
 
     /** 1件を検索して返す */
+    @Transactional(readOnly = true)
     public WebMangaTitleConverter getWebMangaTitleConverter(Integer id) {
         return repository.findById(id).get();
     }
 
     /** titleStringとauthorStringで検索 */
+    @Transactional(readOnly = true)
     public Optional<WebMangaTitleConverter> findByTitleStrignAndAuthorString(String titleString, String authorString){
         return repository.findByTitleStringAndAuthorString(titleString, authorString);
     }

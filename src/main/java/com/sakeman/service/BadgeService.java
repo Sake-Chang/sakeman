@@ -24,21 +24,24 @@ public class BadgeService {
     private final BadgeRepository repository;
 
     /** 全件（選択肢用） */
+    @Transactional(readOnly = true)
     public List<Badge> getAll(){
         return repository.findAll();
     }
 
     /** 全件（ページ） */
+    @Transactional(readOnly = true)
     public Page<Badge> getAllPageable(Pageable pageable){
         return repository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Badge> getById(Integer id) {
         return repository.findById(id);
     }
 
     /** 検索結果 */
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Badge> getSearchResult(Badge badge) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching() // and条件

@@ -29,17 +29,19 @@ public class MangaService {
     private final MangaRepository mangaRepository;
 
     /** 全件を検索して返す **/
+    @Transactional(readOnly = true)
     public List<Manga> getMangaList() {
         return mangaRepository.findAll();
     }
 
     /** ページネーション */
+    @Transactional(readOnly = true)
     public Page<Manga> getMangaListPageable(Pageable pageable){
         return mangaRepository.findAll(pageable);
     }
 
     /** 検索結果 */
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<Manga> getSearchResult(Manga manga, Pageable pageable) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching() // and条件
@@ -48,7 +50,7 @@ public class MangaService {
         return mangaRepository.findAll(Example.of(manga, matcher), pageable);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<Manga> searchManga(String[] keywords, Pageable pageable) {
         Page<Manga> resultPage = mangaRepository.findAll(MangaSpecifications.searchManga(keywords), pageable);
         List<Manga> uniqueMangas = new ArrayList<>(new HashSet<>(resultPage.getContent()));
@@ -57,7 +59,7 @@ public class MangaService {
     }
 
     /** 検索結果 (select2用) */
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Manga> getSearchResult(Manga manga) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching() // and条件
@@ -67,60 +69,70 @@ public class MangaService {
     }
 
     /** Like検索結果 */
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Manga> getLikeSearch(String string) {
         return mangaRepository.findByTitleLike("%" + string + "%");
     }
 
+    @Transactional(readOnly = true)
     public List<Manga> getByIdBetween(int start, int end) {
         return mangaRepository.findByIdBetween(start, end);
     }
 
     /** クレンズで検索 */
+    @Transactional(readOnly = true)
     public List<Manga> getMangaByTitleCleanse(String titleCleanse) {
         return mangaRepository.findByTitleCleanse(titleCleanse);
     }
 
     /** 1件を検索して返す */
+    @Transactional(readOnly = true)
     public Manga getManga(Integer id) {
         return mangaRepository.findById(id).get();
     }
 
+    @Transactional(readOnly = true)
     public Manga getMangaOrThrow(Integer id) {
         return mangaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Manga not found with id " + id));
     }
 
+    @Transactional(readOnly = true)
     public Optional<Manga> getMangaByTitle(String title) {
         return mangaRepository.findByTitle(title);
     }
 
     /** 著者IDで検索 */
+    @Transactional(readOnly = true)
     public List<Manga> getMangaByAuthorId(Integer userId) {
         return mangaRepository.findByMangaAuthorsAuthorId(userId);
     }
 
     /** 著者IDで検索Pageable */
+    @Transactional(readOnly = true)
     public Page<Manga> getMangaByAuthorId(Integer userId, Pageable pageable) {
         return mangaRepository.findByMangaAuthorsAuthorId(userId, pageable);
     }
 
     /** 著者リストで検索 */
+    @Transactional(readOnly = true)
     public List<Manga> getMangaByAuthorsIn(List<Author> authors) {
         return mangaRepository.findByMangaAuthorsAuthorIn(authors);
     }
 
     /** 著者リストで検索 Distinct */
+    @Transactional(readOnly = true)
     public Page<Manga> getDistinctMangaByAuthorsIn(List<Author> authors, Pageable pageable) {
         return mangaRepository.findDistinctByMangaAuthorsAuthorIn(authors, pageable);
     }
 
     /** 登録処理 */
-//    @Transactional
+    @Transactional
     public Manga saveManga (Manga manga) {
         return mangaRepository.save(manga);
     }
 
+    @Transactional
     public List<Manga> saveAllManga(List<Manga> mangalist) {
         return mangaRepository.saveAll(mangalist);
     }

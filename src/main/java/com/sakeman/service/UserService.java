@@ -29,37 +29,43 @@ public class UserService {
 
     /* SELECT系 */
     /** 全件検索 **/
+    @Transactional(readOnly = true)
     public List<User> getUserList() {
         return userRepository.findAll();
     }
 
     /** 全件検索 (ページング) **/
+    @Transactional(readOnly = true)
     public Page<User> getUserListPageable(Pageable pageable){
         return userRepository.findAll(pageable);
     }
 
     /** 全件検索 (ページング) **/
+    @Transactional(readOnly = true)
     public Page<User> getEnabledUserListPageable(boolean bool, Pageable pageable){
         return userRepository.findByIsEnabled(bool, pageable);
     }
 
     /** ユーザーIDで検索 */
+    @Transactional(readOnly = true)
     public User getUser(Integer id) {
         return userRepository.findById(id);
     }
 
     /** Emailで検索 **/
+    @Transactional(readOnly = true)
     public Optional<User> getByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     /** verificationTokenで検索 **/
+    @Transactional(readOnly = true)
     public Optional<User> getByVerificationToken(String verificationToken) {
         return userRepository.findByVerificationToken(verificationToken);
     }
 
     /** あいまい検索 (Select2で使用) */
-    @Transactional
+    @Transactional(readOnly = true)
     public List<User> getSearchResult(User user) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching() // and条件
@@ -69,11 +75,13 @@ public class UserService {
     }
 
     /** フォローしている人の検索 */
+    @Transactional(readOnly = true)
     public Page<User> getFollowingsByUserId(Integer id, Pageable pageable) {
         return userRepository.findFollowingsByUserId(id, pageable);
     }
 
     /** フォローされている人の検索 */
+    @Transactional(readOnly = true)
     public Page<User> getFollowersByUserId(Integer id, Pageable pageable) {
         return userRepository.findFollowersByUserId(id, pageable);
     }

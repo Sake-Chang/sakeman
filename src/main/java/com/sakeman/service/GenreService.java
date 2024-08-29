@@ -29,22 +29,26 @@ public class GenreService {
     private final GenreRepository repository;
 
     /** 全件を検索して返す **/
+    @Transactional(readOnly = true)
     public List<Genre> getGenreList() {
         return repository.findAll();
     }
 
     /** 全件を表示順で返す **/
+    @Transactional(readOnly = true)
     @Cacheable("genreListOrdered")
     public List<Genre> getGenreListOrdered() {
         return repository.findAllByOrderByDisplayOrder();
     }
 
     /** ページネーション */
+    @Transactional(readOnly = true)
     public Page<Genre> getGenreListPageable(Pageable pageable){
         return repository.findAll(pageable);
     }
 
     /** 検索結果 */
+    @Transactional(readOnly = true)
     public List<Genre> getSearchResult(Genre genre) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching() // and条件
@@ -54,11 +58,13 @@ public class GenreService {
     }
 
     /** 1件を検索して返す */
+    @Transactional(readOnly = true)
     public Genre getGenre(Integer id) {
         return repository.findById(id).get();
     }
 
     /** 著者名で検索して返す */
+    @Transactional(readOnly = true)
     public List<Genre> findByName(String name) {
         return repository.findByName(name);
     }

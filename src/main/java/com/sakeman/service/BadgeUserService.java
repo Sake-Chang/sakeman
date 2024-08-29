@@ -29,18 +29,22 @@ public class BadgeUserService {
     private final BadgeUserRepository repository;
 
     /** ページネーション */
+    @Transactional(readOnly = true)
     public Page<BadgeUser> getAllPageable(Pageable pageable){
         return repository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
     public Optional<BadgeUser> getById(Integer id) {
         return repository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     public List<BadgeUser> getByUserId(Integer userId) {
         return repository.findByUserId(userId);
     }
 
+    @Transactional(readOnly = true)
     public Optional<BadgeUser> getByUserIdAndBadgeId(Integer uId, Integer bId) {
         return repository.findByUserIdAndBadgeId(uId, bId);
     }

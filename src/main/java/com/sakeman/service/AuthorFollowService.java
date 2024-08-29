@@ -25,16 +25,19 @@ public class AuthorFollowService {
     private final AuthorFollowRepository afRepository;
 
     /** userで検索 */
+    @Transactional(readOnly = true)
     public List<AuthorFollow> findByUser(User user) {
         return afRepository.findByUser(user);
     }
 
     /** user & authorで検索 */
+    @Transactional(readOnly = true)
     public AuthorFollow findByUserAndAuthor(User user, Author author) {
         return afRepository.findByUserAndAuthor(user, author);
     }
 
     /** ログインユーザーがFollowしているUserのIDのリストを作成して返す */
+    @Transactional(readOnly = true)
     public List<Integer> authorIdListFollowedByUser(@AuthenticationPrincipal UserDetail userDetail){
         List<AuthorFollow> followlist = new ArrayList<>();
         List<Integer> authorIdList = new ArrayList<Integer>();

@@ -24,47 +24,52 @@ public class GenreTagService {
     private final GenreTagRepository repository;
 
     /** 全件を検索して返す **/
+    @Transactional(readOnly = true)
     public List<GenreTag> getGenreTagList() {
         return repository.findAll();
     }
 
     /** 1件を検索して返す */
+    @Transactional(readOnly = true)
     public GenreTag getGenreTag(Integer id) {
         return repository.findById(id).get();
     }
 
     /** uclist_idで検索して返す */
+    @Transactional(readOnly = true)
     public List<GenreTag> findByTagId(Integer tagId) {
         return repository.findByTagId(tagId);
     }
 
     /** uclist_idで検索して返す */
+    @Transactional(readOnly = true)
     public List<GenreTag> findByGenreId(Integer genreId) {
         return repository.findByGenreId(genreId);
     }
 
     /** genreとtagで検索して返す */
+    @Transactional(readOnly = true)
     public Optional<GenreTag> findByGenreAndTag(Genre genre, Tag tag) {
         return repository.findByGenreAndTag(genre, tag);
     }
 
     /** 登録処理(1件) */
-//    @Transactional
+    @Transactional
     public GenreTag saveGenreTag(GenreTag genreTag) {
         return repository.save(genreTag);
     }
 
     /** 登録処理(複数件) */
-//  @Transactional
-  public List<GenreTag> saveGenreTagAll(List<GenreTag> genreTags) {
-      return repository.saveAll(genreTags);
-  }
+    @Transactional
+    public List<GenreTag> saveGenreTagAll(List<GenreTag> genreTags) {
+        return repository.saveAll(genreTags);
+    }
 
-  /** 削除
- * @return */
-  @Transactional
-  public void deleteById(Integer id) {
-      repository.deleteById(id);
-  }
+    /** 削除
+    * @return */
+    @Transactional
+    public void deleteById(Integer id) {
+        repository.deleteById(id);
+    }
 
 }

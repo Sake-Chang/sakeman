@@ -23,45 +23,51 @@ public class MangaTagService {
     private final MangaTagRepository mangaTagRepository;
 
     /** 全件を検索して返す **/
+    @Transactional(readOnly = true)
     public List<MangaTag> getMangaTagList() {
         return mangaTagRepository.findAll();
     }
 
     /** ページネーション */
+    @Transactional(readOnly = true)
     public Page<MangaTag> getListPageable(Pageable pageable){
         return mangaTagRepository.findAll(pageable);
     }
 
     /** 1件を検索して返す */
+    @Transactional(readOnly = true)
     public MangaTag getMangaTag(Integer id) {
         return mangaTagRepository.findById(id).get();
     }
 
     /** manga_idで検索して返す */
+    @Transactional(readOnly = true)
     public List<MangaTag> findByMangaId(Integer mangaId) {
         return mangaTagRepository.findByMangaId(mangaId);
     }
 
     /** tag_idで検索して返す */
+    @Transactional(readOnly = true)
     public List<MangaTag> findByTagId(Integer tagId) {
         return mangaTagRepository.findByTagId(tagId);
     }
 
     /** tag_name,user_id,manga_idで検索して返す */
+    @Transactional(readOnly = true)
     public Optional<MangaTag> findByTagTagnameAndUserIdAndMangaId(String tagname, Integer userId, Integer mangaId) {
         return mangaTagRepository.findByTagTagnameAndUserIdAndMangaId(tagname, userId, mangaId);
     }
 
     /** 登録処理(1件) */
-//    @Transactional
+    @Transactional
     public MangaTag saveMangaTag(MangaTag mangaTag) {
         return mangaTagRepository.save(mangaTag);
     }
 
     /** 登録処理(複数件) */
-//  @Transactional
-  public List<MangaTag> saveMangaTagAll(List<MangaTag> mangaTags) {
-      return mangaTagRepository.saveAll(mangaTags);
-  }
+    @Transactional
+    public List<MangaTag> saveMangaTagAll(List<MangaTag> mangaTags) {
+        return mangaTagRepository.saveAll(mangaTags);
+    }
 
 }

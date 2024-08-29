@@ -16,43 +16,47 @@ import com.sakeman.entity.WebMangaUpdateInfo;
 import com.sakeman.repository.LikeRepository;
 import com.sakeman.repository.WebLikeRepository;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Service
+@RequiredArgsConstructor
 public class WebLikeService {
 
     private final WebLikeRepository webLikeRepository;
 
-    public WebLikeService(WebLikeRepository repository) {
-        this.webLikeRepository = repository;
-    }
-
     /** Reviewで検索 */
+    @Transactional(readOnly = true)
     public Optional<WebLike> findByWebMangaUpdateInfo(WebMangaUpdateInfo info) {
         return webLikeRepository.findByWebMangaUpdateInfo(info);
     }
 
     /** 個々のReviewのLike数をカウント */
+    @Transactional(readOnly = true)
     public int countByWebMangaUpdateInfo(WebMangaUpdateInfo info){
         return webLikeRepository.countByWebMangaUpdateInfo(info);
     }
 
     /** UserとReviewで検索 */
+    @Transactional(readOnly = true)
     public Optional<WebLike> findByUserAndWebMangaUpdateInfo(User user, WebMangaUpdateInfo info){
         return webLikeRepository.findByUserAndWebMangaUpdateInfo(user, info);
     }
 
     /** Userで検索 */
+    @Transactional(readOnly = true)
     public List<WebLike> findByUser(User user) {
         return webLikeRepository.findByUser(user);
     }
 
     /** user_idで検索 */
+    @Transactional(readOnly = true)
     public List<WebLike> findByUserId(Integer userId){
         return webLikeRepository.findByUserId(userId);
     }
 
     /** ログインユーザーがLikeしているReviewのIDのリストを作成して返す */
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Integer> webMangaUpdateInfoIdListWebLikedByUser(@AuthenticationPrincipal UserDetail userDetail){
         List<Integer> webMangaUpdateInfoIdList = new ArrayList<>();
         if (userDetail != null) {

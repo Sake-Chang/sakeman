@@ -19,37 +19,40 @@ import com.sakeman.entity.WebMangaMedia;
 import com.sakeman.repository.MangaRepository;
 import com.sakeman.repository.WebMangaMediaRepository;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Service
+@RequiredArgsConstructor
 public class WebMangaMediaService {
     private final WebMangaMediaRepository webMangaMediaRepository;
 
-    public WebMangaMediaService(WebMangaMediaRepository repository) {
-        this.webMangaMediaRepository = repository;
-    }
-
     /** 全件を検索して返す **/
+    @Transactional(readOnly = true)
     @Cacheable("mediaList")
     public List<WebMangaMedia> getWebMangaMediaList() {
         return webMangaMediaRepository.findAll();
     }
 
     /** ページネーション */
+    @Transactional(readOnly = true)
     public Page<WebMangaMedia> getWebMangaMediaListPageable(Pageable pageable){
         return webMangaMediaRepository.findAll(pageable);
     }
 
     /** 1件を検索して返す */
+    @Transactional(readOnly = true)
     public WebMangaMedia getWebMangaMedia(Integer id) {
         return webMangaMediaRepository.findById(id).get();
     }
 
+    @Transactional(readOnly = true)
     public Optional<WebMangaMedia> getWebMangaMediaByName(String name) {
         return webMangaMediaRepository.findByName(name);
     }
 
     /** 登録処理 */
-//    @Transactional
+    @Transactional
     @CacheEvict(value = "mediaList", allEntries = true)
     public WebMangaMedia saveWebMangaMedia (WebMangaMedia webMangaMedia) {
         return webMangaMediaRepository.save(webMangaMedia);

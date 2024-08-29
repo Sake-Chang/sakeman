@@ -14,37 +14,41 @@ import com.sakeman.entity.User;
 import com.sakeman.entity.UserFollow;
 import com.sakeman.repository.UserFollowRepository;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Service
+@RequiredArgsConstructor
 public class UserFollowService {
 
     private final UserFollowRepository ufRepository;
 
-    public UserFollowService(UserFollowRepository repository) {
-        this.ufRepository = repository;
-    }
-
     /** followerで検索 */
+    @Transactional(readOnly = true)
     public List<UserFollow> findByFollower(User follower) {
         return ufRepository.findByFollower(follower);
     }
 
     /** follower_id で検索 */
+    @Transactional(readOnly = true)
     public Page<UserFollow> findByFollowerIdOrderByRegisteredAt(Integer id, Pageable pageable) {
         return ufRepository.findByFollowerIdOrderByRegisteredAt(id, pageable);
     }
 
     /** followee_id で検索 */
+    @Transactional(readOnly = true)
     public Page<UserFollow> findByFolloweeIdOrderByRegisteredAt(Integer id, Pageable pageable) {
         return ufRepository.findByFolloweeIdOrderByRegisteredAt(id, pageable);
     }
 
     /** follower & followeeで検索 */
+    @Transactional(readOnly = true)
     public UserFollow findByFollowerAndFollowee(User follower, User followee) {
         return ufRepository.findByFollowerAndFollowee(follower, followee);
     }
 
     /** ログインユーザーがFollowしているUserのIDのリストを作成して返す */
+    @Transactional(readOnly = true)
     public List<Integer> followeeIdListFollowedByUser(@AuthenticationPrincipal UserDetail userDetail){
         List<Integer> followeeIdList = new ArrayList<>();
         if (userDetail != null) {

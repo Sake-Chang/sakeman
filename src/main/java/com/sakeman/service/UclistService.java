@@ -11,47 +11,52 @@ import com.sakeman.entity.Manga;
 import com.sakeman.entity.Uclist;
 import com.sakeman.repository.UclistRepository;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class UclistService {
     private final UclistRepository uclistRepository;
 
-    public UclistService(UclistRepository repository) {
-        this.uclistRepository = repository;
-    }
-
     /** 全件を検索して返す **/
+    @Transactional(readOnly = true)
     public List<Uclist> getUclistList() {
         return uclistRepository.findAll();
     }
 
     /** ページネーション */
+    @Transactional(readOnly = true)
     public Page<Uclist> getUclistListPageable(Pageable pageable){
         return uclistRepository.findAll(pageable);
     }
 
     /** 1件を検索して返す */
+    @Transactional(readOnly = true)
     public Uclist getUclist(Integer id) {
         return uclistRepository.findById(id).get();
     }
 
     /** マンガで検索 */
+    @Transactional(readOnly = true)
     public List<Uclist> getByManga(Manga manga) {
         return uclistRepository.findByUclistMangasManga(manga);
     }
 
     /** マンガで検索(Pageable) */
+    @Transactional(readOnly = true)
     public Page<Uclist> getByMangaPageable(Manga manga, Pageable pageable) {
         return uclistRepository.findByUclistMangasManga(manga, pageable);
     }
 
     /** マンガIDで検索(Pageable) */
+    @Transactional(readOnly = true)
     public Page<Uclist> getByMangaIdPageable(Integer mangaId, Pageable pageable) {
         return uclistRepository.findByUclistMangasMangaId(mangaId, pageable);
     }
 
     /** 著者IDで検索 **/
+    @Transactional(readOnly = true)
     public Page<Uclist> gettDistinctByUclistMangasMangaMangaAuthorsAuthorId(Integer aId, Pageable pageable) {
         return uclistRepository.findDistinctByUclistMangasMangaMangaAuthorsAuthorId(aId, pageable);
     }

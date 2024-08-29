@@ -25,16 +25,19 @@ public class TagService {
     private final TagRepository tagRepository;
 
     /** 全件を検索して返す **/
+    @Transactional(readOnly = true)
     public List<Tag> getTagList() {
         return tagRepository.findAll();
     }
 
     /** ページネーション */
+    @Transactional(readOnly = true)
     public Page<Tag> getTagListPageable(Pageable pageable){
         return tagRepository.findAll(pageable);
     }
 
     /** 検索結果 */
+    @Transactional(readOnly = true)
     public List<Tag> getSearchResult(Tag tag) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching() // and条件
@@ -44,11 +47,13 @@ public class TagService {
     }
 
     /** 1件を検索して返す */
+    @Transactional(readOnly = true)
     public Tag getTag(Integer id) {
         return tagRepository.findById(id).get();
     }
 
     /** 著者名で検索して返す */
+    @Transactional(readOnly = true)
     public List<Tag> findByTagname(String tagname) {
         return tagRepository.findByTagname(tagname);
     }

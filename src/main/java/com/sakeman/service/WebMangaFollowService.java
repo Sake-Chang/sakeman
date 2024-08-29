@@ -16,43 +16,47 @@ import com.sakeman.entity.WebMangaFollow;
 import com.sakeman.repository.LikeRepository;
 import com.sakeman.repository.WebMangaFollowRepository;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Service
+@RequiredArgsConstructor
 public class WebMangaFollowService {
 
     private final WebMangaFollowRepository repository;
 
-    public WebMangaFollowService(WebMangaFollowRepository repository) {
-        this.repository = repository;
-    }
-
     /** Mangaで検索 */
+    @Transactional(readOnly = true)
     public Optional<WebMangaFollow> findByReview(Manga manga) {
         return repository.findByManga(manga);
     }
 
     /** 個々のReviewのLike数をカウント */
+    @Transactional(readOnly = true)
     public int countByManga(Manga manga){
         return repository.countByManga(manga);
     }
 
     /** UserとReviewで検索 */
+    @Transactional(readOnly = true)
     public Optional<WebMangaFollow> findByUserAndManga(User user, Manga manga){
         return repository.findByUserAndManga(user, manga);
     }
 
     /** Userで検索 */
+    @Transactional(readOnly = true)
     public List<WebMangaFollow> findByUser(User user) {
         return repository.findByUser(user);
     }
 
     /** user_idで検索 */
+    @Transactional(readOnly = true)
     public List<WebMangaFollow> findByUserId(Integer userId){
         return repository.findByUserId(userId);
     }
 
     /** ログインユーザーがLikeしているReviewのIDのリストを作成して返す */
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Integer> webMangaIdListLikedByUser(@AuthenticationPrincipal UserDetail userDetail){
         List<Integer> mangaIdList = new ArrayList<Integer>();
         if (userDetail != null) {
@@ -66,8 +70,6 @@ public class WebMangaFollowService {
         }
         return mangaIdList;
     }
-
-
 
     /** 登録処理 */
     @Transactional
