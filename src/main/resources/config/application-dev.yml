@@ -11,7 +11,6 @@ spring:
       connection-timeout: 30000
       validation-timeout: 5000
       read-only: false
-      connection-test-query: SELECT 1
       connection-init-sql: "SET SESSION sql_mode='TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY'"
   thymeleaf:
     cache: true
