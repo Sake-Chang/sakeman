@@ -70,7 +70,7 @@ public class MangaController {
                           @ModelAttribute Manga manga) {
 
         if (tab==null) tab = "recent";
-        if (page==null) page = 0;
+        if (page == null || page < 0) page = 0;
         Author author = null;
 
         Pageable pageable = getPageable(tab, page);
@@ -99,12 +99,7 @@ public class MangaController {
                                 @ModelAttribute Manga manga,
                                 HttpServletRequest request) {
 
-        Logger logger = LoggerFactory.getLogger(MangaController.class);
-        if (page < 0) {
-            logger.error("負のページ番号が指定されました。リクエストURL: " + request.getRequestURL().toString());
-            page = 0;
-        }
-
+        if (page == null || page < 0) page = 0;
         if (tab==null) tab = "recent";
         Pageable pageable = getPageable(tab, page);
 

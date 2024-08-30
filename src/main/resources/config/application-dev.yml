@@ -30,6 +30,8 @@ spring:
 logging:
   level:
     root: error
+    "[com.zaxxer.hikari]": debug
+
 
 # AWS
 cloud:
