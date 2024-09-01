@@ -69,3 +69,4 @@ management:
       enabled: true  # metrics エンドポイントを有効化
     httptrace:
       enabled: true  # httptrace エンドポイントを有効化
+

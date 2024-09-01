@@ -43,7 +43,7 @@ public class Select2RestController {
 
     @GetMapping("/getsearch")
     @ResponseBody
-    public List<Manga> select2Search(@RequestParam String q, Model model){
+    public List<Manga> select2Search(@RequestParam(value = "q", defaultValue = "") String q, Model model){
         Manga manga = new Manga();
         manga.setTitle(q);
         List<Manga> searchResult = maService.getSearchResult(manga);
@@ -55,7 +55,7 @@ public class Select2RestController {
 
     @GetMapping("/getsearchauthor")
     @ResponseBody
-    public List<Author> select2SearchAuthor(@RequestParam String q, Model model){
+    public List<Author> select2SearchAuthor(@RequestParam(value = "q", defaultValue = "") String q, Model model){
         Author author = new Author();
         author.setName(q);
         List<Author> searchResult = authService.getSearchResult(author);
@@ -66,7 +66,7 @@ public class Select2RestController {
 
     @GetMapping("/getsearchtag")
     @ResponseBody
-    public List<Tag> select2SearchTag(@RequestParam String q, Model model){
+    public List<Tag> select2SearchTag(@RequestParam(value = "q", defaultValue = "") String q, Model model){
         Tag tag = new Tag();
         tag.setTagname(q);
         List<Tag> searchResult = tagService.getSearchResult(tag);
@@ -76,7 +76,7 @@ public class Select2RestController {
 
     @GetMapping("/getsearchgenre")
     @ResponseBody
-    public List<Genre> select2SearchGenre(@RequestParam String q, Model model){
+    public List<Genre> select2SearchGenre(@RequestParam(value = "q", defaultValue = "") String q, Model model){
         Genre genre = new Genre();
         genre.setName(q);
         List<Genre> searchResult = genreService.getSearchResult(genre);
@@ -86,7 +86,7 @@ public class Select2RestController {
 
     @GetMapping("/getsearchuser")
     @ResponseBody
-    public List<User> select2SearchUser(@RequestParam String q, Model model){
+    public List<User> select2SearchUser(@RequestParam(value = "q", defaultValue = "") String q, Model model){
         User user = new User();
         user.setUsername(q);
         List<User> searchResult = userService.getSearchResult(user);
@@ -96,7 +96,7 @@ public class Select2RestController {
 
     @GetMapping("/getsearchbadge")
     @ResponseBody
-    public List<Badge> select2SearchBadge(@RequestParam String q, Model model){
+    public List<Badge> select2SearchBadge(@RequestParam(value = "q", defaultValue = "") String q, Model model){
         Badge badge = new Badge();
         badge.setName(q);
         List<Badge> searchResult = badgeService.getSearchResult(badge);

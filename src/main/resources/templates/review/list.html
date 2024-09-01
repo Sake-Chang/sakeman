@@ -36,6 +36,7 @@
         <div class="container" th:with="text='__${textappend}__レビュー一覧', class='uil-comment-lines'" layout:include="module/other/page-title-module :: h2(object='')"></div>
     </th:block>
 
+
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
     <div class="container" th:with="pages=${reviewlistPages}" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
 

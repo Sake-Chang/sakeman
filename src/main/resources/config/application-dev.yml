@@ -2,16 +2,34 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    type: com.zaxxer.hikari.HikariDataSource
-    hikari:
-      maximum-pool-size: 15
-      minimum-idle: 5
-      idle-timeout: 600000
-      max-lifetime: 1800000
-      connection-timeout: 30000
-      validation-timeout: 5000
-      read-only: false
-      connection-init-sql: "SET SESSION sql_mode='TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY'"
+#    type: com.zaxxer.hikari.HikariDataSource
+#    hikari:
+#      maximum-pool-size: 15
+#      minimum-idle: 5
+#      idle-timeout: 600000
+#      max-lifetime: 1800000
+#      connection-timeout: 30000
+#      validation-timeout: 5000
+#      read-only: false
+#      connection-init-sql: "SET SESSION sql_mode='TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY'"
+    type: org.apache.tomcat.jdbc.pool.DataSource
+    tomcat:
+      max-wait: 30000  # 取得待機時間（ミリ秒）
+      max-active: 15  # 最大接続数
+      min-idle: 5  # 最小アイドル接続数
+      max-idle: 15  # 最大アイドル接続数
+      initial-size: 5  # 初期接続数
+      validation-query: "SELECT 1"
+      validation-interval: 30000  # 検証インターバル（ミリ秒）
+      test-on-borrow: true  # 取得時の接続検証
+      test-on-return: false  # 返却時の接続検証
+      test-while-idle: true  # アイドル状態の接続検証
+      time-between-eviction-runs-millis: 5000  # 接続削除の実行間隔
+      min-evictable-idle-time-millis: 60000  # 削除されるまでの最小アイドル時間
+      log-abandoned: true  # 放棄された接続のログ
+      remove-abandoned: true  # 放棄された接続の削除
+      remove-abandoned-timeout: 60  # 放棄された接続の削除タイムアウト（秒）
+      init-s-q-l: "SET SESSION sql_mode='TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY'"
   thymeleaf:
     cache: true
   jpa:
@@ -29,9 +47,7 @@ spring:
 
 logging:
   level:
-    root: error
-    "[com.zaxxer.hikari]": debug
-
+    root: WARN
 
 # AWS
 cloud:
