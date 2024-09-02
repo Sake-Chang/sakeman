@@ -59,6 +59,7 @@ public class MangaService {
     }
 
     /** 検索結果 (select2用) */
+    /**　使用していない */
     @Transactional(readOnly = true)
     public List<Manga> getSearchResult(Manga manga) {
         ExampleMatcher matcher = ExampleMatcher
@@ -66,6 +67,16 @@ public class MangaService {
                 .withStringMatcher(StringMatcher.CONTAINING) // Like句
                 .withIgnoreCase(); // 大文字小文字の両方
         return mangaRepository.findAll(Example.of(manga, matcher));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Manga> getSearchResultWithPaging(Manga manga, Pageable pageable) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching() // and条件
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING) // Like句
+                .withIgnoreCase(); // 大文字小文字の両方
+
+        return mangaRepository.findAll(Example.of(manga, matcher), pageable);
     }
 
     /** Like検索結果 */

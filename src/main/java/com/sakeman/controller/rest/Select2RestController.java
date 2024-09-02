@@ -2,11 +2,12 @@ package com.sakeman.controller.rest;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,16 +42,29 @@ public class Select2RestController {
     private final BadgeService badgeService;
 
 
+//    @GetMapping("/getsearch")
+//    @ResponseBody
+//    public List<Manga> select2Search(@RequestParam(value = "q", defaultValue = "") String q, Model model){
+//        Manga manga = new Manga();
+//        manga.setTitle(q);
+//        List<Manga> searchResult = maService.getSearchResult(manga);
+//
+////        List<Manga> searchResult = maService.getLikeSearch(q);
+//
+//        return searchResult;
+//    }
+
     @GetMapping("/getsearch")
     @ResponseBody
-    public List<Manga> select2Search(@RequestParam(value = "q", defaultValue = "") String q, Model model){
+    public Page<Manga> select2Search(
+            @RequestParam(value = "q", defaultValue = "") String q,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+
         Manga manga = new Manga();
         manga.setTitle(q);
-        List<Manga> searchResult = maService.getSearchResult(manga);
-
-//        List<Manga> searchResult = maService.getLikeSearch(q);
-
-        return searchResult;
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return maService.getSearchResultWithPaging(manga, pageable);
     }
 
     @GetMapping("/getsearchauthor")
