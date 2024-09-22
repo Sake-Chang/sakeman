@@ -5,7 +5,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CacheService {
-    @CacheEvict(value = "cacheName", allEntries = true)
+    @CacheEvict(value = {
+            "webMangaUpdateInfo",
+            "webMangaUpdateInfoToday",
+            "webMangaUpdateInfoByMangaId",
+            "webMangaUpdateInfoByMediaId",
+            "webMangaUpdateInfoByTitleSubtitle"
+        }, allEntries = true)
     public void clearCache() {
     }
 }
