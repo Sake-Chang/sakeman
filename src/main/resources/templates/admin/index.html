@@ -20,6 +20,9 @@
     <input type="text" name="end" id="end" placeholder="終了id">
     <input type="submit" value="タイトルクレンジング">
 </form>
+<form th:action="@{/evictCach}" method="post">
+    <input type="submit" value="キャッシュクリア">
+</form>
 <!--
 <p>URLで取得</p>
 <form th:action="@{/rssparse/getupdateinfo-individual}" method="post">

@@ -115,22 +115,22 @@ public class WebMangaUpdateInfoController {
 
             /** 有料無料で絞り込み */
             if (genres.size()==0 && followflag==0) {
-                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(freeflagsSetting, pageable);
+                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(freeflagsSetting, pageable, true);
                 model.addAttribute("pages", result);
                 model.addAttribute("infolist", result.getContent());
             /** 有料無料・フォローで絞り込み */
             } else if (genres.size()==0 && followflag==1) {
-                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(freeflagsSetting, thisUserId, pageable);
+                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(freeflagsSetting, thisUserId, pageable, true);
                 model.addAttribute("pages", result);
                 model.addAttribute("infolist", result.getContent());
             /** 有料無料・ジャンルで絞り込み */
             } else if (genres.size()!=0 && followflag==0) {
-                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, pageable);
+                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, pageable, true);
                 model.addAttribute("pages", result);
                 model.addAttribute("infolist", result.getContent());
             /** 有料無料・ジャンル・フォローで絞り込み */
             } else {
-                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, thisUserId, pageable);
+                Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, thisUserId, pageable, true);
                 model.addAttribute("pages", result);
                 model.addAttribute("infolist", result.getContent());
             }
@@ -138,7 +138,7 @@ public class WebMangaUpdateInfoController {
             genres = new ArrayList<Integer>();
             freeflag = 0;
             followflag = 0;
-            Page<WebMangaUpdateInfo> result = webService.getInfoListPageable(pageable);
+            Page<WebMangaUpdateInfo> result = webService.getInfoListPageable(pageable, true);
             model.addAttribute("pages", result);
             model.addAttribute("infolist", result.getContent());
         }
@@ -155,7 +155,7 @@ public class WebMangaUpdateInfoController {
         LocalDate date = LocalDate.now(ZoneId.of("Asia/Tokyo"));
         LocalTime time = LocalTime.of(0, 0, 0);
         LocalDateTime today = LocalDateTime.of(date, time);
-        model.addAttribute("todaylistsize", webService.getTodayInfoList(today).size());
+        model.addAttribute("todaylistsize", webService.getTodayInfoList(today, true).size());
 
         return "web-manga-update-info/list";
     }
@@ -329,9 +329,9 @@ public class WebMangaUpdateInfoController {
 
         WebMangaMedia media = mediaService.getWebMangaMedia(mediaId);
 
-        model.addAttribute("pages", webService.findByMediaIdPageable(mediaId, pageable));
+        model.addAttribute("pages", webService.findByMediaIdPageable(mediaId, pageable, true));
         model.addAttribute("likelist", webLikeService.webMangaUpdateInfoIdListWebLikedByUser(userDetail));
-        model.addAttribute("infolist", webService.findByMediaIdPageable(mediaId, pageable).getContent());
+        model.addAttribute("infolist", webService.findByMediaIdPageable(mediaId, pageable, true).getContent());
         model.addAttribute("webmangafollowlist", wmfService.webMangaIdListLikedByUser(userDetail));
         model.addAttribute("medialist", mediaService.getWebMangaMediaList());
         model.addAttribute("media", media);
@@ -339,7 +339,7 @@ public class WebMangaUpdateInfoController {
         LocalDate date = LocalDate.now(ZoneId.of("Asia/Tokyo"));
         LocalTime time = LocalTime.of(0, 0, 0);
         LocalDateTime today = LocalDateTime.of(date, time);
-        model.addAttribute("todaylistsize", webService.getTodayInfoList(today).size());
+        model.addAttribute("todaylistsize", webService.getTodayInfoList(today, true).size());
 
         return "web-manga-update-info/list";
     }
@@ -359,8 +359,8 @@ public class WebMangaUpdateInfoController {
 
         Manga mangaobj = maService.getManga(mangaId);
 
-        model.addAttribute("pages", webService.findByMangaIdPageable(mangaId, pageable));
-        model.addAttribute("infolist", webService.findByMangaIdPageable(mangaId, pageable).getContent());
+        model.addAttribute("pages", webService.findByMangaIdPageable(mangaId, pageable, true));
+        model.addAttribute("infolist", webService.findByMangaIdPageable(mangaId, pageable, true).getContent());
 
         model.addAttribute("likelist", webLikeService.webMangaUpdateInfoIdListWebLikedByUser(userDetail));
         model.addAttribute("webmangafollowlist", wmfService.webMangaIdListLikedByUser(userDetail));
@@ -370,7 +370,7 @@ public class WebMangaUpdateInfoController {
         LocalDate date = LocalDate.now(ZoneId.of("Asia/Tokyo"));
         LocalTime time = LocalTime.of(0, 0, 0);
         LocalDateTime today = LocalDateTime.of(date, time);
-        model.addAttribute("todaylistsize", webService.getTodayInfoList(today).size());
+        model.addAttribute("todaylistsize", webService.getTodayInfoList(today, true).size());
 
         return "web-manga-update-info/list";
     }

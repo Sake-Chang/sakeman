@@ -2,6 +2,8 @@ package com.sakeman.controller.admin;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -49,16 +51,16 @@ public class AdminWebMangaUpdateInfoController {
     /** 一覧表示 */
     @GetMapping("list")
     public String getList(Model model, @PageableDefault(page = 0, size = 50) @SortDefault.SortDefaults({@SortDefault(sort="updateAt", direction=Direction.DESC), @SortDefault(sort="webMangaMedia", direction=Direction.ASC), @SortDefault(sort="id", direction=Direction.DESC)}) Pageable pageable) {
-        model.addAttribute("pages", service.getInfoListPageable(pageable));
-        model.addAttribute("infolist", service.getInfoListPageable(pageable).getContent());
+        model.addAttribute("pages", service.getInfoListPageable(pageable, false));
+        model.addAttribute("infolist", service.getInfoListPageable(pageable, false).getContent());
         return "admin/web-manga-update-info/list";
         }
 
     /** 一覧表示（mangaIdが1のものだけ） */
     @GetMapping("list/modify")
     public String getListModify(Model model, @PageableDefault(page = 0, size = 50) @SortDefault.SortDefaults({@SortDefault(sort="updateAt", direction=Direction.DESC), @SortDefault(sort="webMangaMedia", direction=Direction.ASC), @SortDefault(sort="id", direction=Direction.DESC)}) Pageable pageable) {
-        model.addAttribute("pages", service.findByMangaIdPageable(111111, pageable));
-        model.addAttribute("infolist", service.findByMangaIdPageable(111111, pageable).getContent());
+        model.addAttribute("pages", service.findByMangaIdPageable(111111, pageable, false));
+        model.addAttribute("infolist", service.findByMangaIdPageable(111111, pageable, false).getContent());
 
         return "admin/web-manga-update-info/list";
         }

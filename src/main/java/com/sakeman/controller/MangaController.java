@@ -129,7 +129,7 @@ public class MangaController {
                             direction=Direction.DESC) Pageable pageable) {
 
         if (tab==null) tab = "info";
-        Page<WebMangaUpdateInfo> infolistPage = infoService.findByMangaIdPageable(id, pageable);
+        Page<WebMangaUpdateInfo> infolistPage = infoService.findByMangaIdPageable(id, pageable, true);
 
         model.addAttribute("manga", service.getMangaOrThrow(id));
         model.addAttribute("infopage", infolistPage);

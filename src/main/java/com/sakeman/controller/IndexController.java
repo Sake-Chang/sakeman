@@ -61,7 +61,7 @@ public class IndexController {
         LocalDate date = LocalDate.now(ZoneId.of("Asia/Tokyo"));
         LocalTime time = LocalTime.of(0, 0, 0);
         LocalDateTime today = LocalDateTime.of(date, time);
-        model.addAttribute("todaylistsize", webService.getTodayInfoList(today).size());
+        model.addAttribute("todaylistsize", webService.getTodayInfoList(today, true).size());
 
         return "index";
     }

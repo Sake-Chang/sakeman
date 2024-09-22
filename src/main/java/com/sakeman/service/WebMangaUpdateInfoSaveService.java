@@ -124,7 +124,7 @@ public class WebMangaUpdateInfoSaveService {
         LocalDateTime updateAt = (LocalDateTime)parseContents.get("updateAt");
         Integer freeFlag = (Integer)parseContents.get("freeFlag");
 
-        if (webService.findByTitleStringAndSubTitle(titleString, subTitle).isEmpty()) {
+        if (webService.findByTitleStringAndSubTitle(titleString, subTitle, false).isEmpty()) {
             WebMangaUpdateInfo info = new WebMangaUpdateInfo();
                 info.setWebMangaMedia(getWebMangaMedia(mediaName));
                 info.setMediaName(mediaName);

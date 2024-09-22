@@ -21,7 +21,8 @@ public class EmailServiceImpl implements EmailService {
                 + "現在はまだ登録は完了していません。\n"
                 + "以下のリンクをクリックして登録を完了してください。\n"
                 + verificationLink
-                + "\n\n※このメールは、サケマンへ登録された方に自動送信しています。本メールにお心当りがない場合は、誠に恐れ入りますが弊社サポートまでお問い合わせくださいますようお願いいたします。\n"
+                + "\n\n※このメールは、サケマンへ登録された方に自動送信しています。本メールにお心当りがない場合は、以下のリンクからお知らせください。\n"
+                + "https://docs.google.com/forms/d/e/1FAIpQLSeP4LsQZK4AsiJrB_Uq2NIQ8UcjihYn21IUdeynfkZ2TGL6bQ/viewform?usp=sf_link"
                 + "※このメールに記載されたURLの有効期限は1時間です。有効期限切れの場合は、お手数ですが上記リンクから改めて手続を行ってください。");
         javaMailSender.send(message);
     }
@@ -38,6 +39,7 @@ public class EmailServiceImpl implements EmailService {
                 + "以下のリンクをクリックしてメールアドレスの変更を完了してください。\n"
                 + verificationLink
                 + "\n\n※このメールにお心当りがない場合は、URLにアクセスせず、本メールを破棄していただきますようお願いいたします。\n"
+                + "https://docs.google.com/forms/d/e/1FAIpQLSeP4LsQZK4AsiJrB_Uq2NIQ8UcjihYn21IUdeynfkZ2TGL6bQ/viewform?usp=sf_link"
                 + "※このメールに記載されたURLの有効期限は1時間です。有効期限切れの場合は、お手数ですが上記リンクから改めて手続を行ってください。");
         javaMailSender.send(message);
     }
@@ -54,6 +56,7 @@ public class EmailServiceImpl implements EmailService {
                 + "新しいパスワードを再設定できます。\n"
                 + passwordResetLink
                 + "\n\n※このメールにお心当りがない場合は、URLにアクセスせず、本メールを破棄していただきますようお願いいたします。\n"
+                + "https://docs.google.com/forms/d/e/1FAIpQLSeP4LsQZK4AsiJrB_Uq2NIQ8UcjihYn21IUdeynfkZ2TGL6bQ/viewform?usp=sf_link"
                 + "※このメールに記載されたURLの有効期限は1時間です。有効期限切れの場合は、お手数ですが上記リンクから改めて手続を行ってください。");
         javaMailSender.send(message);    }
 }
