@@ -750,3 +750,381 @@ org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2e45f83
 2024/09/22 11:51:04 DEBUG [HikariPool-9 housekeeper] - HikariPool-9 - Fill pool skipped, pool is at sufficient level.
 2024/09/22 11:51:34 DEBUG [HikariPool-9 housekeeper] - HikariPool-9 - Pool stats (total=10, active=0, idle=10, waiting=0)
 2024/09/22 11:51:34 DEBUG [HikariPool-9 housekeeper] - HikariPool-9 - Fill pool skipped, pool is at sufficient level.
+2024/09/22 11:52:04 DEBUG [HikariPool-9 housekeeper] - HikariPool-9 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 11:52:04 DEBUG [HikariPool-9 housekeeper] - HikariPool-9 - Fill pool skipped, pool is at sufficient level.
+2024/09/22 11:52:10 INFO  [RMI TCP Connection(43)-127.0.0.1] - HikariPool-9 - Shutdown initiated...
+2024/09/22 11:52:10 DEBUG [RMI TCP Connection(43)-127.0.0.1] - HikariPool-9 - Before shutdown stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 11:52:10 DEBUG [HikariPool-9 connection closer] - HikariPool-9 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7925174a: (connection evicted)
+2024/09/22 11:52:10 DEBUG [HikariPool-9 connection closer] - HikariPool-9 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@5b0c021d: (connection evicted)
+2024/09/22 11:52:10 DEBUG [HikariPool-9 connection closer] - HikariPool-9 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@1a310826: (connection evicted)
+2024/09/22 11:52:10 DEBUG [HikariPool-9 connection closer] - HikariPool-9 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@2be1d41d: (connection evicted)
+2024/09/22 11:52:10 DEBUG [HikariPool-9 connection closer] - HikariPool-9 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7a1ef769: (connection evicted)
+2024/09/22 11:52:10 DEBUG [HikariPool-9 connection closer] - HikariPool-9 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7e1a7fa6: (connection evicted)
+2024/09/22 11:52:10 DEBUG [HikariPool-9 connection closer] - HikariPool-9 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7e50e9d6: (connection evicted)
+2024/09/22 11:52:10 DEBUG [HikariPool-9 connection closer] - HikariPool-9 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7800acfd: (connection evicted)
+2024/09/22 11:52:10 DEBUG [HikariPool-9 connection closer] - HikariPool-9 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@3540eb1c: (connection evicted)
+2024/09/22 11:52:10 DEBUG [HikariPool-9 connection closer] - HikariPool-9 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@4d6091c9: (connection evicted)
+2024/09/22 11:52:10 DEBUG [RMI TCP Connection(43)-127.0.0.1] - HikariPool-9 - After shutdown stats (total=0, active=0, idle=0, waiting=0)
+2024/09/22 11:52:10 INFO  [RMI TCP Connection(43)-127.0.0.1] - HikariPool-9 - Shutdown completed.
+2024/09/22 12:09:22 DEBUG [restartedMain] - Driver class com.mysql.cj.jdbc.Driver found in Thread context class loader TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+org.springframework.boot.devtools.restart.classloader.RestartClassLoader@53a16896
+
+2024/09/22 12:09:22 DEBUG [restartedMain] - HikariPool-1 - configuration:
+2024/09/22 12:09:22 DEBUG [restartedMain] - allowPoolSuspension................................false
+2024/09/22 12:09:22 DEBUG [restartedMain] - autoCommit................................true
+2024/09/22 12:09:22 DEBUG [restartedMain] - catalog................................none
+2024/09/22 12:09:22 DEBUG [restartedMain] - connectionInitSql................................none
+2024/09/22 12:09:22 DEBUG [restartedMain] - connectionTestQuery................................none
+2024/09/22 12:09:22 DEBUG [restartedMain] - connectionTimeout................................30000
+2024/09/22 12:09:22 DEBUG [restartedMain] - dataSource................................none
+2024/09/22 12:09:22 DEBUG [restartedMain] - dataSourceClassName................................none
+2024/09/22 12:09:22 DEBUG [restartedMain] - dataSourceJNDI................................none
+2024/09/22 12:09:22 DEBUG [restartedMain] - dataSourceProperties................................{password=<masked>}
+2024/09/22 12:09:22 DEBUG [restartedMain] - driverClassName................................"com.mysql.cj.jdbc.Driver"
+2024/09/22 12:09:22 DEBUG [restartedMain] - exceptionOverrideClassName................................none
+2024/09/22 12:09:22 DEBUG [restartedMain] - healthCheckProperties................................{}
+2024/09/22 12:09:22 DEBUG [restartedMain] - healthCheckRegistry................................none
+2024/09/22 12:09:22 DEBUG [restartedMain] - idleTimeout................................600000
+2024/09/22 12:09:22 DEBUG [restartedMain] - initializationFailTimeout................................1
+2024/09/22 12:09:22 DEBUG [restartedMain] - isolateInternalQueries................................false
+2024/09/22 12:09:22 DEBUG [restartedMain] - jdbcUrl................................jdbc:mysql://localhost/sakemandb?useSSL=false&allowPublicKeyRetrieval=true
+2024/09/22 12:09:22 DEBUG [restartedMain] - keepaliveTime................................0
+2024/09/22 12:09:22 DEBUG [restartedMain] - leakDetectionThreshold................................0
+2024/09/22 12:09:22 DEBUG [restartedMain] - maxLifetime................................1800000
+2024/09/22 12:09:22 DEBUG [restartedMain] - maximumPoolSize................................10
+2024/09/22 12:09:22 DEBUG [restartedMain] - metricRegistry................................none
+2024/09/22 12:09:22 DEBUG [restartedMain] - metricsTrackerFactory................................com.zaxxer.hikari.metrics.micrometer.MicrometerMetricsTrackerFactory@ed87ae4
+2024/09/22 12:09:22 DEBUG [restartedMain] - minimumIdle................................10
+2024/09/22 12:09:22 DEBUG [restartedMain] - password................................<masked>
+2024/09/22 12:09:22 DEBUG [restartedMain] - poolName................................"HikariPool-1"
+2024/09/22 12:09:22 DEBUG [restartedMain] - readOnly................................false
+2024/09/22 12:09:22 DEBUG [restartedMain] - registerMbeans................................false
+2024/09/22 12:09:22 DEBUG [restartedMain] - scheduledExecutor................................none
+2024/09/22 12:09:22 DEBUG [restartedMain] - schema................................none
+2024/09/22 12:09:22 DEBUG [restartedMain] - threadFactory................................internal
+2024/09/22 12:09:22 DEBUG [restartedMain] - transactionIsolation................................default
+2024/09/22 12:09:22 DEBUG [restartedMain] - username................................"sakemanuser"
+2024/09/22 12:09:22 DEBUG [restartedMain] - validationTimeout................................5000
+2024/09/22 12:09:22 INFO  [restartedMain] - HikariPool-1 - Starting...
+2024/09/22 12:09:22 DEBUG [restartedMain] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@38f2f58
+2024/09/22 12:09:22 INFO  [restartedMain] - HikariPool-1 - Start completed.
+2024/09/22 12:09:22 DEBUG [HikariPool-1 housekeeper] - HikariPool-1 - Pool stats (total=1, active=0, idle=1, waiting=0)
+2024/09/22 12:09:22 DEBUG [HikariPool-1 connection adder] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@14f8ed44
+2024/09/22 12:09:22 DEBUG [HikariPool-1 connection adder] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@55c5e77f
+2024/09/22 12:09:22 DEBUG [HikariPool-1 connection adder] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@64da1056
+2024/09/22 12:09:22 DEBUG [HikariPool-1 connection adder] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@35ea1830
+2024/09/22 12:09:22 DEBUG [HikariPool-1 connection adder] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6cb90664
+2024/09/22 12:09:22 DEBUG [HikariPool-1 connection adder] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@31a4c163
+2024/09/22 12:09:22 DEBUG [HikariPool-1 connection adder] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6204bfed
+2024/09/22 12:09:22 DEBUG [HikariPool-1 connection adder] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7213a9bc
+2024/09/22 12:09:22 DEBUG [HikariPool-1 connection adder] - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2348bd6b
+2024/09/22 12:09:22 DEBUG [HikariPool-1 connection adder] - HikariPool-1 - After adding stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:09:52 DEBUG [HikariPool-1 housekeeper] - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:09:52 DEBUG [HikariPool-1 housekeeper] - HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024/09/22 12:10:22 DEBUG [HikariPool-1 housekeeper] - HikariPool-1 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:10:22 DEBUG [HikariPool-1 housekeeper] - HikariPool-1 - Fill pool skipped, pool is at sufficient level.
+2024/09/22 12:10:51 INFO  [Thread-6] - HikariPool-1 - Shutdown initiated...
+2024/09/22 12:10:51 DEBUG [Thread-6] - HikariPool-1 - Before shutdown stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:10:51 DEBUG [HikariPool-1 connection closer] - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@38f2f58: (connection evicted)
+2024/09/22 12:10:51 DEBUG [HikariPool-1 connection closer] - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@14f8ed44: (connection evicted)
+2024/09/22 12:10:51 DEBUG [HikariPool-1 connection closer] - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@55c5e77f: (connection evicted)
+2024/09/22 12:10:51 DEBUG [HikariPool-1 connection closer] - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@64da1056: (connection evicted)
+2024/09/22 12:10:51 DEBUG [HikariPool-1 connection closer] - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@35ea1830: (connection evicted)
+2024/09/22 12:10:51 DEBUG [HikariPool-1 connection closer] - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@6cb90664: (connection evicted)
+2024/09/22 12:10:51 DEBUG [HikariPool-1 connection closer] - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@31a4c163: (connection evicted)
+2024/09/22 12:10:51 DEBUG [HikariPool-1 connection closer] - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@6204bfed: (connection evicted)
+2024/09/22 12:10:51 DEBUG [HikariPool-1 connection closer] - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7213a9bc: (connection evicted)
+2024/09/22 12:10:51 DEBUG [HikariPool-1 connection closer] - HikariPool-1 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@2348bd6b: (connection evicted)
+2024/09/22 12:10:51 DEBUG [Thread-6] - HikariPool-1 - After shutdown stats (total=0, active=0, idle=0, waiting=0)
+2024/09/22 12:10:51 INFO  [Thread-6] - HikariPool-1 - Shutdown completed.
+2024/09/22 12:10:54 DEBUG [restartedMain] - Driver class com.mysql.cj.jdbc.Driver found in Thread context class loader TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2a735c95
+
+2024/09/22 12:10:54 DEBUG [restartedMain] - HikariPool-2 - configuration:
+2024/09/22 12:10:54 DEBUG [restartedMain] - allowPoolSuspension................................false
+2024/09/22 12:10:54 DEBUG [restartedMain] - autoCommit................................true
+2024/09/22 12:10:54 DEBUG [restartedMain] - catalog................................none
+2024/09/22 12:10:54 DEBUG [restartedMain] - connectionInitSql................................none
+2024/09/22 12:10:54 DEBUG [restartedMain] - connectionTestQuery................................none
+2024/09/22 12:10:54 DEBUG [restartedMain] - connectionTimeout................................30000
+2024/09/22 12:10:54 DEBUG [restartedMain] - dataSource................................none
+2024/09/22 12:10:54 DEBUG [restartedMain] - dataSourceClassName................................none
+2024/09/22 12:10:54 DEBUG [restartedMain] - dataSourceJNDI................................none
+2024/09/22 12:10:54 DEBUG [restartedMain] - dataSourceProperties................................{password=<masked>}
+2024/09/22 12:10:54 DEBUG [restartedMain] - driverClassName................................"com.mysql.cj.jdbc.Driver"
+2024/09/22 12:10:54 DEBUG [restartedMain] - exceptionOverrideClassName................................none
+2024/09/22 12:10:54 DEBUG [restartedMain] - healthCheckProperties................................{}
+2024/09/22 12:10:54 DEBUG [restartedMain] - healthCheckRegistry................................none
+2024/09/22 12:10:54 DEBUG [restartedMain] - idleTimeout................................600000
+2024/09/22 12:10:54 DEBUG [restartedMain] - initializationFailTimeout................................1
+2024/09/22 12:10:54 DEBUG [restartedMain] - isolateInternalQueries................................false
+2024/09/22 12:10:54 DEBUG [restartedMain] - jdbcUrl................................jdbc:mysql://localhost/sakemandb?useSSL=false&allowPublicKeyRetrieval=true
+2024/09/22 12:10:54 DEBUG [restartedMain] - keepaliveTime................................0
+2024/09/22 12:10:54 DEBUG [restartedMain] - leakDetectionThreshold................................0
+2024/09/22 12:10:54 DEBUG [restartedMain] - maxLifetime................................1800000
+2024/09/22 12:10:54 DEBUG [restartedMain] - maximumPoolSize................................10
+2024/09/22 12:10:54 DEBUG [restartedMain] - metricRegistry................................none
+2024/09/22 12:10:54 DEBUG [restartedMain] - metricsTrackerFactory................................com.zaxxer.hikari.metrics.micrometer.MicrometerMetricsTrackerFactory@6e8f3b
+2024/09/22 12:10:54 DEBUG [restartedMain] - minimumIdle................................10
+2024/09/22 12:10:54 DEBUG [restartedMain] - password................................<masked>
+2024/09/22 12:10:54 DEBUG [restartedMain] - poolName................................"HikariPool-2"
+2024/09/22 12:10:54 DEBUG [restartedMain] - readOnly................................false
+2024/09/22 12:10:54 DEBUG [restartedMain] - registerMbeans................................false
+2024/09/22 12:10:54 DEBUG [restartedMain] - scheduledExecutor................................none
+2024/09/22 12:10:54 DEBUG [restartedMain] - schema................................none
+2024/09/22 12:10:54 DEBUG [restartedMain] - threadFactory................................internal
+2024/09/22 12:10:54 DEBUG [restartedMain] - transactionIsolation................................default
+2024/09/22 12:10:54 DEBUG [restartedMain] - username................................"sakemanuser"
+2024/09/22 12:10:54 DEBUG [restartedMain] - validationTimeout................................5000
+2024/09/22 12:10:54 INFO  [restartedMain] - HikariPool-2 - Starting...
+2024/09/22 12:10:54 DEBUG [restartedMain] - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@22c945a8
+2024/09/22 12:10:54 INFO  [restartedMain] - HikariPool-2 - Start completed.
+2024/09/22 12:10:54 DEBUG [HikariPool-2 housekeeper] - HikariPool-2 - Pool stats (total=1, active=0, idle=1, waiting=0)
+2024/09/22 12:10:54 DEBUG [HikariPool-2 connection adder] - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@663f9b79
+2024/09/22 12:10:54 DEBUG [HikariPool-2 connection adder] - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@27029142
+2024/09/22 12:10:54 DEBUG [HikariPool-2 connection adder] - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@16ef53c4
+2024/09/22 12:10:54 DEBUG [HikariPool-2 connection adder] - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@472d6e0d
+2024/09/22 12:10:54 DEBUG [HikariPool-2 connection adder] - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@472ba7d9
+2024/09/22 12:10:54 DEBUG [HikariPool-2 connection adder] - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@61cbe0c0
+2024/09/22 12:10:54 DEBUG [HikariPool-2 connection adder] - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@34d7a7c9
+2024/09/22 12:10:54 DEBUG [HikariPool-2 connection adder] - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5b02aadf
+2024/09/22 12:10:54 DEBUG [HikariPool-2 connection adder] - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3a17d4ab
+2024/09/22 12:10:54 DEBUG [HikariPool-2 connection adder] - HikariPool-2 - After adding stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:11:24 DEBUG [HikariPool-2 housekeeper] - HikariPool-2 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:11:24 DEBUG [HikariPool-2 housekeeper] - HikariPool-2 - Fill pool skipped, pool is at sufficient level.
+2024/09/22 12:11:54 DEBUG [HikariPool-2 housekeeper] - HikariPool-2 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:11:54 DEBUG [HikariPool-2 housekeeper] - HikariPool-2 - Fill pool skipped, pool is at sufficient level.
+2024/09/22 12:12:24 DEBUG [HikariPool-2 housekeeper] - HikariPool-2 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:12:24 DEBUG [HikariPool-2 housekeeper] - HikariPool-2 - Fill pool skipped, pool is at sufficient level.
+2024/09/22 12:12:34 INFO  [Thread-8] - HikariPool-2 - Shutdown initiated...
+2024/09/22 12:12:34 DEBUG [Thread-8] - HikariPool-2 - Before shutdown stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:12:34 DEBUG [HikariPool-2 connection closer] - HikariPool-2 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@22c945a8: (connection evicted)
+2024/09/22 12:12:34 DEBUG [HikariPool-2 connection closer] - HikariPool-2 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@663f9b79: (connection evicted)
+2024/09/22 12:12:34 DEBUG [HikariPool-2 connection closer] - HikariPool-2 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@27029142: (connection evicted)
+2024/09/22 12:12:34 DEBUG [HikariPool-2 connection closer] - HikariPool-2 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@16ef53c4: (connection evicted)
+2024/09/22 12:12:34 DEBUG [HikariPool-2 connection closer] - HikariPool-2 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@472d6e0d: (connection evicted)
+2024/09/22 12:12:34 DEBUG [HikariPool-2 connection closer] - HikariPool-2 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@472ba7d9: (connection evicted)
+2024/09/22 12:12:34 DEBUG [HikariPool-2 connection closer] - HikariPool-2 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@61cbe0c0: (connection evicted)
+2024/09/22 12:12:34 DEBUG [HikariPool-2 connection closer] - HikariPool-2 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@34d7a7c9: (connection evicted)
+2024/09/22 12:12:34 DEBUG [HikariPool-2 connection closer] - HikariPool-2 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@5b02aadf: (connection evicted)
+2024/09/22 12:12:34 DEBUG [HikariPool-2 connection closer] - HikariPool-2 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@3a17d4ab: (connection evicted)
+2024/09/22 12:12:34 DEBUG [Thread-8] - HikariPool-2 - After shutdown stats (total=0, active=0, idle=0, waiting=0)
+2024/09/22 12:12:34 INFO  [Thread-8] - HikariPool-2 - Shutdown completed.
+2024/09/22 12:12:35 DEBUG [restartedMain] - Driver class com.mysql.cj.jdbc.Driver found in Thread context class loader TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+org.springframework.boot.devtools.restart.classloader.RestartClassLoader@25f28eb0
+
+2024/09/22 12:12:36 DEBUG [restartedMain] - HikariPool-3 - configuration:
+2024/09/22 12:12:36 DEBUG [restartedMain] - allowPoolSuspension................................false
+2024/09/22 12:12:36 DEBUG [restartedMain] - autoCommit................................true
+2024/09/22 12:12:36 DEBUG [restartedMain] - catalog................................none
+2024/09/22 12:12:36 DEBUG [restartedMain] - connectionInitSql................................none
+2024/09/22 12:12:36 DEBUG [restartedMain] - connectionTestQuery................................none
+2024/09/22 12:12:36 DEBUG [restartedMain] - connectionTimeout................................30000
+2024/09/22 12:12:36 DEBUG [restartedMain] - dataSource................................none
+2024/09/22 12:12:36 DEBUG [restartedMain] - dataSourceClassName................................none
+2024/09/22 12:12:36 DEBUG [restartedMain] - dataSourceJNDI................................none
+2024/09/22 12:12:36 DEBUG [restartedMain] - dataSourceProperties................................{password=<masked>}
+2024/09/22 12:12:36 DEBUG [restartedMain] - driverClassName................................"com.mysql.cj.jdbc.Driver"
+2024/09/22 12:12:36 DEBUG [restartedMain] - exceptionOverrideClassName................................none
+2024/09/22 12:12:36 DEBUG [restartedMain] - healthCheckProperties................................{}
+2024/09/22 12:12:36 DEBUG [restartedMain] - healthCheckRegistry................................none
+2024/09/22 12:12:36 DEBUG [restartedMain] - idleTimeout................................600000
+2024/09/22 12:12:36 DEBUG [restartedMain] - initializationFailTimeout................................1
+2024/09/22 12:12:36 DEBUG [restartedMain] - isolateInternalQueries................................false
+2024/09/22 12:12:36 DEBUG [restartedMain] - jdbcUrl................................jdbc:mysql://localhost/sakemandb?useSSL=false&allowPublicKeyRetrieval=true
+2024/09/22 12:12:36 DEBUG [restartedMain] - keepaliveTime................................0
+2024/09/22 12:12:36 DEBUG [restartedMain] - leakDetectionThreshold................................0
+2024/09/22 12:12:36 DEBUG [restartedMain] - maxLifetime................................1800000
+2024/09/22 12:12:36 DEBUG [restartedMain] - maximumPoolSize................................10
+2024/09/22 12:12:36 DEBUG [restartedMain] - metricRegistry................................none
+2024/09/22 12:12:36 DEBUG [restartedMain] - metricsTrackerFactory................................com.zaxxer.hikari.metrics.micrometer.MicrometerMetricsTrackerFactory@37f5f46a
+2024/09/22 12:12:36 DEBUG [restartedMain] - minimumIdle................................10
+2024/09/22 12:12:36 DEBUG [restartedMain] - password................................<masked>
+2024/09/22 12:12:36 DEBUG [restartedMain] - poolName................................"HikariPool-3"
+2024/09/22 12:12:36 DEBUG [restartedMain] - readOnly................................false
+2024/09/22 12:12:36 DEBUG [restartedMain] - registerMbeans................................false
+2024/09/22 12:12:36 DEBUG [restartedMain] - scheduledExecutor................................none
+2024/09/22 12:12:36 DEBUG [restartedMain] - schema................................none
+2024/09/22 12:12:36 DEBUG [restartedMain] - threadFactory................................internal
+2024/09/22 12:12:36 DEBUG [restartedMain] - transactionIsolation................................default
+2024/09/22 12:12:36 DEBUG [restartedMain] - username................................"sakemanuser"
+2024/09/22 12:12:36 DEBUG [restartedMain] - validationTimeout................................5000
+2024/09/22 12:12:36 INFO  [restartedMain] - HikariPool-3 - Starting...
+2024/09/22 12:12:36 DEBUG [restartedMain] - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@46e62977
+2024/09/22 12:12:36 INFO  [restartedMain] - HikariPool-3 - Start completed.
+2024/09/22 12:12:36 DEBUG [HikariPool-3 housekeeper] - HikariPool-3 - Pool stats (total=1, active=0, idle=1, waiting=0)
+2024/09/22 12:12:36 DEBUG [HikariPool-3 connection adder] - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@26d5a9d2
+2024/09/22 12:12:36 DEBUG [HikariPool-3 connection adder] - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@67e8a3e9
+2024/09/22 12:12:36 DEBUG [HikariPool-3 connection adder] - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5645c3b7
+2024/09/22 12:12:36 DEBUG [HikariPool-3 connection adder] - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7c75ca6
+2024/09/22 12:12:36 DEBUG [HikariPool-3 connection adder] - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@993b918
+2024/09/22 12:12:36 DEBUG [HikariPool-3 connection adder] - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@38927c0
+2024/09/22 12:12:36 DEBUG [HikariPool-3 connection adder] - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7a3f0868
+2024/09/22 12:12:36 DEBUG [HikariPool-3 connection adder] - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3d2f4744
+2024/09/22 12:12:36 DEBUG [HikariPool-3 connection adder] - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@50f0bf58
+2024/09/22 12:12:36 DEBUG [HikariPool-3 connection adder] - HikariPool-3 - After adding stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:12:45 INFO  [Thread-13] - HikariPool-3 - Shutdown initiated...
+2024/09/22 12:12:45 DEBUG [Thread-13] - HikariPool-3 - Before shutdown stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:12:45 DEBUG [HikariPool-3 connection closer] - HikariPool-3 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@46e62977: (connection evicted)
+2024/09/22 12:12:45 DEBUG [HikariPool-3 connection closer] - HikariPool-3 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@26d5a9d2: (connection evicted)
+2024/09/22 12:12:45 DEBUG [HikariPool-3 connection closer] - HikariPool-3 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@67e8a3e9: (connection evicted)
+2024/09/22 12:12:45 DEBUG [HikariPool-3 connection closer] - HikariPool-3 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@5645c3b7: (connection evicted)
+2024/09/22 12:12:45 DEBUG [HikariPool-3 connection closer] - HikariPool-3 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7c75ca6: (connection evicted)
+2024/09/22 12:12:45 DEBUG [HikariPool-3 connection closer] - HikariPool-3 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@993b918: (connection evicted)
+2024/09/22 12:12:45 DEBUG [HikariPool-3 connection closer] - HikariPool-3 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@38927c0: (connection evicted)
+2024/09/22 12:12:45 DEBUG [HikariPool-3 connection closer] - HikariPool-3 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7a3f0868: (connection evicted)
+2024/09/22 12:12:45 DEBUG [HikariPool-3 connection closer] - HikariPool-3 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@3d2f4744: (connection evicted)
+2024/09/22 12:12:45 DEBUG [HikariPool-3 connection closer] - HikariPool-3 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@50f0bf58: (connection evicted)
+2024/09/22 12:12:45 DEBUG [Thread-13] - HikariPool-3 - After shutdown stats (total=0, active=0, idle=0, waiting=0)
+2024/09/22 12:12:45 INFO  [Thread-13] - HikariPool-3 - Shutdown completed.
+2024/09/22 12:12:47 DEBUG [restartedMain] - Driver class com.mysql.cj.jdbc.Driver found in Thread context class loader TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2ba6b9b0
+
+2024/09/22 12:12:47 DEBUG [restartedMain] - HikariPool-4 - configuration:
+2024/09/22 12:12:47 DEBUG [restartedMain] - allowPoolSuspension................................false
+2024/09/22 12:12:47 DEBUG [restartedMain] - autoCommit................................true
+2024/09/22 12:12:47 DEBUG [restartedMain] - catalog................................none
+2024/09/22 12:12:47 DEBUG [restartedMain] - connectionInitSql................................none
+2024/09/22 12:12:47 DEBUG [restartedMain] - connectionTestQuery................................none
+2024/09/22 12:12:47 DEBUG [restartedMain] - connectionTimeout................................30000
+2024/09/22 12:12:47 DEBUG [restartedMain] - dataSource................................none
+2024/09/22 12:12:47 DEBUG [restartedMain] - dataSourceClassName................................none
+2024/09/22 12:12:47 DEBUG [restartedMain] - dataSourceJNDI................................none
+2024/09/22 12:12:47 DEBUG [restartedMain] - dataSourceProperties................................{password=<masked>}
+2024/09/22 12:12:47 DEBUG [restartedMain] - driverClassName................................"com.mysql.cj.jdbc.Driver"
+2024/09/22 12:12:47 DEBUG [restartedMain] - exceptionOverrideClassName................................none
+2024/09/22 12:12:47 DEBUG [restartedMain] - healthCheckProperties................................{}
+2024/09/22 12:12:47 DEBUG [restartedMain] - healthCheckRegistry................................none
+2024/09/22 12:12:47 DEBUG [restartedMain] - idleTimeout................................600000
+2024/09/22 12:12:47 DEBUG [restartedMain] - initializationFailTimeout................................1
+2024/09/22 12:12:47 DEBUG [restartedMain] - isolateInternalQueries................................false
+2024/09/22 12:12:47 DEBUG [restartedMain] - jdbcUrl................................jdbc:mysql://localhost/sakemandb?useSSL=false&allowPublicKeyRetrieval=true
+2024/09/22 12:12:47 DEBUG [restartedMain] - keepaliveTime................................0
+2024/09/22 12:12:47 DEBUG [restartedMain] - leakDetectionThreshold................................0
+2024/09/22 12:12:47 DEBUG [restartedMain] - maxLifetime................................1800000
+2024/09/22 12:12:47 DEBUG [restartedMain] - maximumPoolSize................................10
+2024/09/22 12:12:47 DEBUG [restartedMain] - metricRegistry................................none
+2024/09/22 12:12:47 DEBUG [restartedMain] - metricsTrackerFactory................................com.zaxxer.hikari.metrics.micrometer.MicrometerMetricsTrackerFactory@3bd7e6ad
+2024/09/22 12:12:47 DEBUG [restartedMain] - minimumIdle................................10
+2024/09/22 12:12:47 DEBUG [restartedMain] - password................................<masked>
+2024/09/22 12:12:47 DEBUG [restartedMain] - poolName................................"HikariPool-4"
+2024/09/22 12:12:47 DEBUG [restartedMain] - readOnly................................false
+2024/09/22 12:12:47 DEBUG [restartedMain] - registerMbeans................................false
+2024/09/22 12:12:47 DEBUG [restartedMain] - scheduledExecutor................................none
+2024/09/22 12:12:47 DEBUG [restartedMain] - schema................................none
+2024/09/22 12:12:47 DEBUG [restartedMain] - threadFactory................................internal
+2024/09/22 12:12:47 DEBUG [restartedMain] - transactionIsolation................................default
+2024/09/22 12:12:47 DEBUG [restartedMain] - username................................"sakemanuser"
+2024/09/22 12:12:47 DEBUG [restartedMain] - validationTimeout................................5000
+2024/09/22 12:12:47 INFO  [restartedMain] - HikariPool-4 - Starting...
+2024/09/22 12:12:47 DEBUG [restartedMain] - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@667e3327
+2024/09/22 12:12:47 INFO  [restartedMain] - HikariPool-4 - Start completed.
+2024/09/22 12:12:47 DEBUG [HikariPool-4 housekeeper] - HikariPool-4 - Pool stats (total=1, active=0, idle=1, waiting=0)
+2024/09/22 12:12:47 DEBUG [HikariPool-4 connection adder] - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1e43d6a2
+2024/09/22 12:12:47 DEBUG [HikariPool-4 connection adder] - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5f7edc99
+2024/09/22 12:12:47 DEBUG [HikariPool-4 connection adder] - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6e6b8229
+2024/09/22 12:12:47 DEBUG [HikariPool-4 connection adder] - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3f5123d6
+2024/09/22 12:12:47 DEBUG [HikariPool-4 connection adder] - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@e7b2d88
+2024/09/22 12:12:47 DEBUG [HikariPool-4 connection adder] - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3b1ff82e
+2024/09/22 12:12:47 DEBUG [HikariPool-4 connection adder] - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4c1b004c
+2024/09/22 12:12:47 DEBUG [HikariPool-4 connection adder] - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@347504be
+2024/09/22 12:12:47 DEBUG [HikariPool-4 connection adder] - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@60ad99b3
+2024/09/22 12:12:47 DEBUG [HikariPool-4 connection adder] - HikariPool-4 - After adding stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:13:08 INFO  [Thread-18] - HikariPool-4 - Shutdown initiated...
+2024/09/22 12:13:08 DEBUG [Thread-18] - HikariPool-4 - Before shutdown stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:13:08 DEBUG [HikariPool-4 connection closer] - HikariPool-4 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@667e3327: (connection evicted)
+2024/09/22 12:13:08 DEBUG [HikariPool-4 connection closer] - HikariPool-4 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@1e43d6a2: (connection evicted)
+2024/09/22 12:13:08 DEBUG [HikariPool-4 connection closer] - HikariPool-4 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@5f7edc99: (connection evicted)
+2024/09/22 12:13:08 DEBUG [HikariPool-4 connection closer] - HikariPool-4 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@6e6b8229: (connection evicted)
+2024/09/22 12:13:08 DEBUG [HikariPool-4 connection closer] - HikariPool-4 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@3f5123d6: (connection evicted)
+2024/09/22 12:13:08 DEBUG [HikariPool-4 connection closer] - HikariPool-4 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@e7b2d88: (connection evicted)
+2024/09/22 12:13:08 DEBUG [HikariPool-4 connection closer] - HikariPool-4 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@3b1ff82e: (connection evicted)
+2024/09/22 12:13:08 DEBUG [HikariPool-4 connection closer] - HikariPool-4 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@4c1b004c: (connection evicted)
+2024/09/22 12:13:08 DEBUG [HikariPool-4 connection closer] - HikariPool-4 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@347504be: (connection evicted)
+2024/09/22 12:13:08 DEBUG [HikariPool-4 connection closer] - HikariPool-4 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@60ad99b3: (connection evicted)
+2024/09/22 12:13:08 DEBUG [Thread-18] - HikariPool-4 - After shutdown stats (total=0, active=0, idle=0, waiting=0)
+2024/09/22 12:13:08 INFO  [Thread-18] - HikariPool-4 - Shutdown completed.
+2024/09/22 12:13:09 DEBUG [restartedMain] - Driver class com.mysql.cj.jdbc.Driver found in Thread context class loader TomcatEmbeddedWebappClassLoader
+  context: ROOT
+  delegate: true
+----------> Parent Classloader:
+org.springframework.boot.devtools.restart.classloader.RestartClassLoader@56c944c0
+
+2024/09/22 12:13:09 DEBUG [restartedMain] - HikariPool-5 - configuration:
+2024/09/22 12:13:09 DEBUG [restartedMain] - allowPoolSuspension................................false
+2024/09/22 12:13:09 DEBUG [restartedMain] - autoCommit................................true
+2024/09/22 12:13:09 DEBUG [restartedMain] - catalog................................none
+2024/09/22 12:13:09 DEBUG [restartedMain] - connectionInitSql................................none
+2024/09/22 12:13:09 DEBUG [restartedMain] - connectionTestQuery................................none
+2024/09/22 12:13:09 DEBUG [restartedMain] - connectionTimeout................................30000
+2024/09/22 12:13:09 DEBUG [restartedMain] - dataSource................................none
+2024/09/22 12:13:09 DEBUG [restartedMain] - dataSourceClassName................................none
+2024/09/22 12:13:09 DEBUG [restartedMain] - dataSourceJNDI................................none
+2024/09/22 12:13:09 DEBUG [restartedMain] - dataSourceProperties................................{password=<masked>}
+2024/09/22 12:13:09 DEBUG [restartedMain] - driverClassName................................"com.mysql.cj.jdbc.Driver"
+2024/09/22 12:13:09 DEBUG [restartedMain] - exceptionOverrideClassName................................none
+2024/09/22 12:13:09 DEBUG [restartedMain] - healthCheckProperties................................{}
+2024/09/22 12:13:09 DEBUG [restartedMain] - healthCheckRegistry................................none
+2024/09/22 12:13:09 DEBUG [restartedMain] - idleTimeout................................600000
+2024/09/22 12:13:09 DEBUG [restartedMain] - initializationFailTimeout................................1
+2024/09/22 12:13:09 DEBUG [restartedMain] - isolateInternalQueries................................false
+2024/09/22 12:13:09 DEBUG [restartedMain] - jdbcUrl................................jdbc:mysql://localhost/sakemandb?useSSL=false&allowPublicKeyRetrieval=true
+2024/09/22 12:13:09 DEBUG [restartedMain] - keepaliveTime................................0
+2024/09/22 12:13:09 DEBUG [restartedMain] - leakDetectionThreshold................................0
+2024/09/22 12:13:09 DEBUG [restartedMain] - maxLifetime................................1800000
+2024/09/22 12:13:09 DEBUG [restartedMain] - maximumPoolSize................................10
+2024/09/22 12:13:09 DEBUG [restartedMain] - metricRegistry................................none
+2024/09/22 12:13:09 DEBUG [restartedMain] - metricsTrackerFactory................................com.zaxxer.hikari.metrics.micrometer.MicrometerMetricsTrackerFactory@313aca80
+2024/09/22 12:13:09 DEBUG [restartedMain] - minimumIdle................................10
+2024/09/22 12:13:09 DEBUG [restartedMain] - password................................<masked>
+2024/09/22 12:13:09 DEBUG [restartedMain] - poolName................................"HikariPool-5"
+2024/09/22 12:13:09 DEBUG [restartedMain] - readOnly................................false
+2024/09/22 12:13:09 DEBUG [restartedMain] - registerMbeans................................false
+2024/09/22 12:13:09 DEBUG [restartedMain] - scheduledExecutor................................none
+2024/09/22 12:13:09 DEBUG [restartedMain] - schema................................none
+2024/09/22 12:13:09 DEBUG [restartedMain] - threadFactory................................internal
+2024/09/22 12:13:09 DEBUG [restartedMain] - transactionIsolation................................default
+2024/09/22 12:13:09 DEBUG [restartedMain] - username................................"sakemanuser"
+2024/09/22 12:13:09 DEBUG [restartedMain] - validationTimeout................................5000
+2024/09/22 12:13:09 INFO  [restartedMain] - HikariPool-5 - Starting...
+2024/09/22 12:13:09 DEBUG [restartedMain] - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@14e5d495
+2024/09/22 12:13:09 INFO  [restartedMain] - HikariPool-5 - Start completed.
+2024/09/22 12:13:09 DEBUG [HikariPool-5 housekeeper] - HikariPool-5 - Pool stats (total=1, active=0, idle=1, waiting=0)
+2024/09/22 12:13:09 DEBUG [HikariPool-5 connection adder] - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3e41b4d3
+2024/09/22 12:13:09 DEBUG [HikariPool-5 connection adder] - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7f7cbee8
+2024/09/22 12:13:09 DEBUG [HikariPool-5 connection adder] - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4e49c23c
+2024/09/22 12:13:09 DEBUG [HikariPool-5 connection adder] - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1f5341a7
+2024/09/22 12:13:09 DEBUG [HikariPool-5 connection adder] - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@ab081f8
+2024/09/22 12:13:09 DEBUG [HikariPool-5 connection adder] - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1b1dba5d
+2024/09/22 12:13:09 DEBUG [HikariPool-5 connection adder] - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@58dcd243
+2024/09/22 12:13:09 DEBUG [HikariPool-5 connection adder] - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@47b3892
+2024/09/22 12:13:09 DEBUG [HikariPool-5 connection adder] - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@568f9ce
+2024/09/22 12:13:09 DEBUG [HikariPool-5 connection adder] - HikariPool-5 - After adding stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:13:39 DEBUG [HikariPool-5 housekeeper] - HikariPool-5 - Pool stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:13:39 DEBUG [HikariPool-5 housekeeper] - HikariPool-5 - Fill pool skipped, pool is at sufficient level.
+2024/09/22 12:14:02 INFO  [RMI TCP Connection(10)-127.0.0.1] - HikariPool-5 - Shutdown initiated...
+2024/09/22 12:14:02 DEBUG [RMI TCP Connection(10)-127.0.0.1] - HikariPool-5 - Before shutdown stats (total=10, active=0, idle=10, waiting=0)
+2024/09/22 12:14:02 DEBUG [HikariPool-5 connection closer] - HikariPool-5 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@14e5d495: (connection evicted)
+2024/09/22 12:14:02 DEBUG [HikariPool-5 connection closer] - HikariPool-5 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@3e41b4d3: (connection evicted)
+2024/09/22 12:14:02 DEBUG [HikariPool-5 connection closer] - HikariPool-5 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@7f7cbee8: (connection evicted)
+2024/09/22 12:14:02 DEBUG [HikariPool-5 connection closer] - HikariPool-5 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@4e49c23c: (connection evicted)
+2024/09/22 12:14:02 DEBUG [HikariPool-5 connection closer] - HikariPool-5 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@1f5341a7: (connection evicted)
+2024/09/22 12:14:02 DEBUG [HikariPool-5 connection closer] - HikariPool-5 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@ab081f8: (connection evicted)
+2024/09/22 12:14:02 DEBUG [HikariPool-5 connection closer] - HikariPool-5 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@1b1dba5d: (connection evicted)
+2024/09/22 12:14:02 DEBUG [HikariPool-5 connection closer] - HikariPool-5 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@58dcd243: (connection evicted)
+2024/09/22 12:14:02 DEBUG [HikariPool-5 connection closer] - HikariPool-5 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@47b3892: (connection evicted)
+2024/09/22 12:14:02 DEBUG [HikariPool-5 connection closer] - HikariPool-5 - Closing connection com.mysql.cj.jdbc.ConnectionImpl@568f9ce: (connection evicted)
+2024/09/22 12:14:02 DEBUG [RMI TCP Connection(10)-127.0.0.1] - HikariPool-5 - After shutdown stats (total=0, active=0, idle=0, waiting=0)
+2024/09/22 12:14:02 INFO  [RMI TCP Connection(10)-127.0.0.1] - HikariPool-5 - Shutdown completed.
