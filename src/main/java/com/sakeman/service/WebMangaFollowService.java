@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,14 +74,21 @@ public class WebMangaFollowService {
 
     /** 登録処理 */
     @Transactional
+//    @CacheEvict(value = {"webMangaUpdateInfo"}, key = "'userId:' + #webMangaFollow.user.id")
     public WebMangaFollow saveWebMangaFollow(WebMangaFollow webMangaFollow) {
+        System.out.println("登録");
         return repository.save(webMangaFollow);
     }
 
     /** 削除処理 */
     @Transactional
+//    @CacheEvict(value = {"webMangaUpdateInfo"}, key = "'userId:' + #webMangaFollow.user.id", condition = "#webMangaFollow != null && #webMangaFollow.user != null")
     public void deleteById(Integer id) {
-        repository.deleteById(id);
+        WebMangaFollow webMangaFollow = repository.findById(id).orElse(null);
+        if (webMangaFollow != null) {
+            System.out.println("削除");
+            repository.deleteById(id);
+        }
     }
 
 }
