@@ -31,7 +31,7 @@
 <form class="post-review-form-container" method="post" th:action="@{/review/post}" th:object="${review}">
 
     <label class="form-label" for="manga.id">レビューする作品</label>
-    <select class="select2" name="manga.id" th:errorclass="err">
+    <select class="select2-manga" name="manga.id" th:errorclass="err">
         <option th:value="${review.manga.id != null} ? ${review.manga.id} : ''"
                 th:text="${review.manga.id != null} ? ${review.manga.title} : 'レビューする作品を選んでください。'"></option>
     </select><br>
@@ -60,7 +60,7 @@
     <span th:errors="*{content}" class="err"></span><br>
     <textarea class="post-review-form-content" th:field="*{content}" placeholder="個人的なメモでも良いですし、推し活的なものでも良いかもしれません。" th:errorclass="err"></textarea>
 
-    <input class="form-button" type="submit" value="投稿する" th:disabled="${#authorization.expression('isAnonymous()')}">
+    <input class="form-button" type="submit" value="投稿する" disabled th:disabled="${#authorization.expression('isAnonymous()')}" data-is-anonymous="${#authorization.expression('isAnonymous()')}">
 </form>
 
 </div>

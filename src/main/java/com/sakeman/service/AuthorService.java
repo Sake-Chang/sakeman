@@ -44,6 +44,16 @@ public class AuthorService {
         return authorRepository.findAll(Example.of(author, matcher));
     }
 
+    @Transactional(readOnly = true)
+    public Page<Author> getSearchResultWithPaging(Author author, Pageable pageable) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching() // and条件
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING) // Like句
+                .withIgnoreCase(); // 大文字小文字の両方
+
+        return authorRepository.findAll(Example.of(author, matcher), pageable);
+    }
+
     /** 1件を検索して返す */
     @Transactional(readOnly = true)
     public Author getAuthor(Integer id) {

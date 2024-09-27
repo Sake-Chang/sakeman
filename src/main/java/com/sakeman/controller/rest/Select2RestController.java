@@ -54,7 +54,7 @@ public class Select2RestController {
 //        return searchResult;
 //    }
 
-    @GetMapping("/getsearch")
+    @GetMapping("/select2manga")
     @ResponseBody
     public Page<Manga> select2Search(
             @RequestParam(value = "q", defaultValue = "") String q,
@@ -67,56 +67,69 @@ public class Select2RestController {
         return maService.getSearchResultWithPaging(manga, pageable);
     }
 
-    @GetMapping("/getsearchauthor")
+    @GetMapping("/select2author")
     @ResponseBody
-    public List<Author> select2SearchAuthor(@RequestParam(value = "q", defaultValue = "") String q, Model model){
+    public Page<Author> select2SearchAuthor(
+            @RequestParam(value = "q", defaultValue = "") String q,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+
         Author author = new Author();
         author.setName(q);
-        List<Author> searchResult = authService.getSearchResult(author);
-//        model.addAttribute("searchResult", maService.getSearchResult(manga));
-
-        return searchResult;
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return authService.getSearchResultWithPaging(author, pageable);
     }
 
-    @GetMapping("/getsearchtag")
+    @GetMapping("/select2tag")
     @ResponseBody
-    public List<Tag> select2SearchTag(@RequestParam(value = "q", defaultValue = "") String q, Model model){
+    public Page<Tag> select2SearchTag(
+            @RequestParam(value = "q", defaultValue = "") String q,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+
         Tag tag = new Tag();
         tag.setTagname(q);
-        List<Tag> searchResult = tagService.getSearchResult(tag);
-
-        return searchResult;
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return tagService.getSearchResultWithPaging(tag, pageable);
     }
 
-    @GetMapping("/getsearchgenre")
+    @GetMapping("/select2genre")
     @ResponseBody
-    public List<Genre> select2SearchGenre(@RequestParam(value = "q", defaultValue = "") String q, Model model){
+    public Page<Genre> select2SearchGenre(
+            @RequestParam(value = "q", defaultValue = "") String q,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+
         Genre genre = new Genre();
         genre.setName(q);
-        List<Genre> searchResult = genreService.getSearchResult(genre);
-
-        return searchResult;
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return genreService.getSearchResultWithPaging(genre, pageable);
     }
 
-    @GetMapping("/getsearchuser")
+    @GetMapping("/select2user")
     @ResponseBody
-    public List<User> select2SearchUser(@RequestParam(value = "q", defaultValue = "") String q, Model model){
+    public Page<User> select2SearchUser(
+            @RequestParam(value = "q", defaultValue = "") String q,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+
         User user = new User();
         user.setUsername(q);
-        List<User> searchResult = userService.getSearchResult(user);
-
-        return searchResult;
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return userService.getSearchResultWithPaging(user, pageable);
     }
 
-    @GetMapping("/getsearchbadge")
+    @GetMapping("/select2badge")
     @ResponseBody
-    public List<Badge> select2SearchBadge(@RequestParam(value = "q", defaultValue = "") String q, Model model){
+    public Page<Badge> select2SearchBadge(
+            @RequestParam(value = "q", defaultValue = "") String q,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+
         Badge badge = new Badge();
         badge.setName(q);
-        List<Badge> searchResult = badgeService.getSearchResult(badge);
-
-        return searchResult;
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return badgeService.getSearchResultWithPaging(badge, pageable);
     }
-
 
 }

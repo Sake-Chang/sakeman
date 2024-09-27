@@ -50,6 +50,16 @@ public class BadgeService {
         return repository.findAll(Example.of(badge, matcher));
     }
 
+    @Transactional(readOnly = true)
+    public Page<Badge> getSearchResultWithPaging(Badge badge, Pageable pageable) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching() // and条件
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING) // Like句
+                .withIgnoreCase(); // 大文字小文字の両方
+
+        return repository.findAll(Example.of(badge, matcher), pageable);
+    }
+
     /** 登録処理 */
     @Transactional
     public Badge saveBadge (Badge badge) {

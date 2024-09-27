@@ -46,6 +46,16 @@ public class TagService {
         return tagRepository.findAll(Example.of(tag, matcher));
     }
 
+    @Transactional(readOnly = true)
+    public Page<Tag> getSearchResultWithPaging(Tag tag, Pageable pageable) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching() // and条件
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING) // Like句
+                .withIgnoreCase(); // 大文字小文字の両方
+
+        return tagRepository.findAll(Example.of(tag, matcher), pageable);
+    }
+
     /** 1件を検索して返す */
     @Transactional(readOnly = true)
     public Tag getTag(Integer id) {

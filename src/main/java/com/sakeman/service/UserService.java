@@ -74,6 +74,16 @@ public class UserService {
         return userRepository.findAll(Example.of(user, matcher));
     }
 
+    @Transactional(readOnly = true)
+    public Page<User> getSearchResultWithPaging(User user, Pageable pageable) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching() // and条件
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING) // Like句
+                .withIgnoreCase(); // 大文字小文字の両方
+
+        return userRepository.findAll(Example.of(user, matcher), pageable);
+    }
+
     /** フォローしている人の検索 */
     @Transactional(readOnly = true)
     public Page<User> getFollowingsByUserId(Integer id, Pageable pageable) {

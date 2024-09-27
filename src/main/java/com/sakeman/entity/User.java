@@ -155,26 +155,32 @@ public class User implements Serializable {
     @JsonManagedReference("user-followee")
     private List<UserFollow> followers;
 
-    // 配列バージョン
-//    @Column(name = "web_manga_settings_genre", nullable = true)
-//    private int[] webMangaSettingsGenre;
 
-//    @ElementCollection(targetClass=Integer.class, fetch=FetchType.EAGER)
     @ElementCollection(targetClass=Integer.class)
     @CollectionTable(name = "user_web_manga_settings_genre")
-    @Column(name = "web_manga_settings_genre", nullable = true)
+    @Column(name = "web_manga_settings_genre", nullable = false)
     private List<Integer> webMangaSettingsGenre = new ArrayList<>();
 
-    @Column(name = "web_manga_settings_freeflag", nullable = true)
-    private Integer webMangaSettingsFreeflag;
-    @Column(name = "web_manga_settings_followflag", nullable = true)
-    private Integer webMangaSettingsFollowflag;
+    @Column(name = "web_manga_settings_freeflag", nullable = false)
+    private Integer webMangaSettingsFreeflag = 0;
+    @Column(name = "web_manga_settings_followflag", nullable = false)
+    private Integer webMangaSettingsFollowflag = 0;
 
 
     @PrePersist
     public void onPrePersist() {
         setRegisteredAt(new Timestamp(System.currentTimeMillis()));
         setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+
+        if (this.webMangaSettingsGenre == null) {
+            this.webMangaSettingsGenre = new ArrayList<>();
+        }
+        if (this.webMangaSettingsFreeflag == null) {
+            this.webMangaSettingsFreeflag = 0;
+        }
+        if (this.webMangaSettingsFollowflag == null) {
+            this.webMangaSettingsFollowflag = 0;
+        }
     }
 
     @PreUpdate

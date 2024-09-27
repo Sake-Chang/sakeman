@@ -57,6 +57,16 @@ public class GenreService {
         return repository.findAll(Example.of(genre, matcher));
     }
 
+    @Transactional(readOnly = true)
+    public Page<Genre> getSearchResultWithPaging(Genre genre, Pageable pageable) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching() // and条件
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING) // Like句
+                .withIgnoreCase(); // 大文字小文字の両方
+
+        return repository.findAll(Example.of(genre, matcher), pageable);
+    }
+
     /** 1件を検索して返す */
     @Transactional(readOnly = true)
     public Genre getGenre(Integer id) {
