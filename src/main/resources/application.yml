@@ -12,8 +12,8 @@ spring:
   mail:
     host: email-smtp.ap-northeast-1.amazonaws.com
     port: 587
-    username: ${sakeman.mail.smtp.username}
-    password: ${sakeman.mail.smtp.password}
+    username: ${mail.smtp.username}
+    password: ${mail.smtp.password}
     properties:
       mail:
         smtp:

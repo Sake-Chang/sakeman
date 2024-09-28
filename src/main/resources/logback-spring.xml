@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<configuration debug="true">
+<configuration debug="false">
     <!-- デフォルト設定読み込み -->
+    <!--
     <include resource="org/springframework/boot/logging/logback/base.xml" />
+    -->
     <property name="logFileName" value="sakeman" />
-
-    <!-- ローカル環境用設定 -->
-    <springProfile name="local">
-        <root level="ERROR">
-            <appender-ref ref="STDOUT" />
-        </root>
-    </springProfile>
-
-    <!-- dev環境用設定（本番環境として使用） -->
-    <springProfile name="dev">
-        <property name="logFilePath" value="/var/log/sakeman/" />
-    </springProfile>
 
     <!-- コンソール出力設定 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -26,37 +15,45 @@
         </encoder>
     </appender>
 
-    <!-- アプリケーションのログファイル出力設定（ローテーション） -->
-    <appender name="APPLICATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${logFilePath}${logFileName}.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logFilePath}${logFileName}-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
-            <maxHistory>14</maxHistory>
-            <totalSizeCap>10GB</totalSizeCap>
-        </rollingPolicy>
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern>%d{yyyy/MM/dd HH:mm:ss} %-5level [%thread] - %msg%n</pattern>
-        </encoder>
-    </appender>
+    <!-- ローカル環境用設定（ファイル出力不要） -->
+    <springProfile name="local">
+        <root level="INFO">
+            <appender-ref ref="STDOUT" />
+        </root>
+    </springProfile>
 
-    <!-- HikariCPのログファイル出力設定（ローテーション） -->
-    <appender name="HIKARI_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${logFilePath}hikari.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logFilePath}hikari-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
-            <maxHistory>14</maxHistory>
-            <totalSizeCap>5GB</totalSizeCap>
-        </rollingPolicy>
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern>%d{yyyy/MM/dd HH:mm:ss} %-5level [%thread] - %msg%n</pattern>
-        </encoder>
-    </appender>
+    <!-- dev環境用設定（本番環境として使用） -->
+    <springProfile name="dev">
+        <property name="logFilePath" value="/var/log/sakeman/" />
+        <appender name="APPLICATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${logFilePath}${logFileName}.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${logFilePath}${logFileName}-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+                <maxHistory>14</maxHistory>
+                <totalSizeCap>10GB</totalSizeCap>
+            </rollingPolicy>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>%d{yyyy/MM/dd HH:mm:ss} %-5level [%thread] - %msg%n</pattern>
+            </encoder>
+        </appender>
 
-    <!-- rootログレベルと適用するログ出力設定 -->
-    <root level="ERROR">
-        <appender-ref ref="APPLICATION_LOG" />
-    </root>
+        <appender name="HIKARI_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${logFilePath}hikari.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${logFilePath}hikari-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+                <maxHistory>14</maxHistory>
+                <totalSizeCap>5GB</totalSizeCap>
+            </rollingPolicy>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>%d{yyyy/MM/dd HH:mm:ss} %-5level [%thread] - %msg%n</pattern>
+            </encoder>
+        </appender>
 
+        <root level="ERROR">
+            <appender-ref ref="APPLICATION_LOG" />
+            <appender-ref ref="HIKARI_LOG" />
+        </root>
+    </springProfile>
 </configuration>
