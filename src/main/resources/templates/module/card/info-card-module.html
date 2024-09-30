@@ -81,9 +81,15 @@
     <th:block th:if="${info.manga.id != 1}" class="manga-module-head">
 
         <!--/* あらすじ */-->
+        <!--
         <div class="read-more-002">
             <p class="manga-card-synopsis" th:classappend="${info.manga.id==111111} ? '__as'">[[${info.manga.synopsis}]]</p>
             <label><input type="checkbox"/>続きを読む</label>
+        </div>
+        -->
+        <div class="description-text-container">
+            <p class="card-description-text">[[${info.manga.synopsis}]]</p>
+            <span class="read-more">>> 続きを読む</span>
         </div>
     </th:block>
 

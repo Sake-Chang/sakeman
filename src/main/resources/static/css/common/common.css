@@ -767,7 +767,7 @@ h2 > i {
 }
 
 .info-module-updateat {
-    color: var(--BK);
+    color: var(--GR);
     font-size: 12px;
 }
 
@@ -806,6 +806,7 @@ h2 > i {
 }
 
 .info-module-subtitle {
+    color: var(--BK);
     font-size: 14px;
     overflow: hidden;
     display: -webkit-box;
@@ -814,6 +815,7 @@ h2 > i {
 }
 
 .info-module-author {
+    color: var(--BK);
     font-size: 14px;
     font-weight: 100;
     overflow: hidden;
@@ -2583,4 +2585,35 @@ input[id^=post-popup]:checked ~ .post-popup-overlay {
 
 .form-wrapper {
     padding: 0 16px;
+}
+
+
+.description-text-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.card-description-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+/*    line-height: 1.5em;*/
+    font-size: 14px;
+    color: var(--GR);
+    line-height: 1.5;
+}
+
+.read-more {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: var(--WH);
+    color: var(--PL);
+    padding-left: 16px;
+    cursor: pointer;
+    font-size: 14px;
+/*    height: 1.5em;*/
+    line-height: 1.5;
 }
