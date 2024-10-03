@@ -2,9 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout}">
 
 <head>
-    <!--
-    <link rel="stylesheet" th:href="@{/css/manga/uclist.css}">
-    -->
     <th:block th:if="${mangaobj==null}">
         <title th:text="${tab}=='recent' ? 'リスト一覧 (新着順) | サケマン' : 'リスト一覧 (人気順) | サケマン' "></title>
     </th:block>
@@ -37,18 +34,18 @@
 
 <!-- 見出し -->
     <th:block th:with="textappend=${mangaobj != null} ? ${mangaobj.title} + 'を含む' : ''">
-        <div class="container" th:with="text='__${textappend}__リスト一覧', class='uil-list-ul'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+        <div class="container" th:with="text='__${textappend}__リスト一覧', class='uil-list-ul'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}"></div>
     </th:block>
 
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-    <div class="container" th:with="pages=${uclistlistPages}" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+    <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${uclistlistPages})}"></div>
     <!--/* リストモジュールを呼び出し（${uclistlist}を引数として渡す） */-->
-    <div class="container" layout:include="module/card/uclist-card :: uclist-card(object='${uclistlist}')"></div>
+    <div class="container" layout:include="~{module/card/uclist-card :: uclist-card(uclistlist=${uclistlist})}"></div>
     <div th:if="${uclistlist.isEmpty}" class="nolist-message-container">
-        <div th:if="${uclistlist.isEmpty}" class="tmp-container-2" th:with="mode='button', text1='この作品を含むリストはまだありません。', text2='リストを作っててみませんか？', text3='(会員登録［無料］が必要です)', btnText='リストを作ってみる', linkurl='@{/uclist/post}'" layout:include="module/other/message-info-module :: message-info-module(object='')"></div>
+        <div th:if="${uclistlist.isEmpty}" class="tmp-container-2" th:with="mode='button', text1='この作品を含むリストはまだありません。', text2='リストを作っててみませんか？', text3='(会員登録［無料］が必要です)', btnText='リストを作ってみる', linkurl='@{/uclist/post}'" layout:include="~{module/other/message-info-module :: message-info-module(mode=${mode}, message=${message}, text1=${text1}, text2=${text2}, text3=${text3}, linkurl=${linkurl}, btnText=${btnText})}"></div>
     </div>
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-    <div class="container" th:with="pages=${uclistlistPages}" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+    <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${uclistlistPages})}"></div>
 
 
 </div>

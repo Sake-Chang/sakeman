@@ -2,8 +2,7 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<!--/* 引数を受け取って呼ばれる（ object = ${reviewlist} ） */-->
-<div layout:fragment="user-card(object)">
+<div layout:fragment="user-card(mangalist, userlist, userId, reviewlist, followeelist)">
 
 <!--/* カードモジュール */-->
 <div class="card-outer" th:each="user:${userlist}">
@@ -28,7 +27,7 @@
             </div>
         </div>
         <!--/* フォローボタンを呼び出し（${reviewlist}, ${followeelist}を引数として渡す） */-->
-        <th:block class="" th:with="userId=${user.id}" layout:include="module/btn/btn-user-follow :: btn-user-follow(object='${userId}, ${reviewlist}, ${followeelist}')"></th:block>
+        <th:block class="" th:with="userId=${user.id}" layout:include="~{module/btn/btn-user-follow :: btn-user-follow(userId=${user.id}, followeelist=${followeelist})}"></th:block>
     </div>
 
     <div class="user-card-counter-container">
@@ -41,28 +40,9 @@
             <span th:text="${user.reviews.size}"></span>
         </div>
     </div>
-    <!--
-    <div class="read-more-002">
-        <p class="user-card-selfintro">[[${user.selfIntro}]]</p>
-        <label><input type="checkbox"/>続きを読む</label>
-    </div>
-    -->
+
     <div class="user-card-selfintro" th:text="${user.selfIntro}"></div>
 
-    <!-- 読んだ本 -->
-    <!--
-    <div class="user-card-shelf-container" th:with="readlist=${user.readStatus}">
-        <th:block   th:if="!${#lists.isEmpty(readlist)}">
-        <th:block   th:each="i : ${#numbers.sequence(1,10)}">
-            <figure class="user-card-shelf-calligraphy">
-                <a th:href="@{/manga/{id}(id=${readlist[i-1].manga.id})}">
-                <img th:src="@{https://sake-man.com/calligraphy/__${readlist[i-1].manga.calligraphy}__}">
-                </a>
-            </figure>
-        </th:block>
-        </th:block>
-    </div>
-    -->
 
     <div class="user-card-shelf-container">
         <th:block th:each="readlist:${#getReadManga.getReadManga(__${user.id}__)}">

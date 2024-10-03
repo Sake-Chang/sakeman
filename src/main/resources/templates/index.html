@@ -6,17 +6,10 @@
 
 <head>
     <title>サケマン | Webまんがサイトの更新情報やレビューなどがここに</title>
-    <!--
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-    -->
 </head>
 
 <div layout:fragment="content">
 <div th:if="${success}" class="alert alert-success">[[${success}]]</div>
-<!--/* 検索モジュールを呼び出し（${}を引数として渡す） */-->
-<!--
-<div class="search" layout:include="module/search-module :: search-module(object='')"></div>
--->
 
 <!--/* タブ */-->
 <div class="tab-container">
@@ -35,18 +28,18 @@
 </div>
 
 <!-- リスト -->
-<div class="container" th:with="text='新着のリスト', class='uil-list-ul'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+<div class="container" th:with="text='新着のリスト', class='uil-list-ul'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}"></div>
 <!--/* まんがリストモジュールを呼び出し（${uclistlist}を引数として渡す） */-->
-<div class="container" layout:include="module/card/uclist-card :: uclist-card(object='${uclistlist}')"></div>
+<div class="container" layout:include="~{module/card/uclist-card :: uclist-card(uclistlist=${uclistlist})}"></div>
 <!--/* もっとみるボタン */-->
-<div class="container" th:with="linkurl='@{/uclist/list}', pageobj = ${uclPage}" layout:include="module/btn/btn-see-more :: btn-see-more(object='')"></div>
+<div class="container" th:with="linkurl='@{/uclist/list}'" layout:include="~{module/btn/btn-see-more :: btn-see-more(linkurl=${linkurl}, pageobj=${uclPage})}"></div>
 
 <!-- レビュー -->
-<div class="container" th:with="text='新着のレビュー', class='uil-comment-lines'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+<div class="container" th:with="text='新着のレビュー', class='uil-comment-lines'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}"></div>
 <!--/* レビューリストモジュールを呼び出し（${reviewlist}を引数として渡す） */-->
-<div class="container" layout:include="module/card/review-card-module :: review-card-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist}, ${followeelist}')"></div>
+<div class="container" layout:include="~{module/card/review-card-module :: review-card-module(reviewlist=${reviewlist}, likelist=${likelist}, wantlist=${wantlist}, readlist=${readlist}, followlist=${followeelist})}"></div>
 <!--/* もっとみるボタン */-->
-<div class="container" th:with="linkurl='@{/review/list}', pageobj = ${reviewPage}" layout:include="module/btn/btn-see-more :: btn-see-more(object='')"></div>
+<div class="container" th:with="linkurl='@{/review/list}'" layout:include="~{module/btn/btn-see-more :: btn-see-more(linkurl=${linkurl}, pageobj=${reviewPage})}"></div>
 
 
 </div>

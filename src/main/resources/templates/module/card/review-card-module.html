@@ -3,7 +3,7 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <!--/* 引数を受け取って呼ばれる（ object = ${reviewlist} ） */-->
-<div layout:fragment="review-card-module(object)">
+<div layout:fragment="review-card-module(reviewlist, likelist, wantlist, readlist, followeelist)">
 
 <!--/* カードモジュール */-->
 <div class="card-outer" th:each="review : ${reviewlist}">
@@ -30,7 +30,7 @@
             </div>
         </div>
         <!--/* フォローボタンを呼び出し（${reviewlist}, ${followeelist}を引数として渡す） */-->
-        <th:block class="" th:with="userId=${review.user.id}" layout:include="module/btn/btn-user-follow :: btn-user-follow(object='${userId}, ${reviewlist}, ${followeelist}')"></th:block>
+        <th:block class="" layout:include="~{module/btn/btn-user-follow :: btn-user-follow(userId=${review.user.id}, followeelist=${followeelist})}"></th:block>
     </div>
 
     <!--/* 対象作品情報 */-->
@@ -88,11 +88,11 @@
     <div class="manga-action">
         <div>
             <!--/* いいねボタンを呼び出し（${reviewlist}, ${likelist}を引数として渡す） */-->
-            <th:block class="" layout:include="module/btn/btn-like :: btn-like(object='${reviewlist}, ${likelist}')"></th:block>
+            <th:block class="" layout:include="~{module/btn/btn-like :: btn-like(review=${review}, likelist=${likelist})}"></th:block>
         </div>
         <div>
             <!--/* 気になるボタンを呼び出し（${manga.id}, ${wantlist}, ${readlist}を引数として渡す） */-->
-            <th:block class="" th:with="mangaId=${review.manga.id}" layout:include="module/btn/btn-read-status :: btn-read-status(object='${mangaId}, ${wantlist}, ${readlist}')"></th:block>
+            <th:block class="" layout:include="~{module/btn/btn-read-status :: btn-read-status(mangaId=${review.manga.id}, wantlist=${wantlist}, readlist=${readlist})}"></th:block>
         </div>
     </div>
 

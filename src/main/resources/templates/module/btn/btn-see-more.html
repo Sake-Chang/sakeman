@@ -3,10 +3,8 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 
-<!--/* 引数を受け取って呼ばれる [${Page<T> pageobj} ${String linkurl} ] */-->
-<th:block layout:fragment="btn-see-more(object)">
+<th:block layout:fragment="btn-see-more(linkurl, pageobj)">
 
-    <!--/* もっとみるボタン */-->
     <th:block th:if="${pageobj.totalElements > pageobj.size}">
         <div class="more-btn-container">
             <a th:href="@{__${linkurl}__}">

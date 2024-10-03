@@ -2,8 +2,7 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<!--/* 引数を受け取って呼ばれる（ object = ${mangalist} ） */-->
-<div layout:fragment="manga-card(object)">
+<div layout:fragment="manga-card(mangalist, reviewlist, likelist, wantlist, readlist)">
 
 <!--/* カードモジュール */-->
 <div class="card-outer" th:each="manga : ${mangalist}">
@@ -59,9 +58,6 @@
                 </a>
             </th:block>
             <th:block th:if="${#lists.isEmpty(manga.reviews)}">
-                <!--
-                <a th:href="@{/review/post/__${manga.id}__}" class="test-a">
-                -->
                 <a th:href="@{/review/list-manga/__${manga.id}__}" class="test-a">
                     <div class="manga-card-review-container">
                         <i class="uil uil-comment-edit md-20"></i>
@@ -70,25 +66,6 @@
                 </a>
             </th:block>
         </div>
-<!--
-        <th:block th:if="!${#lists.isEmpty(manga.reviews)}">
-            <a th:href="@{/manga/review/{id}#reviews(id=${manga.id})}" class="test-a">
-                <div class="manga-card-review-container">
-                    <i class="uil uil-comment-search md-20"></i>
-                    <span class="manga-card-review" th:text="|${manga.reviews.size}件のレビューをみる|"></span>
-                </div>
-            </a>
-        </th:block>
-        <th:block th:if="${#lists.isEmpty(manga.reviews)}">
-            <a th:href="@{/review/post/{id}(id=${manga.id})}" class="test-a">
-                <div class="manga-card-review-container">
-                    <i class="uil uil-comment-edit md-20"></i>
-                    <span class="manga-card-review" th:text="一番乗りレビューする"></span>
-                </div>
-            </a>
-        </th:block>
--->
-
 
         <th:block th:if="${not #lists.isEmpty(manga.webMangaUpdateInfos)}">
             <a th:href="@{/web-manga-update-info/manga/__${manga.id}__}">
@@ -116,11 +93,9 @@
 
 <!--/* アクション */-->
 <div class="manga-action">
-    <!--/* ストアボタンを呼び出し */-->
-    <th:block layout:include="module/btn/btn-store :: btn-store(object='${manga}')"></th:block>
+    <th:block layout:include="~{module/btn/btn-store :: btn-store(manga=${manga})}"></th:block>
     <div class="btn-admin"><a class="link-block" th:href="@{/admin/manga/update/{id}/(id=${manga.id})}" sec:authorize-url="/admin"><span class="material-icons-outlined md-20 md-AS">build_circle</span></a></div>
-    <!--/* 気になるボタンを呼び出し（${mangaId}, ${wantlist}, ${readlist}を引数として渡す） */-->
-    <th:block class="btn-ia" th:with="mangaId=${manga.id}" layout:include="module/btn/btn-read-status :: btn-read-status(object='${mangaId}, ${wantlist}, ${readlist}')"></th:block>
+    <th:block class="btn-ia" layout:include="~{module/btn/btn-read-status :: btn-read-status(mangaId=${manga.id}, wantlist=${wantlist}, readlist=${readlist})}"></th:block>
 </div>
 
 </div> <!--/* outer */-->

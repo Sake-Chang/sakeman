@@ -4,7 +4,7 @@
 
 
 <!--/* 引数を受け取って呼ばれる（ object = ${mangaId}, ${wantlist}, ${readlist} ） */-->
-<th:block layout:fragment="btn-read-status(object)">
+<th:block layout:fragment="btn-read-status(mangaId, wantlist, readlist)">
 
 <th:block sec:authorize="isAuthenticated()">
     <div class="btn-ia"

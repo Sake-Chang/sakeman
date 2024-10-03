@@ -9,7 +9,7 @@
 
     <div class="user-prof-head">
         <!--/* カバーを呼び出し */-->
-        <div layout:include="module/other/user-cover :: user-cover(object='${user}, ${statuslist}')"></div>
+        <div layout:include="~{module/other/user-cover :: user-cover(user=${user}, statuslist=${statuslist})}"></div>
 
         <a th:href="@{/user/{id}(id=${user.id})}">
             <th:block th:if="${user.img != null}">
@@ -22,7 +22,7 @@
         </a>
 
         <!--/* ユーザープロフィールボタンを呼び出し */-->
-        <div layout:include="module/btn/btn-user-prof :: btn-user-prof(object='${user}, ${followeelist}')"></div>
+        <div layout:include="~{module/btn/btn-user-prof :: btn-user-prof(user=${user}, followeelist=${followeelist})}"></div>
 
         <div class="userpage-head-container">
             <span class="userpage-username" th:text="${user.username}"></span>
@@ -63,39 +63,28 @@
         </a>
     </div>
 
-<!--
-    <div class="shelf-form-container">
-        <a th:href="@{/user/{id}/{tab}/grid(id=${user.id})(tab=${tab})}">
-            <span class="material-icons-outlined shelf-form-icon current">grid_view</span>
-        </a>
-        <a th:href="@{/user/{id}/{tab}/list(id=${user.id})(tab=${tab})}">
-            <span class="material-icons-outlined shelf-form-icon">view_agenda</span>
-        </a>
-    </div>
--->
-
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
     <th:block th:if="${tab} == 'want'">
-        <div th:with="pages=${wantpages}" class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${wantpages})}"></div>
     </th:block>
     <th:block th:if="${tab} == 'read'">
-        <div th:with="pages=${readpages}" class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${readpages})}"></div>
     </th:block>
 
     <!--/* 本棚モジュールを呼び出し（${userwantlist}, ${wantlist}, ${readlist}を引数として渡す） */-->
     <th:block th:if="${tab} == 'want'">
-        <div th:with="usermangalist=${userwantlist}" layout:include="module/card/shelf-card-module :: shelf-card-module(object='${user}, ${usermangalist}, ${wantlist}, ${readlist}, ${tab}')"></div>
+        <div layout:include="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userwantlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
     </th:block>
     <th:block th:if="${tab} == 'read'">
-        <div th:with="usermangalist=${userreadlist}" layout:include="module/card/shelf-card-module :: shelf-card-module(object='${user}, ${usermangalist}, ${wantlist}, ${readlist}. ${tab}')"></div>
+        <div layout:include="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userreadlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
     </th:block>
 
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
     <th:block th:if="${tab} == 'want'">
-        <div th:with="pages=${wantpages}" class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${wantpages})}"></div>
     </th:block>
     <th:block th:if="${tab} == 'read'">
-        <div th:with="pages=${readpages}" class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${readpages})}"></div>
     </th:block>
 
 

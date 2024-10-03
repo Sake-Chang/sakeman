@@ -3,7 +3,7 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <!--/* 引数を受け取って呼ばれる（ object = ${} ） */-->
-<div layout:fragment="message-info-module(object)">
+<div layout:fragment="message-info-module(mode, message, text1, text2, text3, linkurl, btnText)">
         <!-- 文字のみ -->
         <th:block th:if="${mode == 'text'}">
             <div class="nolist-message-container short">

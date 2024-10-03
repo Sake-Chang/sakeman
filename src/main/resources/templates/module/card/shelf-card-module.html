@@ -3,7 +3,7 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <!--/* 引数を受け取って呼ばれる（ object = ${} ） */-->
-<div layout:fragment="shelf-card-module(object)">
+<div layout:fragment="shelf-card-module(user, usermangalist, wantlist, readlist, tab, allstatus)">
 
     <th:block  th:if="!${#lists.isEmpty(usermangalist)}">
     <div class="shelf-container">
@@ -16,7 +16,7 @@
                                      @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">
                     </figure>
                 </a>
-                                    <th:block th:with="manga=${um.manga}" layout:include="module/btn/btn-store-circle :: btn-store-circle(object='${manga}')"></th:block>
+                <th:block layout:include="~{module/btn/btn-store-circle :: btn-store-circle(manga=${um.manga})}"></th:block>
 
             </div>
 
@@ -62,7 +62,7 @@
                     </a>
                 </div>
                 <!--/* 気になるボタンを呼び出し（${manga.id}, ${wantlist}, ${readlist}を引数として渡す） */-->
-                <th:block class="" th:with="umlist=${um}" layout:include="module/btn/btn-read-status-select :: btn-read-status-select(object='${usermangalist}, ${wantlist}, ${readlist}')"></th:block>
+                <th:block class="" layout:include="~{module/btn/btn-read-status-select :: btn-read-status-select(umlist=${um}, wantlist=${wantlist}, readlist=${readlist}, allstatus=${allstatus})}"></th:block>
             </div>
         </div>
     </div>

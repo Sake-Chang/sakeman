@@ -41,7 +41,7 @@
     </a>
 
     <!--/* フォローモジュールを呼び出し（${user}を引数として渡す） */-->
-    <div layout:include="module/btn/btn-author-follow :: btn-author-follow(object='${author}, ${authorlist}')"></div>
+    <div layout:include="~{module/btn/btn-author-follow :: btn-author-follow(author=${author}, authorlist=${authorlist})}"></div>
 
     <div class="userpage-head-container">
         <span class="userpage-username" th:text="${author.name}"></span>
@@ -83,36 +83,36 @@
 
     <!--/* infotab */-->
     <th:block th:if="${tab == 'info'}">
-        <div class="container" th:with="text='__${author.name}__先生のまんが一覧 (__${mangalistPage.totalElements}__作品)', class='uil-book-open'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+        <div class="container" th:with="text='__${author.name}__先生のまんが一覧 (__${mangalistPage.totalElements}__作品)', class='uil-book-open'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}"></div>
 
         <th:block th:if="!${mangalist.isEmpty}">
             <div class="container" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${wantlist}, ${readlist}')"></div>
-            <div class="container" th:with="linkurl='@{/manga/list-author/__${author.id}__/recent}', pageobj = ${mangalistPage}" layout:include="module/btn/btn-see-more :: btn-see-more(object='')"></div>
+            <div class="container" th:with="linkurl='@{/manga/list-author/__${author.id}__/recent}'" layout:include="~{module/btn/btn-see-more :: btn-see-more(linkurl=${linkurl}, pageobj=${mangalistPage})}"></div>
         </th:block>
     </th:block>
 
     <!--/* infotab */-->
     <th:block th:if="${tab == 'review'}">
-        <div class="container" th:with="text='__${author.name}__先生作品のレビュー一覧', class='uil-comment_lines'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+        <div class="container" th:with="text='__${author.name}__先生作品のレビュー一覧', class='uil-comment_lines'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}"></div>
 
         <!--/* レビューモジュールを呼び出し（${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}を引数として渡す） */-->
-        <div th:if="!${reviewlist.isEmpty}" class="container" layout:include="module/card/review-card-module :: review-card-module(object='${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}')"></div>
+        <div th:if="!${reviewlist.isEmpty}" class="container" layout:include="~{module/card/review-card-module :: review-card-module(reviewlist=${reviewlist}, likelist=${likelist}, wantlist=${wantlist}, readlist=${readlist}, followeelist=${followeelist})}"></div>
         <!--/* もっとみるボタン */-->
         <!-- /**リンク先のページ（著者ごとのレビュー一覧ページ）が必要
         <div class="container" th:with="linkurl='@{/review/list-manga/__${manga.id}__}', pageobj = ${reviewpage}" layout:include="module/btn/btn-see-more :: btn-see-more(object='${infolist}, ${linkurl}')"></div>
         -->
-        <div th:if="${reviewlist.isEmpty}" class="tmp-container-2" th:with="mode='button', text1='この先生の作品にはまだレビューがありません。', text2='一番のりでレビューしてみませんか？', text3='(会員登録［無料］が必要です)', btnText='レビューを書く', linkurl='@{/review/post}'" layout:include="module/other/message-info-module :: message-info-module(object='')"></div>
+        <div th:if="${reviewlist.isEmpty}" class="tmp-container-2" th:with="mode='button', text1='この先生の作品にはまだレビューがありません。', text2='一番のりでレビューしてみませんか？', text3='(会員登録［無料］が必要です)', btnText='レビューを書く', linkurl='@{/review/post}'" layout:include="~{module/other/message-info-module :: message-info-module(mode=${mode}, message=${message}, text1=${text1}, text2=${text2}, text3=${text3}, linkurl=${linkurl}, btnText=${btnText})}"></div>
 
             <div    class="container"
             th:with="  text='この作品が入っているリスト一覧',
                        class='uil-list-ul'"
-            layout:include="module/other/page-title-module :: h2(object='${text}')">
+            layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}">
     </div>
 
     <!--/* リストモジュールを呼び出し（${reviewlist}, ${likelist}, ${wantlist}, ${readlist} ${followeelist}を引数として渡す） */-->
     <div    th:if="!${uclistlist.isEmpty}"
             class="container"
-            layout:include="module/card/uclist-card :: uclist-card(object='${uclistlist}')">
+            layout:include="~{module/card/uclist-card :: uclist-card(uclistlist=${uclistlist})}">
     </div>
     <!--/* もっとみるボタン */-->
     <!--
@@ -127,7 +127,7 @@
                         text3='(会員登録［無料］が必要です)',
                         btnText='リストを作ってみる',
                         linkurl='@{/uclist/post}'"
-            layout:include="module/other/message-info-module :: message-info-module(object='')">
+            layout:include="~{module/other/message-info-module :: message-info-module(mode=${mode}, message=${message}, text1=${text1}, text2=${text2}, text3=${text3}, linkurl=${linkurl}, btnText=${btnText})}">
     </div>
 
     </th:block>

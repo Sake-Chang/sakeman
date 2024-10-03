@@ -2,7 +2,7 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<div layout:fragment="webmanga-setting-form(object)">
+<div layout:fragment="webmanga-setting-form(followflag, freeflag, medialist, genrelist, genreflag, webmangafollowlist)">
 
 
     <form class="webmanga-config" th:action="@{/web-manga-update-info}" method="post">

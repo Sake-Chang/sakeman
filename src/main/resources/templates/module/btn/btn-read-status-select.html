@@ -4,7 +4,7 @@
 
 
 <!--/* 引数を受け取って呼ばれる（ object = ${mangaId}, ${wantlist}, ${readlist} ） */-->
-<th:block layout:fragment="btn-read-status-select(object)">
+<th:block layout:fragment="btn-read-status-select(umlist, wantlist, readlist, allstatus)">
 
 
 <th:block sec:authorize="isAuthenticated()">
@@ -47,7 +47,10 @@
     <!--/* リスト部分 */-->
     <div class="dropdown__body read-status-select">
         <ul class="dropdown__list">
+            <!--
             <th:block  th:each="item:${T(com.sakeman.entity.ReadStatus.Status).values()}">
+            -->
+            <th:block  th:each="item:${allstatus}">
                 <li class="dropdown__item" th:value="${item}" th:text="${item}" th:data-id="${umlist.id}"></li>
             </th:block>
         </ul>

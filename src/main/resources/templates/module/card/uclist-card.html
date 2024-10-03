@@ -2,10 +2,8 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<!--/* 引数を受け取って呼ばれる（ object = ${uclistlist} ） */-->
-<div layout:fragment="uclist-card(object)">
+<div layout:fragment="uclist-card(uclistlist)">
 
-<!-- <div class="container-uclist"> -->
     <div class="card-outer-uclist" th:each="uclist : ${uclistlist}">
         <div class="uclist-card-main">
             <div class="card-head">
@@ -25,18 +23,7 @@
                         </div>
                     </div>
                 </div>
-<!--
-                <div class="uclist-card-counter-container">
-                    <div class="uclist-card-counter">
-                        <span class="material-icons-outlined md-24">favorite_border</span>
-                        <span>18</span>
-                    </div>
-                    <div class="uclist-card-counter">
-                        <span class="material-icons-outlined md-24">bookmark_added</span>
-                        <span>25</span>
-                    </div>
-                </div>
--->
+
                 <div class="under-construction">
                     <span class="material-icons-outlined md-24 md-AS">error_outline</span>
                     <span class="under-construction-text">ここ開発中</span>
@@ -53,15 +40,16 @@
         <div class="uclist-container">
             <th:block th:if="!${#lists.isEmpty(uclist.uclistMangas)}" th:each="um : ${uclist.uclistMangas}">
                 <div class="uclist-child">
-                    <th:block th:with="manga=${um.manga}" layout:include="module/btn/btn-manga-info-uclist :: btn-manga-info-uclist(object='${manga}')"></th:block>
+                    <th:block layout:include="~{module/btn/btn-manga-info-uclist :: btn-manga-info-uclist(manga=${um.manga})}"></th:block>
                     <div class="uclist-child-figure">
                     <a th:href="@{/manga/detail/__${um.manga.id}__}">
                         <figure class="minimanga-module-calligrapy">
                             <img th:src="${#lists.isEmpty(um.manga.calligraphy)} ?
                                          @{https://sake-man.com/system/noimage.jpg} :
-                                         @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">                        </figure>
+                                         @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">
+                        </figure>
                     </a>
-                    <th:block th:with="manga=${um.manga}" layout:include="module/btn/btn-store-circle :: btn-store-circle(object='${manga}')"></th:block>
+                    <th:block layout:include="~{module/btn/btn-store-circle :: btn-store-circle(manga=${um.manga})}"></th:block>
                     </div>
                     <div class="minimanga-module-body">
                         <div class="minimanga-module-title">
@@ -103,7 +91,7 @@
                     </div>
 
                     <!--/* 気になるボタンを呼び出し（${manga.id}, ${wantlist}, ${readlist}を引数として渡す） */-->
-                    <th:block class="" th:with="mangaId=${um.manga.id}" layout:include="module/btn/btn-read-status-mini :: btn-read-status-mini(object='${mangaId}, ${wantlist}, ${readlist}')"></th:block>
+                    <th:block class="" layout:include="~{module/btn/btn-read-status-mini :: btn-read-status-mini(mangaId=${um.manga.id}, wantlist=${wantlist}, readlist=${readlist})}"></th:block>
 
                 </div>
             </div>

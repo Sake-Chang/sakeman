@@ -6,10 +6,11 @@ spring:
     password: sakemanpass
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: update
     defer-datasource-initialization: true
+    open-in-view: true
   sql:
     init:
       mode: never

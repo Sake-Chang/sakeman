@@ -4,7 +4,7 @@
 
 
 <!--/* 引数を受け取って呼ばれる（ object = ${infolist}, ${likelist} ） */-->
-<th:block layout:fragment="btn-web-manga-follow(object)">
+<th:block layout:fragment="btn-web-manga-follow(mangaId, webmangafollowlist)">
 
 <th:block sec:authorize="isAuthenticated()">
     <th:block   th:unless="${mangaId} == 111111">

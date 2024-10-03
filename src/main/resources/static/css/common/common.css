@@ -2617,3 +2617,7 @@ input[id^=post-popup]:checked ~ .post-popup-overlay {
 /*    height: 1.5em;*/
     line-height: 1.5;
 }
+
+.card-description-text.__as {
+    color: var(--AS);
+}

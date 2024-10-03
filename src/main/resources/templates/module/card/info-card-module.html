@@ -3,13 +3,13 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <!--/* 引数を受け取って呼ばれる（ object = ${infolist} ） */-->
-<div layout:fragment="info-card-module(object)">
+<div layout:fragment="info-card-module(infolist, likelist)">
 
 <!--/* カードモジュール */-->
 <div class="card-outer" th:each="info : ${infolist}">
 
 <!--/* インフォボタン */-->
-<th:block class="btn-manga-info" layout:include="module/btn/btn-manga-info :: btn-manga-info(object='${infolist}')"></th:block>
+<th:block class="btn-manga-info" layout:include="~{module/btn/btn-manga-info :: btn-manga-info(infolist=${info})}"></th:block>
 
 
     <div class="card-head">
@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <th:block class="" th:with="mangaId=${info.manga.id}" layout:include="module/btn/btn-web-manga-follow :: btn-web-manga-follow(object='${mangaId}, ${webmangafollowlist}')"></th:block>
+    <th:block class="" layout:include="~{module/btn/btn-web-manga-follow :: btn-web-manga-follow(mangaId=${info.manga.id}, webmangafollowlist=${webmangafollowlist})}"></th:block>
 
     </div>
 
@@ -88,7 +88,7 @@
         </div>
         -->
         <div class="description-text-container">
-            <p class="card-description-text">[[${info.manga.synopsis}]]</p>
+            <p class="card-description-text" th:classappend="${info.manga.id==111111} ? '__as'">[[${info.manga.synopsis}]]</p>
             <span class="read-more">>> 続きを読む</span>
         </div>
     </th:block>
@@ -96,7 +96,7 @@
     <!--/* アクション */-->
     <div class="manga-action">
     <!--/* いいねボタンを呼び出し（${reviewlist}, ${likelist}を引数として渡す） */-->
-    <th:block class="" layout:include="module/btn/btn-weblike :: btn-weblike(object='${infolist}, ${likelist}')"></th:block>
+    <th:block class="" layout:include="~{module/btn/btn-weblike :: btn-weblike(info=${info}, likelist=${likelist})}"></th:block>
     <a class="btn-ia-container-info" th:href="*{info.url}" target="_blank" rel="noopener noreferrer">
         <div class="btn-ia-container-info">
             <i class="uil uil-book-open md-24 md-GR"></i>

@@ -4,7 +4,7 @@
 
 
 <!--/* 引数を受け取って呼ばれる（ object = ${}, ${} ） */-->
-<th:block layout:fragment="search-module(object)">
+<th:block layout:fragment="search-module(searchbarForm)">
 
 <!-- 検索 -->
 <form id="search-bar-container" th:action="@{/search}" method="get" th:object="${searchbarForm}" style="display:none;">

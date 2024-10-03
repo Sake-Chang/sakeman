@@ -117,6 +117,9 @@ public class UserController {
         model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
         model.addAttribute("statuslist", statuslist);
         model.addAttribute("badgelist", buService.getByUserId(id));
+
+        model.addAttribute("allStatus", ReadStatus.Status.values());
+
         return "user/detail";
     }
 

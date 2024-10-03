@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
 
 <head>
+    <title>サケマン管理部屋</title>
 </head>
 
 <div layout:fragment="content">
@@ -12,7 +13,7 @@
         <a class="btn-primary" th:href="@{/admin/web-manga-update-info/register}">新規登録</a>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
 
         <table>
             <tr>
@@ -38,7 +39,7 @@
         </table>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
 
 
 </div>

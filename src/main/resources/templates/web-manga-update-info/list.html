@@ -3,15 +3,6 @@
 
 <head>
     <title>Webまんがサイトの更新情報一覧 | サケマン</title>
-    <!--
-    <th:block th:if="${mangaobj==null}">
-        <title th:text="${media==null} ? 'Webまんがサイトの更新情報一覧 | サケマン' : '__${media.displayName}__の更新情報一覧 | サケマン' "></title>
-    </th:block>
-    <th:block th:if="${mangaobj!=null}">
-        <title th:text="__${mangaobj.title}__の更新情報一覧 | サケマン"></title>
-    </th:block>
-    -->
-
 </head>
 
 <div layout:fragment="content">
@@ -36,20 +27,20 @@
 <th:block th:with=" textappend= ${mangaobj != null} ? ${mangaobj.title} :
                                (${media != null} ? ${media.displayName} :
                                 'Webまんがサイト') ">
-    <div class="container" th:with="text='__${textappend}__の更新一覧', class='uil-sync'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+    <div class="container" th:with="text='__${textappend}__の更新一覧', class='uil-sync'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}"></div>
 </th:block>
 
 
-<div layout:include="module/other/webmanga-setting-form :: webmanga-setting-form(object='${followflag}, ${freeflag}, ${medialist}, ${genrelist}, ${genreflag}, ${webmangafollowlist}')"></div>
+<div layout:include="~{module/other/webmanga-setting-form :: webmanga-setting-form(followflag=${followflag}, freeflag=${freeflag}, medialist=${medialist}, genrelist=${genrelist}, genreflag=${genreflag}, webmangafollowlist=${webmangafollowlist})}"></div>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
 
 <!--/* インフォリストモジュールを呼び出し（${infolist}を引数として渡す） */-->
-<div class="container" layout:include="module/card/info-card-module :: info-card-module(object='${infolist}, ${likelist}')"></div>
+<div class="container" layout:include="~{module/card/info-card-module :: info-card-module(infolist=${infolist}, likelist=${likelist})}"></div>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="module/pagenation-module :: pagenation-module(object='${pages}')"></div>
+<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
 
 <!--</div>-->
 </html>
