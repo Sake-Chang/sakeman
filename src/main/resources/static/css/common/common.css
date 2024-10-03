@@ -2605,6 +2605,10 @@ input[id^=post-popup]:checked ~ .post-popup-overlay {
     line-height: 1.5;
 }
 
+.card-description-text.__long {
+    -webkit-line-clamp: 9;
+}
+
 .read-more {
     position: absolute;
     bottom: 0;
@@ -2620,4 +2624,8 @@ input[id^=post-popup]:checked ~ .post-popup-overlay {
 
 .card-description-text.__as {
     color: var(--AS);
+}
+
+.user-selfinfo-container{
+    padding: 0 16px;
 }

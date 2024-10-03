@@ -58,9 +58,15 @@
 -->
         </div>
     </div>
+    <!--
     <div class="read-more-002">
         <p class="userpage-selfintro">[[${author.profile}]]</p>
         <label><input type="checkbox"/>続きを読む</label>
+    </div>
+    -->
+    <div class="description-text-container">
+        <p class="card-description-text">[[${author.profile}]]</p>
+        <span class="read-more">>> 続きを読む</span>
     </div>
 </div>
 
@@ -86,7 +92,7 @@
         <div class="container" th:with="text='__${author.name}__先生のまんが一覧 (__${mangalistPage.totalElements}__作品)', class='uil-book-open'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}"></div>
 
         <th:block th:if="!${mangalist.isEmpty}">
-            <div class="container" layout:include="module/card/manga-card :: manga-card(object='${mangalist}, ${wantlist}, ${readlist}')"></div>
+            <div class="container" layout:include="~{module/card/manga-card :: manga-card(mangalist=${mangalist}, wantlist=${wantlist}, readlist=${readlist})}"></div>
             <div class="container" th:with="linkurl='@{/manga/list-author/__${author.id}__/recent}'" layout:include="~{module/btn/btn-see-more :: btn-see-more(linkurl=${linkurl}, pageobj=${mangalistPage})}"></div>
         </th:block>
     </th:block>

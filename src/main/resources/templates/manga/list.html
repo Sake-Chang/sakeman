@@ -48,7 +48,7 @@
 
     <!-- 見出し -->
         <th:block th:with="textappend=${author != null} ? ${author.name} + '先生の' : ''">
-            <div class="container" th:with="text='__${textappend}__まんが一覧', class='uil-book-open'" layout:include="module/other/page-title-module :: h2(object='')"></div>
+            <div class="container" th:with="text='__${textappend}__まんが一覧', class='uil-book-open'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})"></div>
         </th:block>
 
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->

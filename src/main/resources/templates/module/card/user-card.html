@@ -41,7 +41,13 @@
         </div>
     </div>
 
+    <!--
     <div class="user-card-selfintro" th:text="${user.selfIntro}"></div>
+    -->
+    <div class="description-text-container">
+        <p class="card-description-text">[[${user.selfIntro}]]</p>
+        <span class="read-more">>> 続きを読む</span>
+    </div>
 
 
     <div class="user-card-shelf-container">
