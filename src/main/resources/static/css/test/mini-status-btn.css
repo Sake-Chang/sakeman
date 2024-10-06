@@ -6,9 +6,10 @@
     display: inline-flex;
     align-items: center;
     padding: 4px 8px;
-    justify-content: space-between;
     margin-bottom: 12px;
     width: 100%;
+    justify-content: center;
+    column-gap: 6px;
 }
 
 .btn-read-status-mini > .status-text {

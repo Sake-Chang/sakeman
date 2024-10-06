@@ -7,7 +7,7 @@
 
     <th:block  th:if="!${#lists.isEmpty(usermangalist)}">
     <div class="shelf-container">
-        <div class="uclist-child" th:each="um : ${usermangalist}">
+        <div class="uclist-child __shelf" th:each="um : ${usermangalist}">
             <div class="uclist-child-figure">
                 <a th:href="@{/manga/detail/__${um.manga.id}__}">
                     <figure class="minimanga-module-calligrapy">

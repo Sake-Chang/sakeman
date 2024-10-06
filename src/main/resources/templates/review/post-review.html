@@ -60,7 +60,7 @@
     <span th:errors="*{content}" class="err"></span><br>
     <textarea class="post-review-form-content" th:field="*{content}" placeholder="個人的なメモでも良いですし、推し活的なものでも良いかもしれません。" th:errorclass="err"></textarea>
 
-    <input class="form-button" type="submit" value="投稿する" disabled th:disabled="${#authorization.expression('isAnonymous()')}" data-is-anonymous="${#authorization.expression('isAnonymous()')}">
+    <input class="form-button" type="submit" value="投稿する" disabled th:disabled="${#authorization.expression('isAnonymous()')}" th:data-is-anonymous="${#authorization.expression('isAnonymous()')}">
 </form>
 
 </div>

@@ -1123,15 +1123,25 @@ border-top: solid 1px var(--AS);
     flex-shrink: 0;
 }
 
+.uclist-child.__shelf {
+    width: 100%;
+}
+
 .minimanga-module-calligrapy {
-    width: 108px;
-    height: 157px;
+    position: relative;
+    width: 100%;
+    padding-top: 145%;
+    overflow: hidden;
     margin-bottom: 16px;
 }
 
 .minimanga-module-calligrapy img {
-    width: 108px;
-    height: 157px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: auto;
+    transform: translate(-50%, -50%);
     border-radius: 8px 8px 0 0;
     flex-shrink: 0;
     object-fit: cover;

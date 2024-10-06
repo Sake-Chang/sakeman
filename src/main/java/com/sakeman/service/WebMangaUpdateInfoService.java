@@ -58,28 +58,28 @@ public class WebMangaUpdateInfoService {
 
     /** 有料無料・ジャンル・フォローで絞り込み */
     @Transactional(readOnly = true)
-//    @Cacheable(value = "webMangaUpdateInfo", key = "'genre:' + #genreIds + ',freeflag:' + #freeflags + ',userId:' + #userId + ',page:' + #pageable.pageNumber", condition = "#useCache")
+//    @Cacheable(value = "webMangaUpdateInfo", key = "'genre:' + #genreIds + ',freeflag:' + #freeflags + ',userId:' + #userId + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
     public Page<WebMangaUpdateInfo> getFilteredInfoListPageable(List<Integer> genreIds, List<Integer> freeflags, Integer userId, Pageable pageable, boolean useCache){
         Page<WebMangaUpdateInfo> res = webRepository.findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagInAndMangaWebMangaFollowsUserId(genreIds, freeflags, userId, pageable);
         return res;
     }
     /** 有料無料・フォローで絞り込み */
     @Transactional(readOnly = true)
-//    @Cacheable(value = "webMangaUpdateInfo", key = "'freeflag:' + #freeflags + ',userId:' + #userId + ',page:' + #pageable.pageNumber", condition = "#useCache")
+//    @Cacheable(value = "webMangaUpdateInfo", key = "'freeflag:' + #freeflags + ',userId:' + #userId + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
     public Page<WebMangaUpdateInfo> getFilteredInfoListPageable(List<Integer> freeflags, Integer userId, Pageable pageable, boolean useCache){
         Page<WebMangaUpdateInfo> res = webRepository.findDistinctByFreeFlagInAndMangaWebMangaFollowsUserId(freeflags, userId, pageable);
         return res;
     }
     /** 有料無料・ジャンルで絞り込み */
     @Transactional(readOnly = true)
-//    @Cacheable(value = "webMangaUpdateInfo", key = "'genre:' + #genreIds + ',freeflag:' + #freeflags + ',page:' + #pageable.pageNumber", condition = "#useCache")
+//    @Cacheable(value = "webMangaUpdateInfo", key = "'genre:' + #genreIds + ',freeflag:' + #freeflags + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
     public Page<WebMangaUpdateInfo> getFilteredInfoListPageable(List<Integer> genreIds, List<Integer> freeflags, Pageable pageable, boolean useCache){
         Page<WebMangaUpdateInfo> res = webRepository.findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagIn(genreIds, freeflags, pageable);
         return res;
     }
     /** 有料無料で絞り込み */
     @Transactional(readOnly = true)
-    @Cacheable(value = "webMangaUpdateInfo", key = "'freeflag:' + #freeflags + ',page:' + #pageable.pageNumber", condition = "#useCache")
+    @Cacheable(value = "webMangaUpdateInfo", key = "'freeflag:' + #freeflags + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
     public Page<WebMangaUpdateInfo> getFilteredInfoListPageable(List<Integer> freeflags, Pageable pageable, boolean useCache){
         Page<WebMangaUpdateInfo> res = webRepository.findByFreeFlagIn(freeflags, pageable);
         return res;
@@ -87,14 +87,14 @@ public class WebMangaUpdateInfoService {
 
     /** 無料のみページネーション */
     @Transactional(readOnly = true)
-    @Cacheable(value = "webMangaUpdateInfo", key = "'freeflag:' + #freeflags + ',page:' + #pageable.pageNumber", condition = "#useCache")
+    @Cacheable(value = "webMangaUpdateInfo", key = "'freeflag:' + #freeflags + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
     public Page<WebMangaUpdateInfo> getFreeInfoListPageable(Integer freeFlag, Pageable pageable, boolean useCache){
         return webRepository.findByFreeFlag(freeFlag, pageable);
     }
 
     /** 今日更新のみページネーション */
     @Transactional(readOnly = true)
-    @Cacheable(value = "webMangaUpdateInfoToday", key = "'today:' + #today.toLocalDate() + ',page:' + #pageable.pageNumber", condition = "#useCache")
+    @Cacheable(value = "webMangaUpdateInfoToday", key = "'today:' + #today.toLocalDate() + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
     public Page<WebMangaUpdateInfo> getTodayInfoListPageable(LocalDateTime today, Pageable pageable, boolean useCache){
         return webRepository.findByUpdateAtGreaterThanEqual(today, pageable);
     }
@@ -127,7 +127,7 @@ public class WebMangaUpdateInfoService {
 
     /** マンガIDで検索して返す（ページ）  */
     @Transactional(readOnly = true)
-    @Cacheable(value = "webMangaUpdateInfoByMangaId", key = "'mangaId:' + #mangaId + ',page:' + #pageable.pageNumber", condition = "#useCache")
+    @Cacheable(value = "webMangaUpdateInfoByMangaId", key = "'mangaId:' + #mangaId + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
     public Page<WebMangaUpdateInfo> findByMangaIdPageable(Integer mangaId, Pageable pageable, boolean useCache) {
         return webRepository.findByMangaId(mangaId, pageable);
     }
@@ -141,7 +141,7 @@ public class WebMangaUpdateInfoService {
 
     /** メディアIDで検索して返す（ページ）  */
     @Transactional(readOnly = true)
-    @Cacheable(value = "webMangaUpdateInfoByMediaId", key = "'mediaId:' + #mediaId", condition = "#useCache")
+    @Cacheable(value = "webMangaUpdateInfoByMediaId", key = "'mediaId:' + #mediaId + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
     public Page<WebMangaUpdateInfo> findByMediaIdPageable(Integer mediaId, Pageable pageable, boolean useCache) {
         return webRepository.findByWebMangaMediaId(mediaId, pageable);
     }

@@ -2,6 +2,8 @@ package com.sakeman.service;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ public class UclistService {
 
     /** ページネーション */
     @Transactional(readOnly = true)
+//    @Cacheable(value = "uclist", key = "'allEntries'")
     public Page<Uclist> getUclistListPageable(Pageable pageable){
         return uclistRepository.findAll(pageable);
     }
@@ -63,6 +66,7 @@ public class UclistService {
 
     /** 登録処理 */
     @Transactional
+//    @CacheEvict(value = {"uclist"}, allEntries = true)
     public Uclist saveUclist (Uclist uclist) {
         return uclistRepository.save(uclist);
     }
