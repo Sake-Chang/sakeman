@@ -151,9 +151,9 @@ public class MangaService {
     /** Admin用検索結果 */
     public Page<Manga> searchMangas(String searchValue, Pageable pageable) {
         Page<Manga> pageData;
-        Manga manga = new Manga();
-        manga.setTitle(searchValue);
         if (StringUtils.hasText(searchValue)) {
+            Manga manga = new Manga();
+            manga.setTitle(searchValue);
             pageData = getSearchResult(manga, pageable);
         } else {
             pageData = getMangaListPageable(pageable);

@@ -47,6 +47,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebMangaUpdateInfoService {
     private final WebMangaUpdateInfoRepository webRepository;
+    private final MangaService maService;
 
     /** 全件を検索して返す **/
     @Transactional(readOnly = true)
@@ -182,6 +183,7 @@ public class WebMangaUpdateInfoService {
         if (StringUtils.hasText(searchValue)) {
             WebMangaUpdateInfo webMangaUpdateInfo = new WebMangaUpdateInfo();
             webMangaUpdateInfo.setTitleString(searchValue);
+            webMangaUpdateInfo.setManga(maService.getManga(mangaId));
             pageData = getSearchResult(webMangaUpdateInfo, pageable);
         } else {
             pageData = findByMangaIdPageable(mangaId, pageable, false);
