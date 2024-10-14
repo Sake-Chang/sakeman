@@ -1,7 +1,10 @@
 package com.sakeman.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MangaAuthorService {
     private final MangaAuthorRepository mangaAuthorRepository;
+    private final AuthorService authService;
 
     /** 全件を検索して返す **/
     @Transactional(readOnly = true)
@@ -33,7 +37,7 @@ public class MangaAuthorService {
     /** ページネーション */
     @Transactional(readOnly = true)
     public Page<MangaAuthor> getListPageable(Pageable pageable){
-        return mangaAuthorRepository.findAll(pageable);
+        return mangaAuthorRepository.findAllActive(pageable);
     }
 
     /** 1件を検索して返す */
@@ -72,11 +76,54 @@ public class MangaAuthorService {
         return mangaAuthorRepository.saveAll(mangaAuthors);
     }
 
-    /** 削除
-    * @return */
+    public List<MangaAuthor> getMalistToAdd(Set<String> inputAuthorNames, Manga manga) {
+        List<MangaAuthor> malistToAdd = new ArrayList<>();
+        for (String authorName : inputAuthorNames) {
+            List<Author> existingAuthors = authService.findByName(authorName);
+
+            Author thisAuthor;
+            if (existingAuthors.isEmpty()) {
+                thisAuthor = new Author();
+                thisAuthor.setName(authorName);
+                thisAuthor.setDeleteFlag(0);
+                authService.saveAuthor(thisAuthor);
+            } else {
+                thisAuthor = existingAuthors.get(0);
+            }
+
+            MangaAuthor newMangaAuthor = new MangaAuthor();
+            newMangaAuthor.setManga(manga);
+            newMangaAuthor.setAuthor(thisAuthor);
+            malistToAdd.add(newMangaAuthor);
+        }
+
+        return malistToAdd;
+    }
+
+    public List<MangaAuthor> getMalistToRemove(List<MangaAuthor> currentMangaAuthors, Set<String> inputAuthorNames) {
+        List<MangaAuthor> malistToRemove = new ArrayList<>();
+        for (MangaAuthor mangaAuthor : currentMangaAuthors) {
+            if (!inputAuthorNames.contains(mangaAuthor.getAuthor().getName())) {
+                malistToRemove.add(mangaAuthor);
+            } else {
+                inputAuthorNames.remove(mangaAuthor.getAuthor().getName());
+            }
+        }
+        return malistToRemove;
+    }
+
+    /** 削除 */
     @Transactional
     public void deleteById(Integer id) {
         mangaAuthorRepository.deleteById(id);
     }
+
+    @Transactional
+    public void deleteAll(List<MangaAuthor> authorsToRemove) {
+        if (!authorsToRemove.isEmpty()) {
+            mangaAuthorRepository.deleteAll(authorsToRemove); // JPAのdeleteAllを呼び出す
+        }
+    }
+
 
 }

@@ -1,9 +1,13 @@
 package com.sakeman.controller.admin;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,33 +24,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sakeman.entity.Author;
-import com.sakeman.entity.Manga;
-import com.sakeman.entity.MangaAuthor;
-import com.sakeman.entity.WebMangaMedia;
+import com.sakeman.dto.WebMangaUpdateInfoAdminResponseDTO;
 import com.sakeman.entity.WebMangaUpdateInfo;
-import com.sakeman.service.AuthorService;
-import com.sakeman.service.MangaAuthorService;
-import com.sakeman.service.MangaService;
-import com.sakeman.service.WebMangaMediaService;
+import com.sakeman.factory.PageRequestFactory;
 import com.sakeman.service.WebMangaUpdateInfoService;
+
+import lombok.RequiredArgsConstructor;
 
 
 
 @Controller
 @RequestMapping("admin/web-manga-update-info")
+@RequiredArgsConstructor
 public class AdminWebMangaUpdateInfoController {
     private final WebMangaUpdateInfoService service;
-    private final WebMangaMediaService mediaService;
-    private final MangaService mangaService;
-
-
-    public AdminWebMangaUpdateInfoController(WebMangaUpdateInfoService service, WebMangaMediaService mediaService, MangaService mangaService) {
-        this.service = service;
-        this.mediaService = mediaService;
-        this.mangaService = mangaService;
-    }
+    private final PageRequestFactory pageRequestFactory;
 
     /** 一覧表示 */
     @GetMapping("list")
@@ -93,25 +87,48 @@ public class AdminWebMangaUpdateInfoController {
 //    }
 
     /** 編集画面を表示 */
-    @GetMapping("update/{id}/")
+    @GetMapping("update/{id}")
     public String getUpdate(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("info", service.getWebMangaUpdateInfo(id));
         return "admin/web-manga-update-info/update";
     }
 
     /** 編集処理 */
-    @PostMapping("update/{id}/")
+    @PostMapping("update/{id}")
     public String updateManga(@PathVariable Integer id, @ModelAttribute WebMangaUpdateInfo info, Model model) {
         service.saveInfo(info);
         return "redirect:/admin/web-manga-update-info/list/modify";
     }
 
     /** 削除処理 */
-//    @GetMapping("delete/{id}/")
-//    public String deleteManga(@PathVariable("id") Integer id, @ModelAttribute Manga manga, Model model) {
-//        Manga mng = service.getManga(id);
-//        mng.setDeleteFlag(1);
-//        service.saveManga(mng);
-//        return "redirect:/admin/manga/list";
-//    }
+    @GetMapping("delete/{id}")
+    public String deleteWebMangaUpdateInfo(@PathVariable("id") Integer id) {
+        service.deleteById(id);
+        return "redirect:/admin/web-manga-update-info/list/modify";
+    }
+
+    @GetMapping("/api")
+    @ResponseBody
+    public Map<String, Object> getWebMangaUpdateInfos(
+        @RequestParam("start") int start,
+        @RequestParam("length") int length,
+        @RequestParam("search[value]") String searchValue,
+        @RequestParam("order[0][column]") int orderColumn,
+        @RequestParam("order[0][dir]") String orderDir) {
+
+        String[] columnNames = { "id", "mediaName", "webMangaMedia", "titleString", "manga", "subTitle", "authorString" };
+        Pageable pageable = pageRequestFactory.createPageRequest(start, length, orderColumn, orderDir, columnNames);
+
+        Page<WebMangaUpdateInfo> pageData = service.searchWebMangaUpdateInfos(searchValue, pageable);
+
+        List<WebMangaUpdateInfoAdminResponseDTO> responseData = service.getResponseData(pageData);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", responseData); // 現在のページデータ
+        response.put("recordsTotal", service.countAll()); // 全データ数
+        response.put("recordsFiltered", pageData.getTotalElements()); // 検索後のデータ数
+
+        return response;
+    }
+
 }

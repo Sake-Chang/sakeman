@@ -30,6 +30,14 @@ spring:
     init:
       mode: never
       encoding: UTF-8
+  session:
+    store-type: redis
+  redis:
+    port: 6379
+  cache:
+    type: simple
+#    redis:
+#      time-to-live: 43200000
 
 logging:
   level:

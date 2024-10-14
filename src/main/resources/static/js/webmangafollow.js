@@ -17,7 +17,7 @@ $(function(){
         console.log(mangaId);//mangaId
             $.ajax({
                 type            : "PUT",
-                url             : '/webmangafollow',
+                url             : '/api/webmangafollow',
                 contentType     : "application/json",
                 data            : JSON.stringify(mangaId),
                 dataType        : 'json',

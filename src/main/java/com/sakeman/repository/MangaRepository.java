@@ -28,5 +28,4 @@ public interface MangaRepository extends JpaRepository<Manga, Integer> {
 
     Page<Manga> findAll(Specification<Manga> spec, Pageable pageable);
 
-
 }

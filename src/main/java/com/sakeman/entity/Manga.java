@@ -25,6 +25,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import lombok.Data;
@@ -36,11 +37,12 @@ import lombok.ToString;
 @Entity
 @Table(name = "manga")
 @ToString(exclude = {"reviews", "mangaAuthors", "uclistMangas", "webMangaFollows"})
-@JsonIgnoreProperties({"titleKana", "registeredAt", "updatedAt", "displayFlag", "deleteFlag", "completionFlag", "volume", "publisher", "publishedIn", "synopsis", "calligraphy", "csid", "reviews", "mangaAuthors", "mangaTags", "webMangaUpdateInfos", "webMangaFollows", "uclistMangas", "readStatus"})
+//@JsonIgnoreProperties({"titleKana", "registeredAt", "updatedAt", "displayFlag", "deleteFlag", "completionFlag", "volume", "publisher", "publishedIn", "synopsis", "calligraphy", "csid", "reviews", "mangaAuthors", "mangaTags", "webMangaUpdateInfos", "webMangaFollows", "uclistMangas", "readStatus"})
+@JsonIgnoreProperties({"reviews", "mangaTags", "webMangaUpdateInfos", "webMangaFollows", "uclistMangas", "readStatus"})
 @Where(clause = "delete_flag=0")
 public class Manga implements Serializable {
 
-    /** フィールド */
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,6 +75,9 @@ public class Manga implements Serializable {
     @Column(name = "completion_flag", nullable = true)
     private Integer completionFlag;
 
+    @Column(name = "isOneShot", nullable = true)
+    private Boolean isOneShot;
+
     @Column(name = "volume", nullable = false)
     private Integer volume;
 
@@ -97,7 +102,8 @@ public class Manga implements Serializable {
     private List<Review> reviews;
 
     /** manga_author */
-    @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "manga", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("manga-authors")
     private List<MangaAuthor> mangaAuthors;
 
     /** webMangaFollows */
@@ -138,13 +144,5 @@ public class Manga implements Serializable {
     public void onPreUpdate() {
         setUpdatedAt(new Timestamp(System.currentTimeMillis()));
     }
-
-//    @JsonValue
-//    public Map<String, Object> toJson() {
-//        Map<String, Object> map = new LinkedHashMap<>();
-//        map.put("id", id);
-//        map.put("title", title);
-//        return map;
-//    }
 
 }

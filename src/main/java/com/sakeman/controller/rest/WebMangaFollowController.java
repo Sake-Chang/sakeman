@@ -23,25 +23,21 @@ import com.sakeman.service.UserDetail;
 import com.sakeman.service.UserService;
 import com.sakeman.service.WebMangaFollowService;
 
+import lombok.RequiredArgsConstructor;
+
 
 @RestController
-@RequestMapping
+@RequestMapping("/api")
+@RequiredArgsConstructor
 public class WebMangaFollowController {
 
-    private WebMangaFollowService wmfService;
-    private UserService userService;
-    private MangaService maService;
-
-    public WebMangaFollowController(WebMangaFollowService wmfService, UserService userService, MangaService maService) {
-        this.wmfService = wmfService;
-        this.userService = userService;
-        this.maService = maService;
-
-    }
+    private final WebMangaFollowService wmfService;
+    private final UserService userService;
+    private final MangaService maService;
 
     @PutMapping("/webmangafollow")
     @ResponseBody
-    public int webMangaFollow(@AuthenticationPrincipal UserDetail userDetail, @RequestBody Manga manga, Model model) {
+    public int webMangaFollow(@AuthenticationPrincipal UserDetail userDetail, @RequestBody Manga manga) {
 
         Integer userId = userDetail.getUser().getId();
         Integer maId = manga.getId();
@@ -65,9 +61,6 @@ public class WebMangaFollowController {
         /** like数をカウント */
         int wmfcount = wmfService.countByManga(ma);
         System.out.println(wmfcount);
-//
-//        Optional<Like> likes = likeService.findByReview(rev);
-//        System.out.println(likes);
 
         return wmfcount;
     }

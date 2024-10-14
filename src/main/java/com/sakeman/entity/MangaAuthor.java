@@ -18,6 +18,8 @@ import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,11 +44,13 @@ public class MangaAuthor {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="manga_id", referencedColumnName = "id")
     @Where(clause = "delete_flag=0")
+    @JsonBackReference("manga-authors")
     private Manga manga;
 
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @Where(clause = "delete_flag=0")
+    @JsonBackReference("author-mangas")
     private Author author;
 
     @Column(name = "registered_at", nullable = false, updatable = false)

@@ -1,5 +1,6 @@
 package com.sakeman.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,9 +33,12 @@ import lombok.ToString;
 @Table(name = "web_manga_media")
 @ToString(exclude = {"webMangaUpdateInfos"})
 @Where(clause = "delete_flag=0")
-public class WebMangaMedia {
+public class WebMangaMedia implements Serializable {
 
     /** フィールド */
+
+    private static final long serialVersionUID = 1L;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

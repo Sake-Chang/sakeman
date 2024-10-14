@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class StringUtilService {
-    private final MangaService maService;
-
     private final List<String> DELETE_CHARS = new ArrayList<>() {
         {
             add("~"); add("-"); add("〜"); add("―");
@@ -53,20 +51,6 @@ public class StringUtilService {
             }
         }
         return sbNorm.toString();
-    }
-
-    public void titleCleanse(int start, int end) {
-        List<Manga> mangalist = maService.getByIdBetween(start, end);
-        int num = mangalist.size();
-            List<Manga> mangas = new ArrayList<>();
-            for (int j=0; j<num; j++) {
-                Manga manga = mangalist.get(j);
-                String titleCleanse = cleanse(manga.getTitle());
-                manga.setTitleCleanse(titleCleanse);
-                mangas.add(manga);
-                System.out.println("manga_id = " + manga.getId() + " SET");
-            }
-            maService.saveAllManga(mangas);
     }
 
 }

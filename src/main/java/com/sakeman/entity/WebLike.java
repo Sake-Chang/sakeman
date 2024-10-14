@@ -1,5 +1,6 @@
 package com.sakeman.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
@@ -32,7 +33,7 @@ import lombok.ToString;
 @Table(name = "web_likes")
 @EqualsAndHashCode(exclude = {"user", "webMangaUpdateInfo"})
 @ToString(exclude = {"user", "webMangaUpdateInfo"})
-public class WebLike {
+public class WebLike implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

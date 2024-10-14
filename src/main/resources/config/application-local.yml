@@ -17,6 +17,15 @@ spring:
       encoding: UTF-8
   thymeleaf:
     cache: false
+  session:
+    store-type: none
+  cache:
+    type: simple
+    
+management:
+  health:
+    redis:
+      enabled: false  
       
 # AWS
 cloud:

@@ -7,16 +7,20 @@ import java.time.ZoneId;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
@@ -24,10 +28,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sakeman.dto.WebMangaUpdateInfoAdminResponseDTO;
 import com.sakeman.entity.Manga;
 import com.sakeman.entity.User;
 import com.sakeman.entity.WebMangaMedia;
@@ -53,6 +59,12 @@ public class WebMangaUpdateInfoService {
     @Transactional(readOnly = true)
     @Cacheable(value = "webMangaUpdateInfo", key = "'page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
     public Page<WebMangaUpdateInfo> getInfoListPageable(Pageable pageable, boolean useCache){
+        return webRepository.findAll(pageable);
+    }
+
+    /** ページネーション(キャッシュなし) */
+    @Transactional(readOnly = true)
+    public Page<WebMangaUpdateInfo> getInfoListPageable(Pageable pageable){
         return webRepository.findAll(pageable);
     }
 
@@ -153,6 +165,48 @@ public class WebMangaUpdateInfoService {
         return webRepository.findByTitleStringAndSubTitle(titleString, subTitle);
     }
 
+    @Transactional(readOnly = true)
+    public Page<WebMangaUpdateInfo> getSearchResult(WebMangaUpdateInfo webMangaUpdateInfo, Pageable pageable) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching() // and条件
+                .withStringMatcher(StringMatcher.CONTAINING) // Like句
+                .withIgnoreCase(); // 大文字小文字の両方
+        return webRepository.findAll(Example.of(webMangaUpdateInfo, matcher), pageable);
+    }
+
+    /** Admin用検索結果 */
+    public Page<WebMangaUpdateInfo> searchWebMangaUpdateInfos(String searchValue, Pageable pageable) {
+        Page<WebMangaUpdateInfo> pageData;
+        WebMangaUpdateInfo webMangaUpdateInfo = new WebMangaUpdateInfo();
+        webMangaUpdateInfo.setTitleString(searchValue);
+        if (StringUtils.hasText(searchValue)) {
+            pageData = getSearchResult(webMangaUpdateInfo, pageable);
+        } else {
+            pageData = getInfoListPageable(pageable);
+        }
+        return pageData;
+    }
+
+
+    public List<WebMangaUpdateInfoAdminResponseDTO> getResponseData(Page<WebMangaUpdateInfo> pageData) {
+        return pageData.getContent().stream().map(m -> {
+            return new WebMangaUpdateInfoAdminResponseDTO(
+                m.getId(),
+                m.getMediaName(),
+                m.getWebMangaMedia().getId(),
+                m.getTitleString(),
+                m.getManga().getId(),
+                m.getSubTitle(),
+                m.getAuthorString()
+            );
+        }).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public long countAll() {
+        return webRepository.count();
+    }
+
 
     /** 登録処理 */
     @Transactional
@@ -165,6 +219,18 @@ public class WebMangaUpdateInfoService {
         }, allEntries = true)
     public WebMangaUpdateInfo saveInfo (WebMangaUpdateInfo info) {
         return webRepository.save(info);
+    }
+
+    @Transactional
+    @CacheEvict(value = {
+            "webMangaUpdateInfo",
+            "webMangaUpdateInfoToday",
+            "webMangaUpdateInfoByMangaId",
+            "webMangaUpdateInfoByMediaId",
+            "webMangaUpdateInfoByTitleSubtitle"
+        }, allEntries = true)
+    public void deleteById(Integer id) {
+        webRepository.deleteById(id);
     }
 
 }

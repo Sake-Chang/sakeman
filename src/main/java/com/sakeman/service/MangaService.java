@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -14,9 +15,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import com.sakeman.dto.MangaAdminResponseDTO;
 import com.sakeman.entity.Author;
 import com.sakeman.entity.Manga;
+import com.sakeman.entity.MangaAuthor;
 import com.sakeman.exception.ResourceNotFoundException;
 import com.sakeman.repository.MangaRepository;
 import com.sakeman.repository.MangaSpecifications;
@@ -27,6 +31,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MangaService {
     private final MangaRepository mangaRepository;
+    private final StringUtilService utilService;
+
 
     /** 全件を検索して返す **/
     @Transactional(readOnly = true)
@@ -96,6 +102,11 @@ public class MangaService {
         return mangaRepository.findByTitleCleanse(titleCleanse);
     }
 
+    @Transactional(readOnly = true)
+    public long countAll() {
+        return mangaRepository.count();
+    }
+
     /** 1件を検索して返す */
     @Transactional(readOnly = true)
     public Manga getManga(Integer id) {
@@ -136,6 +147,78 @@ public class MangaService {
     public Page<Manga> getDistinctMangaByAuthorsIn(List<Author> authors, Pageable pageable) {
         return mangaRepository.findDistinctByMangaAuthorsAuthorIn(authors, pageable);
     }
+
+    /** Admin用検索結果 */
+    public Page<Manga> searchMangas(String searchValue, Pageable pageable) {
+        Page<Manga> pageData;
+        Manga manga = new Manga();
+        manga.setTitle(searchValue);
+        if (StringUtils.hasText(searchValue)) {
+            pageData = getSearchResult(manga, pageable);
+        } else {
+            pageData = getMangaListPageable(pageable);
+        }
+        return pageData;
+    }
+
+    public List<MangaAdminResponseDTO> getResponseData(Page<Manga> pageData) {
+        return pageData.getContent().stream().map(m -> {
+            List<String> authorNames = m.getMangaAuthors().stream()
+                .map(ma -> ma.getAuthor().getName())
+                .collect(Collectors.toList());
+
+            // DTOをコンストラクタで初期化
+            return new MangaAdminResponseDTO(
+                m.getId(),
+                m.getTitle(),
+                m.getVolume(),
+                m.getPublisher(),
+                m.getPublishedIn(),
+                String.join(", ", authorNames)
+            );
+        }).collect(Collectors.toList());
+    }
+
+
+    @Transactional
+    public void setMangaDetailAndSave(Manga inputData, List<MangaAuthor> malistToAdd) {
+        inputData.setTitleCleanse(utilService.cleanse(inputData.getTitle()));
+        inputData.setDeleteFlag(0);
+        inputData.setDisplayFlag(1);
+        inputData.setMangaAuthors(malistToAdd);
+        saveManga(inputData);
+    }
+
+    @Transactional
+    public void updateMangaDetail(Manga existingManga, Manga inputData, List<MangaAuthor> currentMangaAuthors) {
+        existingManga.setTitle(inputData.getTitle());
+        existingManga.setVolume(inputData.getVolume());
+        existingManga.setPublisher(inputData.getPublisher());
+        existingManga.setPublishedIn(inputData.getPublishedIn());
+        existingManga.setSynopsis(inputData.getSynopsis());
+        existingManga.setCalligraphy(inputData.getCalligraphy());
+        existingManga.setIsOneShot(inputData.getIsOneShot());
+        existingManga.setDeleteFlag(inputData.getDeleteFlag());
+        existingManga.setTitleCleanse(utilService.cleanse(inputData.getTitle()));
+        existingManga.setMangaAuthors(currentMangaAuthors);
+
+        saveManga(existingManga);
+    }
+
+    @Transactional
+    public void titleCleanse(int start, int end) {
+        List<Manga> mangalist = getByIdBetween(start, end);
+        int num = mangalist.size();
+        List<Manga> mangas = new ArrayList<>();
+        for (int j=0; j<num; j++) {
+            Manga manga = mangalist.get(j);
+            String titleCleanse = utilService.cleanse(manga.getTitle());
+            manga.setTitleCleanse(titleCleanse);
+            mangas.add(manga);
+        }
+        saveAllManga(mangas);
+    }
+
 
     /** 登録処理 */
     @Transactional

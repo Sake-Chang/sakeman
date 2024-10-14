@@ -1,0 +1,235 @@
+@charset "UTF-8";
+
+:root {
+    --WH: #FFFFFF;
+    --BK: #595959;
+    --GR: #7e7e7e;
+    --AS: #dedede;
+/*    --PL: #7a42bf; */
+    --PL: #7735bd;
+/*    --LV: #E3CEEA; */
+    --LV: #E1D8F0;
+/*    --HL: #f29423; */
+    --HL: #f37025;
+}
+
+ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.main {
+    padding: 60px 0 0;
+}
+
+.card {
+    margin-bottom: 16px;
+}
+
+.offcanvas {
+    position: fixed;
+    top: 58px;
+}
+
+
+.bg-image{
+    background:
+        linear-gradient(to bottom, rgba(119, 53, 189, 1) ,rgba(119, 53, 189, 0.7)),
+        url('https://sake-man.com/system/logo_yoko_lined.png');
+    background-size: cover;
+}
+
+.text-navy{
+    color: var(--PL);
+}
+
+.btn-navy{
+    color: var(--WH);
+    background-color: var(--PL);
+}
+
+.btn-navy:hover{
+    color: var(--WH);
+    background-color: var(--LV);
+}
+
+.nav-link{
+    color: var(--WH);
+}
+
+.nav-link:hover{
+    color: var(--HL);
+}
+
+.offcanvas{
+    width: 240px !important;
+}
+
+@media (min-width: 992px) {
+    .offcanvas{
+        transform: none !important;
+        visibility: visible !important;
+    }
+    .offcanvas-outside{
+        transform: margin-left 0.3s ease-in-out;
+        margin-left: 240px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    div.dt-buttons {
+        text-align: left !important;
+    }
+}
+
+.offcanvas-body {
+  max-height: 80vh; /* ビューポートの高さに応じて調整 */
+  overflow-y: auto; /* スクロール可能にする */
+  scrollbar-width: none; /* Firefox用 */
+  -ms-overflow-style: none;  /* Internet ExplorerとEdge用 */
+}
+
+.offcanvas-body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera用 */
+}
+
+.btn-circle{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    opacity: 0.5;
+    border: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.mh-100{
+    height: calc(100vh - 56px);
+}
+
+.table > :not(:first-child) {
+    border-top: 0;
+}
+
+.admin-table thead {
+    background-color: rgba(0, 0, 0, .03);
+    color: var(--BK);
+}
+
+.admin-table{
+    font-size: 14px;
+    color: var(--BK);
+}
+
+.admin-btn-container {
+    display: flex;
+    column-gap: 8px;
+}
+
+.td-center {
+    vertical-align: middle;
+}
+
+.row.centered{
+    align-items: center;
+    margin-bottom: 8px !important;
+}
+
+.dt-button {
+    margin-bottom: 0 !important;
+}
+
+div.dataTables_length {
+    text-align: left !important;
+}
+
+div.dataTables_filter {
+    text-align: right !important;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+    float: right !important;
+}
+
+.navbar-toggler {
+    border: 1px var(--AS) solid;
+}
+
+.nopadding {
+    padding: 0;
+}
+
+.accordion-button {
+    background-color: #f7f7f7;
+    color: var(--BK);
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #f7f7f7;
+}
+
+.admin-index-btn{
+    background-color: var(--PL);
+    border: none;
+    color: var(--WH);
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.admin-index-btn:hover{
+    background-color: #8a50d1;
+}
+
+.import-btn-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.admin-cleanse-input{
+    font-size: 14px;
+    width: 120px;
+}
+
+.admin-tool-form{
+    margin-bottom: 16px;
+}
+
+.form-control {
+    font-size: 14px !important;
+    padding: 4px 8px;
+    color: var(--BK) !important;
+}
+
+.form-label, .form-check-label {
+    font-size: 14px !important;
+    color: var(--BK) !important;
+}
+
+.select2-search__field {
+    font-size: 14px !important;
+    color: var(--AS) !important;
+}
+
+.select2-selection__choice__display {
+    font-size: 14px !important;
+    color: var(--BK) !important;
+}
+
+.select2-results__option {
+    font-size: 14px !important;
+    color: var(--BK) !important;
+    padding: 4px 8px !important;
+}
+
+.select2-selection.select2-selection--multiple {
+    border: solid 1px #ced4da !important;
+}

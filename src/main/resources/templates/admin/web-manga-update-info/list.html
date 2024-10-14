@@ -1,46 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/layout-admin2}">
 
 <head>
-    <title>サケマン管理部屋</title>
+    <meta charset="UTF-8" th:remove="tag">
 </head>
 
-<div layout:fragment="content">
+<body>
 
+    <div layout:fragment="sidebar" th:replace="~{admin/sidebar::sidebar}"></div>
 
-    <h2>管理者用ページ</h2>
-    <h3>Webマンガ更新情報 一覧</h3>
-        <a class="btn-primary" th:href="@{/admin/web-manga-update-info/register}">新規登録</a>
+    <div layout:fragment="content" class="offcanvas-outside bg-body-tertiary">
+        <div class="container-fluid">
+            <div th:replace="~{admin/sidebar::toggler}"></div>
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="text-navy my-2">
+                                Webマンガ更新情報 一覧
+                            </h6>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-bordered admin-table admin-table-webmangaupdateinfo">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>メディア名</th>
+                                        <th>medid</th>
+                                        <th>タイトル</th>
+                                        <th>manid</th>
+                                        <th>サブタイトル</th>
+                                        <th>著者名</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--
+                                    <tr th:each="info : ${infolist}" th:object="${info}">
+                                        <td th:text="*{id}"></td>
+                                        <td th:text="*{mediaName}"></td>
+                                        <td th:text="*{webMangaMedia.id}"></td>
+                                        <td th:text="*{titleString}"></td>
+                                        <td th:text="*{manga.id}"></td>
+                                        <td th:text="*{subTitle}"></td>
+                                        <td th:text="*{authorString}"></td>
+                                        <td class="td-center">
+                                            <div class="admin-btn-container">
+                                                <a th:href="@{/admin/web-manga-update-info/update/{id}/(id=*{id})}" class="btn btn-navy">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <a th:href="@{/admin/web-manga-update-info/delete/{id}(id=*{id})}" class="btn btn-danger">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
-
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>メディア名</th>
-                <th>メディアID</th>
-                <th>タイトル</th>
-                <th>マンガID</th>
-                <th>サブタイトル</th>
-                <th>著者名</th>
-                <th>操作</th>
-            </tr>
-            <tr th:each="info : ${infolist}">
-                <td th:text="${info.id}"></td>
-                <td th:text="${info.mediaName}"></td>
-                <td th:text="${info.webMangaMedia.id}"></td>
-                <td th:text="${info.titleString}"></td>
-                <td th:text="${info.manga.id}"></td>
-                <td th:text="${info.subTitle}"></td>
-                <td th:text="${info.authorString}"></td>
-                <td><a class="btn-primary" th:href="@{/admin/web-manga-update-info/update/{id}/(id=${info.id})}">編集</a></td>
-            </tr>
-        </table>
-
-<!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
-
-
-</div>
+</body>
 </html>
