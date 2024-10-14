@@ -177,16 +177,17 @@ public class WebMangaUpdateInfoService {
     /** Admin用検索結果 */
     public Page<WebMangaUpdateInfo> searchWebMangaUpdateInfos(String searchValue, Pageable pageable) {
         Page<WebMangaUpdateInfo> pageData;
-        WebMangaUpdateInfo webMangaUpdateInfo = new WebMangaUpdateInfo();
-        webMangaUpdateInfo.setTitleString(searchValue);
+        Integer mangaId = 111111;
+
         if (StringUtils.hasText(searchValue)) {
+            WebMangaUpdateInfo webMangaUpdateInfo = new WebMangaUpdateInfo();
+            webMangaUpdateInfo.setTitleString(searchValue);
             pageData = getSearchResult(webMangaUpdateInfo, pageable);
         } else {
-            pageData = getInfoListPageable(pageable);
+            pageData = findByMangaIdPageable(mangaId, pageable, false);
         }
         return pageData;
     }
-
 
     public List<WebMangaUpdateInfoAdminResponseDTO> getResponseData(Page<WebMangaUpdateInfo> pageData) {
         return pageData.getContent().stream().map(m -> {
