@@ -1,63 +1,147 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/admin-layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{common/layout-admin2}">
 
 <head>
     <title>サケマン管理部屋</title>
 </head>
 
-<div layout:fragment="content">
+    <div layout:fragment="sidebar" th:replace="~{admin/sidebar::sidebar}"></div>
 
-    <h2 th:text="|${info.titleString}の編集|"></h2>
-    <a class="btn-primary" th:href="@{/admin/web-manga-update-info/list}">一覧に戻る</a>
+    <div layout:fragment="content" class="offcanvas-outside bg-body-tertiary">
+        <div class="container-fluid pt-3">
+            <div class="row justify-content-center">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3 text-navy">Webまんが更新情報 更新</h5>
+                            <form th:method="post" th:action="@{/admin/web-manga-update-info/update/{id}(id=${editWebMangaUpdateInfoForm.id})}" th:object="${editWebMangaUpdateInfoForm}">
+                                <div class="mb-3 row align-items-center">
+                                    <div class="col-md-2">
+                                        <label for="id" class="form-label">ID</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="hidden" th:errorclass="err" th:field="*{id}">
+                                        <span class="form-hidden-text" th:text="*{id}"></span>
+                                        <div class="invalid-feedback" th:errors="*{id}"></div>
+                                    </div>
+                                </div>
 
-    <form class="admin-form" th:method="post" th:action="@{/admin/web-manga-update-info/update/{id}/(id=${info.id})}" th:object="${info}">
-        <table>
-            <tr>
-                <th><label for="id">ID</label></th>
-                <td><input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}" th:field="*{id}"></td>
-            </tr>
-            <tr>
-                <th><label for="mediaName">メディア名</label></th>
-                <td><input type="text" th:field="*{mediaName}"></td>
-            </tr>
-            <tr>
-                <th><label for="webMangaMedia.id">メディアID</label></th>
-                <td><input type="text" th:field="*{webMangaMedia.id}"></td>
-            </tr>
-            <tr>
-                <th><label for="titleString">タイトル</label></th>
-                <td><input type="text" th:field="*{titleString}"></td>
-            </tr>
-            <tr>
-                <th><label for="manga.id">マンガID</label></th>
-                <td><input type="text" th:field="*{manga.id}"></input></td>
-            </tr>
-            <tr>
-                <th><label for="authoingrStr">著者</label></th>
-                <td><input type="text" th:field="*{authorString}"></td>
-            </tr>
-            <tr>
-                <th><label for="imgUrl">画像URL</label></th>
-                <td><input type="text" th:field="*{imgUrl}"></td>
-            </tr>
-            <tr>
-                <th><label for="subTitle">サブタイトル</label></th>
-                <td><input type="text" th:field="*{subTitle}"></td>
-            </tr>
-            <tr>
-                <th><label for="updateAt">更新日時</label></th>
-                <td><input type="text" th:field="*{updateAt}"></td>
-            </tr>
-            <tr>
-                <th><label for="url">URL</label></th>
-                <td><input type="text" th:field="*{url}"></td>
-            </tr>
-            <tr>
-                <th><label for="url">URL</label></th>
-                <td><input type="text" th:field="*{freeFlag}"></td>
-            </tr>
-        </table>
-        <input type="submit" value="更新">
-    </form>
-</div>
+                                <div class="mb-3 row align-items-center">
+                                    <div class="col-md-2">
+                                        <label for="titleString" class="form-label">タイトル</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" th:errorclass="err" th:field="*{titleString}">
+                                        <div class="invalid-feedback" th:errors="*{titleString}"></div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row align-items-center">
+                                    <div class="col-md-2">
+                                        <label for="mediaName" class="form-label">メディア名</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" th:errorclass="err" th:field="*{mediaName}">
+                                        <div class="invalid-feedback" th:errors="*{mediaName}"></div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row align-items-center">
+                                    <div class="col-md-2">
+                                        <label for="authorString" class="form-label">著者名</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" th:errorclass="err" th:field="*{authorString}">
+                                        <div class="invalid-feedback" th:errors="*{authorString}"></div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row align-items-center">
+                                    <div class="col-md-2">
+                                        <label for="subTitle" class="form-label">サブタイトル</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" th:errorclass="err" th:field="*{subTitle}">
+                                        <div class="invalid-feedback" th:errors="*{subTitle}"></div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row align-items-center">
+                                    <div class="col-md-2">
+                                        <label for="mangaId" class="form-label">まんがID</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <input class="form-control" type="text" th:errorclass="err" th:field="*{mangaId}">
+                                        <div class="invalid-feedback" th:errors="*{mangaId}"></div>
+                                    </div>
+                                </div>
+
+                                <button class="w-100 btn btn-navy" type="submit">更新</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    <h2 th:text="|${editWebMangaUpdateInfoForm.titleString}の編集|"></h2>-->
+<!--    <a class="btn-primary" th:href="@{/admin/web-manga-update-info/list}">一覧に戻る</a>-->
+
+<!--    <form class="admin-form" th:method="post" th:action="@{/admin/web-manga-update-info/update/{id}/(id=${editWebMangaUpdateInfoForm.id})}" th:object="${editWebMangaUpdateInfoForm}">-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <th><label for="id">ID</label></th>-->
+<!--                <td><input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}" th:field="*{id}"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th><label for="mediaName">メディア名</label></th>-->
+<!--                <td><input type="text" th:field="*{mediaName}"></td>-->
+<!--            </tr>-->
+<!--            -->
+<!--            <tr>-->
+<!--                <th><label for="webMangaMedia.id">メディアID</label></th>-->
+<!--                <td><input type="text" th:field="*{webMangaMedia.id}"></td>-->
+<!--            </tr>-->
+<!--            -->
+<!--            <tr>-->
+<!--                <th><label for="titleString">タイトル</label></th>-->
+<!--                <td><input type="text" th:field="*{titleString}"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th><label for="manga.id">マンガID</label></th>-->
+<!--                <td><input type="text" th:field="*{mangaId}"></input></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th><label for="authoingrStr">著者</label></th>-->
+<!--                <td><input type="text" th:field="*{authorString}"></td>-->
+<!--            </tr>-->
+<!--            -->
+<!--            <tr>-->
+<!--                <th><label for="imgUrl">画像URL</label></th>-->
+<!--                <td><input type="text" th:field="*{imgUrl}"></td>-->
+<!--            </tr>-->
+<!--            -->
+<!--            <tr>-->
+<!--                <th><label for="subTitle">サブタイトル</label></th>-->
+<!--                <td><input type="text" th:field="*{subTitle}"></td>-->
+<!--            </tr>-->
+<!--            -->
+<!--            <tr>-->
+<!--                <th><label for="updateAt">更新日時</label></th>-->
+<!--                <td><input type="text" th:field="*{updateAt}"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th><label for="url">URL</label></th>-->
+<!--                <td><input type="text" th:field="*{url}"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <th><label for="url">URL</label></th>-->
+<!--                <td><input type="text" th:field="*{freeFlag}"></td>-->
+<!--            </tr>-->
+<!--            -->
+<!--        </table>-->
+<!--        <input type="submit" value="更新">-->
+<!--    </form>-->
 </html>

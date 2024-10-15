@@ -13,7 +13,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title mb-3 text-navy">まんが更新</h5>
+                            <h5 class="card-title mb-3 text-navy">まんが 更新</h5>
                             <form th:method="post" th:action="@{/admin/manga/update/{id}(id=${manga.id})}" th:object="${manga}">
                                 <div class="mb-3 row align-items-center">
                                     <div class="col-md-2">
@@ -115,7 +115,7 @@
                                 <!-- 削除フラグ -->
                                 <div class="mb-3 row align-items-center">
                                     <div class="col-md-2">
-                                        <label for="deleteFlag" class="form-label">画像ファイル名</label>
+                                        <label for="deleteFlag" class="form-label">削除フラグ</label>
                                     </div>
                                     <div class="col-md-10">
                                         <input class="form-control" type="text" th:errorclass="err" th:field="*{deleteFlag}">

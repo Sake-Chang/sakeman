@@ -3,21 +3,14 @@ package com.sakeman.controller.admin;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,17 +22,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sakeman.dto.WebMangaUpdateInfoAdminResponseDTO;
 import com.sakeman.entity.WebMangaUpdateInfo;
 import com.sakeman.factory.PageRequestFactory;
+import com.sakeman.form.EditWebMangaUpdateInfoForm;
+import com.sakeman.service.MangaService;
 import com.sakeman.service.WebMangaUpdateInfoService;
 
 import lombok.RequiredArgsConstructor;
-
-
 
 @Controller
 @RequestMapping("admin/web-manga-update-info")
 @RequiredArgsConstructor
 public class AdminWebMangaUpdateInfoController {
     private final WebMangaUpdateInfoService service;
+    private final MangaService maService;
     private final PageRequestFactory pageRequestFactory;
 
     /** 一覧表示 */
@@ -89,14 +83,32 @@ public class AdminWebMangaUpdateInfoController {
     /** 編集画面を表示 */
     @GetMapping("update/{id}")
     public String getUpdate(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("info", service.getWebMangaUpdateInfo(id));
+        WebMangaUpdateInfo thisInfo = service.getWebMangaUpdateInfo(id);
+        EditWebMangaUpdateInfoForm form = new EditWebMangaUpdateInfoForm();
+
+        form.setId(id);
+        form.setMediaName(thisInfo.getMediaName());
+        form.setTitleString(thisInfo.getTitleString());
+        form.setSubTitle(thisInfo.getSubTitle());
+        form.setAuthorString(thisInfo.getAuthorString());
+        form.setMangaId(thisInfo.getManga().getId());
+
+        model.addAttribute("editWebMangaUpdateInfoForm", form);
+
         return "admin/web-manga-update-info/update";
     }
 
     /** 編集処理 */
     @PostMapping("update/{id}")
-    public String updateManga(@PathVariable Integer id, @ModelAttribute WebMangaUpdateInfo info, Model model) {
-        service.saveInfo(info);
+    public String updateManga(@PathVariable Integer id, @ModelAttribute EditWebMangaUpdateInfoForm form, Model model) {
+        WebMangaUpdateInfo thisInfo = service.getWebMangaUpdateInfo(id);
+        thisInfo.setMediaName(form.getMediaName());
+        thisInfo.setTitleString(form.getTitleString());
+        thisInfo.setSubTitle(form.getSubTitle());
+        thisInfo.setAuthorString(form.getAuthorString());
+        thisInfo.setManga(maService.getManga(form.getMangaId()));
+
+        service.saveInfo(thisInfo);
         return "redirect:/admin/web-manga-update-info/list/modify";
     }
 

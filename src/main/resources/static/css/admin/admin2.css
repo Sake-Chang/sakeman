@@ -13,6 +13,11 @@
     --HL: #f37025;
 }
 
+h5 {
+    border-left: #f37025 solid 8px;
+    padding-left: 16px;
+}
+
 ul {
     margin: 0;
     padding-left: 0;
@@ -41,7 +46,7 @@ ul {
 }
 
 .text-navy{
-    color: var(--PL);
+    color: var(--BK);
 }
 
 .btn-navy{
@@ -203,7 +208,7 @@ div.dataTables_filter {
     margin-bottom: 16px;
 }
 
-.form-control {
+.form-control, .form-hidden-text {
     font-size: 14px !important;
     padding: 4px 8px;
     color: var(--BK) !important;
@@ -216,7 +221,7 @@ div.dataTables_filter {
 
 .select2-search__field {
     font-size: 14px !important;
-    color: var(--AS) !important;
+    color: var(--BK) !important;
 }
 
 .select2-selection__choice__display {
@@ -228,6 +233,11 @@ div.dataTables_filter {
     font-size: 14px !important;
     color: var(--BK) !important;
     padding: 4px 8px !important;
+}
+
+.select2-container--default .select2-search--inline .select2-search__field::placeholder {
+    color: var(--AS);
+    opacity: 1;
 }
 
 .select2-selection.select2-selection--multiple {
