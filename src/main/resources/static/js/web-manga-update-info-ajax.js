@@ -1,6 +1,7 @@
 $(document).ready(function() {
     // ページネーションリンクのクリックイベントを処理
     $(document).on('click', '.pagenation a', function(e) {
+        $('#loading-indicator').show();
         e.preventDefault(); // デフォルトのページ遷移を無効化
 
         var url = $(this).attr('href'); // 押されたリンクのURL
@@ -18,6 +19,10 @@ $(document).ready(function() {
             },
             error: function(xhr) {
                 console.error("Error: " + xhr.responseText); // エラー処理
+            },
+            complete: function() {
+                // リクエスト完了後にインディケーターを非表示
+                $('#loading-indicator').hide();
             }
         });
     });
@@ -26,6 +31,8 @@ $(document).ready(function() {
     window.addEventListener('popstate', function(event) {
         if (event.state && event.state.page !== null) {
             var page = event.state.page; // 履歴からページ番号を取得
+
+            $('#loading-indicator').show();
 
             // Ajaxリクエストで履歴に応じたページを再度読み込む
             $.ajax({
@@ -36,6 +43,10 @@ $(document).ready(function() {
                 },
                 error: function(xhr) {
                     console.error("Error: " + xhr.responseText); // エラー処理
+                },
+                complete: function() {
+                    // リクエスト完了後にインディケーターを非表示
+                    $('#loading-indicator').hide();
                 }
             });
         }
