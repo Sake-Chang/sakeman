@@ -19,7 +19,7 @@
 
         <!--/* 最初のページ */-->
         <li th:if="${pages.number gt 2}" class="page-item">
-            <a th:href="@{''(page=0)}" class="page-item-text">1</a>
+            <a th:href="@{''(page=0)}" class="page-item-text" th:attr="data-page=0">1</a>
         </li>
 
         <!--/* … */-->
@@ -31,7 +31,7 @@
         <li th:if="${i ge 0 and i lt pages.totalPages}" class="page-item"
             th:classappend="${i eq pages.number} ? 'current'">
             <a th:href="@{''(page=${i})}" th:text="${i + 1}" class="page-item-text"
-            th:classappend="${i eq pages.number} ? 'current'"></a>
+            th:classappend="${i eq pages.number} ? 'current'" th:attr="data-page=${i}"></a>
         </li>
         </th:block>
 
@@ -43,7 +43,7 @@
         <!--/* 最後のページ */-->
         <li th:if="${pages.totalPages gt (pages.number + 3)}" class="page-item">
             <a th:href="@{''(page=${pages.totalPages - 1})}" th:text="${pages.totalPages}"
-                class="page-item-text"></a>
+                class="page-item-text" th:attr="data-page=${pages.totalPages - 1}"></a>
         </li>
 
         <!--/* 次のページ */-->

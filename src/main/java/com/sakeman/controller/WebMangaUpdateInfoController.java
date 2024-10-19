@@ -5,6 +5,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -53,14 +55,15 @@ public class WebMangaUpdateInfoController {
     @GetMapping("/web-manga-update-info")
     public String getList(@ModelAttribute Manga manga, Model model,
             @AuthenticationPrincipal UserDetail userDetail,
-            @PageableDefault(page = 0, size = 50)
+            @PageableDefault(page = 0, size = 25)
                 @SortDefault.SortDefaults({
                     @SortDefault(sort="updateAt", direction=Direction.DESC),
                     @SortDefault(sort="webMangaMedia", direction=Direction.ASC),
                     @SortDefault(sort="titleString", direction=Direction.ASC),
                     @SortDefault(sort="freeFlag", direction=Direction.DESC),
                     @SortDefault(sort="id", direction=Direction.DESC)
-                }) Pageable pageable) {
+                }) Pageable pageable,
+                HttpServletRequest request) {
 
         User thisUser = (userDetail != null) ? userService.getUser(userDetail.getUser().getId()) : null;
 
@@ -97,7 +100,12 @@ public class WebMangaUpdateInfoController {
         LocalDateTime today = LocalDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate().atStartOfDay();
         model.addAttribute("todaylistsize", webService.getTodayInfoList(today, true).size());
 
-        return "web-manga-update-info/list";
+        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+            return "module/card/info-card-module :: info-card-module";
+        } else {
+            return "web-manga-update-info/list";
+        }
+
     }
 
     /** 設定＆設定の保存 */

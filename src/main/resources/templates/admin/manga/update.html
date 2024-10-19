@@ -25,18 +25,6 @@
                                     </div>
                                 </div>
 
-                                <!-- 著者 -->
-<!--                                <div class="mb-3 row align-items-center">-->
-<!--                                    <div class="col-md-2">-->
-<!--                                        <label for="authorName" class="form-label">著者</label>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-10">-->
-<!--                                        <select class="select2-author form-control" multiple="multiple" name="authorName">-->
-<!--                                            <option value=""></option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
                                 <div class="mb-3 row align-items-center">
                                     <div class="col-md-2">
                                         <label for="authorName" class="form-label">著者</label>
@@ -52,7 +40,6 @@
                                     </div>
                                 </div>
 
-                                <!-- 関数 -->
                                 <div class="mb-3 row align-items-center">
                                     <div class="col-md-2">
                                         <label for="volume" class="form-label">巻数</label>
@@ -63,7 +50,6 @@
                                     </div>
                                 </div>
 
-                                <!-- 出版社 -->
                                 <div class="mb-3 row align-items-center">
                                     <div class="col-md-2">
                                         <label for="publisher" class="form-label">出版社</label>
@@ -74,7 +60,6 @@
                                     </div>
                                 </div>
 
-                                <!-- 掲載誌 -->
                                 <div class="mb-3 row align-items-center">
                                     <div class="col-md-2">
                                         <label for="publishedIn" class="form-label">掲載誌</label>
@@ -85,7 +70,6 @@
                                     </div>
                                 </div>
 
-                                <!-- あらすじ -->
                                 <div class="mb-3 row align-items-center">
                                     <div class="col-md-2">
                                         <label for="synopsis" class="form-label">あらすじ</label>
@@ -96,7 +80,6 @@
                                     </div>
                                 </div>
 
-                                <!-- 画像ファイル名 -->
                                 <div class="mb-3 row align-items-center">
                                     <div class="col-md-2">
                                         <label for="calligraphy" class="form-label">画像ファイル名</label>
@@ -112,7 +95,6 @@
                                     <label class="form-check-label" for="isOneShot">読切</label>
                                 </div>
 
-                                <!-- 削除フラグ -->
                                 <div class="mb-3 row align-items-center">
                                     <div class="col-md-2">
                                         <label for="deleteFlag" class="form-label">削除フラグ</label>
@@ -133,81 +115,4 @@
         </div>
     </div>
 
-<!--<div layout:fragment="content">-->
-<!--    <h2 th:text="|${manga.title}の編集|"></h2>-->
-<!--    <a class="btn-primary" th:href="@{/admin/manga/list}">一覧に戻る</a>-->
-
-<!--    <form class="admin-form" th:method="post" th:action="@{/admin/manga/update/{id}/(id=${manga.id})}" th:object="${manga}">-->
-<!--        <table>-->
-<!--            <tr>-->
-<!--                <th><label for="manga.title">タイトル</label></th>-->
-<!--                <td><input type="text" th:field="*{title}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <th><label for="manga.titleKana">タイトルカナ</label></th>-->
-<!--                <td><input type="text" th:field="*{titleKana}"></td>-->
-<!--            </tr>-->
-<!--        -->
-<!--            <tr>-->
-<!--                <th><label for="manga.mangaAuthors.manga.id">著者ID</label></th>-->
-<!--                <td><th:block th:if="!${#lists.isEmpty(manga.mangaAuthors)}">-->
-<!--                    <th:block th:each="mangaAuthors : ${manga.mangaAuthors}">-->
-<!--                    <input  type="text"-->
-<!--                            id="mangaAuthors.author.id"-->
-<!--                            name="mangaAuthors.author.id"-->
-<!--                            th:value="${mangaAuthors.author.id}">-->
-<!--                            <th:text="${#sets.add(Integer mangaAuthors.author.id)}"></th:text>-->
-<!--                    <input  type="text"-->
-<!--                            id="mangaAuthors.author.name"-->
-<!--                            th:value="${mangaAuthors.author.name}">-->
-<!--                    </th:block>-->
-<!--                    </th:block>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--        -->
-<!--            <tr>-->
-<!--                <th><label for="authorId">著者ID</label></th>-->
-<!--                <td>-->
-<!--                    <select class="select2-author" multiple="multiple" name="authorId">-->
-<!--                        <option value="" th:text="著者を選んでください"></option>-->
-<!--                        <th:block th:each="item : *{mangaAuthors}">-->
-<!--                            <option selected th:value="${item.author.id}" th:text="${item.author.name}"></option>-->
-<!--                        </th:block>-->
-<!--                    </select><br>-->
-<!--                    <span th:errors="*{id}" class="err"></span><br>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <th><label for="manga.volume">巻数</label></th>-->
-<!--                <td><input type="text" th:field="*{volume}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <th><label for="manga.publisher">出版社</label></th>-->
-<!--                <td><input type="text" th:field="*{publisher}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <th><label for="manga.publishedIn">掲載誌</label></th>-->
-<!--                <td><input type="text" th:field="*{publishedIn}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <th><label for="manga.synopsis">あらすじ</label></th>-->
-<!--                <td><textarea th:field="*{synopsis}"></textarea></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <th><label for="manga.calligraphy">画像ファイル名</label></th>-->
-<!--                <td><input type="text" th:field="*{calligraphy}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <th><label for="manga.displayFlag">表示フラグ</label></th>-->
-<!--                <td><input type="text" th:field="${manga.displayFlag}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <th><label for="manga.deleteFlag">削除フラグ</label></th>-->
-<!--                <td><input type="text" th:field="${manga.deleteFlag}"></td>-->
-<!--            </tr>-->
-<!--        </table>-->
-<!--        <input type="submit" value="更新する">-->
-<!--    </form>-->
-
-<!--</div>-->
 </html>

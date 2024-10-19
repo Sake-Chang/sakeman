@@ -3,14 +3,15 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <!--/* 引数を受け取って呼ばれる（ object = ${infolist} ） */-->
-<div layout:fragment="info-card-module(infolist, likelist)">
+<th:block th:fragment="info-card-module(infolist, likelist)">
 
-<!--/* カードモジュール */-->
+<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+
+
 <div class="card-outer" th:each="info : ${infolist}">
 
 <!--/* インフォボタン */-->
 <th:block class="btn-manga-info" layout:include="~{module/btn/btn-manga-info :: btn-manga-info(infolist=${info})}"></th:block>
-
 
     <div class="card-head">
         <div class="info-card-info">
@@ -106,5 +107,9 @@
     </div>
 
 </div> <!--/* outer */-->
-</div> <!--/* layout:fragment */-->
+
+<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+
+</th> <!--/* layout:fragment */-->
+
 </html>

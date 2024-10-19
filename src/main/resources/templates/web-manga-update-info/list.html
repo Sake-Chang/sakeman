@@ -3,6 +3,7 @@
 
 <head>
     <title>Webまんがサイトの更新情報一覧 | サケマン</title>
+    <script th:src="@{/js/web-manga-update-info-ajax.js}" defer></script>
 </head>
 
 <div layout:fragment="content">
@@ -34,13 +35,13 @@
 <div layout:include="~{module/other/webmanga-setting-form :: webmanga-setting-form(followflag=${followflag}, freeflag=${freeflag}, medialist=${medialist}, genrelist=${genrelist}, genreflag=${genreflag}, webmangafollowlist=${webmangafollowlist})}"></div>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+<!--<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>-->
 
 <!--/* インフォリストモジュールを呼び出し（${infolist}を引数として渡す） */-->
-<div class="container" layout:include="~{module/card/info-card-module :: info-card-module(infolist=${infolist}, likelist=${likelist})}"></div>
+<div class="container" id="web-manga-update-info-card-container" th:insert="~{module/card/info-card-module :: info-card-module(infolist=${infolist}, likelist=${likelist})}"></div>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+<!--<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>-->
 
 <!--</div>-->
 </html>
