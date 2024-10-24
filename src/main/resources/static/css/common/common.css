@@ -35,6 +35,10 @@ body {
     background-color: #fafafa;
 }
 
+html, body {
+    overflow-x: hidden;  /* 横スクロールを無効にする */
+    overflow-y: auto;
+}
 
 h1, h2, h3, h4 {
     margin-top: 0;
@@ -1897,15 +1901,24 @@ ul.store-btn-list li + li {
     border: solid 1px var(--GR);
     border-radius: 24px;
     width: fit-content;
-    padding: 6px 10px;
-    column-gap: 4px;
+    padding: 4px 10px;
+    column-gap: 6px;
     align-items: center;
+}
+
+.webmanga-settings.webmanga-settings-modified {
+    border: solid 1px var(--PL);
 }
 
 .webmanga-settings-text {
     font-size: 12px;
     line-height: 100%;
     white-space: nowrap;
+}
+
+.webmanga-settings-modified {
+    color: var(--PL);
+    font-weight: 700;
 }
 
 .webmanga-settings-text::after {
@@ -1926,8 +1939,9 @@ ul.store-btn-list li + li {
     overflow: scroll;
     align-items: center;
     column-gap: 4px;
-    padding: 0 8px 8px;
+    padding: 0 12px 4px;
     position: relative;
+    margin-bottom: 16px;
 }
 
 .webmanga-genres-item {
@@ -1953,7 +1967,7 @@ ul.store-btn-list li + li {
     white-space: nowrap;
 }
 
-.webmanga-genres-checkbox {
+.webmanga-genres-checkbox-inform, .webmanga-genre-checkbox-outer {
     width: auto;
     display: none;
     line-height: 100%;
@@ -2645,6 +2659,10 @@ input[id^=post-popup]:checked ~ .post-popup-overlay {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    display: none;
+    max-width: 100%;  /* 最大幅を画面内に収める */
+    box-sizing: border-box;  /* パディングを含めて幅を計算 */
+    overflow: hidden;  /* スクロールバーがスピナーに表示されないようにする */
 }
 
 #loading-indicator .spinner {

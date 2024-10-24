@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sakeman.entity.Manga;
 import com.sakeman.entity.User;
@@ -63,7 +66,7 @@ public class WebMangaUpdateInfoController {
                     @SortDefault(sort="freeFlag", direction=Direction.DESC),
                     @SortDefault(sort="id", direction=Direction.DESC)
                 }) Pageable pageable,
-                HttpServletRequest request) {
+            HttpServletRequest request) {
 
         User thisUser = (userDetail != null) ? userService.getUser(userDetail.getUser().getId()) : null;
 
@@ -83,6 +86,11 @@ public class WebMangaUpdateInfoController {
             result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, pageable, true);
         } else {
             result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, userDetail.getUser().getId(), pageable, true);
+        }
+
+        if (result.isEmpty() && pageable.getPageNumber() > 0) {
+//            redirectAttributes.addFlashAttribute("message", "該当のページにはコンテンツがありませんでした。1ページ目を表示します。");
+            return "redirect:/web-manga-update-info?page=0";
         }
 
         model.addAttribute("pages", result);
@@ -111,14 +119,21 @@ public class WebMangaUpdateInfoController {
     /** 設定＆設定の保存 */
     @PostMapping("/web-manga-update-info")
     @PreAuthorize("isAuthenticated")
-    public String getFilteredList(
+    @ResponseBody
+    public ResponseEntity<String> getFilteredList(
             @RequestParam(name="genres", required=false) List<Integer> genres,
             @RequestParam(name="freeflag", required=false) Integer freeflag,
             @RequestParam(name="followflag", required=false) Integer followflag,
-            @AuthenticationPrincipal UserDetail userDetail) {
+            @AuthenticationPrincipal UserDetail userDetail,
+            HttpServletRequest request) {
         /** ユーザーの設定を保存 */
         userService.saveSettings(userDetail, genres, freeflag, followflag);
-        return "redirect:/web-manga-update-info";
+
+        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+            return new ResponseEntity<>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("redirect:/web-manga-update-info", HttpStatus.FOUND);
+        }
     }
 
     /** メディアIDごと一覧を表示 */

@@ -12,8 +12,13 @@
             <div class="row justify-content-center">
                 <div class="col">
                     <div class="card">
+                        <div class="card-header">
+                            <h6 class="text-navy my-2">
+                                まんが 更新
+                            </h6>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title mb-3 text-navy">まんが 更新</h5>
+                            <!--<h5 class="card-title mb-3 text-navy">まんが 更新</h5>-->
                             <form th:method="post" th:action="@{/admin/manga/update/{id}(id=${manga.id})}" th:object="${manga}">
                                 <div class="mb-3 row align-items-center">
                                     <div class="col-md-2">
@@ -91,7 +96,7 @@
                                 </div>
 
                                 <div class="mb-3 form-check">
-                                    <input class="form-check-input" type="checkbox" th:field="*{isOneShot}">
+                                    <input class="form-check-input" type="checkbox" id="isOneShot" th:field="*{isOneShot}">
                                     <label class="form-check-label" for="isOneShot">読切</label>
                                 </div>
 

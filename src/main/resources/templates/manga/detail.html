@@ -97,7 +97,8 @@
 
     <th:block th:if="!${infolist.isEmpty}">
         <!--/* インフォリストモジュールを呼び出し（${infolist}を引数として渡す） */-->
-        <div class="container" layout:include="~{module/card/info-card-module :: info-card-module(infolist=${infolist}, likelist=${likelist})}"></div>
+        <div class="container" th:insert="~{module/card/info-card-module :: info-card-module(infolist=${infolist}, likelist=${likelist})}"></div>
+
         <!--/* もっとみるボタン */-->
         <div class="container" th:with="linkurl='@{/web-manga-update-info/manga/__${manga.id}__}'" layout:include="~{module/btn/btn-see-more :: btn-see-more(linkurl=${linkurl}, pageobj=${infopage})}"></div>
     </th:block>

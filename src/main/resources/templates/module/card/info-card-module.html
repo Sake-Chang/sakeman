@@ -5,7 +5,9 @@
 <!--/* 引数を受け取って呼ばれる（ object = ${infolist} ） */-->
 <th:block th:fragment="info-card-module(infolist, likelist)">
 
-<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+<th:block th:if="${pages != null}">
+    <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+</th:block>
 
 
 <div class="card-outer" th:each="info : ${infolist}">
@@ -108,8 +110,10 @@
 
 </div> <!--/* outer */-->
 
-<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+<th:block th:if="${pages != null}">
+    <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+</th:block>
 
-</th> <!--/* layout:fragment */-->
+</th:block> <!--/* layout:fragment */-->
 
 </html>
