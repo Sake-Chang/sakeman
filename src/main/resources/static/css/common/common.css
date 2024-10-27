@@ -33,9 +33,6 @@ html {
 body {
     color: #222222;
     background-color: #fafafa;
-}
-
-html, body {
     overflow-x: hidden;  /* 横スクロールを無効にする */
     overflow-y: auto;
 }

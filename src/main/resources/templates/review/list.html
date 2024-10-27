@@ -54,7 +54,7 @@
         <!-- 人気のレビュー -->
         <div class="container" layout:include="~{module/card/review-card-module :: review-card-module(reviewlist=${popReview}, likelist=${likelist}, wantlist=${wantlist}, readlist=${readlist}, followeelist=${followeelist})}"></div>
         <!--/* もっとみるボタン */-->
-        <div class="container" th:with="linkurl='@{/review/list/popular}'" layout:include="~{module/btn/btn-see-more :: btn-see-more(linkurl=${linkurl}, pageobj=${popReview})}"></div>
+        <div class="container" th:with="linkurl='@{/review/list/popular}'" layout:include="~{module/btn/btn-see-more :: btn-see-more(linkurl=${linkurl}, pageobj=${popReviewPages})}"></div>
     </th:block>
 
 </div>

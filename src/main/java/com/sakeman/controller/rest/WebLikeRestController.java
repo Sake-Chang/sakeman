@@ -1,8 +1,11 @@
 package com.sakeman.controller.rest;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -41,7 +44,7 @@ public class WebLikeRestController {
 
     @PutMapping("/webLike")
     @ResponseBody
-    public int createWebLike(@AuthenticationPrincipal UserDetail userDetail, @RequestBody WebMangaUpdateInfo info, Model model) {
+    public ResponseEntity<Map<String, Object>> createWebLike(@AuthenticationPrincipal UserDetail userDetail, @RequestBody WebMangaUpdateInfo info, Model model) {
 
         Integer userId = userDetail.getUser().getId();
         Integer infoId = info.getId();
@@ -49,27 +52,24 @@ public class WebLikeRestController {
         WebMangaUpdateInfo webMangaUpdateInfo = infoService.getWebMangaUpdateInfo(infoId);
         Optional<WebLike> thisweblike = webLikeService.findByUserAndWebMangaUpdateInfo(user, webMangaUpdateInfo);
 
-        // 既にLikeしてた場合
+        boolean isLiked;
         if (thisweblike.isPresent()) {
             Integer id = thisweblike.get().getId();
             webLikeService.deleteById(id);
-
-        // まだLikeしてない場合
+            isLiked = false;
         } else {
             WebLike webLike = new WebLike();
             webLike.setUser(user);
             webLike.setWebMangaUpdateInfo(info);
             webLikeService.saveWebLike(webLike);
+            isLiked = true;
         }
 
-        /** like数をカウント */
+        Map<String, Object> response = new HashMap<>();
         int weblikecount = webLikeService.countByWebMangaUpdateInfo(info);
-        System.out.println(weblikecount);
-//
-//        Optional<Like> likes = likeService.findByReview(rev);
-//        System.out.println(likes);
-
-        return weblikecount;
+        response.put("weblikecount", weblikecount);
+        response.put("isLiked", isLiked);
+        return ResponseEntity.ok(response);
     }
 
 }
