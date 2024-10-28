@@ -3,20 +3,28 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 
-<!--/* 引数を受け取って呼ばれる（ object = ${user} ） */-->
-<th:block layout:fragment="btn-manga-info-uclist(manga)">
+<th:block th:fragment="btn-manga-info-uclist(manga)">
 
-<!--/* まんがインフォ */-->
-<div class="dropdown manga-info-uclist">
-    <!--/* ボタン部分 */-->
-    <button class="dropdown__btn manga-info-uclist-btn">
-        <i class="uil uil-info-circle md-24"></i>
-    </button>
-    <!--/* リスト部分 */-->
-    <div class="dropdown__body manga-info-uclist">
+<div class="manga-info-dropdown for-uclist">
 
-        <div class="manga-info-synopsys" th:text="${manga.synopsis}"></div>
+    <!-- チェックボックスとラベルでクリックをトリガー -->
+    <th:block th:if="${manga.id != 111111}">
+        <input type="checkbox" th:id="|manga-info-toggle-${manga.id}|" class="manga-info-toggle">
+        <label th:for="|manga-info-toggle-${manga.id}|" class="manga-info-btn">
+            <i class="uil uil-info-circle md-24"></i>
+        </label>
+    </th:block>
+
+    <!-- モーダル要素を配置 -->
+    <div class="modal-overlay" th:id="|overlay-${manga.id}|"></div>
+    <div class="manga-info-content for-uclist" th:id="|modal-content-${manga.id}|">
+        <label th:for="|manga-info-toggle-${manga.id}|" class="modal-close">
+            <span class="material-icons-outlined md-32 md-WH">close</span>
+        </label>
+        <!-- コンテンツ部分 -->
+        <div class="manga-info-synopsis" th:text="${manga.synopsis}"></div>
         <hr class="manga-info-hr">
+
 
         <!--/* 既存タグ */-->
         <div class="info-tag-container">

@@ -3,6 +3,7 @@ package com.sakeman.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -60,12 +61,26 @@ public class MangaTagService {
 
     /** 登録処理(1件) */
     @Transactional
+    @CacheEvict(value = {
+            "webMangaUpdateInfo",
+            "webMangaUpdateInfoToday",
+            "webMangaUpdateInfoByMangaId",
+            "webMangaUpdateInfoByMediaId",
+            "webMangaUpdateInfoByTitleSubtitle"
+        }, allEntries = true)
     public MangaTag saveMangaTag(MangaTag mangaTag) {
         return mangaTagRepository.save(mangaTag);
     }
 
     /** 登録処理(複数件) */
     @Transactional
+    @CacheEvict(value = {
+            "webMangaUpdateInfo",
+            "webMangaUpdateInfoToday",
+            "webMangaUpdateInfoByMangaId",
+            "webMangaUpdateInfoByMediaId",
+            "webMangaUpdateInfoByTitleSubtitle"
+        }, allEntries = true)
     public List<MangaTag> saveMangaTagAll(List<MangaTag> mangaTags) {
         return mangaTagRepository.saveAll(mangaTags);
     }

@@ -12,8 +12,8 @@
 
 <div class="card-outer" th:each="info : ${infolist}">
 
-<!--/* インフォボタン */-->
-<th:block class="btn-manga-info" layout:include="~{module/btn/btn-manga-info :: btn-manga-info(infolist=${info})}"></th:block>
+    <!--/* インフォボタン */-->
+    <th:block th:insert="~{module/btn/btn-manga-info :: btn-manga-info(info=${info})}"></th:block>
 
     <div class="card-head">
         <div class="info-card-info">

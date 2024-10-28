@@ -17,8 +17,8 @@
     <!-- End Google Tag Manager -->
 
     <link rel="stylesheet" th:href="@{/css/normalize.css}">
-    <link rel="stylesheet" th:href="@{/css/common/common.css}">
-    <link rel="stylesheet" th:href="@{/css/common/header.css}">
+    <link rel="stylesheet" th:href="@{/css/common/common.css(v=${'1.3.2'})}">
+    <link rel="stylesheet" th:href="@{/css/common/header.css(v=${'1.2'})}">
     <link rel="stylesheet" th:href="@{/css/common/footer.css}">
     <link rel="stylesheet" th:href="@{/css/common/login.css}">
     <link rel="stylesheet" th:href="@{/css/manga/user.css}">
@@ -32,25 +32,27 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
     <script th:src="@{/js/like.js}" defer></script>
-    <script th:src="@{/js/weblike.js}" defer></script>
+    <script th:src="@{/js/weblike.js(v=${'1.1'})}" defer></script>
     <script th:src="@{/js/status.js}" defer></script>
     <script th:src="@{/js/shelf-status-btn.js}" defer></script>
     <script th:src="@{/js/shelf-status-btn-mini.js}" defer></script>
     <script th:src="@{/js/authorfollow.js}" defer></script>
     <script th:src="@{/js/userfollow.js}" defer></script>
-    <script th:src="@{/js/readmore.js}" defer></script>
+    <script th:src="@{/js/readmore.js(v=${'1.1'})}" defer></script>
     <script th:src="@{/js/5-1-16.js}" defer></script>
     <script th:src="@{/js/searchbar.js(v=${'1.1'})}" defer></script>
     <script th:src="@{/js/rating.js}" defer></script>
-    <script th:src="@{/js/webmangafollow.js}" defer></script>
+    <script th:src="@{/js/webmangafollow.js(v=${'1.1'})}" defer></script>
     <script th:src="@{/js/checkbox.js}" defer></script>
+    <script th:src="@{/js/open-manga-info-for-uclist.js}" defer></script>
+
 
     <script type="text/javascript" language="javascript">var vc_pid = "889574329";</script>
     <script type="text/javascript" src="//aml.valuecommerce.com/vcdal.js" async></script>
 
     <link rel="stylesheet" th:href="@{/css/select2.min.css}">
     <script th:src="@{/js/bootstrap.min.js}" defer></script>
-    <script th:src="@{/js/select2.min.js}" defer></script>
+    <script th:src="@{/js/select2.min.js(v=${'1.0.1'})}" defer></script>
 
     <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>

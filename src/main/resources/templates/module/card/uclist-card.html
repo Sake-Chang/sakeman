@@ -31,12 +31,6 @@
 
             </div>
             <div class="card-title" th:text="${uclist.title}"></div>
-            <!--
-            <div class="read-more-002">
-                <p class="card-description">[[${uclist.description}]]</p>
-                <label><input type="checkbox"/>続きを読む</label>
-            </div>
-            -->
             <div class="description-text-container">
                 <p class="card-description-text">[[${uclist.description}]]</p>
                 <span class="read-more">>> 続きを読む</span>
@@ -46,7 +40,7 @@
         <div class="uclist-container">
             <th:block th:if="!${#lists.isEmpty(uclist.uclistMangas)}" th:each="um : ${uclist.uclistMangas}">
                 <div class="uclist-child">
-                    <th:block layout:include="~{module/btn/btn-manga-info-uclist :: btn-manga-info-uclist(manga=${um.manga})}"></th:block>
+                    <th:block th:insert="~{module/btn/btn-manga-info-uclist :: btn-manga-info-uclist(manga=${um.manga})}"></th:block>
                     <div class="uclist-child-figure">
                     <a th:href="@{/manga/detail/__${um.manga.id}__}">
                         <figure class="minimanga-module-calligrapy">
@@ -55,7 +49,7 @@
                                          @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">
                         </figure>
                     </a>
-                    <th:block layout:include="~{module/btn/btn-store-circle :: btn-store-circle(manga=${um.manga})}"></th:block>
+                    <th:block th:insert="~{module/btn/btn-store-circle :: btn-store-circle(manga=${um.manga})}"></th:block>
                     </div>
                     <div class="minimanga-module-body">
                         <div class="minimanga-module-title">

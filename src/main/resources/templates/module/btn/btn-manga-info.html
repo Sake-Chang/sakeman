@@ -4,40 +4,45 @@
 
 
 <!--/* 引数を受け取って呼ばれる（ object = ${user} ） */-->
-<th:block layout:fragment="btn-manga-info(info)">
+<th:block th:fragment="btn-manga-info(info)">
 
 <!--/* まんがインフォ */-->
-<div class="dropdown manga-info">
-    <!--/* ボタン部分 */-->
-    <button class="dropdown__btn manga-info-btn" th:if="${info.manga.id != 111111}">
-        <i class="uil uil-info-circle md-24"></i>
-    </button>
-    <!--/* リスト部分 */-->
-    <div class="dropdown__body manga-info">
+<div class="manga-info-dropdown">
 
-        <!--/* 既存タグ */-->
-        <div class="info-tag-container">
-            <th:block th:if="!${#lists.isEmpty(info.manga.mangaTags)}" th:each=" ma : ${info.manga.mangaTags}">
+    <!-- チェックボックスとラベルでクリックをトリガー -->
+    <th:block th:if="${info.manga.id != 111111}">
+        <input type="checkbox" th:id="|manga-info-toggle-${info.id}|" class="manga-info-toggle">
+        <label th:for="|manga-info-toggle-${info.id}|" class="manga-info-btn">
+            <i class="uil uil-info-circle md-24"></i>
+        </label>
+    </th:block>
+
+    <!-- 情報カード部分 -->
+    <div class="manga-info-content" th:id="|manga-info-toggle-${info.id}|">
+        <div th:if="!${#lists.isEmpty(info.manga.mangaTags)}" class="info-tag-container">
+            <th:block th:each="ma : ${info.manga.mangaTags}">
                 <span class="tag2"># [[${ma.tag.tagname}]]</span>
             </th:block>
         </div>
 
+        <!-- 会員認証による分岐フォーム -->
         <th:block sec:authorize="isAuthenticated()">
             <form class="manga-info-form" method="post" th:action="@{/tag/register/{id}(id=${info.manga.id})}">
                 <div class="tag-register-container">
                     <select class="select2-tag" multiple="multiple" name="tagName">
                         <option value=""></option>
                     </select>
-                        <button class="tag-register-btn" type="submit">
-                            <i class="uil uil-plus-circle md-24"></i>
-                        </button>
+                    <button class="tag-register-btn" type="submit">
+                        <i class="uil uil-plus-circle md-24"></i>
+                    </button>
                 </div>
             </form>
         </th:block>
 
+        <!-- 非会員向けのメッセージ表示部分 -->
         <th:block sec:authorize="!isAuthenticated()">
             <input type="checkbox" id="alert-popup10">
-            <label class="alert-popup-open"  for="alert-popup10">
+            <label class="alert-popup-open" for="alert-popup10">
                 <div class="manga-info-form">
                     <div class="tag-register-container">
                         <div class="tag-selectbox-dummy">タグを登録する</div>
@@ -47,7 +52,7 @@
                     </div>
                 </div>
             </label>
-
+            <!-- ポップアップ内容 -->
             <div class="alert-popup-overlay">
                 <div class="alert-popup-window">
                     <div class="alert-popup-container">
@@ -67,12 +72,11 @@
                     </label>
                 </div>
             </div>
-
         </th:block>
-
 
         <span class="small-text">既に登録されているタグも自分用としてさらに登録できます</span>
     </div>
+
 </div> <!--/* ドロップダウン */-->
 
 </th:block> <!--/* layout:fragment */-->
