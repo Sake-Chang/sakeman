@@ -26,29 +26,16 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Data
-//@Setter
-//@Getter
 @Entity
 @Table(name = "likes")
-@EqualsAndHashCode(exclude = {"user", "review"})
-@ToString(exclude = {"user", "review"})
+//@EqualsAndHashCode(exclude = {"user", "review"})
+//@ToString(exclude = {"user", "review"})
 public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
-    /** ユーザー：user_id */
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name ="user_id", referencedColumnName = "id")
-    @JsonBackReference("user-like")
-    private User user;
-
-    /** ユーザー：review_id */
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "review_id", referencedColumnName = "id")
-    private Review review;
 
     @Column(name = "registered_at", nullable = false, updatable = false)
     @CreatedDate
@@ -57,6 +44,18 @@ public class Like {
     @Column(name = "updated_at", nullable = false)
     @LastModifiedDate
     private Timestamp updatedAt;
+
+
+    /** 関連エンティティ */
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="user_id", referencedColumnName = "id")
+    @JsonBackReference("user-likes")
+    private User user;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "review_id", referencedColumnName = "id")
+    @JsonBackReference("review-likes")
+    private Review review;
 
 
     @PrePersist

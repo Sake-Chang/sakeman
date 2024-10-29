@@ -31,12 +31,10 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = "author")
-@ToString(exclude = {"mangaAuthors"})
-@JsonIgnoreProperties({"nameKana", "profile", "registeredAt", "updatedAt", "displayFlag", "deleteFlag", "img", "mangaAuthors"})
+//@ToString(exclude = {"mangaAuthors"})
+//@JsonIgnoreProperties({"nameKana", "profile", "registeredAt", "updatedAt", "displayFlag", "deleteFlag", "img", "mangaAuthors"})
 @Where(clause = "delete_flag=0")
 public class Author {
-
-    /** フィールド */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,7 +68,7 @@ public class Author {
     @Column(name = "img", nullable = true)
     private String img;
 
-    /** manga_author */
+    /** 関連エンティティ */
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("author-mangas")
     private Set<MangaAuthor> mangaAuthors;

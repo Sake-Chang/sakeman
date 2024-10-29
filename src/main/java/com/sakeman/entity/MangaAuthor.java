@@ -27,18 +27,25 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Data
-//@Setter
-//@Getter
 @Entity
 @Table(name = "manga_author")
-@EqualsAndHashCode(exclude = {"manga", "author"})
-@ToString(exclude = {"manga", "author"})
+//@EqualsAndHashCode(exclude = {"manga", "author"})
+//@ToString(exclude = {"manga", "author"})
 public class MangaAuthor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
+    @Column(name = "registered_at", nullable = false, updatable = false)
+    @CreatedDate
+    private Timestamp registeredAt;
+
+    @Column(name = "updated_at", nullable = false)
+    @LastModifiedDate
+    private Timestamp updatedAt;
+
 
     /** 作品：manga_id */
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -52,14 +59,6 @@ public class MangaAuthor {
     @Where(clause = "delete_flag=0")
     @JsonBackReference("author-mangas")
     private Author author;
-
-    @Column(name = "registered_at", nullable = false, updatable = false)
-    @CreatedDate
-    private Timestamp registeredAt;
-
-    @Column(name = "updated_at", nullable = false)
-    @LastModifiedDate
-    private Timestamp updatedAt;
 
 
     @PrePersist

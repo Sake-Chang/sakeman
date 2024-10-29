@@ -81,11 +81,12 @@
 
     <!--/* 本棚モジュールを呼び出し（${userwantlist}, ${wantlist}, ${readlist}を引数として渡す） */-->
     <th:block th:if="${tab} == 'want'">
-        <div layout:include="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userwantlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
+        <div th:insert="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userwantlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
     </th:block>
     <th:block th:if="${tab} == 'read'">
-        <div layout:include="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userreadlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
+        <div th:insert="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userreadlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
     </th:block>
+
 
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
     <th:block th:if="${tab} == 'want'">

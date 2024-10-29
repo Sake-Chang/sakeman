@@ -27,6 +27,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,12 +36,10 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = "review")
-@EqualsAndHashCode(exclude = {"manga", "user"})
-@ToString(exclude = {"manga", "user"})
+//@EqualsAndHashCode(exclude = {"manga", "user"})
+//@ToString(exclude = {"manga", "user"})
 @Where(clause = "delete_flag=0")
 public class Review {
-
-    /** フィールド */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,24 +72,25 @@ public class Review {
     @Column(name = "delete_flag", nullable = false)
     private Integer deleteFlag;
 
-    /** 作品：manga_id */
-    @ManyToOne
+
+    /** 関連エンティティ */
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="manga_id", referencedColumnName = "id")
+    @Where(clause = "delete_flag=0")
+    @JsonBackReference("manga-reviews")
     @NotNull
     private Manga manga;
 
-    /** ユーザー：user_id */
-    @ManyToOne
-    @JoinColumn(name ="user_id", referencedColumnName = "id", nullable = true)
-    @JsonBackReference("user-review")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="user_id", referencedColumnName = "id")
+    @Where(clause = "delete_flag=0")
+    @JsonBackReference("user-reviews")
     private User user;
 
-    /** いいね：like_id */
-    @OneToMany(mappedBy = "review", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
+    @JsonManagedReference("review-likes")
     private List<Like> likes;
 
-
-    /** メソッド */
 
     @PrePersist
     public void onPrePersist() {

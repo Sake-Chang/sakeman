@@ -36,8 +36,7 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = "manga")
-@ToString(exclude = {"reviews", "mangaAuthors", "uclistMangas", "webMangaFollows"})
-//@JsonIgnoreProperties({"titleKana", "registeredAt", "updatedAt", "displayFlag", "deleteFlag", "completionFlag", "volume", "publisher", "publishedIn", "synopsis", "calligraphy", "csid", "reviews", "mangaAuthors", "mangaTags", "webMangaUpdateInfos", "webMangaFollows", "uclistMangas", "readStatus"})
+@ToString(exclude = {"reviews", "uclistMangas", "webMangaFollows"})
 @JsonIgnoreProperties({"reviews", "mangaTags", "webMangaUpdateInfos", "webMangaFollows", "uclistMangas", "readStatus"})
 @Where(clause = "delete_flag=0")
 public class Manga implements Serializable {
@@ -55,7 +54,7 @@ public class Manga implements Serializable {
     @Column(name = "title_cleanse", nullable = true)
     private String titleCleanse;
 
-    @Column(name = "title_kana")
+    @Column(name = "title_kana", nullable = true)
     private String titleKana;
 
     @Column(name = "registered_at", nullable = false, updatable = false)
@@ -84,7 +83,7 @@ public class Manga implements Serializable {
     @Column(name = "publisher", nullable = true)
     private String publisher;
 
-    @Column(name = "published_in")
+    @Column(name = "published_in", nullable = true)
     private String publishedIn;
 
     @Column(name = "synopsis", nullable = true)
@@ -94,17 +93,20 @@ public class Manga implements Serializable {
     @Column(name = "calligraphy", nullable = true)
     private String calligraphy;
 
-    @Column(name = "csid")
+    @Column(name = "csid", nullable = true)
     private Integer csid;
 
-    /** review */
-    @OneToMany(mappedBy = "manga", cascade = CascadeType.ALL)
-    private List<Review> reviews;
 
-    /** manga_author */
+    /** 関連エンティティ */
     @OneToMany(mappedBy = "manga", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("manga-authors")
     private List<MangaAuthor> mangaAuthors;
+
+    @OneToMany(mappedBy = "manga", cascade = CascadeType.ALL)
+    @JsonManagedReference("manga-reviews")
+    private List<Review> reviews;
+
+
 
     /** webMangaFollows */
     @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
@@ -121,10 +123,6 @@ public class Manga implements Serializable {
     /** uclist_manga */
     @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
     private List<UclistManga> uclistMangas;
-
-//    /** user_manga */
-//    @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
-//    private List<UserManga> userMangas;
 
     /** readStatus */
     @OrderBy(value = "status.読みたい.length desc")

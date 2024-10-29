@@ -43,8 +43,8 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = "user")
-@ToString(exclude = {"reviews", "uclists", "Likes", "webLikes", "readStatus", "badgeusers", "webMangaSettingsGenre", "webMangaSettingsFollowflag", "webMangaFollows"})
-@JsonIgnoreProperties({"reviews", "uclists", "Likes", "webLikes", "readStatus", "badgeusers", "webMangaSettingsGenre", "webMangaSettingsFollowflag", "password", "role", "registeredAt", "updatedAt", "deleteFlag", "selfIntro", "img", "webMangaFollows"})
+@ToString(exclude = {"uclists", "Likes", "webLikes", "readStatus", "badgeusers", "webMangaSettingsGenre", "webMangaSettingsFollowflag", "webMangaFollows"})
+@JsonIgnoreProperties({"uclists", "Likes", "webLikes", "readStatus", "badgeusers", "webMangaSettingsGenre", "webMangaSettingsFollowflag", "password", "role", "registeredAt", "updatedAt", "deleteFlag", "selfIntro", "img", "webMangaFollows"})
 @Where(clause = "delete_flag=0")
 public class User implements Serializable {
 
@@ -112,7 +112,7 @@ public class User implements Serializable {
 
     /** review */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference("user-review")
+    @JsonManagedReference("user-reviews")
     private List<Review> reviews;
 
     /** uclist */
@@ -122,7 +122,7 @@ public class User implements Serializable {
 
     /** like */
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    @JsonManagedReference("user-like")
+    @JsonManagedReference("user-likes")
     private List<Like> Likes;
 
     /** webLike */
