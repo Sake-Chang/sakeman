@@ -2721,6 +2721,7 @@ input[id^=post-popup]:checked ~ .post-popup-overlay {
     top: 30px;
     left: 0;
     width: calc(100% - 16px);
+    max-width: 584px;
     transform: translateX(-11px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 5001;
