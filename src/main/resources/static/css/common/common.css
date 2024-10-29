@@ -168,7 +168,7 @@ h2 > i {
     Global Classes
 -------------------------------------------------- */
 .main {
-    padding: 53px 0 0;
+    padding: 56px 0 0;
     display: flex;
     width: 100vw;
     justify-content: center;
@@ -177,6 +177,7 @@ h2 > i {
 .main-content {
     min-height: calc(100vh - 70px);
     margin-bottom: -150px;
+    overflow-x: hidden;
 }
 
 .main-content:after {
