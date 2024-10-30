@@ -37,16 +37,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@SuppressWarnings("serial")
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "user")
-@ToString(exclude = {"uclists", "Likes", "webLikes", "readStatus", "badgeusers", "webMangaSettingsGenre", "webMangaSettingsFollowflag", "webMangaFollows"})
-@JsonIgnoreProperties({"uclists", "Likes", "webLikes", "readStatus", "badgeusers", "webMangaSettingsGenre", "webMangaSettingsFollowflag", "password", "role", "registeredAt", "updatedAt", "deleteFlag", "selfIntro", "img", "webMangaFollows"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @Where(clause = "delete_flag=0")
 public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public static enum Role {
         管理者, 一般
@@ -59,6 +63,8 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "username", nullable = false)
@@ -82,13 +88,17 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "is_enabled")
     private boolean isEnabled;
 
+    @Column(name = "verification_token")
     private String verificationToken;
 
+    @Column(name = "verification_token_status")
     @Enumerated(EnumType.STRING)
     private VerificationTokenStatus verificationTokenStatus;
 
+    @Column(name = "verification_token_expiration")
     private Date verificationTokenExpiration;
 
     @Column(name = "registered_at", nullable = false, updatable = false)
@@ -110,50 +120,47 @@ public class User implements Serializable {
     @Column(name = "img", nullable = true)
     private String img;
 
-    /** review */
+
+    /** 関連エンティティ */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+    @JsonManagedReference("user-badges")
+    private List<BadgeUser> badgeusers;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference("user-reviews")
     private List<Review> reviews;
 
-    /** uclist */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference("user-uclist")
+    @JsonManagedReference("user-uclists")
     private List<Uclist> uclists;
 
-    /** like */
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     @JsonManagedReference("user-likes")
     private List<Like> Likes;
 
-    /** webLike */
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    @JsonManagedReference("user-webLike")
+    @JsonManagedReference("user-webLikes")
     private List<WebLike> webLikes;
 
-    /** readStatus */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+    @JsonManagedReference("user-webMangaFollows")
+    private List<WebMangaFollow> webMangaFollows;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+    @JsonManagedReference("user-authors")
+    private List<AuthorFollow> authorFollows;
+
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.MERGE) // このユーザーがフォローしている人
+    @JsonManagedReference("user-followers")
+    private List<UserFollow> followings;
+
+    @OneToMany(mappedBy = "followee", cascade = CascadeType.MERGE) // このユーザーをフォローしている人
+    @JsonManagedReference("user-followees")
+    private List<UserFollow> followers;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
     @JsonManagedReference("user-readStatus")
     private List<ReadStatus> readStatus;
-
-    /** badge_user */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    @JsonManagedReference("user-badgeuser")
-    private List<BadgeUser> badgeusers;
-
-    /** badge_user */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
-    @JsonManagedReference("user-webMangaFollow")
-    private List<WebMangaFollow> webMangaFollows;
-
-    // ユーザーがフォローしている人のリスト
-    @OneToMany(mappedBy = "follower")
-    @JsonManagedReference("user-follower")
-    private List<UserFollow> followings;
-
-    // ユーザーをフォローしている人のリスト
-    @OneToMany(mappedBy = "followee")
-    @JsonManagedReference("user-followee")
-    private List<UserFollow> followers;
 
 
     @ElementCollection(targetClass=Integer.class)
@@ -163,6 +170,7 @@ public class User implements Serializable {
 
     @Column(name = "web_manga_settings_freeflag", nullable = false)
     private Integer webMangaSettingsFreeflag = 0;
+
     @Column(name = "web_manga_settings_followflag", nullable = false)
     private Integer webMangaSettingsFollowflag = 0;
 

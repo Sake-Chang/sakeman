@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -25,28 +26,21 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "web_manga_follow")
-@EqualsAndHashCode(exclude = {"user", "manga"})
-@ToString(exclude = {"user", "manga"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
+//@Where(clause = "user.delete_flag=0 AND manga.delete_flag=0")
 public class WebMangaFollow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
-
-    /** ユーザー：user_id */
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name ="user_id", referencedColumnName = "id")
-    @JsonBackReference("user-webMangaFollow")
-    private User user;
-
-    /** マンガ：manga_id */
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "manga_id", referencedColumnName = "id")
-    private Manga manga;
 
     @Column(name = "registered_at", nullable = false, updatable = false)
     @CreatedDate
@@ -55,6 +49,18 @@ public class WebMangaFollow {
     @Column(name = "updated_at", nullable = false)
     @LastModifiedDate
     private Timestamp updatedAt;
+
+
+    /** 関連エンティティ */
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="user_id", referencedColumnName = "id")
+    @JsonBackReference("user-webMangaFollows")
+    private User user;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "manga_id", referencedColumnName = "id")
+    @JsonBackReference("manga-webMangaFollows")
+    private Manga manga;
 
 
     @PrePersist

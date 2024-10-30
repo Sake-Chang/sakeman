@@ -20,20 +20,28 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "genre")
-@ToString(exclude = {"genreTags"})
-@JsonIgnoreProperties({"genreTags"})
-//@Where(clause = "delete_flag=0")
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class Genre implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "title", nullable = false)
@@ -50,7 +58,10 @@ public class Genre implements Serializable{
     @LastModifiedDate
     private Timestamp updatedAt;
 
+
+    /** 関連エンティティ */
     @OneToMany(mappedBy = "genre", cascade = CascadeType.MERGE)
+    @JsonManagedReference("genre-tags")
     private List<GenreTag> genreTags;
 
 

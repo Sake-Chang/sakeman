@@ -26,16 +26,21 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
+//@Data
 @Entity
 @Table(name = "manga_author")
-//@EqualsAndHashCode(exclude = {"manga", "author"})
-//@ToString(exclude = {"manga", "author"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
+//@Where(clause = "author.delete_flag=0 AND manga.delete_flag=0")
 public class MangaAuthor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "registered_at", nullable = false, updatable = false)
@@ -50,13 +55,11 @@ public class MangaAuthor {
     /** 作品：manga_id */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="manga_id", referencedColumnName = "id")
-    @Where(clause = "delete_flag=0")
     @JsonBackReference("manga-authors")
     private Manga manga;
 
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
-    @Where(clause = "delete_flag=0")
     @JsonBackReference("author-mangas")
     private Author author;
 

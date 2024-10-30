@@ -23,31 +23,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "badge_user")
-@EqualsAndHashCode(exclude = {"badge", "user"})
-@JsonIgnoreProperties({"badge", "user"})
-@ToString(exclude = {"badge", "user"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
+//@Where(clause = "badge.delete_flag=0 AND user.delete_flag=0")
 public class BadgeUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
-
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name ="badge_id", referencedColumnName = "id")
-    @Where(clause = "delete_flag=0")
-    private Badge badge;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @Where(clause = "delete_flag=0")
-    @JsonBackReference("user-badgeuser")
-    private User user;
 
     @Column(name = "registered_at", nullable = false, updatable = false)
     @CreatedDate
@@ -56,6 +50,17 @@ public class BadgeUser {
     @Column(name = "updated_at", nullable = false)
     @LastModifiedDate
     private Timestamp updatedAt;
+
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="badge_id", referencedColumnName = "id")
+    @JsonBackReference("badge-users")
+    private Badge badge;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonBackReference("user-badges")
+    private User user;
 
 
     @PrePersist

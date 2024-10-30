@@ -24,16 +24,19 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
-//@Table(name = "likes")
-@EqualsAndHashCode(exclude = {"manga"})
-@ToString(exclude = {"manga"})
+@Table(name = "web_manga_title_converter")
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class WebMangaTitleConverter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "titleString")

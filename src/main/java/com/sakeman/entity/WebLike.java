@@ -15,6 +15,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -26,30 +27,22 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
-//@Setter
-//@Getter
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "web_likes")
-@EqualsAndHashCode(exclude = {"user", "webMangaUpdateInfo"})
-@ToString(exclude = {"user", "webMangaUpdateInfo"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
+//@Where(clause = "user.delete_flag=0")
 public class WebLike implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
-
-    /** ユーザー：user_id */
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name ="user_id", referencedColumnName = "id")
-    @JsonBackReference("user-webLike")
-    private User user;
-
-    /** ユーザー：review_id */
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "webMangaUpdateInfo_id", referencedColumnName = "id")
-    private WebMangaUpdateInfo webMangaUpdateInfo;
 
     @Column(name = "registered_at", nullable = false, updatable = false)
     @CreatedDate
@@ -58,6 +51,18 @@ public class WebLike implements Serializable {
     @Column(name = "updated_at", nullable = false)
     @LastModifiedDate
     private Timestamp updatedAt;
+
+
+    /** 関連エンティティ */
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="user_id", referencedColumnName = "id")
+    @JsonBackReference("user-webLikes")
+    private User user;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "webMangaUpdateInfo_id", referencedColumnName = "id")
+    @JsonBackReference("webMangaUpdateInfo-webLikes")
+    private WebMangaUpdateInfo webMangaUpdateInfo;
 
 
     @PrePersist

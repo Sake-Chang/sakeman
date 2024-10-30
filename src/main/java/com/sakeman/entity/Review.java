@@ -31,19 +31,24 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "review")
-//@EqualsAndHashCode(exclude = {"manga", "user"})
-//@ToString(exclude = {"manga", "user"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @Where(clause = "delete_flag=0")
 public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "rating", nullable = false)
@@ -76,14 +81,12 @@ public class Review {
     /** 関連エンティティ */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="manga_id", referencedColumnName = "id")
-    @Where(clause = "delete_flag=0")
     @JsonBackReference("manga-reviews")
     @NotNull
     private Manga manga;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="user_id", referencedColumnName = "id")
-    @Where(clause = "delete_flag=0")
     @JsonBackReference("user-reviews")
     private User user;
 

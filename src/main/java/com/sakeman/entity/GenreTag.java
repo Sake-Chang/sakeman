@@ -14,8 +14,11 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,26 +26,21 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "genre_tag")
-@EqualsAndHashCode(exclude = {"genre", "tag"})
-@ToString(exclude = {"genre", "tag"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
+//@Where(clause = "genre.delete_flag=0 AND tag.delete_flag=0")
 public class GenreTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
-
-    /** ジャンル：genre_id */
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name ="genre_id", referencedColumnName = "id")
-    private Genre genre;
-
-    @ManyToOne
-    @JoinColumn(name = "tag_id", referencedColumnName = "id")
-    private Tag tag;
 
     @Column(name = "registered_at", nullable = false, updatable = false)
     @CreatedDate
@@ -51,6 +49,18 @@ public class GenreTag {
     @Column(name = "updated_at", nullable = false)
     @LastModifiedDate
     private Timestamp updatedAt;
+
+
+    /** 関連エンティティ */
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="genre_id", referencedColumnName = "id")
+    @JsonBackReference("genre-tags")
+    private Genre genre;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    @JsonBackReference("tag-genres")
+    private Tag tag;
 
 
     @PrePersist

@@ -18,13 +18,21 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "web_manga_update_info")
-@ToString(exclude = {"webMangaMedia", "manga"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class WebMangaUpdateInfo implements Serializable, Comparable<WebMangaUpdateInfo> {
 
     private static final long serialVersionUID = 1L;
@@ -32,6 +40,8 @@ public class WebMangaUpdateInfo implements Serializable, Comparable<WebMangaUpda
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     private String mediaName;
@@ -40,24 +50,25 @@ public class WebMangaUpdateInfo implements Serializable, Comparable<WebMangaUpda
     private String authorString;
     private String url;
     private String imgUrl;
-
     private Integer freeFlag;
-
     private LocalDateTime updateAt;
 
-    /** 作品：manga_id */
+    /** 関連エンティティ */
     @ManyToOne
     @JoinColumn(name ="manga_id", referencedColumnName = "id")
+    @JsonBackReference("manga-webMangaUpdateInfos")
     private Manga manga;
 
-    /** メディア */
     @ManyToOne
     @JoinColumn(name ="webMangaMedia_id", referencedColumnName = "id")
+    @JsonBackReference("media-webMangaUpdateInfos")
+    @Where(clause = "delete_flag=0")
     private WebMangaMedia webMangaMedia;
 
-    /** いいね：weblike_id */
     @OneToMany(mappedBy = "webMangaUpdateInfo", cascade = CascadeType.MERGE)
+    @JsonManagedReference("webMangaUpdateInfo-webLikes")
     private List<WebLike> webLikes;
+
 
     @Override
     public int compareTo(WebMangaUpdateInfo o) {

@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -25,16 +26,20 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "likes")
-//@EqualsAndHashCode(exclude = {"user", "review"})
-//@ToString(exclude = {"user", "review"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
+//@Where(clause = "user.delete_flag=0 AND review.delete_flag=0")
 public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "registered_at", nullable = false, updatable = false)

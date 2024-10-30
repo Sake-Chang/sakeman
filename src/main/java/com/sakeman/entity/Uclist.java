@@ -23,22 +23,28 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "uclist")
-@ToString(exclude = {"user", "uclistMangas"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @Where(clause = "delete_flag=0")
 public class Uclist {
-
-    /** フィールド */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "title", nullable = false)
@@ -60,18 +66,17 @@ public class Uclist {
     @Column(name = "delete_flag", nullable = false)
     private Integer deleteFlag;
 
-    /** 作品：manga_id */
+
+    /** 関連エンティティ */
     @OneToMany(mappedBy = "uclist", cascade = CascadeType.MERGE)
+    @JsonManagedReference("uclist-mangas")
     private List<UclistManga> uclistMangas;
 
-    /** ユーザー：user_id */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="user_id", referencedColumnName = "id", nullable = true)
-    @JsonBackReference("user-uclist")
+    @JsonBackReference("user-uclists")
     private User user;
 
-
-    /** メソッド */
 
     @PrePersist
     public void onPrePersist() {

@@ -29,15 +29,17 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "manga")
-@ToString(exclude = {"reviews", "uclistMangas", "webMangaFollows"})
-@JsonIgnoreProperties({"reviews", "mangaTags", "webMangaUpdateInfos", "webMangaFollows", "uclistMangas", "readStatus"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @Where(clause = "delete_flag=0")
 public class Manga implements Serializable {
 
@@ -46,6 +48,8 @@ public class Manga implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "title", nullable = false)
@@ -106,31 +110,27 @@ public class Manga implements Serializable {
     @JsonManagedReference("manga-reviews")
     private List<Review> reviews;
 
-
-
-    /** webMangaFollows */
     @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
+    @JsonManagedReference("manga-uclists")
+    List<UclistManga> uclistMangas;
+
+    @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
+    @JsonManagedReference("manga-webMangaFollows")
     private List<WebMangaFollow> webMangaFollows;
 
-    /** manga_tag */
-    @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
-    private List<MangaTag> mangaTags;
-
-    /** webMangaUpdateInfo */
     @OneToMany(mappedBy = "manga", cascade = CascadeType.ALL)
+    @JsonManagedReference("manga-webMangaUpdateInfos")
     private List<WebMangaUpdateInfo> webMangaUpdateInfos;
 
-    /** uclist_manga */
+//    @OrderBy(value = "status.読みたい.length desc")
     @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
-    private List<UclistManga> uclistMangas;
-
-    /** readStatus */
-    @OrderBy(value = "status.読みたい.length desc")
-    @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
+    @JsonManagedReference("manga-readStatus")
     private List<ReadStatus> readStatus;
 
+    @OneToMany(mappedBy = "manga", cascade = CascadeType.MERGE)
+    @JsonManagedReference("manga-tags")
+    private List<MangaTag> mangaTags;
 
-    /** メソッド */
 
     @PrePersist
     public void onPrePersist() {

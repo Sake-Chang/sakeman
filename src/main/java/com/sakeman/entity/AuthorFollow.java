@@ -14,8 +14,11 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,31 +26,38 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "author_follow")
-@EqualsAndHashCode(exclude = {"user", "author"})
-@ToString(exclude = {"user", "author"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
+//@Where(clause = "user.delete_flag=0 AND author.delete_flag=0")
 public class AuthorFollow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
-
-    /** user */
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name ="user_id", referencedColumnName = "id")
-    private User user;
-
-    /** author */
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
-    private Author author;
 
     @Column(name = "registered_at", nullable = false, updatable = false)
     @CreatedDate
     private Timestamp registeredAt;
+
+
+    /** 関連エンティティ */
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name ="user_id", referencedColumnName = "id")
+    @JsonBackReference("user-authors")
+    private User user;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    @JsonBackReference("author-users")
+    private Author author;
+
 
     @PrePersist
     public void onPrePersist() {

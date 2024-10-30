@@ -26,19 +26,26 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
+//@Data
 @Entity
 @Table(name = "author")
-//@ToString(exclude = {"mangaAuthors"})
-//@JsonIgnoreProperties({"nameKana", "profile", "registeredAt", "updatedAt", "displayFlag", "deleteFlag", "img", "mangaAuthors"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @Where(clause = "delete_flag=0")
 public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "name")
@@ -72,6 +79,10 @@ public class Author {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("author-mangas")
     private Set<MangaAuthor> mangaAuthors;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.MERGE)
+    @JsonManagedReference("author-users")
+    private List<AuthorFollow> authorFollows;
 
 
 

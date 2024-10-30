@@ -28,24 +28,29 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "tag")
-@EqualsAndHashCode(exclude = {"manga", "user"})
-@ToString(exclude = {"manga", "user"})
-@JsonIgnoreProperties({"registeredAt", "updatedAt", "mangaTags", "genreTags"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class Tag implements Serializable {
 
-    /** フィールド */
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "tagname", nullable = false)
@@ -59,20 +64,16 @@ public class Tag implements Serializable {
     @LastModifiedDate
     private Timestamp updatedAt;
 
-    /** manga_tag */
+
+    /** 関連エンティティ */
     @OneToMany(mappedBy = "tag", cascade = CascadeType.MERGE)
+    @JsonManagedReference("tag-mangas")
     private List<MangaTag> mangaTags;
 
-//    /** ユーザー：user_id */
-//    @ManyToOne
-//    @JoinColumn(name ="user_id", referencedColumnName = "id", nullable = true)
-//    private User user;
-
-    /** genre_tag */
     @OneToMany(mappedBy = "tag", cascade = CascadeType.MERGE)
+    @JsonManagedReference("tag-genres")
     private List<GenreTag> genreTags;
 
-    /** メソッド */
 
     @PrePersist
     public void onPrePersist() {

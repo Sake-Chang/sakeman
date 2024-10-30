@@ -23,26 +23,31 @@ import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
 @Entity
 @Table(name = "web_manga_media")
-@ToString(exclude = {"webMangaUpdateInfos"})
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @Where(clause = "delete_flag=0")
 public class WebMangaMedia implements Serializable {
 
-    /** フィールド */
-
     private static final long serialVersionUID = 1L;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
     @Column(name = "name", nullable = false)
@@ -75,11 +80,11 @@ public class WebMangaMedia implements Serializable {
     private LocalDateTime recentUpdateAt;
 
 
-    /** webMangaUpdateInfo */
-    @OneToMany(mappedBy = "webMangaMedia", cascade = CascadeType.ALL)
+    /** 関連エンティティ */
+    @OneToMany(mappedBy = "webMangaMedia", cascade = CascadeType.MERGE)
+    @JsonManagedReference("media-webMangaUpdateInfos")
     private List<WebMangaUpdateInfo> webMangaUpdateInfos;
 
-    /** メソッド */
 
     @PrePersist
     public void onPrePersist() {

@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -25,35 +26,39 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data
-//@Setter
-//@Getter
 @Entity
 @Table(name = "user_follow")
-//@EqualsAndHashCode(exclude = "user")
-//@ToString(exclude = "user")
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
+//@Where(clause = "follower.delete_flag=0 AND followee.delete_flag=0")
 public class UserFollow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private Integer id;
 
-    /** フォロワー（フォローした人） */
+    @Column(name = "registered_at", nullable = false, updatable = false)
+    @CreatedDate
+    private Timestamp registeredAt;
+
+
+    /** 関連エンティティ */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name ="follower_user_id", referencedColumnName = "id")
-    @JsonBackReference("user-follower")
+    @JsonBackReference("user-followers")
     private User follower;
 
     /** フォロイー（フォローされた人） */
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "followee_user_id", referencedColumnName = "id")
-    @JsonBackReference("user-followee")
+    @JsonBackReference("user-followees")
     private User followee;
 
-    @Column(name = "registered_at", nullable = false, updatable = false)
-    @CreatedDate
-    private Timestamp registeredAt;
 
     @PrePersist
     public void onPrePersist() {
