@@ -754,6 +754,15 @@ h2 > i {
     padding: 1px 8px 0;
 }
 
+.info-module-oneshot {
+    border: solid 0.5px var(--PL);
+    background-color: var(--WH);
+    border-radius: 2px;
+    color: var(--PL);
+    font-size: 12px;
+    padding: 1px 8px 0;
+}
+
 .info-module-title {
     font-size: 16px;
     font-weight: 700;

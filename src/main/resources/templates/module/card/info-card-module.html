@@ -33,6 +33,7 @@
             </div>
             <div class="info-module-head-sub">
                 <span th:if="*{info.freeFlag==1}" class="info-module-free">無料</span>
+                <span th:if="*{info.manga.isOneShot}" class="info-module-oneshot">読切</span>
                 <span class="info-module-updateat" th:text="|*{#temporals.format(info.updateAt, 'yyyy/MM/dd HH:mm')} 更新|"></span>
             </div>
         </div>

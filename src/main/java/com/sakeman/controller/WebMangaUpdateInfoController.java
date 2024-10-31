@@ -89,7 +89,6 @@ public class WebMangaUpdateInfoController {
         }
 
         if (result.isEmpty() && pageable.getPageNumber() > 0) {
-//            redirectAttributes.addFlashAttribute("message", "該当のページにはコンテンツがありませんでした。1ページ目を表示します。");
             return "redirect:/web-manga-update-info?page=0";
         }
 
