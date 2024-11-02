@@ -75,24 +75,23 @@ public class WebMangaUpdateInfoController {
         int oneshotflag = (thisUser != null) ? thisUser.getWebMangaSettingsOneshotflag() : 0;
         List<Integer> genreSetting = (thisUser != null) ? thisUser.getWebMangaSettingsGenre() : new ArrayList<>();
 
-        Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(thisUser, freeflag, followflag, oneshotflag, genreSetting, pageable, true);
-//        if (userDetail == null) {
-//            result = webService.getInfoListPageable(pageable, true);
-//        } else {
-//            result = webService.getFilteredInfoListPageable(genreSetting, freeflag, userDetail.getUser().getId(), oneshotflag, pageable, true);
-//        }
+//        Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageableSpecific(thisUser, freeflag, followflag, oneshotflag, genreSetting, pageable, true);
 
-//        if (userDetail == null) {
-//            result = webService.getInfoListPageable(pageable, true);
-//        } else if (genres.isEmpty() && followflag == 0) {
-//            result = webService.getFilteredInfoListPageable(freeflagsSetting, pageable, true);
-//        } else if (genres.isEmpty() && followflag == 1) {
-//            result = webService.getFilteredInfoListPageable(freeflagsSetting, userDetail.getUser().getId(), pageable, true);
-//        } else if (!genres.isEmpty() && followflag == 0) {
-//            result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, pageable, true);
-//        } else {
-//            result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, userDetail.getUser().getId(), pageable, true);
-//        }
+//ここから
+        List<Integer> freeflagsSetting = freeflag == 0 ? List.of(0, 1, 2) : List.of(1);
+        Page<WebMangaUpdateInfo> result;
+        if (userDetail == null) {
+            result = webService.getInfoListPageable(pageable, true);
+        } else if (genreSetting.isEmpty() && followflag == 0) {
+            result = webService.getFilteredInfoListPageable(freeflagsSetting, pageable, true);
+        } else if (genreSetting.isEmpty() && followflag == 1) {
+            result = webService.getFilteredInfoListPageable(freeflagsSetting, userDetail.getUser().getId(), pageable, true);
+        } else if (!genreSetting.isEmpty() && followflag == 0) {
+            result = webService.getFilteredInfoListPageable(genreSetting, freeflagsSetting, pageable, true);
+        } else {
+            result = webService.getFilteredInfoListPageable(genreSetting, freeflagsSetting, userDetail.getUser().getId(), pageable, true);
+        }
+// ここまで
 
         if (result.isEmpty() && pageable.getPageNumber() > 0) {
             return "redirect:/web-manga-update-info?page=0";
