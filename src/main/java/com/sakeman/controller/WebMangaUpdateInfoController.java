@@ -70,23 +70,29 @@ public class WebMangaUpdateInfoController {
 
         User thisUser = (userDetail != null) ? userService.getUser(userDetail.getUser().getId()) : null;
 
-        List<Integer> genres = (thisUser != null) ? thisUser.getWebMangaSettingsGenre() : new ArrayList<>();
         int followflag = (thisUser != null) ? thisUser.getWebMangaSettingsFollowflag() : 0;
         int freeflag = (thisUser != null) ? thisUser.getWebMangaSettingsFreeflag() : 0;
-        List<Integer> freeflagsSetting = freeflag == 0 ? List.of(0, 1, 2) : List.of(1);
+        int oneshotflag = (thisUser != null) ? thisUser.getWebMangaSettingsOneshotflag() : 0;
+        List<Integer> genreSetting = (thisUser != null) ? thisUser.getWebMangaSettingsGenre() : new ArrayList<>();
 
-        Page<WebMangaUpdateInfo> result;
-        if (userDetail == null) {
-            result = webService.getInfoListPageable(pageable, true);
-        } else if (genres.isEmpty() && followflag == 0) {
-            result = webService.getFilteredInfoListPageable(freeflagsSetting, pageable, true);
-        } else if (genres.isEmpty() && followflag == 1) {
-            result = webService.getFilteredInfoListPageable(freeflagsSetting, userDetail.getUser().getId(), pageable, true);
-        } else if (!genres.isEmpty() && followflag == 0) {
-            result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, pageable, true);
-        } else {
-            result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, userDetail.getUser().getId(), pageable, true);
-        }
+        Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageable(thisUser, freeflag, followflag, oneshotflag, genreSetting, pageable, true);
+//        if (userDetail == null) {
+//            result = webService.getInfoListPageable(pageable, true);
+//        } else {
+//            result = webService.getFilteredInfoListPageable(genreSetting, freeflag, userDetail.getUser().getId(), oneshotflag, pageable, true);
+//        }
+
+//        if (userDetail == null) {
+//            result = webService.getInfoListPageable(pageable, true);
+//        } else if (genres.isEmpty() && followflag == 0) {
+//            result = webService.getFilteredInfoListPageable(freeflagsSetting, pageable, true);
+//        } else if (genres.isEmpty() && followflag == 1) {
+//            result = webService.getFilteredInfoListPageable(freeflagsSetting, userDetail.getUser().getId(), pageable, true);
+//        } else if (!genres.isEmpty() && followflag == 0) {
+//            result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, pageable, true);
+//        } else {
+//            result = webService.getFilteredInfoListPageable(genres, freeflagsSetting, userDetail.getUser().getId(), pageable, true);
+//        }
 
         if (result.isEmpty() && pageable.getPageNumber() > 0) {
             return "redirect:/web-manga-update-info?page=0";
@@ -100,9 +106,10 @@ public class WebMangaUpdateInfoController {
         model.addAttribute("medialist", mediaService.getWebMangaMediaList());
         model.addAttribute("genrelist", genreService.getGenreListOrdered());
 
-        model.addAttribute("genreflag", genres);
+        model.addAttribute("genreflag", genreSetting);
         model.addAttribute("freeflag", freeflag);
         model.addAttribute("followflag", followflag);
+        model.addAttribute("oneshotflag", oneshotflag);
 
         LocalDateTime today = LocalDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate().atStartOfDay();
         model.addAttribute("todaylistsize", webService.getTodayInfoList(today, true).size());
@@ -121,12 +128,13 @@ public class WebMangaUpdateInfoController {
     @ResponseBody
     public ResponseEntity<String> getFilteredList(
             @RequestParam(name="genres", required=false) List<Integer> genres,
-            @RequestParam(name="freeflag", required=false) Integer freeflag,
-            @RequestParam(name="followflag", required=false) Integer followflag,
+            @RequestParam(name="freeflag", required=false, defaultValue="0") Integer freeflag,
+            @RequestParam(name="followflag", required=false, defaultValue="0") Integer followflag,
+            @RequestParam(name="oneshotflag", required=false, defaultValue="0") Integer oneshotflag,
             @AuthenticationPrincipal UserDetail userDetail,
             HttpServletRequest request) {
         /** ユーザーの設定を保存 */
-        userService.saveSettings(userDetail, genres, freeflag, followflag);
+        userService.saveSettings(userDetail, genres, freeflag, followflag, oneshotflag);
 
         if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
             return new ResponseEntity<>("", HttpStatus.OK);

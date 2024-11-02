@@ -22,6 +22,12 @@ spring:
   cache:
     type: simple
     
+logging:
+  level:
+    org:
+      hibernate:
+        SQL : DEBUG
+    
 management:
   health:
     redis:

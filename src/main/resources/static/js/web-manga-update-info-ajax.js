@@ -63,6 +63,7 @@ $(function() {
             var form = $(this);
             var url = form.attr('action');
             var formData = form.serialize();
+            console.log(formData)
 
             $.ajax({
                 url: url,
@@ -121,10 +122,11 @@ $(function() {
             var params = new URLSearchParams(formData);
             var freeflag = params.get('freeflag');
             var followflag = params.get('followflag');
+            var oneshotflag = params.get('oneshotflag');
             var genres = params.getAll('genres');
 
             // デフォルトの状態と比較
-            if (freeflag == 0 && followflag == 0 && genres.length == 0) {
+            if (freeflag == 0 && followflag == 0 && oneshotflag == 0 && genres.length == 0) {
                 return true;
             }
             return false;
@@ -148,6 +150,7 @@ $(function() {
 
             var freeflag = $('input[name="freeflag"]:checked').val();
             var followflag = $('input[name="followflag"]:checked').val();
+            var oneshotflag = $('input[name="oneshotflag"]:checked').val();
 
             $.ajax({
                 url: '/web-manga-update-info',
@@ -155,7 +158,8 @@ $(function() {
                 data: {
                     genres: selectedGenres.length > 0 ? selectedGenres.join(',') : '',
                     freeflag: freeflag,
-                    followflag: followflag
+                    followflag: followflag,
+                    oneshotflag: oneshotflag
                 },
                 success: function() {
                     $.ajax({

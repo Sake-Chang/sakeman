@@ -34,7 +34,7 @@
 </th:block>
 
 
-<div layout:include="~{module/other/webmanga-setting-form :: webmanga-setting-form(followflag=${followflag}, freeflag=${freeflag}, medialist=${medialist}, genrelist=${genrelist}, genreflag=${genreflag}, webmangafollowlist=${webmangafollowlist})}"></div>
+<div th:replace="~{module/other/webmanga-setting-form :: webmanga-setting-form(followflag=${followflag}, freeflag=${freeflag}, medialist=${medialist}, genrelist=${genrelist}, genreflag=${genreflag}, webmangafollowlist=${webmangafollowlist})}"></div>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
 <!--<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>-->

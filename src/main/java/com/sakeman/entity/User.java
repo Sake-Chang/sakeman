@@ -174,6 +174,9 @@ public class User implements Serializable {
     @Column(name = "web_manga_settings_followflag", nullable = false)
     private Integer webMangaSettingsFollowflag = 0;
 
+    @Column(name = "web_manga_settings_oneshotflag", nullable = false)
+    private Integer webMangaSettingsOneshotflag = 0;
+
 
     @PrePersist
     public void onPrePersist() {

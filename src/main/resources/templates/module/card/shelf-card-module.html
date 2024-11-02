@@ -10,7 +10,7 @@
         <div class="uclist-child __shelf" th:each="um : ${usermangalist}">
             <div class="uclist-child-figure">
                 <div th:if="${um.manga.reviews.?[user.id == #authentication.principal.user.id].size() > 0}" class="review-badge">
-                    <span class="material-icons-outlined md-18 md-HL md-bold">military_tech</span>
+                    <span class="material-icons-outlined md-18 md-HL md-bold">workspace_premium</span>
                 </div>
                 <div th:unless="${um.manga.reviews.?[user.id == #authentication.principal.user.id].size() > 0}" class="review-post">
                     <a th:href="@{/review/post/__${um.manga.id}__}">

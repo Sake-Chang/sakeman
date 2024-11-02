@@ -7,14 +7,18 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.sakeman.entity.User;
 import com.sakeman.entity.WebMangaUpdateInfo;
 import com.sakeman.service.UserDetail;
 
 
-public interface WebMangaUpdateInfoRepository extends JpaRepository<WebMangaUpdateInfo, Integer> {
+public interface WebMangaUpdateInfoRepository extends JpaRepository<WebMangaUpdateInfo, Integer>, JpaSpecificationExecutor<WebMangaUpdateInfo> {
+    Page<WebMangaUpdateInfo> findAll(Specification<WebMangaUpdateInfo> specs, Pageable pageable);
+
     Optional<WebMangaUpdateInfo> findByUrl(String url);
     List<WebMangaUpdateInfo> findByMangaId(Integer mangaId);
     Page<WebMangaUpdateInfo> findAll(Pageable pageable);

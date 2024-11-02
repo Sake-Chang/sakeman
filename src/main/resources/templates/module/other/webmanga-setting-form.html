@@ -2,21 +2,29 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<div layout:fragment="webmanga-setting-form(followflag, freeflag, medialist, genrelist, genreflag, webmangafollowlist)">
-    <div class="webmanga-genres-container">
+<th:block th:fragment="webmanga-setting-form(followflag, freeflag, medialist, genrelist, genreflag, webmangafollowlist)">
+    <div  class="webmanga-genres-container">
 
         <form id="web-manga-filter-form" th:action="@{/web-manga-update-info}" method="post">
-                <input type="checkbox" id="webmanga-settings-popup">
-                <label  class="webmanga-setting-popup-open webmanga-settings" for="webmanga-settings-popup"
-                        th:classappend="${freeflag != 0 or followflag != 0 or #lists.size(genreflag) != 0 ? 'webmanga-settings-modified' : ''}">
-                    <span   class="material-icons-outlined md-18 md-BL"
-                            th:text="${freeflag != 0 or followflag != 0 or #lists.size(genreflag) != 0 ? 'check' : 'tune'}">
-                    </span>
-                    <span class="webmanga-settings-text">マイセット</span>
-                </label>
-                <div class="webmanga-setting-popup-overlay">
-                    <div class="webmanga-setting-popup-window">
 
+            <input type="checkbox" id="webmanga-settings-popup">
+            <label  class="webmanga-setting-popup-open webmanga-settings" for="webmanga-settings-popup"
+                    th:classappend="${freeflag != 0 or followflag != 0 or #lists.size(genreflag) != 0 ? 'webmanga-settings-modified' : ''}">
+                <span   class="material-icons-outlined md-18 md-BL"
+                        th:text="${freeflag != 0 or followflag != 0 or #lists.size(genreflag) != 0 ? 'check' : 'tune'}">
+                </span>
+                <span class="webmanga-settings-text">マイセット</span>
+            </label>
+
+
+            <div class="webmanga-setting-popup-overlay">
+                <div class="webmanga-setting-popup-window">
+                    <label class="webmanga-setting-popup-close" for="webmanga-settings-popup">
+                        <div class="webmanga-setting-icon close-icon">
+                            <span class="material-icons-outlined md-14 md-BK">close</span>
+                        </div>
+                    </label>
+                    <div class="webmanga-setting-popup-content">
                         <th:block th:if="${#authorization.expression('isAnonymous()')}">
                             <div class="notion-register">
                                 <div class="notion-text-container">
@@ -34,31 +42,118 @@
                                 <div class="webmanga-setting-popup-title">[[${#authentication.principal.user.username}]]の設定</div>
                                 <button class="btn-filter-mini" type="submit">設定</button>
                             </div>
+                            <hr class="webmanga-setting">
                         </th:block>
-                        <div class="webmanga-setting-popup-text">有料 / 無料</div>
-                        <div class="webmanga-settings-items">
-                            <div class="webmanga-settings-radio">
-                                <input class="" type="radio" id="free-paid" name="freeflag" value="0" th:checked="${freeflag==0}">
-                                <label for="free-paid">すべて</label>
+
+<!--
+                        <div class="webmanga-setting-row-container">
+                            <div class="webmanga-setting-row-title">
+                                <div class="webmanga-setting-icon">
+                                    <span class="material-icons-outlined md-14 md-WH">currency_yen</span>
+                                </div>
+                                <div class="webmanga-setting-popup-text">有料 / 無料</div>
                             </div>
-                            <div class="webmanga-settings-radio">
-                                <input class="" type="radio" id="free-only" name="freeflag" value="1" th:checked="${freeflag==1}">
-                                <label for="free-only">無料のみ</label>
-                            </div>
-                        </div>
-                        <div class="webmanga-setting-popup-text">フォロー有無</div>
-                        <div class="webmanga-settings-items">
-                            <div class="webmanga-settings-radio">
-                                <input class="" type="radio" id="follow-nofollow" name="followflag" value="0" th:checked="${followflag == 0}">
-                                <label for="follow-nofollow">すべて</label>
-                            </div>
-                            <div class="webmanga-settings-radio">
-                                <input class="" type="radio" id="follow-only" name="followflag" value="1" th:checked="${followflag == 1}">
-                                <label for="follow-only">フォローのみ</label>
+                            <div class="webmanga-settings-pill">
+                                <div class="webmanga-settings-radio">
+                                    <input class="" type="radio" id="free-paid" name="freeflag" value="0" th:checked="${freeflag==0}">
+                                    <label for="free-paid">ぜんぶ</label>
+                                </div>
+                                <div class="webmanga-settings-radio">
+                                    <input class="" type="radio" id="free-only" name="freeflag" value="1" th:checked="${freeflag==1}">
+                                    <label for="free-only">無料のみ</label>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="webmanga-setting-popup-text">ジャンル（複数選択可）</div>
+                        <div class="webmanga-setting-row-container">
+                            <div class="webmanga-setting-row-title">
+                                <div class="webmanga-setting-icon">
+                                    <span class="material-icons-outlined md-14 md-WH">bookmark</span>
+                                </div>
+                                <div class="webmanga-setting-popup-text">フォロー有無</div>
+                            </div>
+                            <div class="webmanga-settings-pill">
+                                <div class="webmanga-settings-radio">
+                                    <input class="" type="radio" id="follow-nofollow" name="followflag" value="0" th:checked="${followflag == 0}">
+                                    <label for="follow-nofollow">ぜんぶ</label>
+                                </div>
+                                <div class="webmanga-settings-radio">
+                                    <input class="" type="radio" id="follow-only" name="followflag" value="1" th:checked="${followflag == 1}">
+                                    <label for="follow-only">フォローのみ</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="webmanga-setting-row-container">
+                            <div class="webmanga-setting-row-title">
+                                <div class="webmanga-setting-icon">
+                                    <span class="material-icons-outlined md-14 md-WH">auto_awesome</span>
+                                </div>
+                                <div class="webmanga-setting-popup-text">読切の表示</div>
+                            </div>
+                            <div class="webmanga-settings-pill">
+                                <div class="webmanga-settings-radio">
+                                    <input class="" type="radio" id="show-oneShot" name="showOneShot" value="1" th:checked="${showOneShot == 1}">
+                                    <label for="show-oneShot">ぜんぶ</label>
+                                </div>
+                                <div class="webmanga-settings-radio">
+                                    <input class="" type="radio" id="hide-oneShot" name="showOneShot" value="0" th:checked="${showOneShot == 0}">
+                                    <label for="hide-oneShot">他の設定に従う</label>
+                                </div>
+                            </div>
+                        </div>
+-->
+
+                        <div class="webmanga-setting-row-container">
+                            <div class="webmanga-setting-row-title">
+                                <div class="webmanga-setting-icon">
+                                    <span class="material-icons-outlined md-14 md-WH">currency_yen</span>
+                                </div>
+                                <div class="webmanga-setting-popup-text">無料のみ表示</div>
+                            </div>
+                            <div class="webmanga-setting-toggle">
+                                <input type="checkbox" id="free-toggle" class="webmanga-setting-toggle-input" name="freeflag" value="1" th:checked="${freeflag == 1}">
+                                <label for="free-toggle" class="webmanga-setting-toggle-slider"></label>
+                            </div>
+                        </div>
+
+                        <div class="webmanga-setting-row-container">
+                            <div class="webmanga-setting-row-title">
+                                <div class="webmanga-setting-icon">
+                                    <span class="material-icons-outlined md-14 md-WH">bookmark</span>
+                                </div>
+                                <div class="webmanga-setting-popup-text">フォローのみ表示</div>
+                            </div>
+                            <div class="webmanga-setting-toggle">
+                                <input type="checkbox" id="follow-toggle" class="webmanga-setting-toggle-input" name="followflag" value="1" th:checked="${followflag == 1}">
+                                <label for="follow-toggle" class="webmanga-setting-toggle-slider"></label>
+                            </div>
+                        </div>
+
+                        <div class="webmanga-setting-row-container">
+                            <div class="webmanga-setting-row-title">
+                                <div class="webmanga-setting-icon">
+                                    <span class="material-icons-outlined md-14 md-WH">auto_awesome</span>
+                                </div>
+                                <div class="webmanga-setting-popup-text">読切は常にぜんぶ表示</div>
+                            </div>
+                            <div class="webmanga-setting-toggle">
+                                <input type="checkbox" id="oneshot-toggle" class="webmanga-setting-toggle-input" name="oneshotflag" value="1" th:checked="${oneshotflag == 1}">
+                                <label for="oneshot-toggle" class="webmanga-setting-toggle-slider"></label>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="webmanga-setting-row-container">
+                            <div class="webmanga-setting-row-title">
+                                <div class="webmanga-setting-icon">
+                                    <span class="material-icons-outlined md-14 md-WH">category</span>
+                                </div>
+                                <div class="webmanga-setting-popup-text">ジャンル（複数選択可）</div>
+                            </div>
+                        </div>
                         <div class="webmanga-settings-items">
                             <div class="webmanga-genres-item" th:each="genre : ${genrelist}">
                                 <label>
@@ -73,15 +168,9 @@
                         </div>
 
                         <input class="btn-filter" type="submit" value="設定する" th:disabled="${#authorization.expression('isAnonymous()')}">
-
                     </div>
-                    <label class="webmanga-setting-popup-close" for="webmanga-settings-popup">
-                        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
-                            <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
-                            <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
-                        </svg>
-                    </label>
                 </div>
+            </div>
         </form>
 
         <div class="webmanga-genres-item" th:each="genre:${genrelist}">
@@ -116,11 +205,8 @@
                     </div>
                 </th:block>
             </label>
-
-
         </div>
-
     </div>
-</div>
+</th:block>
 
 </html>

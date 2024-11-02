@@ -31,7 +31,7 @@ html {
 }
 
 body {
-    color: #222222;
+    color: var(--BK);
     background-color: #fafafa;
 }
 
@@ -547,6 +547,8 @@ h2 > i {
 -------------------------------------------------- */
 
 /* アイコンのサイズを変更するためのルール */
+.material-icons-outlined.md-12 { font-size: 12px; }
+.material-icons-outlined.md-14 { font-size: 14px; }
 .material-icons-outlined.md-16 { font-size: 16px; }
 .material-icons-outlined.md-18 { font-size: 18px; }
 .material-icons-outlined.md-20 { font-size: 20px; }
@@ -558,6 +560,8 @@ h2 > i {
 .material-icons-outlined.md-48 { font-size: 48px; }
 .material-icons-outlined.md-56 { font-size: 56px; }
 
+.md-12 { font-size: 12px; }
+.md-14 { font-size: 14px; }
 .md-16 { font-size: 16px; }
 .md-18 { font-size: 18px; }
 .md-20 { font-size: 20px; }
@@ -1914,6 +1918,7 @@ ul.store-btn-list li + li {
     padding: 4px 10px;
     column-gap: 6px;
     align-items: center;
+    background-color: var(--WH);
 }
 
 .webmanga-settings.webmanga-settings-modified {
@@ -1955,7 +1960,7 @@ ul.store-btn-list li + li {
 }
 
 .webmanga-genres-item {
-    font-size: 12px;
+    font-size: 10px;
     color: var(--GR);
     border: solid 1px var(--AS);
     border-radius: 20px;
@@ -1983,6 +1988,33 @@ ul.store-btn-list li + li {
     line-height: 100%;
 }
 
+
+.webmanga-setting-row-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.webmanga-setting-row-title{
+    display: flex;
+    column-gap: 12px;
+    align-items: center;
+}
+
+.webmanga-setting-icon {
+    background-color: var(--HL);
+    border-radius: 50%;
+    align-items: center;
+    display: flex;
+    padding: 4px;
+}
+
+.webmanga-setting-icon.close-icon {
+    background-color: var(--WH);
+    border: solid 0.8px var(--GR);
+}
+
 .webmanga-settings-items{
     display: flex;
     column-gap: 8px;
@@ -1991,28 +2023,103 @@ ul.store-btn-list li + li {
     margin-bottom: 32px;
 }
 
-.webmanga-settings-radio {
-    font-size: 12px;
-    color: var(--GR);
-    border: solid 1px var(--AS);
-    border-radius: 20px;
-    background-color: var(--WH);
-    padding: 6px 10px;
-    width: fit-content;
-    white-space: nowrap;
+.webmanga-settings-pill{
+    display: flex;
+    column-gap: 0;
+    flex-wrap: wrap;
+    border-radius: 12px;
 }
 
-.webmanga-settings-radio:has(input:checked) {
-    font-size: 12px;
-    color: var(--PL);
-    font-weight: 550;
-    border: solid 1px var(--PL);
-    border-radius: 20px;
+.webmanga-settings-radio label{
+    font-size: 10px;
+    color: var(--GR);
+    border: solid 1px var(--AS);
     background-color: var(--WH);
-    padding: 6px 10px;
+    padding: 4px 10px;
     width: fit-content;
     white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
 }
+
+#free-paid + label,
+#follow-nofollow + label,
+#show-oneShot + label {
+    border-radius: 20px 0 0 20px;
+}
+
+#free-only + label,
+#follow-only + label,
+#hide-oneShot + label {
+    border-radius: 0 20px 20px 0;
+}
+
+.webmanga-settings-radio input[type="radio"]:checked + label {
+    background-color: var(--PL);
+    color: var(--WH);
+    border-color: var(--PL);
+}
+
+.webmanga-settings-radio input[type="radio"] + label {
+    background-color: transparent;
+}
+
+.webmanga-settings-radio label:hover {
+    border-color: var(--HL);
+    color: var(--HL);
+}
+
+
+
+/* ここから */
+.webmanga-setting-toggle {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 48px;
+    height: 24px;
+}
+
+/* checkboxは非表示 */
+.webmanga-setting-toggle-input {
+    display: none;
+}
+
+/* スライダーのスタイル */
+.webmanga-setting-toggle-slider {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #ccc; /* オフ時の背景色 */
+    border-radius: 15px;
+    transition: 0.4s;
+    cursor: pointer;
+}
+
+/* オンの時の背景色 */
+.webmanga-setting-toggle-input:checked + .webmanga-setting-toggle-slider {
+    background-color: var(--PL);
+}
+
+/* スライダーの丸い部分 */
+.webmanga-setting-toggle-slider::before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    background-color: white;
+    border-radius: 50%;
+    top: 4px;
+    left: 4px;
+    transition: 0.4s;
+}
+
+/* ここまで */
+.webmanga-setting-toggle-input:checked + .webmanga-setting-toggle-slider::before {
+    transform: translateX(24px);
+}
+
+
 
 
 #webmanga-settings-popup {
@@ -2024,11 +2131,11 @@ ul.store-btn-list li + li {
 }
 
 .webmanga-setting-popup-overlay {
-  display: none; /* input にチェックが入るまでは非表示に */
+    display: none; /* input にチェックが入るまでは非表示に */
 }
 
 #webmanga-settings-popup:checked ~ .webmanga-setting-popup-overlay {
-  display: block;
+  display: flex;
   z-index: 3500;
   background-color: #00000070;
   position: fixed;
@@ -2036,21 +2143,25 @@ ul.store-btn-list li + li {
   height: 100vh;
   top: 0;
   left: 0;
+  justify-content: center;
+  align-items: center;
 }
 
 .webmanga-setting-popup-window {
-  width: 90vw;
-  max-width: 560px;
-/*  max-height: calc((100vh - 26px) * 0.85); */
-  height: 75vh;
-  padding: 20px 16px;
-  background-color: #ffffff;
-  border-radius: 6px;
-  position: fixed;
-  top: calc(50vh + 14px);
-  left: 50%;
-  transform: translate(-50%, -50%);
-  overflow: auto;
+    width: 90vw;
+    max-width: 560px;
+    height: 75vh;
+    border-radius: 6px;
+    position: relative;
+}
+
+.webmanga-setting-popup-content {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    padding: 20px 16px;
+    background-color: var(--WH);
+    overflow: auto;
 }
 
 .webmanga-setting-popup-title-container {
@@ -2058,25 +2169,27 @@ ul.store-btn-list li + li {
 }
 
 .webmanga-setting-popup-title {
-  font-size: 20px;
-  color: var(--BL);
+  font-size: 18px;
+  color: var(--BK);
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
+}
+
+hr.webmanga-setting {
+    margin: 0 0 24px 0;
 }
 
 .webmanga-setting-popup-text {
-  font-size: 16px;
-  color: var(--BL);
-  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--BK);
 }
 
 .webmanga-setting-popup-close {
   cursor: pointer;
   position: absolute;
-/*  top: max(calc(7.5vh), calc(50vh - 12px - 50%)); */
-/*  top: 24px; */
-  top: 72px;
-  right: 24px;
+  top: -10px;
+  right: -10px;
+  z-index: 3000;
 }
 
 
@@ -2092,7 +2205,7 @@ ul.store-btn-list li + li {
     position: absolute;
     top: -2px;
     right: 0;
-    font-size: 12px;
+    font-size: 10px;
     text-align: center;
 }
 
@@ -2198,14 +2311,14 @@ input[id^=alert-popup]:checked ~ .alert-popup-overlay {
 
 .alert-popup-title {
   font-size: 20px;
-  color: var(--BL);
+  color: var(--BK);
   text-align: center;
   margin-bottom: 24px;
 }
 
 .alert-popup-text {
   font-size: 16px;
-  color: var(--BL);
+  color: var(--BK);
   margin-bottom: 12px;
 }
 

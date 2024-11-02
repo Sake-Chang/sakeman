@@ -104,11 +104,12 @@ public class UserService {
 
     /** Webまんがのマイセット登録 **/
     @Transactional
-    public User saveSettings(UserDetail userDetail, List<Integer> genres, Integer freeflag, Integer followflag) {
+    public User saveSettings(UserDetail userDetail, List<Integer> genres, Integer freeflag, Integer followflag, Integer oneshotoflag) {
         User user = userDetail.getUser();
         user.setWebMangaSettingsGenre(genres);
         user.setWebMangaSettingsFreeflag(freeflag);
         user.setWebMangaSettingsFollowflag(followflag);
+        user.setWebMangaSettingsOneshotflag(oneshotoflag);
         return userRepository.save(user);
     }
 
