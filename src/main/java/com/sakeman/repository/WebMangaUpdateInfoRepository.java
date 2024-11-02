@@ -7,12 +7,15 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 
 import com.sakeman.entity.User;
 import com.sakeman.entity.WebMangaUpdateInfo;
+import com.sakeman.entity.projection.webmanga.WebMangaUpdateInfoProjectionBasic;
 import com.sakeman.service.UserDetail;
 
 
@@ -34,14 +37,17 @@ public interface WebMangaUpdateInfoRepository extends JpaRepository<WebMangaUpda
     Page<WebMangaUpdateInfo> findDistinctByMangaMangaTagsTagIdIn(List<Integer> tagIds, Pageable pageable);
     Page<WebMangaUpdateInfo> findDistinctByMangaMangaTagsTagGenreTagsGenreIdIn(List<Integer> genreIds, Pageable pageable);
 
-    /** 有料無料・ジャンル・フォローで絞り込み */
-    Page<WebMangaUpdateInfo> findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagInAndMangaWebMangaFollowsUserId(List<Integer> genreIds, List<Integer> freeflags, Integer userId, Pageable pageable);
-    /** 有料無料・フォローで絞り込み */
-    Page<WebMangaUpdateInfo> findDistinctByFreeFlagInAndMangaWebMangaFollowsUserId(List<Integer> freeflags, Integer userId, Pageable pageable);
-    /** 有料無料・ジャンルで絞り込み */
-    Page<WebMangaUpdateInfo> findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagIn(List<Integer> genreIds, List<Integer> freeflags, Pageable pageable);
-    /** 有料無料で絞り込み */
-    Page<WebMangaUpdateInfo> findByFreeFlagIn(List<Integer> freeflags, Pageable pageable);
+    /** 無料・フォロー・ジャンルで絞り込み */
+    Page<WebMangaUpdateInfoProjectionBasic> findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagInAndMangaWebMangaFollowsUserId(List<Integer> genreIds, List<Integer> freeflags, Integer userId, Pageable pageable);
+    /** 無料・フォローで絞り込み */
+    Page<WebMangaUpdateInfoProjectionBasic> findDistinctByFreeFlagInAndMangaWebMangaFollowsUserId(List<Integer> freeflags, Integer userId, Pageable pageable);
+    /** 無料・ジャンルで絞り込み */
+    Page<WebMangaUpdateInfoProjectionBasic> findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagIn(List<Integer> genreIds, List<Integer> freeflags, Pageable pageable);
+    /** 無料で絞り込み */
+    Page<WebMangaUpdateInfoProjectionBasic> findByFreeFlagIn(List<Integer> freeflags, Pageable pageable);
+    /** ノーマル */
+    Page<WebMangaUpdateInfoProjectionBasic> findAllWithProjectionBy(Pageable pageable);
+
 
     Optional<WebMangaUpdateInfo> findByTitleStringAndSubTitle(String titleString, String subTitle);
 

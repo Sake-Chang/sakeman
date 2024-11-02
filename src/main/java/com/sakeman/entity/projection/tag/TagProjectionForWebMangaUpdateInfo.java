@@ -5,7 +5,7 @@ import java.util.List;
 import com.sakeman.entity.projection.genretag.GenreTagProjectionForWebMangaUpdateInfo;
 
 public interface TagProjectionForWebMangaUpdateInfo {
-    String getTagnaame();
+    String getTagname();
     List<GenreTagProjectionForWebMangaUpdateInfo> getGenreTags();
 
 }

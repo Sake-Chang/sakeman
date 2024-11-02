@@ -29,6 +29,7 @@ import com.sakeman.entity.Manga;
 import com.sakeman.entity.User;
 import com.sakeman.entity.WebMangaMedia;
 import com.sakeman.entity.WebMangaUpdateInfo;
+import com.sakeman.entity.projection.webmanga.WebMangaUpdateInfoProjectionBasic;
 import com.sakeman.service.GenreService;
 import com.sakeman.service.MangaService;
 import com.sakeman.service.TagService;
@@ -75,13 +76,13 @@ public class WebMangaUpdateInfoController {
         int oneshotflag = (thisUser != null) ? thisUser.getWebMangaSettingsOneshotflag() : 0;
         List<Integer> genreSetting = (thisUser != null) ? thisUser.getWebMangaSettingsGenre() : new ArrayList<>();
 
-//        Page<WebMangaUpdateInfo> result = webService.getFilteredInfoListPageableSpecific(thisUser, freeflag, followflag, oneshotflag, genreSetting, pageable, true);
+//        Page<WebMangaUpdateInfoProjectionBasic> result = webService.getFilteredInfoListPageableSpecific(thisUser, freeflag, followflag, oneshotflag, genreSetting, pageable, true);
 
 //ここから
         List<Integer> freeflagsSetting = freeflag == 0 ? List.of(0, 1, 2) : List.of(1);
-        Page<WebMangaUpdateInfo> result;
+        Page<WebMangaUpdateInfoProjectionBasic> result;
         if (userDetail == null) {
-            result = webService.getInfoListPageable(pageable, true);
+            result = webService.getInfoListPageableProjection(pageable, true);
         } else if (genreSetting.isEmpty() && followflag == 0) {
             result = webService.getFilteredInfoListPageable(freeflagsSetting, pageable, true);
         } else if (genreSetting.isEmpty() && followflag == 1) {

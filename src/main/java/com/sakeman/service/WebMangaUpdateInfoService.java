@@ -24,8 +24,8 @@ import org.springframework.util.StringUtils;
 import com.sakeman.dto.WebMangaUpdateInfoAdminResponseDTO;
 import com.sakeman.entity.User;
 import com.sakeman.entity.WebMangaUpdateInfo;
+import com.sakeman.entity.projection.webmanga.WebMangaUpdateInfoProjectionBasic;
 import com.sakeman.repository.WebMangaUpdateInfoRepository;
-import com.sakeman.repository.specification.WebMangaUpdateInfoSpecifications;
 
 import lombok.RequiredArgsConstructor;
 
@@ -50,6 +50,13 @@ public class WebMangaUpdateInfoService {
         return webRepository.findAll(pageable);
     }
 
+    /** ページネーション Projection */
+    @Transactional(readOnly = true)
+    @Cacheable(value = "webMangaUpdateInfoProjection", key = "'page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
+    public Page<WebMangaUpdateInfoProjectionBasic> getInfoListPageableProjection(Pageable pageable, boolean useCache){
+        return webRepository.findAllWithProjectionBy(pageable);
+    }
+
     /** ページネーション(キャッシュなし) */
     @Transactional(readOnly = true)
     public Page<WebMangaUpdateInfo> getInfoListPageable(Pageable pageable){
@@ -58,29 +65,37 @@ public class WebMangaUpdateInfoService {
 
 //    /** 追加したspecification用のメソッド */
 //    @Transactional(readOnly = true)
-//    public Page<WebMangaUpdateInfo> getFilteredInfoListPageableSpecific(
+//    public Page<WebMangaUpdateInfoProjectionBasic> getFilteredInfoListPageableSpecific(
 //            User thisUser, Integer freeflag, Integer followflag, Integer oneshotflag, List<Integer> genreSetting, Pageable pageable, boolean useCache) {
 //
 //        // 基本条件に基づいてデータを取得
-//        List<WebMangaUpdateInfo> basicResultList = getBasicFilteredResult(thisUser, freeflag, followflag, oneshotflag, genreSetting, pageable);
+//        List<WebMangaUpdateInfoProjectionBasic> basicResultList = getBasicFilteredResult(thisUser, freeflag, followflag, oneshotflag, genreSetting, pageable);
 //        // OneShotのみを取得
-//        List<WebMangaUpdateInfo> oneShotResultList = getOneShotResult(oneshotflag, pageable);
+////        List<WebMangaUpdateInfo> oneShotResultList = getOneShotResult(oneshotflag, pageable);
 //
-//        // 結果をマージして重複を排除
-//        LinkedHashSet<WebMangaUpdateInfo> mergedResults = new LinkedHashSet<>(basicResultList);
-//        mergedResults.addAll(oneShotResultList);
-//
-//        List<WebMangaUpdateInfo> mergedList = new ArrayList<>(mergedResults);
+//        /** basicResultListをpageableで指定されたページサイズに合わせてサブリストに分割 */
 //        int start = (int) pageable.getOffset();
-//        int end = Math.min((start + pageable.getPageSize()), mergedList.size());
+//        int end = Math.min((start + pageable.getPageSize()), basicResultList.size());
+//        List<WebMangaUpdateInfoProjectionBasic> paginatedList = basicResultList.subList(start, end);
 //
-//        // ページングされた結果を返す
-//        return new PageImpl<>(mergedList.subList(start, end), pageable, mergedList.size());
+//        /** PageImplを使用してPageオブジェクトを作成 */
+//        return new PageImpl<>(paginatedList, pageable, basicResultList.size());
+//
+////        // 結果をマージして重複を排除
+////        LinkedHashSet<WebMangaUpdateInfo> mergedResults = new LinkedHashSet<>(basicResultList);
+////        mergedResults.addAll(oneShotResultList);
+////
+////        List<WebMangaUpdateInfo> mergedList = new ArrayList<>(mergedResults);
+////        int start = (int) pageable.getOffset();
+////        int end = Math.min((start + pageable.getPageSize()), mergedList.size());
+////
+////        // ページングされた結果を返す
+////        return new PageImpl<>(mergedList.subList(start, end), pageable, mergedList.size());
 //    }
 //
 //
-//    public List<WebMangaUpdateInfo> getBasicFilteredResult(User thisUser, Integer freeflag, Integer followflag, Integer oneshotflag, List<Integer> genreSetting, Pageable pageable) {
-//        Specification<WebMangaUpdateInfo> specs;
+//    public List<WebMangaUpdateInfoProjectionBasic> getBasicFilteredResult(User thisUser, Integer freeflag, Integer followflag, Integer oneshotflag, List<Integer> genreSetting, Pageable pageable) {
+//        Specification<WebMangaUpdateInfoProjectionBasic> specs;
 //        if (thisUser != null) {
 //            specs = Specification
 //                        .where(WebMangaUpdateInfoSpecifications.hasGenres(genreSetting))
@@ -95,46 +110,48 @@ public class WebMangaUpdateInfoService {
 //            specs = Specification.where(null);
 //        }
 //
-//        return webRepository.findAll(specs, pageable.getSort());
+//        return webRepository.findAllProjection(specs, pageable.getSort());
 //    }
 //
-//    public List<WebMangaUpdateInfo> getOneShotResult(Integer oneshotflag, Pageable pageable) {
+//    public List<WebMangaUpdateInfoProjectionBasic> getOneShotResult(Integer oneshotflag, Pageable pageable) {
 //        if (oneshotflag == null || oneshotflag != 1) {
 //            return Collections.emptyList();
 //        }
-//        Specification<WebMangaUpdateInfo> oneShotSpecs = WebMangaUpdateInfoSpecifications.isOneShot(oneshotflag);
-//        return webRepository.findAll(oneShotSpecs, pageable.getSort());
+//        Specification<WebMangaUpdateInfoProjectionBasic> oneShotSpecs = WebMangaUpdateInfoSpecifications.isOneShot(oneshotflag);
+//        return webRepository.findAllProjection(oneShotSpecs, pageable.getSort());
 //    }
 
 
+/** 従前の個別のメソッド( getFilteredInfoListPageable ) ここから */
     /** 有料無料・ジャンル・フォローで絞り込み */
     @Transactional(readOnly = true)
 //    @Cacheable(value = "webMangaUpdateInfo", key = "'genre:' + #genreIds + ',freeflag:' + #freeflags + ',userId:' + #userId + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
-    public Page<WebMangaUpdateInfo> getFilteredInfoListPageable(List<Integer> genreIds, List<Integer> freeflags, Integer userId, Pageable pageable, boolean useCache){
-        Page<WebMangaUpdateInfo> res = webRepository.findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagInAndMangaWebMangaFollowsUserId(genreIds, freeflags, userId, pageable);
+    public Page<WebMangaUpdateInfoProjectionBasic> getFilteredInfoListPageable(List<Integer> genreIds, List<Integer> freeflags, Integer userId, Pageable pageable, boolean useCache){
+        Page<WebMangaUpdateInfoProjectionBasic> res = webRepository.findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagInAndMangaWebMangaFollowsUserId(genreIds, freeflags, userId, pageable);
         return res;
     }
     /** 有料無料・フォローで絞り込み */
     @Transactional(readOnly = true)
 //    @Cacheable(value = "webMangaUpdateInfo", key = "'freeflag:' + #freeflags + ',userId:' + #userId + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
-    public Page<WebMangaUpdateInfo> getFilteredInfoListPageable(List<Integer> freeflags, Integer userId, Pageable pageable, boolean useCache){
-        Page<WebMangaUpdateInfo> res = webRepository.findDistinctByFreeFlagInAndMangaWebMangaFollowsUserId(freeflags, userId, pageable);
+    public Page<WebMangaUpdateInfoProjectionBasic> getFilteredInfoListPageable(List<Integer> freeflags, Integer userId, Pageable pageable, boolean useCache){
+        Page<WebMangaUpdateInfoProjectionBasic> res = webRepository.findDistinctByFreeFlagInAndMangaWebMangaFollowsUserId(freeflags, userId, pageable);
         return res;
     }
     /** 有料無料・ジャンルで絞り込み */
     @Transactional(readOnly = true)
 //    @Cacheable(value = "webMangaUpdateInfo", key = "'genre:' + #genreIds + ',freeflag:' + #freeflags + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
-    public Page<WebMangaUpdateInfo> getFilteredInfoListPageable(List<Integer> genreIds, List<Integer> freeflags, Pageable pageable, boolean useCache){
-        Page<WebMangaUpdateInfo> res = webRepository.findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagIn(genreIds, freeflags, pageable);
+    public Page<WebMangaUpdateInfoProjectionBasic> getFilteredInfoListPageable(List<Integer> genreIds, List<Integer> freeflags, Pageable pageable, boolean useCache){
+        Page<WebMangaUpdateInfoProjectionBasic> res = webRepository.findDistinctByMangaMangaTagsTagGenreTagsGenreIdInAndFreeFlagIn(genreIds, freeflags, pageable);
         return res;
     }
     /** 有料無料で絞り込み */
     @Transactional(readOnly = true)
     @Cacheable(value = "webMangaUpdateInfo", key = "'freeflag:' + #freeflags + ',page:' + #pageable.pageNumber + ',size:' + #pageable.pageSize", condition = "#useCache")
-    public Page<WebMangaUpdateInfo> getFilteredInfoListPageable(List<Integer> freeflags, Pageable pageable, boolean useCache){
-        Page<WebMangaUpdateInfo> res = webRepository.findByFreeFlagIn(freeflags, pageable);
+    public Page<WebMangaUpdateInfoProjectionBasic> getFilteredInfoListPageable(List<Integer> freeflags, Pageable pageable, boolean useCache){
+        Page<WebMangaUpdateInfoProjectionBasic> res = webRepository.findByFreeFlagIn(freeflags, pageable);
         return res;
     }
+/** 従前の個別のメソッド( getFilteredInfoListPageable ) ここまで */
 
     /** 無料のみページネーション */
     @Transactional(readOnly = true)
