@@ -9,7 +9,7 @@ import com.sakeman.entity.projection.webmangamedia.WebMangaMediaProjectionForWeb
 
 public interface WebMangaUpdateInfoProjectionBasic {
     Integer getId();
-    String getTitleString();
+    String getString();
     String getSubTitle();
     String getAuthorString();
     String getUrl();
