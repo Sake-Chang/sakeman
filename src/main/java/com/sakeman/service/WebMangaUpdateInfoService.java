@@ -122,6 +122,11 @@ public class WebMangaUpdateInfoService {
 //    }
 
 
+    @Transactional(readOnly=true)
+    public Page<WebMangaUpdateInfoProjectionBasic> getFiltered(List<Integer> genreIds, boolean isGenreEmpty, List<Integer> freeflags, Integer followflag, Integer userId, Integer oneshotflag, Pageable pageable, boolean useCache) {
+        return webRepository.findFiltered(freeflags, followflag, userId, oneshotflag, genreIds, isGenreEmpty, pageable);
+    }
+
 /** 従前の個別のメソッド( getFilteredInfoListPageable ) ここから */
     /** 有料無料・ジャンル・フォローで絞り込み */
     @Transactional(readOnly = true)

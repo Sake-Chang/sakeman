@@ -3,6 +3,7 @@ package com.sakeman.controller;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,7 +34,6 @@ import com.sakeman.entity.WebMangaUpdateInfo;
 import com.sakeman.entity.projection.webmanga.WebMangaUpdateInfoProjectionBasic;
 import com.sakeman.service.GenreService;
 import com.sakeman.service.MangaService;
-import com.sakeman.service.TagService;
 import com.sakeman.service.UserDetail;
 import com.sakeman.service.UserService;
 import com.sakeman.service.WebLikeService;
@@ -43,7 +44,8 @@ import com.sakeman.service.WebMangaUpdateInfoService;
 import lombok.RequiredArgsConstructor;
 
 
-@Controller("/")
+@Controller
+@RequestMapping("/web-manga-update-info")
 @RequiredArgsConstructor
 public class WebMangaUpdateInfoController {
 
@@ -56,7 +58,7 @@ public class WebMangaUpdateInfoController {
     private final UserService userService;
 
     /** 一覧を表示 */
-    @GetMapping("/web-manga-update-info")
+    @GetMapping("")
     public String getList(@ModelAttribute Manga manga, Model model,
             @AuthenticationPrincipal UserDetail userDetail,
             @PageableDefault(page = 0, size = 25)
@@ -75,24 +77,31 @@ public class WebMangaUpdateInfoController {
         int freeflag = (thisUser != null) ? thisUser.getWebMangaSettingsFreeflag() : 0;
         int oneshotflag = (thisUser != null) ? thisUser.getWebMangaSettingsOneshotflag() : 0;
         List<Integer> genreSetting = (thisUser != null) ? thisUser.getWebMangaSettingsGenre() : new ArrayList<>();
+        boolean isGenreEmpty = genreSetting == null || genreSetting.isEmpty();
+        if (isGenreEmpty) {
+            genreSetting = Collections.singletonList(0);  // 空リストが渡されるとエラーになるため、ダミーで0を設定
+        }
 
 //        Page<WebMangaUpdateInfoProjectionBasic> result = webService.getFilteredInfoListPageableSpecific(thisUser, freeflag, followflag, oneshotflag, genreSetting, pageable, true);
 
 //ここから
         List<Integer> freeflagsSetting = freeflag == 0 ? List.of(0, 1, 2) : List.of(1);
-        Page<WebMangaUpdateInfoProjectionBasic> result;
-        if (userDetail == null) {
-            result = webService.getInfoListPageableProjection(pageable, true);
-        } else if (genreSetting.isEmpty() && followflag == 0) {
-            result = webService.getFilteredInfoListPageable(freeflagsSetting, pageable, true);
-        } else if (genreSetting.isEmpty() && followflag == 1) {
-            result = webService.getFilteredInfoListPageable(freeflagsSetting, userDetail.getUser().getId(), pageable, true);
-        } else if (!genreSetting.isEmpty() && followflag == 0) {
-            result = webService.getFilteredInfoListPageable(genreSetting, freeflagsSetting, pageable, true);
-        } else {
-            result = webService.getFilteredInfoListPageable(genreSetting, freeflagsSetting, userDetail.getUser().getId(), pageable, true);
-        }
+
+//        Page<WebMangaUpdateInfoProjectionBasic> result;
+//        if (userDetail == null) {
+//            result = webService.getInfoListPageableProjection(pageable, true);
+//        } else if (genreSetting.isEmpty() && followflag == 0) {
+//            result = webService.getFilteredInfoListPageable(freeflagsSetting, pageable, true);
+//        } else if (genreSetting.isEmpty() && followflag == 1) {
+//            result = webService.getFilteredInfoListPageable(freeflagsSetting, userDetail.getUser().getId(), pageable, true);
+//        } else if (!genreSetting.isEmpty() && followflag == 0) {
+//            result = webService.getFilteredInfoListPageable(genreSetting, freeflagsSetting, pageable, true);
+//        } else {
+//            result = webService.getFilteredInfoListPageable(genreSetting, freeflagsSetting, userDetail.getUser().getId(), pageable, true);
+//        }
 // ここまで
+
+        Page<WebMangaUpdateInfoProjectionBasic> result = webService.getFiltered(genreSetting, isGenreEmpty, freeflagsSetting, followflag, userDetail.getUser().getId(), oneshotflag, pageable, true);
 
         if (result.isEmpty() && pageable.getPageNumber() > 0) {
             return "redirect:/web-manga-update-info?page=0";
@@ -123,10 +132,10 @@ public class WebMangaUpdateInfoController {
     }
 
     /** 設定＆設定の保存 */
-    @PostMapping("/web-manga-update-info")
+    @PostMapping("")
     @PreAuthorize("isAuthenticated")
     @ResponseBody
-    public ResponseEntity<String> getFilteredList(
+    public ResponseEntity<String> postWebmangaSetting(
             @RequestParam(name="genres", required=false) List<Integer> genres,
             @RequestParam(name="freeflag", required=false, defaultValue="0") Integer freeflag,
             @RequestParam(name="followflag", required=false, defaultValue="0") Integer followflag,
@@ -144,7 +153,7 @@ public class WebMangaUpdateInfoController {
     }
 
     /** メディアIDごと一覧を表示 */
-    @GetMapping("/web-manga-update-info/media/{id}")
+    @GetMapping("/media/{id}")
     public String getListByMediaId(@ModelAttribute Manga manga,
                                    Model model,
                                    @PathVariable("id") Integer mediaId,
@@ -173,7 +182,7 @@ public class WebMangaUpdateInfoController {
     }
 
     /** マンガIDごと一覧を表示 */
-    @GetMapping("/web-manga-update-info/manga/{id}")
+    @GetMapping("/manga/{id}")
     public String getListByMangaId(@ModelAttribute Manga manga,
                                    Model model,
                                    @PathVariable("id") Integer mangaId,
