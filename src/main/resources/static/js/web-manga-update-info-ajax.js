@@ -91,14 +91,14 @@ $(function() {
                         },
                         error: function(xhr) {
                             console.error("Error during GET: " + xhr.responseText);
+                        },
+                        complete: function() {
+                            $('#loading-indicator').hide();
                         }
                     });
                 },
                 error: function(xhr) {
                     console.error("Error during POST: " + xhr.responseText);
-                },
-                complete: function() {
-                    $('#loading-indicator').hide();
                 }
             });
         });
@@ -188,14 +188,14 @@ $(function() {
                         },
                         error: function(xhr) {
                             console.error("Error during GET: " + xhr.responseText);
+                        },
+                        complete: function() {
+                            $('#loading-indicator').hide();
                         }
                     });
                 },
                 error: function(xhr) {
                     console.error("Error during POST: " + xhr.responseText);
-                },
-                complete: function() {
-                    $('#loading-indicator').hide();
                 }
             });
         });
