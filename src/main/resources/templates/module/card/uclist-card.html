@@ -11,7 +11,7 @@
                     <a th:href="@{/user/{id}/want/grid(id=${uclist.user.id})}">
                         <img class="card-user-img" th:src="${#lists.isEmpty(uclist.user.img)} ?
                                     @{https://sake-man.com/system/default_img.png} :
-                                    @{https://sake-man.com/sakeman-user-upload/{path}(path=${uclist.user.img})}">
+                                    @{https://sake-man.com/sakeman-user-upload/{path}(path=${uclist.user.img})}" loading="lazy">
                     </a>
                     <div class="card-user-text">
                         <div class="card-user-name">
@@ -46,7 +46,7 @@
                         <figure class="minimanga-module-calligrapy">
                             <img th:src="${#lists.isEmpty(um.manga.calligraphy)} ?
                                          @{https://sake-man.com/system/noimage.jpg} :
-                                         @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">
+                                         @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}" loading="lazy">
                         </figure>
                     </a>
                     <th:block th:insert="~{module/btn/btn-store-circle :: btn-store-circle(manga=${um.manga})}"></th:block>

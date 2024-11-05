@@ -29,7 +29,7 @@ public class UclistService {
 
     /** ページネーション */
     @Transactional(readOnly = true)
-//    @Cacheable(value = "uclist", key = "'allEntries'")
+    @Cacheable(value = "uclist", key = "'allEntries'")
     public Page<Uclist> getUclistListPageable(Pageable pageable){
         return uclistRepository.findAll(pageable);
     }
@@ -66,7 +66,7 @@ public class UclistService {
 
     /** 登録処理 */
     @Transactional
-//    @CacheEvict(value = {"uclist"}, allEntries = true)
+    @CacheEvict(value = {"uclist"}, allEntries = true)
     public Uclist saveUclist (Uclist uclist) {
         return uclistRepository.save(uclist);
     }

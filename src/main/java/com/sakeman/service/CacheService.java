@@ -10,7 +10,8 @@ public class CacheService {
             "webMangaUpdateInfoToday",
             "webMangaUpdateInfoByMangaId",
             "webMangaUpdateInfoByMediaId",
-            "webMangaUpdateInfoByTitleSubtitle"
+            "webMangaUpdateInfoByTitleSubtitle",
+            "webMangaUpdateInfoProjection"
         }, allEntries = true)
     public void clearCache() {
     }

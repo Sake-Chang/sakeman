@@ -13,7 +13,7 @@
         <figure class="manga-card-calligraphy">
             <img th:src="${#lists.isEmpty(manga.calligraphy)} ?
                             @{https://sake-man.com/system/noimage.jpg} :
-                            @{https://sake-man.com/calligraphy/__${manga.calligraphy}__}">
+                            @{https://sake-man.com/calligraphy/__${manga.calligraphy}__}" loading="lazy">
         </figure>
     </a>
 
@@ -72,7 +72,7 @@
                 <div class="manga-card-media-logo-container">
                     <th:block th:each=" media : ${#toSetMedia.toSetMedia(manga)} ">
                         <figure class="manga-card-media-logo-figure">
-                            <img class="manga-card-media-logo-img" th:src="@{https://sake-man.com/media_logo/__${media.logo}__}">
+                            <img class="manga-card-media-logo-img" th:src="@{https://sake-man.com/media_logo/__${media.logo}__}" loading="lazy">
                         </figure>
                     </th:block>
                 </div>

@@ -21,7 +21,7 @@
                     <figure class="minimanga-module-calligrapy">
                         <img th:src="${#lists.isEmpty(um.manga.calligraphy)} ?
                                      @{https://sake-man.com/system/noimage.jpg} :
-                                     @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">
+                                     @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}" loading="lazy">
                     </figure>
                 </a>
                 <th:block th:insert="~{module/btn/btn-store-circle :: btn-store-circle(manga=${um.manga})}"></th:block>

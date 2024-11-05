@@ -124,9 +124,14 @@ $(function() {
             var followflag = params.get('followflag');
             var oneshotflag = params.get('oneshotflag');
             var genres = params.getAll('genres');
+            console.log(freeflag)
+            console.log(followflag)
+            console.log(oneshotflag)
+
+            console.log(genres.length)
 
             // デフォルトの状態と比較
-            if (freeflag == 0 && followflag == 0 && oneshotflag == 0 && genres.length == 0) {
+            if (freeflag == null && followflag == null && oneshotflag == null && genres.length == 0) {
                 return true;
             }
             return false;
@@ -199,6 +204,32 @@ $(function() {
                 }
             });
         });
+
+
+    // ここからチェックボックスの全選択用JS
+        var selectAllCheckbox = document.getElementById("selectAllGenres");
+        var genreCheckboxes = document.querySelectorAll(".webmanga-genres-checkbox-inform");
+
+        if (selectAllCheckbox && genreCheckboxes.length > 0) {
+            // 「すべて」チェックボックスの状態を他のチェックボックスに適用
+            selectAllCheckbox.addEventListener("change", function() {
+                var isChecked = selectAllCheckbox.checked;
+                genreCheckboxes.forEach(function(checkbox) {
+                    checkbox.checked = isChecked;
+                });
+            });
+
+            // 個別のチェックボックスがすべてオンまたはオフなら「すべて」もチェック状態を更新
+            genreCheckboxes.forEach(function(checkbox) {
+                checkbox.addEventListener("change", function() {
+                    selectAllCheckbox.checked = Array.from(genreCheckboxes).every(cb => cb.checked);
+                });
+            });
+        } else {
+            console.warn("selectAllGenres または genreCheckboxes が見つかりません。");
+        }
+    //ここまで
+
 
     });
 });

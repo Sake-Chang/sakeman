@@ -10,10 +10,10 @@
         <div class="card-user">
             <a th:href="@{/user/{id}/want/grid(id=${user.id})}">
             <th:block th:if="${user.img != null}">
-            <img class="card-user-img" th:src="@{https://sake-man.com/sakeman-user-upload/{path}(path=${user.img})}">
+            <img class="card-user-img" th:src="@{https://sake-man.com/sakeman-user-upload/{path}(path=${user.img})}" loading="lazy">
             </th:block>
             <th:block th:unless="${user.img != null}">
-            <img class="card-user-img" th:src="@{https://sake-man.com/system/default_img.png}" style ="background-color: #E1D8F0">
+            <img class="card-user-img" th:src="@{https://sake-man.com/system/default_img.png}" style ="background-color: #E1D8F0" loading="lazy">
             </th:block>
             </a>
             <div class="card-user-text">
@@ -56,7 +56,7 @@
                 <a th:href="@{/manga/detail/${readlist.id}__}">
                     <img th:src="${#lists.isEmpty(readlist.manga.calligraphy)} ?
                                      @{https://sake-man.com/system/noimage.jpg} :
-                                     @{https://sake-man.com/calligraphy/__${readlist.manga.calligraphy}__}">
+                                     @{https://sake-man.com/calligraphy/__${readlist.manga.calligraphy}__}" loading="lazy">
                 </a>
             </figure>
         </th:block>

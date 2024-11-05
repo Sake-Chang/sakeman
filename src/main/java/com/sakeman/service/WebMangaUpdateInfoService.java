@@ -278,7 +278,8 @@ public class WebMangaUpdateInfoService {
             "webMangaUpdateInfoToday",
             "webMangaUpdateInfoByMangaId",
             "webMangaUpdateInfoByMediaId",
-            "webMangaUpdateInfoByTitleSubtitle"
+            "webMangaUpdateInfoByTitleSubtitle",
+            "webMangaUpdateInfoProjection"
         }, allEntries = true)
     public WebMangaUpdateInfo saveInfo (WebMangaUpdateInfo info) {
         return webRepository.save(info);
@@ -290,7 +291,8 @@ public class WebMangaUpdateInfoService {
             "webMangaUpdateInfoToday",
             "webMangaUpdateInfoByMangaId",
             "webMangaUpdateInfoByMediaId",
-            "webMangaUpdateInfoByTitleSubtitle"
+            "webMangaUpdateInfoByTitleSubtitle",
+            "webMangaUpdateInfoProjection"
         }, allEntries = true)
     public void deleteById(Integer id) {
         webRepository.deleteById(id);

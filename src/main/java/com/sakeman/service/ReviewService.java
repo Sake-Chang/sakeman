@@ -2,6 +2,8 @@ package com.sakeman.service;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,7 @@ public class ReviewService {
 
     /** マンガIDで検索して返す */
     @Transactional(readOnly = true)
+    @Cacheable(value = "review", key = "'allEntries'")
     public List<Review> getReviewByMangaId(Integer id) {
         return reviewRepository.findByMangaId(id);
     }
@@ -57,6 +60,7 @@ public class ReviewService {
 
     /** 登録処理 */
     @Transactional
+    @CacheEvict(value = {"review"}, allEntries = true)
     public Review saveReview (Review review) {
         return reviewRepository.save(review);
     }

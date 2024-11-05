@@ -12,7 +12,8 @@
                 <figure class="shelf-vertical-calligraphy">
                     <img th:src="${um.manga.calligrapy==null} ?
                                  @{https://sake-man.com/system/noimage.jpg} :
-                                 @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}">                </figure>
+                                 @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}" loading="lazy">
+                </figure>
             </a>
 
             <div class="shelf-vertical-text">

@@ -66,21 +66,6 @@ public class IndexController {
         return "index";
     }
 
-//    /** 検索結果を表示 */
-//    @GetMapping("/search")
-//    public String getSearchResult(@ModelAttribute Manga manga, @AuthenticationPrincipal UserDetail userDetail, Model model, @PageableDefault(page=0, size=20, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
-//        String query = manga.getTitle();
-//        Page<Manga> searchResultPage = maService.getSearchResult(manga, pageable);
-//        model.addAttribute("searchResultPage", searchResultPage);
-//        model.addAttribute("searchResult", searchResultPage.getContent());
-//        model.addAttribute("reviewlist", reService.getReviewList());
-//        model.addAttribute("likelist", likeService.reviewIdListLikedByUser(userDetail));
-//        model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
-//        model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
-//        model.addAttribute("query", query);
-//        return "search";
-//    }
-
     @GetMapping("/search")
     public String getSearchResult(@ModelAttribute SearchbarForm searchbarForm, @AuthenticationPrincipal UserDetail userDetail, Model model, @PageableDefault(page=0, size=20, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
         String[] keywords = searchbarForm.getKeywords();
