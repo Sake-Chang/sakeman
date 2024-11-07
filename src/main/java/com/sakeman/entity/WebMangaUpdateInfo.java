@@ -44,13 +44,21 @@ public class WebMangaUpdateInfo implements Serializable, Comparable<WebMangaUpda
     @ToString.Include
     private Integer id;
 
+    @Column(name = "media_name")
     private String mediaName;
+    @Column(name = "title_string")
     private String titleString;
+    @Column(name = "sub_title")
     private String subTitle;
+    @Column(name = "author_string")
     private String authorString;
+    @Column(name = "url")
     private String url;
+    @Column(name = "img_url")
     private String imgUrl;
+    @Column(name = "free_flag")
     private Integer freeFlag;
+    @Column(name = "update_at")
     private LocalDateTime updateAt;
 
     /** 関連エンティティ */

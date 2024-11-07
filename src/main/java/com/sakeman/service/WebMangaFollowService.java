@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +50,12 @@ public class WebMangaFollowService {
     @Transactional(readOnly = true)
     public List<WebMangaFollow> findByUser(User user) {
         return repository.findByUser(user);
+    }
+
+    /** Userで検索 */
+    @Transactional(readOnly = true)
+    public Page<WebMangaFollow> findByUserPageable(User user, Pageable pageable) {
+        return repository.findByUser(user, pageable);
     }
 
     /** user_idで検索 */

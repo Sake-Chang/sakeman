@@ -55,18 +55,28 @@
         <span class="tag" th:text="${badgeuser.badge.name}"></span>
     </div>
 
+    <!--
+    <div class="container" th:with="text='マイ本棚', class='uil-books'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}"></div>
+    -->
+
     <!--/* タブ */-->
     <div class="tab-container">
         <a class="tab-link" th:href="@{/user/{id}/want/grid(id=${user.id})}">
             <div class="tab" th:classappend="${tab == 'want'} ? 'tab-current' : ''">
-                <i class="material-icons-outlined md-24">bookmark_added</i>
+                <!--<i class="material-icons-outlined md-24">bookmark_added</i>-->
                 <span class="tab-text">気になる ([[${wantpages.totalElements}]])</span>
             </div>
         </a>
         <a class="tab-link" th:href="@{/user/{id}/read/grid(id=${user.id})}">
             <div class="tab" th:classappend="${tab == 'read'} ? 'tab-current' : ''">
-                <i class="material-icons-outlined md-24">check_box</i>
+                <!--<i class="material-icons-outlined md-24">check_box</i>-->
                 <span class="tab-text">読んだ ([[${readpages.totalElements}]])</span>
+            </div>
+        </a>
+        <a class="tab-link" th:href="@{/user/{id}/follow/grid(id=${user.id})}">
+            <div class="tab" th:classappend="${tab == 'follow'} ? 'tab-current' : ''">
+                <!--<i class="material-icons-outlined md-24">check_box</i>-->
+                <span class="tab-text">Webフォロー ([[${readpages.totalElements}]])</span>
             </div>
         </a>
     </div>
@@ -85,6 +95,9 @@
     </th:block>
     <th:block th:if="${tab} == 'read'">
         <div th:insert="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userreadlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
+    </th:block>
+    <th:block th:if="${tab} == 'follow'">
+        <div th:insert="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userfollowlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
     </th:block>
 
 

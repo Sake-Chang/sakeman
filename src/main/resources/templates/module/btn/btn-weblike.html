@@ -9,7 +9,7 @@
 <!--/* btn-like */-->
 
 <th:block sec:authorize="isAuthenticated()">
-    <div class="btn-ia weblike-toggle"
+    <div class="btn-ia weblike-toggle clickable"
             th:classappend="${#lists.contains(likelist, info.id)} ? 'md-HL'" th:data-info-id="${info.id}">
         <span class="material-icons-outlined md-24">favorite_border</span>
         <span class="btn-ia-text">[[${info.webLikes.size}]] いいね</span>
@@ -17,7 +17,7 @@
 </th:block>
 <th:block sec:authorize="!isAuthenticated()">
     <input type="checkbox" id="alert-popup8">
-    <label class="btn-ia alert-popup-open" for="alert-popup8"
+    <label class="btn-ia alert-popup-open clickable" for="alert-popup8"
             th:classappend="${#lists.contains(likelist, info.id)} ? 'md-HL'" th:data-info-id="${info.id}">
         <span class="material-icons-outlined md-24">favorite_border</span>
         <span class="btn-ia-text">[[${info.webLikes.size}]] いいね</span>

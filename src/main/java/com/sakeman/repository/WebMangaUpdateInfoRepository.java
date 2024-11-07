@@ -51,6 +51,8 @@ public interface WebMangaUpdateInfoRepository extends JpaRepository<WebMangaUpda
     Page<WebMangaUpdateInfoProjectionBasic> findAllWithProjectionBy(Pageable pageable);
     /** 昔の個別でやってた時のメソッド (ここまで)*/
 
+
+
     @Query("""
             SELECT DISTINCT w
             FROM WebMangaUpdateInfo w
@@ -64,6 +66,60 @@ public interface WebMangaUpdateInfoRepository extends JpaRepository<WebMangaUpda
               AND (:followflag = 0 OR EXISTS (SELECT 1 FROM WebMangaFollow wf WHERE wf.user.id = :userId AND wf.manga.id = m.id)))
               OR (:oneshotflag = 1 AND m.isOneShot = true)
             """)
+//    @Query(value = """
+//            -- 条件1〜3に基づくメインクエリ
+//            (SELECT DISTINCT w.*
+//             FROM web_manga_update_info w
+//             JOIN manga m ON w.manga_id = m.id
+//             LEFT JOIN manga_tag mt ON m.id = mt.manga_id
+//             LEFT JOIN tag t ON mt.tag_id = t.id
+//             LEFT JOIN genre_tag gt ON t.id = gt.tag_id
+//             WHERE (:isGenreEmpty = true OR gt.genre_id IN :genreIds)
+//               AND w.free_flag IN :freeflags
+//               AND (:followflag = 0 OR EXISTS (
+//                   SELECT 1
+//                   FROM web_manga_follow wf
+//                   WHERE wf.user_id = :userId AND wf.manga_id = m.id
+//               )))
+//
+//            UNION
+//
+//            -- 条件4に基づく読切作品を追加
+//            (SELECT DISTINCT w.*
+//             FROM web_manga_update_info w
+//             JOIN manga m ON w.manga_id = m.id
+//             WHERE :oneshotflag = 1 AND m.is_one_shot = true)
+//
+//            ORDER BY update_at DESC, web_manga_media_id ASC,
+//                     title_string ASC, free_flag DESC, id DESC
+//            """,
+//            countQuery = """
+//            -- 件数取得用のcountクエリ
+//            SELECT COUNT(*)
+//            FROM (
+//                (SELECT DISTINCT w.id
+//                 FROM web_manga_update_info w
+//                 JOIN manga m ON w.manga_id = m.id
+//                 LEFT JOIN manga_tag mt ON m.id = mt.manga_id
+//                 LEFT JOIN tag t ON mt.tag_id = t.id
+//                 LEFT JOIN genre_tag gt ON t.id = gt.tag_id
+//                 WHERE (:isGenreEmpty = true OR gt.genre_id IN :genreIds)
+//                   AND w.free_flag IN :freeflags
+//                   AND (:followflag = 0 OR EXISTS (
+//                       SELECT 1
+//                       FROM web_manga_follow wf
+//                       WHERE wf.user_id = :userId AND wf.manga_id = m.id
+//                   )))
+//
+//                UNION
+//
+//                (SELECT DISTINCT w.id
+//                 FROM web_manga_update_info w
+//                 JOIN manga m ON w.manga_id = m.id
+//                 WHERE :oneshotflag = 1 AND m.is_one_shot = true)
+//            ) AS union_count
+//            """,
+//            nativeQuery = true)
     Page<WebMangaUpdateInfoProjectionBasic> findFiltered(
         @Param("freeflags") List<Integer> freeflags,
         @Param("followflag") Integer followflag,

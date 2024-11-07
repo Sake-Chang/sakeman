@@ -25,7 +25,7 @@
                 -->
 
                 <input type="checkbox" id="webmanga-settings-popup">
-                <label  class="webmanga-setting-popup-open webmanga-settings" for="webmanga-settings-popup"
+                <label  class="webmanga-setting-popup-open webmanga-settings clickable" for="webmanga-settings-popup"
                         th:classappend="${freeflag != 0 or followflag != 0 or !genreflag.contains(0) ? 'webmanga-settings-modified' : ''}">
                     <span   class="material-icons-outlined md-18 md-BL"
                             th:text="${freeflag != 0 or followflag != 0 or !genreflag.contains(0) ? 'check' : 'tune'}">
@@ -104,12 +104,12 @@
                                         <div class="webmanga-setting-popup-text">ジャンル（複数選択可）</div>
                                     </div>
                                     <label class="webmanga-genres-select-all">
-                                        <input id="selectAllGenres" type="checkbox">
+                                        <input id="selectAllGenres" type="checkbox" class="clickable">
                                         <span>ぜんぶ</span>
                                     </label>
                                 </div>
                                 <div class="webmanga-settings-items">
-                                    <div class="webmanga-genres-item" th:each="genre : ${genrelist}">
+                                    <div class="webmanga-genres-item clickable" th:each="genre : ${genrelist}">
                                         <label>
                                             <input class="webmanga-genres-checkbox-inform" type="checkbox"
                                                    th:name="genres"
@@ -122,10 +122,10 @@
                                 </div>
                             </div>
                             <div class="webmanga-setting-btn-container">
-                                <label class="webmanga-setting-popup-close btn-cancel" for="webmanga-settings-popup">
+                                <label class="webmanga-setting-popup-close btn-cancel clickable" for="webmanga-settings-popup">
                                     キャンセル
                                 </label>
-                                <input class="btn-filter" type="submit" value="設定する" th:disabled="${#authorization.expression('isAnonymous()')}">
+                                <input class="btn-filter clickable" type="submit" value="設定する" th:disabled="${#authorization.expression('isAnonymous()')}">
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
             <!--</div>-->
         </form>
 
-        <div class="webmanga-genres-item" th:each="genre:${genrelist}">
+        <div class="webmanga-genres-item clickable" th:each="genre:${genrelist}">
             <label>
                 <input class="webmanga-genres-checkbox-outer"
                        type="checkbox"

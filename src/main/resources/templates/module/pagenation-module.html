@@ -5,6 +5,7 @@
 <!--/* 引数を受け取って呼ばれる（ object = ${pages} ） */-->
 <div layout:fragment="pagenation-module(pages)">
 
+<th:block th:if="${pages.totalPages != 1}">
 <!--/* ページネーションバー（Redmine参考） */-->
 <nav class="pagenation" aria-label="pagenation">
 
@@ -18,33 +19,35 @@
         </li>
 
         <!--/* 最初のページ */-->
-        <li th:if="${pages.number gt 2}" class="page-item">
-            <a th:href="@{''(page=0)}" class="page-item-text" th:attr="data-page=0">1</a>
-        </li>
+        <a th:href="@{''(page=0)}" class="page-item-text" th:attr="data-page=0">
+            <li th:if="${pages.number >= 2}" class="page-item">1</li>
+        </a>
 
         <!--/* … */-->
-        <li th:if="${pages.number gt 3}" class="page-item dot">
+        <li th:if="${pages.number >= 3}" class="page-item dot">
             <span class="page-item-text dot">…</span>
         </li>
 
         <th:block th:each="i : ${ #numbers.sequence(pages.number - 1, pages.number + 1) }">
-        <li th:if="${i ge 0 and i lt pages.totalPages}" class="page-item"
-            th:classappend="${i eq pages.number} ? 'current'">
-            <a th:href="@{''(page=${i})}" th:text="${i + 1}" class="page-item-text"
-            th:classappend="${i eq pages.number} ? 'current'" th:attr="data-page=${i}"></a>
-        </li>
+            <a th:href="@{''(page=${i})}" class="page-item-text"
+                th:classappend="${i == pages.number} ? 'current'" th:attr="data-page=${i}">
+                <li th:if="${i >= 0 and i < pages.totalPages}" class="page-item"
+                    th:classappend="${i == pages.number} ? 'current'"
+                    th:text="${i + 1}">
+                </li>
+            </a>
         </th:block>
 
         <!--/* … */-->
-        <li th:if="${pages.totalPages gt (pages.number + 4)}" class="page-item dot">
+        <li th:if="${pages.totalPages >= (pages.number + 4)}" class="page-item dot">
             <span class="page-item-text dot">…</span>
         </li>
 
         <!--/* 最後のページ */-->
-        <li th:if="${pages.totalPages gt (pages.number + 3)}" class="page-item">
-            <a th:href="@{''(page=${pages.totalPages - 1})}" th:text="${pages.totalPages}"
-                class="page-item-text" th:attr="data-page=${pages.totalPages - 1}"></a>
-        </li>
+        <a th:href="@{''(page=${pages.totalPages - 1})}"
+            class="page-item-text" th:attr="data-page=${pages.totalPages - 1}">
+            <li th:if="${pages.totalPages > (pages.number + 2)}" class="page-item" th:text="${pages.totalPages}"></li>
+        </a>
 
         <!--/* 次のページ */-->
         <li class="next page-item" th:classappend="${pages.last} ? 'disabled'">
@@ -55,5 +58,6 @@
         </li>
     </ul>
   </nav>
+</th:block>
 </div>
 </html>

@@ -33,6 +33,7 @@ import com.sakeman.entity.ReadStatus;
 import com.sakeman.entity.ReadStatus.Status;
 import com.sakeman.entity.User;
 import com.sakeman.entity.UserFollow;
+import com.sakeman.entity.WebMangaFollow;
 import com.sakeman.form.EditUserProfForm;
 import com.sakeman.service.BadgeUserService;
 import com.sakeman.service.ImageValidationService;
@@ -42,6 +43,7 @@ import com.sakeman.service.S3Service;
 import com.sakeman.service.UserDetail;
 import com.sakeman.service.UserFollowService;
 import com.sakeman.service.UserService;
+import com.sakeman.service.WebMangaFollowService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -56,6 +58,7 @@ public class UserController {
     private final BadgeUserService buService;
     private final S3Service s3Service;
     private final ImageValidationService ivService;
+    private final WebMangaFollowService wfService;
 
     /** 一覧表示 */
     @GetMapping({"/list", "/list/{tab}"})
@@ -96,12 +99,15 @@ public class UserController {
                             @PageableDefault(page=0, size=99, sort= {"registeredAt"},
                             direction=Direction.DESC) Pageable pageable) {
 
-        Page<ReadStatus> userwantlistPage = rsService.findByUserAndStatusPageable(service.getUser(id), Status.気になる, pageable);
-        Page<ReadStatus> userreadlistPage = rsService.findByUserAndStatusPageable(service.getUser(id), Status.読んだ, pageable);
+        User thisUser = service.getUser(id);
+        Page<ReadStatus> userwantlistPage = rsService.findByUserAndStatusPageable(thisUser, Status.気になる, pageable);
+        Page<ReadStatus> userreadlistPage = rsService.findByUserAndStatusPageable(thisUser, Status.読んだ, pageable);
         List<ReadStatus> statuslist = new ArrayList<>();
         statuslist.addAll(userwantlistPage.getContent());
         statuslist.addAll(userreadlistPage.getContent());
         Collections.shuffle(statuslist);
+
+        Page<WebMangaFollow> userfollowlistPage  = wfService.findByUserPageable(thisUser, pageable);
 
         model.addAttribute("tab", tab);
         model.addAttribute("display-type", displayType);
@@ -111,6 +117,8 @@ public class UserController {
         model.addAttribute("userwantlist", userwantlistPage.getContent());
         model.addAttribute("readpages", userreadlistPage);
         model.addAttribute("userreadlist", userreadlistPage.getContent());
+        model.addAttribute("followpages", userfollowlistPage);
+        model.addAttribute("userfollowlist", userfollowlistPage.getContent());
 
         model.addAttribute("followeelist", ufService.followeeIdListFollowedByUser(userDetail));
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));

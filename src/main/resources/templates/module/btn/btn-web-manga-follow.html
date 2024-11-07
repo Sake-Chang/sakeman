@@ -8,7 +8,7 @@
 
 <th:block sec:authorize="isAuthenticated()">
     <th:block   th:unless="${mangaId} == 111111">
-        <div    class="web-manga-follow-toggle"
+        <div    class="web-manga-follow-toggle clickable"
                     th:with="mangaId=${mangaId}"
                     th:data-manga-id="${mangaId}">
                 <span   class="material-icons-outlined md-24 md-GR"

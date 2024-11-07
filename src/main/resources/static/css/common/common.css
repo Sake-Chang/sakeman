@@ -8,11 +8,8 @@
     --BK: #595959;
     --GR: #7e7e7e;
     --AS: #dedede;
-    /*    --PL: #7a42bf; */
     --PL: #7735bd;
-    /*    --LV: #E3CEEA; */
     --LV: #E1D8F0;
-    /*    --HL: #f29423; */
     --HL: #f37025;
 }
 
@@ -135,6 +132,18 @@ input[type="submit"] :hover {
     padding: 16px;
     margin: 16px;
     border-radius: 4px;
+}
+
+button:active, a:active, .clickable:active {
+    transform: translateY(2px);
+    transition: transform 0.1s ease;
+}
+
+@media (hover: none) {
+  *:hover {
+    background-color: initial;
+    color: inherit;
+  }
 }
 
 /* --------------------------------------------------
@@ -494,10 +503,12 @@ h2>i {
     width: 100%;
     display: flex;
     margin-bottom: 20px;
+    overflow: auto;
 }
 
 .tab {
     height: 100%;
+/*    min-width: 150px;*/
     color: var(--GR);
     border-top: solid 0.5px var(--AS);
     border-bottom: solid 0.5px var(--AS);
@@ -521,9 +532,10 @@ h2>i {
     content: "";
     display: block;
     height: 2.5px;
-    width: 66%;
     position: absolute;
-    left: 17%;
+    width: 100%;
+/*    width: 66%;*/
+/*    left: 17%;*/
     bottom: 0px;
 }
 
@@ -1257,7 +1269,7 @@ table.manga-info-table td.bar {
     aspect-ratio: 120 / 174;
     width: 100%;
     overflow: hidden;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .minimanga-module-calligrapy img {
@@ -1405,15 +1417,29 @@ nav.pagenation {
     align-items: center;
 }
 
-
+.container.pagenation-container {
+    padding: 0;
+    margin-bottom: 0;
+    width: 100%;
+}
 
 .page-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
     height: 40px;
     background-color: var(--WH);
     border-radius: 50%;
     border: solid 1px var(--AS);
 }
+
+.page-item:hover,
+.page-item.current:hover {
+    background-color: var(--LV);
+    color: var(--BK);
+}
+
 
 .page-item.current {
     background-color: var(--PL);
@@ -1432,6 +1458,10 @@ nav.pagenation {
     right: 76%;
     z-index: -1;
     rotate: -8deg;
+}
+
+.page-item.current:hover::before {
+    border-bottom-color: var(--LV);
 }
 
 .page-item-text {
@@ -2037,8 +2067,8 @@ ul.store-btn-list li+li {
 /*    border-left: none;*/
 /*    border-radius: 0 24px 24px 0;*/
 /*    padding: 4px 8px 4px 6px;*/
-    border-radius: 24px;
-    padding: 4px 10px;
+    border-radius: 6px;
+    padding: 4px 8px;
     column-gap: 4px;
     width: fit-content;
     align-items: center;
@@ -2053,7 +2083,7 @@ ul.store-btn-list li+li {
     cursor: pointer;
     display: flex;
     border: solid 1px var(--AS);
-    border-radius: 24px 0 0 24px;
+    border-radius: 8px 0 0 8px;
     background-color: var(--WH);
     width: fit-content;
     padding: 4px 8px 4px 12px;
@@ -2069,9 +2099,8 @@ ul.store-btn-list li+li {
 
 .webmanga-settings-modified {
     color: var(--PL);
-    font-weight: 700;
 /*    padding: 4px 6px 4px 12px;*/
-    padding: 4px 10px;
+    padding: 4px 8px;
     border: solid 1px var(--PL)
 }
 
@@ -2096,7 +2125,7 @@ ul.store-btn-list li+li {
     display: inline-flex;
     overflow: scroll;
     align-items: center;
-    column-gap: 4px;
+    column-gap: 6px;
     padding: 0 12px 4px;
     position: relative;
     margin-bottom: 16px;
@@ -2149,23 +2178,16 @@ ul.store-btn-list li+li {
     font-size: 12px;
     color: var(--GR);
     border: solid 1px var(--AS);
-    border-radius: 20px;
+    border-radius: 6px;
     background-color: var(--WH);
-    padding: 6px 10px;
+    padding: 6px 8px;
     width: fit-content;
     white-space: nowrap;
 }
 
 .webmanga-genres-item:has(input:checked) {
-    font-size: 12px;
     color: var(--PL);
-    font-weight: 550;
     border: solid 1px var(--PL);
-    border-radius: 20px;
-    background-color: var(--WH);
-    padding: 6px 10px;
-    width: fit-content;
-    white-space: nowrap;
 }
 
 .webmanga-genres-checkbox-inform,
@@ -3148,4 +3170,9 @@ input[id^=post-popup]:checked~.post-popup-overlay {
     width: fit-content;
     padding: 2px 3.5px;
     border-radius: 50%;
+}
+
+.manga-info-synopsis {
+    font-size: 12px;
+    margin-bottom: 8px;
 }

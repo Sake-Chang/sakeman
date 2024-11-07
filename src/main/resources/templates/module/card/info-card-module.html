@@ -6,14 +6,14 @@
 <th:block th:fragment="info-card-module(infolist, likelist)">
 
 <th:block th:if="${pages != null}">
-    <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+    <div class="container pagenation-container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
 </th:block>
 
 
 <div class="card-outer" th:each="info : ${infolist}">
 
     <!--/* インフォボタン */-->
-    <th:block th:insert="~{module/btn/btn-manga-info :: btn-manga-info(info=${info})}"></th:block>
+    <th:block th:replace="~{module/btn/btn-manga-info :: btn-manga-info(info=${info})}"></th:block>
 
     <div class="card-head">
         <div class="info-card-info">
@@ -23,7 +23,7 @@
             </figure>
         </a>
         <div class="info-card-text">
-            <div class="card-user-name">
+            <div class="card-user-name clickable">
                 <th:block th:if="${info.manga.id==111111}">
                     <a>[[*{info.titleString}]]</a>
                 </th:block>
@@ -44,7 +44,7 @@
     </div>
 
     <div class="info-module-main">
-        <div class="info-module-main-img">
+        <div class="info-module-main-img clickable">
             <th:block th:if="${info.imgUrl != null}">
                 <a th:href="*{info.url}">
                     <img th:src="*{info.imgUrl}" loading="lazy">
