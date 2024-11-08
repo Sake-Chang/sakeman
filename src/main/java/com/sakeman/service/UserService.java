@@ -118,8 +118,12 @@ public class UserService {
     @Transactional
     public User saveSettings(UserDetail userDetail, List<Integer> genres, Integer freeflag, Integer followflag, Integer oneshotflag) {
         User user = userDetail.getUser();
-        UserWebMangaSetting setting = (user.getUserWebMangaSetting() != null) ? user.getUserWebMangaSetting() : new UserWebMangaSetting();
-        setting = settingRepository.findById(user.getUserWebMangaSetting().getId()).orElse(setting);
+        UserWebMangaSetting setting;
+        if (user.getUserWebMangaSetting() != null) {
+            setting = settingRepository.findById(user.getUserWebMangaSetting().getId()).orElse(new UserWebMangaSetting());
+        } else {
+            setting = new UserWebMangaSetting();
+        }
 
         List<Integer> currentGenreIds = user.getGenreIdsAll();
 
