@@ -1,8 +1,6 @@
 package com.sakeman.entity;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,32 +8,30 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "genre")
+@Table(name = "user_web_manga_setting_genre")
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
-public class Genre implements Serializable{
-    private static final long serialVersionUID = 1L;
+//@Where(clause = "author.delete_flag=0 AND manga.delete_flag=0")
+public class UserWebMangaSettingGenre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,12 +39,6 @@ public class Genre implements Serializable{
     @EqualsAndHashCode.Include
     @ToString.Include
     private Integer id;
-
-    @Column(name = "title", nullable = false)
-    private String name;
-
-    @Column(name = "display_order", nullable = true)
-    private Integer displayOrder;
 
     @Column(name = "registered_at", nullable = false, updatable = false)
     @CreatedDate
@@ -58,15 +48,20 @@ public class Genre implements Serializable{
     @LastModifiedDate
     private Timestamp updatedAt;
 
+    @Column(name = "delete_flag", nullable = false)
+    private boolean deleteFlag = false;
+  
 
     /** 関連エンティティ */
-    @OneToMany(mappedBy = "genre", cascade = CascadeType.MERGE)
-    @JsonManagedReference("genre-tags")
-    private List<GenreTag> genreTags;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_web_manga_setting_id", referencedColumnName = "id")
+    @JsonBackReference("userWebMangaSetting-genres")
+    private UserWebMangaSetting userWebMangaSetting;
 
-    @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
-    @JsonManagedReference("genre-userWebMangaSettings")
-    private List<UserWebMangaSettingGenre> webMangaSettingsGenres;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "genre_id", referencedColumnName = "id")
+    @JsonBackReference("genre-userWebMangaSettings")
+    private Genre genre;
 
 
     @PrePersist

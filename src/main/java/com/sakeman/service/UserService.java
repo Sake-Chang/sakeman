@@ -1,9 +1,12 @@
 package com.sakeman.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,9 +19,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sakeman.entity.Author;
+import com.sakeman.entity.Genre;
 import com.sakeman.entity.Review;
 import com.sakeman.entity.User;
+import com.sakeman.entity.UserWebMangaSetting;
+import com.sakeman.entity.UserWebMangaSettingGenre;
+import com.sakeman.repository.GenreRepository;
 import com.sakeman.repository.UserRepository;
+import com.sakeman.repository.UserWebMangaSettingGenreRepository;
+import com.sakeman.repository.UserWebMangaSettingRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +35,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final GenreRepository genreRepository;
+    private final UserWebMangaSettingRepository settingRepository;
+    private final UserWebMangaSettingGenreRepository settingGenreRepository;
 
     /* SELECT系 */
     /** 全件検索 **/
@@ -104,13 +116,68 @@ public class UserService {
 
     /** Webまんがのマイセット登録 **/
     @Transactional
-    public User saveSettings(UserDetail userDetail, List<Integer> genres, Integer freeflag, Integer followflag, Integer oneshotoflag) {
+    public User saveSettings(UserDetail userDetail, List<Integer> genres, Integer freeflag, Integer followflag, Integer oneshotflag) {
         User user = userDetail.getUser();
-        user.setWebMangaSettingsGenre(genres);
-        user.setWebMangaSettingsFreeflag(freeflag);
-        user.setWebMangaSettingsFollowflag(followflag);
-        user.setWebMangaSettingsOneshotflag(oneshotoflag);
+        UserWebMangaSetting setting = (user.getUserWebMangaSetting() != null) ? user.getUserWebMangaSetting() : new UserWebMangaSetting();
+        setting = settingRepository.findById(user.getUserWebMangaSetting().getId()).orElse(setting);
+
+        List<Integer> currentGenreIds = user.getGenreIdsAll();
+
+        List<UserWebMangaSettingGenre> newList = new ArrayList<>();
+        // 送られてきたgenresを1つずつ確認
+        for (Integer genreId : genres) {
+            // 既存セットにあった場合
+            if (currentGenreIds.contains(genreId)) {
+                // そのUserWebMangaSetingGenreを取得
+                Optional<UserWebMangaSettingGenre> OptionalItem = settingGenreRepository.findByUserWebMangaSettingAndGenre(setting, genreRepository.findById(genreId).get());
+                if (OptionalItem.isPresent()) {
+                    UserWebMangaSettingGenre item = OptionalItem.get();
+                    // delete_flag==trueの場合falseに変更
+                    if (item.isDeleteFlag()) {
+                        item.setDeleteFlag(false);
+                    }
+                    newList.add(item);
+                } else {
+                    // ここには到達しないはずですが、安全のため
+                    throw new IllegalStateException("Unexpected state: UserWebMangaSettingGenre not found");
+                }
+            // 既存セットになかった場合
+            } else {
+                UserWebMangaSettingGenre item = new UserWebMangaSettingGenre();
+                item.setGenre(genreRepository.findById(genreId).get());
+                item.setUserWebMangaSetting(setting);
+                newList.add(item);
+            }
+
+        }
+
+        for (Integer genreId : currentGenreIds) {
+            if (!genres.contains(genreId)) {
+                Optional<UserWebMangaSettingGenre> OptionalItem = settingGenreRepository.findByUserWebMangaSettingAndGenre(setting, genreRepository.findById(genreId).get());
+                if (OptionalItem.isPresent()) {
+                    UserWebMangaSettingGenre item = OptionalItem.get();
+                    item.setDeleteFlag(true);
+                    newList.add(item);
+                } else {
+                    // ここには到達しないはずですが、安全のため
+                    throw new IllegalStateException("Unexpected state: UserWebMangaSettingGenre not found");
+                }
+            }
+        }
+
+        // フラグの更新
+        setting.setWebMangaSettingsFreeflag(freeflag);
+        setting.setWebMangaSettingsFollowflag(followflag);
+        setting.setWebMangaSettingsOneshotflag(oneshotflag);
+        setting.setWebMangaSettingsGenres(newList);
+
+        user.setUserWebMangaSetting(setting);
         return userRepository.save(user);
     }
+
+
+
+
+
 
 }

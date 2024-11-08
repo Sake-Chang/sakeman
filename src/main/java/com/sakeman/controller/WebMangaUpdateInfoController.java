@@ -9,7 +9,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
@@ -26,9 +28,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sakeman.entity.Manga;
 import com.sakeman.entity.User;
+import com.sakeman.entity.UserWebMangaSetting;
 import com.sakeman.entity.WebMangaMedia;
 import com.sakeman.entity.WebMangaUpdateInfo;
 import com.sakeman.entity.projection.webmanga.WebMangaUpdateInfoProjectionBasic;
@@ -43,7 +47,6 @@ import com.sakeman.service.WebMangaUpdateInfoService;
 
 import lombok.RequiredArgsConstructor;
 
-
 @Controller
 @RequestMapping("/web-manga-update-info")
 @RequiredArgsConstructor
@@ -56,48 +59,34 @@ public class WebMangaUpdateInfoController {
     private final WebMangaMediaService mediaService;
     private final GenreService genreService;
     private final UserService userService;
+    private final int PAGE_SIZE_SHORT = 25;
+    private final int PAGE_SIZE_LONG = 50;
+    private final Sort DEFAULT_SORT = Sort.by(Sort.Order.desc("updateAt"),Sort.Order.asc("webMangaMedia"),Sort.Order.asc("titleString"),Sort.Order.desc("freeFlag"));
+
 
     /** 一覧を表示 */
     @GetMapping("")
-    public String getList(@ModelAttribute Manga manga, Model model,
-            @AuthenticationPrincipal UserDetail userDetail,
-            @PageableDefault(page = 0, size = 25)
-                @SortDefault.SortDefaults({
-                    @SortDefault(sort="updateAt", direction=Direction.DESC),
-                    @SortDefault(sort="webMangaMedia", direction=Direction.ASC),
-                    @SortDefault(sort="titleString", direction=Direction.ASC),
-                    @SortDefault(sort="freeFlag", direction=Direction.DESC),
-                    @SortDefault(sort="id", direction=Direction.DESC)
-                }) Pageable pageable,
-            HttpServletRequest request) {
+    public String getList(  @ModelAttribute Manga manga,
+                            @AuthenticationPrincipal UserDetail userDetail,
+                            @RequestParam(defaultValue = "1") int page,
+                            Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
+        Pageable pageable = PageRequest.of(page - 1, PAGE_SIZE_SHORT, DEFAULT_SORT);
 
         User thisUser = (userDetail != null) ? userService.getUser(userDetail.getUser().getId()) : null;
+        UserWebMangaSetting thisSetting = (thisUser.getUserWebMangaSetting() != null) ? thisUser.getUserWebMangaSetting() : new UserWebMangaSetting();
 
-        int followflag = (thisUser != null) ? thisUser.getWebMangaSettingsFollowflag() : 0;
-        int freeflag = (thisUser != null) ? thisUser.getWebMangaSettingsFreeflag() : 0;
-        int oneshotflag = (thisUser != null) ? thisUser.getWebMangaSettingsOneshotflag() : 0;
-        List<Integer> genreSetting = (thisUser != null) ? thisUser.getWebMangaSettingsGenre() : new ArrayList<>();
+        int followflag = (thisUser != null) ? thisSetting.getWebMangaSettingsFollowflag() : 0;
+        int freeflag = (thisUser != null) ? thisSetting.getWebMangaSettingsFreeflag() : 0;
+        int oneshotflag = (thisUser != null) ? thisSetting.getWebMangaSettingsOneshotflag() : 0;
+        List<Integer> genreSetting = (thisUser != null) ? thisUser.getGenreIdsExist() : new ArrayList<>();
         boolean isGenreEmpty = genreSetting == null || genreSetting.isEmpty();
         if (isGenreEmpty) {
-            genreSetting = Collections.singletonList(0);  // 空リストが渡されるとエラーになるため、ダミーで0を設定
+            genreSetting = Collections.singletonList(0);
         }
 
-//ここから
         List<Integer> freeflagsSetting = freeflag == 0 ? List.of(0, 1, 2) : List.of(1);
 
-//        Page<WebMangaUpdateInfoProjectionBasic> result;
-//        if (userDetail == null) {
-//            result = webService.getInfoListPageableProjection(pageable, true);
-//        } else if (genreSetting.isEmpty() && followflag == 0) {
-//            result = webService.getFilteredInfoListPageable(freeflagsSetting, pageable, true);
-//        } else if (genreSetting.isEmpty() && followflag == 1) {
-//            result = webService.getFilteredInfoListPageable(freeflagsSetting, userDetail.getUser().getId(), pageable, true);
-//        } else if (!genreSetting.isEmpty() && followflag == 0) {
-//            result = webService.getFilteredInfoListPageable(genreSetting, freeflagsSetting, pageable, true);
-//        } else {
-//            result = webService.getFilteredInfoListPageable(genreSetting, freeflagsSetting, userDetail.getUser().getId(), pageable, true);
-//        }
-// ここまで
         Page<WebMangaUpdateInfoProjectionBasic> result;
         if (userDetail == null  || (freeflag == 0 && followflag == 0 && oneshotflag == 0 && isGenreEmpty)) {
             result = webService.getInfoListPageableProjection(pageable, true);
@@ -111,6 +100,11 @@ public class WebMangaUpdateInfoController {
 
         model.addAttribute("pages", result);
         model.addAttribute("infolist", result.getContent());
+
+        if (page > result.getTotalPages()) {
+            redirectAttributes.addAttribute("page", 1);
+            return "redirect:/web-manga-update-info";
+        }
 
         model.addAttribute("likelist", webLikeService.webMangaUpdateInfoIdListWebLikedByUser(userDetail));
         model.addAttribute("webmangafollowlist", wmfService.webMangaIdListLikedByUser(userDetail));
@@ -157,20 +151,27 @@ public class WebMangaUpdateInfoController {
     /** メディアIDごと一覧を表示 */
     @GetMapping("/media/{id}")
     public String getListByMediaId(@ModelAttribute Manga manga,
-                                   Model model,
                                    @PathVariable("id") Integer mediaId,
                                    @AuthenticationPrincipal UserDetail userDetail,
-                                   @PageableDefault(page = 0, size = 50)
-                                        @SortDefault.SortDefaults({@SortDefault(sort="updateAt", direction=Direction.DESC),
-                                                                   @SortDefault(sort="webMangaMedia", direction=Direction.ASC),
-                                                                   @SortDefault(sort="id", direction=Direction.DESC)})
-                                   Pageable pageable) {
+                                   @RequestParam(defaultValue = "1") int page,
+                                   Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
+        Sort sort = Sort.by(
+                Sort.Order.desc("updateAt"),
+                Sort.Order.asc("webMangaMedia")
+            );
+        Pageable pageable = PageRequest.of(page - 1, PAGE_SIZE_LONG, sort);
 
         WebMangaMedia media = mediaService.getWebMangaMedia(mediaId);
 
         Page<WebMangaUpdateInfo> result = webService.findByMediaIdPageable(mediaId, pageable, true);
         model.addAttribute("pages", result);
         model.addAttribute("infolist", result.getContent());
+
+        if (page > result.getTotalPages()) {
+            redirectAttributes.addAttribute("page", 1);
+            return "redirect:/web-manga-update-info/media/" + mediaId;
+        }
 
         model.addAttribute("likelist", webLikeService.webMangaUpdateInfoIdListWebLikedByUser(userDetail));
         model.addAttribute("webmangafollowlist", wmfService.webMangaIdListLikedByUser(userDetail));
@@ -180,26 +181,37 @@ public class WebMangaUpdateInfoController {
         LocalDateTime today = LocalDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate().atStartOfDay();
         model.addAttribute("todaylistsize", webService.getTodayInfoList(today, true).size());
 
-        return "web-manga-update-info/list";
+        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+            return "module/card/info-card-module :: info-card-module";
+        } else {
+            return "web-manga-update-info/list";
+        }
     }
 
     /** マンガIDごと一覧を表示 */
     @GetMapping("/manga/{id}")
     public String getListByMangaId(@ModelAttribute Manga manga,
-                                   Model model,
                                    @PathVariable("id") Integer mangaId,
                                    @AuthenticationPrincipal UserDetail userDetail,
-                                   @PageableDefault(page = 0, size = 50)
-                                        @SortDefault.SortDefaults({@SortDefault(sort="updateAt", direction=Direction.DESC),
-                                                                   @SortDefault(sort="webMangaMedia", direction=Direction.ASC),
-                                                                   @SortDefault(sort="id", direction=Direction.DESC)})
-                                   Pageable pageable) {
+                                   @RequestParam(defaultValue = "1") int page,
+                                   Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
+        Sort sort = Sort.by(
+                Sort.Order.desc("updateAt"),
+                Sort.Order.asc("webMangaMedia")
+            );
+        Pageable pageable = PageRequest.of(page - 1, PAGE_SIZE_LONG, sort);
 
         Manga mangaobj = maService.getManga(mangaId);
 
         Page<WebMangaUpdateInfo> result = webService.findByMangaIdPageable(mangaId, pageable, true);
         model.addAttribute("pages", result);
         model.addAttribute("infolist", result.getContent());
+
+        if (page > result.getTotalPages()) {
+            redirectAttributes.addAttribute("page", 1);
+            return "redirect:/web-manga-update-info/manga/" + mangaId;
+        }
 
         model.addAttribute("likelist", webLikeService.webMangaUpdateInfoIdListWebLikedByUser(userDetail));
         model.addAttribute("webmangafollowlist", wmfService.webMangaIdListLikedByUser(userDetail));
@@ -209,7 +221,11 @@ public class WebMangaUpdateInfoController {
         LocalDateTime today = LocalDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate().atStartOfDay();
         model.addAttribute("todaylistsize", webService.getTodayInfoList(today, true).size());
 
-        return "web-manga-update-info/list";
+        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+            return "module/card/info-card-module :: info-card-module";
+        } else {
+            return "web-manga-update-info/list";
+        }
     }
 }
 

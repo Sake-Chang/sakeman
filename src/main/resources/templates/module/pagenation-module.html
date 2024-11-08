@@ -2,62 +2,69 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<!--/* 引数を受け取って呼ばれる（ object = ${pages} ） */-->
 <div layout:fragment="pagenation-module(pages)">
 
-<th:block th:if="${pages.totalPages != 1}">
-<!--/* ページネーションバー（Redmine参考） */-->
-<nav class="pagenation" aria-label="pagenation">
+    <th:block th:if="${pages.totalPages != 1}">
 
-<ul class="pagenation">
-        <!--/* 前のページ */-->
-        <li class="prev page-item" th:classappend="${pages.first} ? 'disabled'">
-            <a th:href="@{''(page=${pages.number - 1})}" class="prev page-item-text"
-               th:tabindex="${pages.first} ? -1" aria-label="Previous">
-               <i class="uil uil-angle-left-b" aria-hidden="true"></i>
-            </a>
-        </li>
+        <nav class="pagenation" aria-label="pagenation">
+            <ul class="pagenation">
+                    <!--/* 前のページ */-->
+                    <li class="prev page-item" th:classappend="${pages.first} ? 'disabled'">
+<!--                        <a th:href="@{''(page=${pages.number - 1})}" class="prev page-item-text" aria-label="Previous">-->
+                        <a th:href="@{''(page=${pages.number})}" class="prev page-item-text" aria-label="Previous">
+                           <i class="uil uil-angle-left-b" aria-hidden="true"></i>
+                        </a>
+                    </li>
 
-        <!--/* 最初のページ */-->
-        <a th:href="@{''(page=0)}" class="page-item-text" th:attr="data-page=0">
-            <li th:if="${pages.number >= 2}" class="page-item">1</li>
-        </a>
+                    <!--/* 最初のページ */-->
+<!--                    <a th:href="@{''(page=0)}" class="page-item-text" th:attr="data-page=0">-->
+<!--                        <li th:if="${pages.number >= 2}" class="page-item">1</li>-->
+                    <a th:href="@{''(page=1)}" class="page-item-text" th:attr="data-page=1">
+                        <li th:if="${pages.number >= 2}" class="page-item">1</li>
+                    </a>
 
-        <!--/* … */-->
-        <li th:if="${pages.number >= 3}" class="page-item dot">
-            <span class="page-item-text dot">…</span>
-        </li>
+                    <!--/* … */-->
+                    <li th:if="${pages.number >= 3}" class="page-item dot">
+                        <span class="page-item-text dot">…</span>
+                    </li>
 
-        <th:block th:each="i : ${ #numbers.sequence(pages.number - 1, pages.number + 1) }">
-            <a th:href="@{''(page=${i})}" class="page-item-text"
-                th:classappend="${i == pages.number} ? 'current'" th:attr="data-page=${i}">
-                <li th:if="${i >= 0 and i < pages.totalPages}" class="page-item"
-                    th:classappend="${i == pages.number} ? 'current'"
-                    th:text="${i + 1}">
-                </li>
-            </a>
-        </th:block>
+                    <!--/* 現在のページと前後のページ */-->
+                    <th:block th:each="i : ${ #numbers.sequence(pages.number - 1, pages.number + 1) }">
+<!--                        <a th:href="@{''(page=${i})}" class="page-item-text"-->
+<!--                            th:classappend="${i == pages.number} ? 'current'" th:attr="data-page=${i}">-->
+<!--                            <li th:if="${i >= 0 and i < pages.totalPages}" class="page-item"-->
+<!--                                th:classappend="${i == pages.number} ? 'current'"-->
+<!--                                th:text="${i + 1}">-->
+<!--                            </li>-->
+                        <a th:href="@{''(page=${i+1})}" class="page-item-text"
+                            th:classappend="${i == pages.number} ? 'current'" th:attr="data-page=${i+1}">
+                            <li th:if="${i >= 0 and i < pages.totalPages}" class="page-item"
+                                th:classappend="${i == pages.number} ? 'current'"
+                                th:text="${i + 1}">
+                            </li>                        </a>
+                    </th:block>
 
-        <!--/* … */-->
-        <li th:if="${pages.totalPages >= (pages.number + 4)}" class="page-item dot">
-            <span class="page-item-text dot">…</span>
-        </li>
+                    <!--/* … */-->
+                    <li th:if="${pages.totalPages >= (pages.number + 4)}" class="page-item dot">
+                        <span class="page-item-text dot">…</span>
+                    </li>
 
-        <!--/* 最後のページ */-->
-        <a th:href="@{''(page=${pages.totalPages - 1})}"
-            class="page-item-text" th:attr="data-page=${pages.totalPages - 1}">
-            <li th:if="${pages.totalPages > (pages.number + 2)}" class="page-item" th:text="${pages.totalPages}"></li>
-        </a>
+                    <!--/* 最後のページ */-->
+<!--                    <a th:href="@{''(page=${pages.totalPages - 1})}"-->
+<!--                        class="page-item-text" th:attr="data-page=${pages.totalPages - 1}">-->
+<!--                        <li th:if="${pages.totalPages > (pages.number + 2)}" class="page-item" th:text="${pages.totalPages}"></li>-->
+                    <a th:href="@{''(page=${pages.totalPages})}"
+                        class="page-item-text" th:attr="data-page=${pages.totalPages}">
+                        <li th:if="${pages.totalPages > (pages.number + 2)}" class="page-item" th:text="${pages.totalPages}"></li>                    </a>
 
-        <!--/* 次のページ */-->
-        <li class="next page-item" th:classappend="${pages.last} ? 'disabled'">
-            <a th:href="@{''(page=${pages.number + 1})}" class="next page-item-text"
-                th:tabindex="${pages.last} ? -1" aria-label="Next">
-                <i class="uil uil-angle-right-b" aria-hidden="true"></i>
-            </a>
-        </li>
-    </ul>
-  </nav>
-</th:block>
+                    <!--/* 次のページ */-->
+                    <li class="next page-item" th:classappend="${pages.last} ? 'disabled'">
+                        <a th:href="@{''(page=${pages.number + 1})}" class="next page-item-text" aria-label="Next">
+                            <i class="uil uil-angle-right-b" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+          </nav>
+    </th:block>
 </div>
 </html>
