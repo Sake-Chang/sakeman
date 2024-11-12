@@ -1,5 +1,6 @@
 package com.sakeman.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ import lombok.ToString;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
 @Where(clause = "delete_flag=0")
-public class UserWebMangaSetting {
+public class UserWebMangaSetting implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

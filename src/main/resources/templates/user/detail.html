@@ -76,7 +76,7 @@
         <a class="tab-link" th:href="@{/user/{id}/follow/grid(id=${user.id})}">
             <div class="tab" th:classappend="${tab == 'follow'} ? 'tab-current' : ''">
                 <!--<i class="material-icons-outlined md-24">check_box</i>-->
-                <span class="tab-text">Webフォロー ([[${readpages.totalElements}]])</span>
+                <span class="tab-text">Webフォロー ([[${followpages.totalElements}]])</span>
             </div>
         </a>
     </div>
@@ -87,6 +87,9 @@
     </th:block>
     <th:block th:if="${tab} == 'read'">
         <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${readpages})}"></div>
+    </th:block>
+    <th:block th:if="${tab} == 'follow'">
+        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${followpages})}"></div>
     </th:block>
 
     <!--/* 本棚モジュールを呼び出し（${userwantlist}, ${wantlist}, ${readlist}を引数として渡す） */-->
@@ -107,6 +110,9 @@
     </th:block>
     <th:block th:if="${tab} == 'read'">
         <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${readpages})}"></div>
+    </th:block>
+    <th:block th:if="${tab} == 'follow'">
+        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${followpages})}"></div>
     </th:block>
 
 

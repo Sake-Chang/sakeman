@@ -19,13 +19,17 @@
         <th:block th:with="urlappend=${author != null} ? 'list-author/' + ${author.id} : 'list'">
         <a class="tab-link" th:href="@{/manga/__${urlappend}__/recent}">
             <div class="tab" th:classappend="${tab=='recent'} ? 'tab-current'">
-                <i class="uil uil-bolt"></i>
+                <div class="tabicon">
+                    <i class="uil uil-bolt"></i>
+                </div>
                 <span class="tab-text">新着順</span>
             </div>
         </a>
         <a class="tab-link" th:href="@{/manga/__${urlappend}__/popular}">
             <div class="tab" th:classappend="${tab=='popular'} ? 'tab-current'">
-                <i class="uil uil-fire"></i>
+                <div class="tabicon">
+                    <i class="uil uil-fire"></i>
+                </div>
                 <span class="tab-text">人気順</span>
             </div>
         </a>

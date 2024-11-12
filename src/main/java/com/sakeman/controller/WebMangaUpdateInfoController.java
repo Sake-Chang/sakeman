@@ -74,11 +74,16 @@ public class WebMangaUpdateInfoController {
         Pageable pageable = PageRequest.of(page - 1, PAGE_SIZE_SHORT, DEFAULT_SORT);
 
         User thisUser = (userDetail != null) ? userService.getUser(userDetail.getUser().getId()) : null;
-        UserWebMangaSetting thisSetting = (thisUser.getUserWebMangaSetting() != null) ? thisUser.getUserWebMangaSetting() : new UserWebMangaSetting();
+        UserWebMangaSetting thisSetting;
+        if (thisUser == null) {
+            thisSetting = new UserWebMangaSetting();
+        } else {
+            thisSetting = thisUser.getUserWebMangaSetting();
+        }
 
-        int followflag = (thisUser != null) ? thisSetting.getWebMangaSettingsFollowflag() : 0;
-        int freeflag = (thisUser != null) ? thisSetting.getWebMangaSettingsFreeflag() : 0;
-        int oneshotflag = (thisUser != null) ? thisSetting.getWebMangaSettingsOneshotflag() : 0;
+        int followflag = (thisSetting != null) ? thisSetting.getWebMangaSettingsFollowflag() : 0;
+        int freeflag = (thisSetting != null) ? thisSetting.getWebMangaSettingsFreeflag() : 0;
+        int oneshotflag = (thisSetting != null) ? thisSetting.getWebMangaSettingsOneshotflag() : 0;
         List<Integer> genreSetting = (thisUser != null) ? thisUser.getGenreIdsExist() : new ArrayList<>();
         boolean isGenreEmpty = genreSetting == null || genreSetting.isEmpty();
         if (isGenreEmpty) {
@@ -95,13 +100,13 @@ public class WebMangaUpdateInfoController {
         }
 
         if (result.isEmpty() && pageable.getPageNumber() > 0) {
-            return "redirect:/web-manga-update-info?page=0";
+            return "redirect:/web-manga-update-info?page=1";
         }
 
         model.addAttribute("pages", result);
         model.addAttribute("infolist", result.getContent());
 
-        if (page > result.getTotalPages()) {
+        if (page > result.getTotalPages() && !result.isEmpty()) {
             redirectAttributes.addAttribute("page", 1);
             return "redirect:/web-manga-update-info";
         }

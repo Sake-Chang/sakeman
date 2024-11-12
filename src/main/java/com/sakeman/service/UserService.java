@@ -117,12 +117,15 @@ public class UserService {
     /** Webまんがのマイセット登録 **/
     @Transactional
     public User saveSettings(UserDetail userDetail, List<Integer> genres, Integer freeflag, Integer followflag, Integer oneshotflag) {
-        User user = userDetail.getUser();
+        User user = userRepository.findById(userDetail.getUser().getId());
         UserWebMangaSetting setting;
         if (user.getUserWebMangaSetting() != null) {
             setting = settingRepository.findById(user.getUserWebMangaSetting().getId()).orElse(new UserWebMangaSetting());
         } else {
             setting = new UserWebMangaSetting();
+        }
+        if (genres == null) {
+            genres = new ArrayList<>(); // 空のリストに初期化
         }
 
         List<Integer> currentGenreIds = user.getGenreIdsAll();

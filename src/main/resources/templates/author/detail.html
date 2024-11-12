@@ -74,13 +74,17 @@
 <div class="tab-container">
     <a class="tab-link" th:href="@{/author/__${author.id}__/info}">
         <div class="tab" th:classappend="${tab == 'info'} ? 'tab-current' ">
-            <i class="uil uil-book-open"></i>
+            <div class="tabicon">
+                <i class="uil uil-book-open"></i>
+            </div>
             <span class="tab-text">作品一覧</span>
         </div>
     </a>
     <a class="tab-link" th:href="@{/author/__${author.id}__/review}">
         <div class="tab" th:classappend="${tab == 'review'} ? 'tab-current' ">
-            <i class="uil uil-comment-lines"></i>
+            <div class="tabicon">
+                <i class="uil uil-comment-lines"></i>
+            </div>
             <span class="tab-text">レビュー・リスト</span>
         </div>
     </a>

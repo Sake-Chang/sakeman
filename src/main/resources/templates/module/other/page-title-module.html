@@ -4,14 +4,18 @@
 
 <div layout:fragment="h2(text, class)">
     <div class="page-title">
-        <i class="uil md-24 md-HL" th:classappend="__${class}__"></i>
+        <div class="h2icon">
+            <i class="uil md-18 md-WH" th:classappend="__${class}__"></i>
+        </div>
         <h2 th:text="${text}"></h2>
     </div>
 </div>
 
 <div layout:fragment="h3(text, class)">
     <div class="page-title">
-        <i class="uil md-20 md-HL" th:classappend="__${class}__"></i>
+        <div class="">
+            <i class="uil md-20 md-HL" th:classappend="__${class}__"></i>
+        </div>
         <h3 th:text="${text}"></h3>
     </div>
 </div>

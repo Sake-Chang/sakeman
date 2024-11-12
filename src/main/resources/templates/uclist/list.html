@@ -17,7 +17,9 @@
     <th:block th:with="urlappend=${mangaobj != null} ? 'list-manga/' + ${mangaobj.id} : 'list'">
     <a class="tab-link" th:href="@{/uclist/__${urlappend}__/recent}">
         <div class="tab" th:classappend="${tab=='recent'} ? 'tab-current'">
-            <i class="uil uil-bolt"></i>
+            <div class="tabicon">
+                <i class="uil uil-bolt"></i>
+            </div>
             <span class="tab-text">新着順</span>
         </div>
     </a>

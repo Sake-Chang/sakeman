@@ -138,12 +138,14 @@ $(function() {
         }
 
         // フォーム外での更新
-        $('.webmanga-genres-checkbox-outer').on('change', function() {
-            $('#loading-indicator').show();
+        $('.webmanga-genres-checkbox-outer').on('change', function(event) {
             var isAnonymous = $(this).data('anonymous');
             if (isAnonymous) {
+                event.stopPropagation();
                 return;
             }
+
+            $('#loading-indicator').show();
             var selectedGenres = [];
 
             // 選択されているジャンルをすべて取得
@@ -233,6 +235,43 @@ $(function() {
 
     });
 });
+
+// open-popup-label のイベントリスナーを追加
+$(document).ready(function() {
+    document.querySelectorAll('.open-popup-label').forEach((label, index) => {
+        console.log(`Label ${index} - イベントリスナーを登録`); // デバッグ用ログ: イベントリスナーの登録確認
+        label.addEventListener('click', function () {
+            console.log(`Label ${index} がクリックされました`); // デバッグ用ログ: クリック時に表示
+            const overlay = document.querySelector('.webmanga-setting-popup-overlay');
+            if (overlay) {
+                console.log("Overlay要素が見つかりました。表示を切り替えます。"); // デバッグ用ログ: Overlay要素の確認
+                overlay.style.display = 'flex'; // ポップアップを表示する
+            } else {
+                console.error("Overlay要素が見つかりません"); // デバッグ用ログ: Overlay要素が見つからない場合
+            }
+        });
+    });
+});
+
+$(document).ready(function() {
+    $('.alert-popup-genres-open').on('click', function(event) {
+        event.preventDefault();
+
+        const overlay = $('.alert-popup-overlay.__genres');
+        if (overlay.length > 0) {
+            overlay.css('display', 'flex');
+        }
+    });
+
+    window.closePopup = function() {
+        const overlay = $('.alert-popup-overlay.__genres');
+        if (overlay.length > 0) {
+            overlay.css('display', 'none');
+        }
+    };
+});
+
+
 
 //let page = 0; // 現在のページ番号
 //let loading = false; // データロード中かどうか

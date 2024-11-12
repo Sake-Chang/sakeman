@@ -1,5 +1,6 @@
 package com.sakeman.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
@@ -31,7 +32,7 @@ import lombok.ToString;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
 //@Where(clause = "author.delete_flag=0 AND manga.delete_flag=0")
-public class UserWebMangaSettingGenre {
+public class UserWebMangaSettingGenre implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,7 +51,7 @@ public class UserWebMangaSettingGenre {
 
     @Column(name = "delete_flag", nullable = false)
     private boolean deleteFlag = false;
-  
+
 
     /** 関連エンティティ */
     @ManyToOne(cascade = CascadeType.ALL)

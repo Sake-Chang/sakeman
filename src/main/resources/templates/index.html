@@ -15,13 +15,17 @@
 <div class="tab-container">
     <a class="tab-link" th:href="@{/}">
         <div class="tab tab-current">
-            <i class="uil uil-arrow-growth"></i>
+            <div class="tabicon">
+                <i class="uil uil-arrow-growth"></i>
+            </div>
             <span class="tab-text">オススメ</span>
         </div>
     </a>
     <a class="tab-link" th:href="@{/web-manga-update-info}">
         <div class="tab tab-webmanga"  th:data-custom-content="本日__${todaylistsize}__件">
-            <i class="uil uil-sync"></i>
+            <div class="tabicon">
+                <i class="uil uil-sync"></i>
+            </div>
             <span class="tab-text">Web連載 更新</span>
         </div>
     </a>
