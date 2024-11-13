@@ -63,7 +63,6 @@ $(function() {
             var form = $(this);
             var url = form.attr('action');
             var formData = form.serialize();
-            console.log(formData)
 
             $.ajax({
                 url: url,
@@ -138,74 +137,79 @@ $(function() {
         }
 
         // フォーム外での更新
-        $('.webmanga-genres-checkbox-outer').on('change', function(event) {
-            var isAnonymous = $(this).data('anonymous');
-            if (isAnonymous) {
-                event.stopPropagation();
-                return;
-            }
+        $(function() {
+            $(document).on('change', '.webmanga-genres-checkbox-outer', function(event) {
+                console.log("Event bound to .webmanga-genres-checkbox-outer change triggered");
+                var isAnonymous = $(this).data('anonymous');
+                console.log("isAnonymous:", isAnonymous);
+                if (isAnonymous) {
+                    event.stopPropagation();
+                    return;
+                }
 
-            $('#loading-indicator').show();
-            var selectedGenres = [];
+                $('#loading-indicator').show();
+                var selectedGenres = [];
 
-            // 選択されているジャンルをすべて取得
-            $('.webmanga-genres-checkbox-outer:checked').each(function() {
-                selectedGenres.push($(this).val());
-            });
+                // 選択されているジャンルをすべて取得
+                $('.webmanga-genres-checkbox-outer:checked').each(function() {
+                    selectedGenres.push($(this).val());
+                });
 
-            console.log("Selected genres:", selectedGenres);
+                console.log("Selected genres:", selectedGenres);
 
-            var freeflag = $('input[name="freeflag"]:checked').val();
-            var followflag = $('input[name="followflag"]:checked').val();
-            var oneshotflag = $('input[name="oneshotflag"]:checked').val();
+                var freeflag = $('input[name="freeflag"]:checked').val();
+                var followflag = $('input[name="followflag"]:checked').val();
+                var oneshotflag = $('input[name="oneshotflag"]:checked').val();
 
-            $.ajax({
-                url: '/web-manga-update-info',
-                type: 'POST',
-                data: {
-                    genres: selectedGenres.length > 0 ? selectedGenres.join(',') : '',
-                    freeflag: freeflag,
-                    followflag: followflag,
-                    oneshotflag: oneshotflag
-                },
-                success: function() {
-                    $.ajax({
-                        url: '/web-manga-update-info',
-                        type: 'GET',
-                        success: function(data) {
-                            $('#web-manga-update-info-card-container').html(data);
-                            console.log("GET request success:", data);
+                $.ajax({
+                    url: '/web-manga-update-info',
+                    type: 'POST',
+                    data: {
+                        genres: selectedGenres.length > 0 ? selectedGenres.join(',') : '',
+                        freeflag: freeflag,
+                        followflag: followflag,
+                        oneshotflag: oneshotflag
+                    },
+                    success: function() {
+                        $.ajax({
+                            url: '/web-manga-update-info',
+                            type: 'GET',
+                            success: function(data) {
+                                $('#web-manga-update-info-card-container').html(data);
+                                console.log("GET request success:", data);
 
-                            // フォーム内のチェックボックスの状態を更新
-                            selectedGenres.forEach(function(genreId) {
+                                // フォーム内のチェックボックスの状態を更新
+                                selectedGenres.forEach(function(genreId) {
+                                    $('input.webmanga-genres-checkbox-inform').each(function() {
+                                        if ($(this).val() === genreId) {
+                                            $(this).prop('checked', true); // フォーム内のチェックボックスをチェックする
+                                        }
+                                    });
+                                });
+
+                                // すべてのジャンルを一度確認し、選択されていないものを同期して外す
                                 $('input.webmanga-genres-checkbox-inform').each(function() {
-                                    if ($(this).val() === genreId) {
-                                        $(this).prop('checked', true); // フォーム内のチェックボックスをチェックする
+                                    if (!selectedGenres.includes($(this).val())) {
+                                        $(this).prop('checked', false); // 選択されていないものはチェックを外す
                                     }
                                 });
-                            });
 
-                            // すべてのジャンルを一度確認し、選択されていないものを同期して外す
-                            $('input.webmanga-genres-checkbox-inform').each(function() {
-                                if (!selectedGenres.includes($(this).val())) {
-                                    $(this).prop('checked', false); // 選択されていないものはチェックを外す
-                                }
-                            });
-
-                        },
-                        error: function(xhr) {
-                            console.error("Error during GET: " + xhr.responseText);
-                        },
-                        complete: function() {
-                            $('#loading-indicator').hide();
-                        }
-                    });
-                },
-                error: function(xhr) {
-                    console.error("Error during POST: " + xhr.responseText);
-                }
+                            },
+                            error: function(xhr) {
+                                console.error("Error during GET: " + xhr.responseText);
+                            },
+                            complete: function() {
+                                $('#loading-indicator').hide();
+                            }
+                        });
+                    },
+                    error: function(xhr) {
+                        console.error("Error during POST: " + xhr.responseText);
+                    }
+                });
             });
         });
+
 
 
     // ここからチェックボックスの全選択用JS
@@ -255,7 +259,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('.alert-popup-genres-open').on('click', function(event) {
-        event.preventDefault();
+//        event.preventDefault();
 
         const overlay = $('.alert-popup-overlay.__genres');
         if (overlay.length > 0) {

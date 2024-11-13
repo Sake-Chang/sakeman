@@ -182,34 +182,6 @@ public class User implements Serializable {
 //    @Column(name = "web_manga_settings_oneshotflag", nullable = false)
 //    private Integer webMangaSettingsOneshotflag = 0;
 
-
-    public List<Integer> getGenreIdsAll() {
-        // UserWebMangaSetting またはその内部リストが null の場合、空リストを返す
-        if (userWebMangaSetting == null || userWebMangaSetting.getWebMangaSettingsGenres() == null) {
-            return List.of();
-        }
-
-        // 全ての UserWebMangaSettingGenre リストから Genre の ID を抽出して返す
-        return userWebMangaSetting.getWebMangaSettingsGenres().stream()
-                .map(settingGenre -> settingGenre.getGenre().getId())  // Genre IDを取得
-                .collect(Collectors.toList());
-    }
-
-    public List<Integer> getGenreIdsExist() {
-        // UserWebMangaSetting またはその内部リストが null の場合、空リストを返す
-        if (userWebMangaSetting == null || userWebMangaSetting.getWebMangaSettingsGenres() == null) {
-            return List.of();
-        }
-
-        // 削除フラグがfalseのUserWebMangaSettingGenreリストからGenreのIDを抽出して返す
-        return userWebMangaSetting.getWebMangaSettingsGenres().stream()
-                .filter(settingGenre -> settingGenre.isDeleteFlag() == false)  // 削除されていないもののみ
-                .map(settingGenre -> settingGenre.getGenre().getId())  // Genre IDを取得
-                .collect(Collectors.toList());
-    }
-
-
-
     @PrePersist
     public void onPrePersist() {
         setRegisteredAt(new Timestamp(System.currentTimeMillis()));
@@ -218,10 +190,10 @@ public class User implements Serializable {
         if (this.userWebMangaSetting == null) {
             UserWebMangaSetting settings = new UserWebMangaSetting();
 
-            settings.setWebMangaSettingsFreeflag(0);  // 必要であれば明示的に設定
-            settings.setWebMangaSettingsFollowflag(0);
-            settings.setWebMangaSettingsOneshotflag(0);
-            settings.setWebMangaSettingsGenres(new ArrayList<>());
+            settings.setFreeflagSetting(0);  // 必要であれば明示的に設定
+            settings.setFollowflagSetting(0);
+            settings.setOneshotflagSetting(0);
+            settings.setGenreSettings(new ArrayList<>());
 
             this.userWebMangaSetting = settings;
         }

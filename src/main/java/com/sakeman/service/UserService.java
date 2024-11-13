@@ -38,6 +38,7 @@ public class UserService {
     private final GenreRepository genreRepository;
     private final UserWebMangaSettingRepository settingRepository;
     private final UserWebMangaSettingGenreRepository settingGenreRepository;
+    private final UserWebMangaSettingService settingService;
 
     /* SELECT系 */
     /** 全件検索 **/
@@ -96,6 +97,18 @@ public class UserService {
         return userRepository.findAll(Example.of(user, matcher), pageable);
     }
 
+    /** UserDetailからUserを取得 */
+    @Transactional(readOnly = true)
+    public Optional<User> getUserFromUseerDetail(UserDetail userDetail) {
+        return Optional.ofNullable(userDetail)
+                       .map(detail -> getUser(detail.getUser().getId()));
+    }
+
+    public Optional<UserWebMangaSetting> getUserWebMangaSetting(User user) {
+        return Optional.ofNullable(user).map(User::getUserWebMangaSetting);
+    }
+
+
     /** フォローしている人の検索 */
     @Transactional(readOnly = true)
     public Page<User> getFollowingsByUserId(Integer id, Pageable pageable) {
@@ -128,7 +141,7 @@ public class UserService {
             genres = new ArrayList<>(); // 空のリストに初期化
         }
 
-        List<Integer> currentGenreIds = user.getGenreIdsAll();
+        List<Integer> currentGenreIds = settingService.getGenreIdsAll(setting);
 
         List<UserWebMangaSettingGenre> newList = new ArrayList<>();
         // 送られてきたgenresを1つずつ確認
@@ -173,10 +186,10 @@ public class UserService {
         }
 
         // フラグの更新
-        setting.setWebMangaSettingsFreeflag(freeflag);
-        setting.setWebMangaSettingsFollowflag(followflag);
-        setting.setWebMangaSettingsOneshotflag(oneshotflag);
-        setting.setWebMangaSettingsGenres(newList);
+        setting.setFreeflagSetting(freeflag);
+        setting.setFollowflagSetting(followflag);
+        setting.setOneshotflagSetting(oneshotflag);
+        setting.setGenreSettings(newList);
 
         user.setUserWebMangaSetting(setting);
         return userRepository.save(user);

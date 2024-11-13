@@ -19,4 +19,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     Page<Review> findAll(Pageable pageable);
     Page<Review> findDistinctByMangaMangaAuthorsAuthorId(Integer aId, Pageable pageable);
 
+    List<Review> findTop10ByOrderByRegisteredAtDesc();
+
+
 }

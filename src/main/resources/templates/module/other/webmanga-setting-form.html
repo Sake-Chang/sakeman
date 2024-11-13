@@ -2,7 +2,7 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<th:block th:fragment="webmanga-setting-form(followflag, freeflag, medialist, genrelist, genreflag, webmangafollowlist)">
+<th:block th:fragment="webmanga-setting-form(userSettings, genreIdsExist, medialist, genrelist, webmangafollowlist)">
     <div  class="webmanga-genres-container">
 
         <form id="web-manga-filter-form" th:action="@{/web-manga-update-info}" method="post">
@@ -10,8 +10,8 @@
             <div class="webmanga-setting-myset-btn">
                 <input type="checkbox" id="webmanga-settings-myset">
                 <label  class="webmanga-setting-myset" for="webmanga-setting-myset"
-                        th:classappend="${freeflag != 0 or followflag != 0 or !genreflag.contains(0) ? 'webmanga-settings-modified' : ''}">
-                    <span   th:if="${freeflag != 0 or followflag != 0 or !genreflag.contains(0)}"
+                        th:classappend="${freeflag != 0 or followflag != 0 or !genreIdsExist.contains(0) ? 'webmanga-settings-modified' : ''}">
+                    <span   th:if="${freeflag != 0 or followflag != 0 or !genreIdsExist.contains(0)}"
                             class="material-icons-outlined md-18 md-BK"
                             th:text="check">
                     </span>
@@ -26,9 +26,9 @@
 
                 <input type="checkbox" id="webmanga-settings-popup">
                 <label  class="webmanga-setting-popup-open webmanga-settings clickable" for="webmanga-settings-popup"
-                        th:classappend="${freeflag != 0 or followflag != 0 or !genreflag.contains(0) ? 'webmanga-settings-modified' : ''}">
+                        th:classappend="${userSettings.freeflagSetting != 0 or userSettings.followflagSetting != 0 or !genreIdsExist.contains(0) ? 'webmanga-settings-modified' : ''}">
                     <span   class="material-icons-outlined md-18 md-BL"
-                            th:text="${freeflag != 0 or followflag != 0 or !genreflag.contains(0) ? 'check' : 'tune'}">
+                            th:text="${userSettings.freeflagSetting != 0 or userSettings.followflagSetting != 0 or !genreIdsExist.contains(0) ? 'check' : 'tune'}">
                     </span>
                     <span class="webmanga-settings-text">マイセット</span>
                 </label>
@@ -65,7 +65,7 @@
                                         <div class="webmanga-setting-popup-text">無料のみ表示</div>
                                     </div>
                                     <div class="webmanga-setting-toggle">
-                                        <input type="checkbox" id="free-toggle" class="webmanga-setting-toggle-input" name="freeflag" value="1" th:checked="${freeflag == 1}">
+                                        <input type="checkbox" id="free-toggle" class="webmanga-setting-toggle-input" name="freeflag" value="1" th:checked="${userSettings.freeflagSetting == 1}">
                                         <label for="free-toggle" class="webmanga-setting-toggle-slider"></label>
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                         <div class="webmanga-setting-popup-text">フォローのみ表示</div>
                                     </div>
                                     <div class="webmanga-setting-toggle">
-                                        <input type="checkbox" id="follow-toggle" class="webmanga-setting-toggle-input" name="followflag" value="1" th:checked="${followflag == 1}">
+                                        <input type="checkbox" id="follow-toggle" class="webmanga-setting-toggle-input" name="followflag" value="1" th:checked="${userSettings.followflagSetting == 1}">
                                         <label for="follow-toggle" class="webmanga-setting-toggle-slider"></label>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                         <div class="webmanga-setting-popup-text">読切は常にぜんぶ表示</div>
                                     </div>
                                     <div class="webmanga-setting-toggle">
-                                        <input type="checkbox" id="oneshot-toggle" class="webmanga-setting-toggle-input" name="oneshotflag" value="1" th:checked="${oneshotflag == 1}">
+                                        <input type="checkbox" id="oneshot-toggle" class="webmanga-setting-toggle-input" name="oneshotflag" value="1" th:checked="${userSettings.oneshotflagSetting == 1}">
                                         <label for="oneshot-toggle" class="webmanga-setting-toggle-slider"></label>
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                                                    th:name="genres"
                                                    th:id="'form-genres-' + ${genre.id}"
                                                    th:value="${genre.id}"
-                                                   th:checked="${#lists.contains(genreflag, genre.id)}">
+                                                   th:checked="${#lists.contains(genreIdsExist, genre.id)}">
                                            <span th:text="${genre.name}"></span>
                                         </label>
                                     </div>
@@ -140,7 +140,7 @@
                    th:name="genres"
                    th:id="'alert-popup-genres-' + ${genre.id}"
                    th:value="${genre.id}"
-                   th:checked="${#lists.contains(genreflag, genre.id)}"
+                   th:checked="${#lists.contains(genreIdsExist, genre.id)}"
                    th:data-anonymous="${#authorization.expression('isAnonymous()')}">
             <label class="alert-popup-genres-open" th:for="'alert-popup-genres-' + ${genre.id}">
                 <span th:text="${genre.name}"></span>

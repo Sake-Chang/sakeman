@@ -37,8 +37,9 @@
     <div class="container" th:with="text='__${textappend}__の更新一覧', class='uil-sync'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}"></div>
 </th:block>
 
-
-<div th:replace="~{module/other/webmanga-setting-form :: webmanga-setting-form(followflag=${followflag}, freeflag=${freeflag}, medialist=${medialist}, genrelist=${genrelist}, genreflag=${genreflag}, webmangafollowlist=${webmangafollowlist})}"></div>
+<th:block th:if="${userSettings != null}">
+    <div th:replace="~{module/other/webmanga-setting-form :: webmanga-setting-form(userSettings=${userSettings}, genreIdsExist=${genreIdsExist}, medialist=${medialist}, genrelist=${genrelist}, webmangafollowlist=${webmangafollowlist})}"></div>
+</th:block>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
 <!--<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>-->

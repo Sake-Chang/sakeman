@@ -33,7 +33,7 @@
 
 <!-- リスト -->
 <div class="container" th:with="text='新着のリスト', class='uil-list-ul'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}"></div>
-<!--/* まんがリストモジュールを呼び出し（${uclistlist}を引数として渡す） */-->
+<!--/* リストリストモジュールを呼び出し（${uclistlist}を引数として渡す） */-->
 <div class="container" layout:include="~{module/card/uclist-card :: uclist-card(uclistlist=${uclistlist})}"></div>
 <!--/* もっとみるボタン */-->
 <div class="container" th:with="linkurl='@{/uclist/list}'" layout:include="~{module/btn/btn-see-more :: btn-see-more(linkurl=${linkurl}, pageobj=${uclPage})}"></div>

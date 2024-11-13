@@ -1,9 +1,6 @@
 package com.sakeman.controller;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -58,10 +55,7 @@ public class IndexController {
         model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
         model.addAttribute("followeelist", ufService.followeeIdListFollowedByUser(userDetail));
 
-        LocalDate date = LocalDate.now(ZoneId.of("Asia/Tokyo"));
-        LocalTime time = LocalTime.of(0, 0, 0);
-        LocalDateTime today = LocalDateTime.of(date, time);
-        model.addAttribute("todaylistsize", webService.getTodayInfoList(today, true).size());
+        model.addAttribute("todaylistsize", webService.getTodayInfoList(true).size());
 
         return "index";
     }

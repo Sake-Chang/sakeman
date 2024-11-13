@@ -65,16 +65,23 @@ public class MangaController {
     @GetMapping({"/list", "/list/{tab}"})
     public String getList(@AuthenticationPrincipal UserDetail userDetail,
                           @PathVariable(name="tab", required=false) String tab,
-                          Integer page,
+                          @RequestParam(name="page", required=false, defaultValue = "1") int page,
                           Model model,
                           @ModelAttribute Manga manga) {
 
         if (tab==null) tab = "recent";
-        if (page == null || page < 0) page = 0;
+        if (page < 1) {
+            return String.format("redirect:/manga/list/%s", tab);
+        }
+
         Author author = null;
 
         Pageable pageable = getPageable(tab, page);
         Page<Manga> mangalistPage = service.getMangaListPageable(pageable);
+
+        if (page > Math.max(mangalistPage.getTotalPages(), 1)) {
+            return String.format("redirect:/manga/list/%s", tab);
+        }
 
         model.addAttribute("mangaPages", mangalistPage);
         model.addAttribute("mangalist", mangalistPage.getContent());
@@ -94,16 +101,22 @@ public class MangaController {
     public String getListAuthor(@AuthenticationPrincipal UserDetail userDetail,
                                 @PathVariable(name="tab", required=false) String tab,
                                 @PathVariable(name="author-id", required=true) Integer authorId,
-                                @RequestParam(name = "page", defaultValue = "0") Integer page,
+                                @RequestParam(name="page", required=false, defaultValue = "1") int page,
                                 Model model,
                                 @ModelAttribute Manga manga,
                                 HttpServletRequest request) {
 
-        if (page == null || page < 0) page = 0;
         if (tab==null) tab = "recent";
-        Pageable pageable = getPageable(tab, page);
+        if (page < 1) {
+            return String.format("redirect:/manga/list-author/%s/%s", authorId, tab);
+        }
 
+        Pageable pageable = getPageable(tab, page);
         Page<Manga> mangalistPage = service.getMangaByAuthorId(authorId, pageable);
+
+        if (page > Math.max(mangalistPage.getTotalPages(), 1)) {
+            return String.format("redirect:/manga/list-author/%s/%s", authorId, tab);
+        }
 
         model.addAttribute("mangaPages", mangalistPage);
         model.addAttribute("mangalist", mangalistPage.getContent());
@@ -142,14 +155,11 @@ public class MangaController {
         model.addAttribute("webmangafollowlist", wmfService.webMangaIdListLikedByUser(userDetail));
 
         model.addAttribute("tab", tab);
+
         if (tab.equals("info")) {
             List<Author> authors = authorService.getByManga(service.getManga(id));
 
             Pageable pageableEd = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "updatedAt"));
-//            Page<Manga> sameauthormangalistPage = service.getDistinctMangaByAuthorsIn(authors, pageableEd);
-//            List<Manga> sameauthormangalist = sameauthormangalistPage.getContent();
-//            model.addAttribute("pages", sameauthormangalistPage);
-//            model.addAttribute("sameauthormangalist", sameauthormangalist);
 
             /** 著者ごとに出す **/
             List<List<Object>> allList = new ArrayList<>();
@@ -174,7 +184,7 @@ public class MangaController {
         }
 
         return "manga/detail";
-        }
+    }
 
 
     @GetMapping("/minilist")
@@ -186,37 +196,34 @@ public class MangaController {
     /** Pageableオブジェクトの取得 */
     public Pageable getPageable(String tab, int page) {
         Pageable pageable;
-        if (tab == null) tab = "recent";
-        int safePage = Math.max(page, 0);
-
         switch (tab) {
             case "recent":
-                pageable = PageRequest.of(safePage, 20, Sort.by(Sort.Direction.DESC, "registeredAt"));
+                pageable = PageRequest.of(page-1, 20, Sort.by(Sort.Direction.DESC, "registeredAt"));
                 break;
             case "popular":
-                pageable = PageRequest.of(safePage, 20, Sort.by(Sort.Direction.DESC, "readStatus"));
+                pageable = PageRequest.of(page-1, 20, Sort.by(Sort.Direction.DESC, "readStatus"));
                 break;
             default:
-                pageable = PageRequest.of(safePage, 20, Sort.by(Sort.Direction.DESC, "registeredAt"));
+                pageable = PageRequest.of(page-1, 20, Sort.by(Sort.Direction.DESC, "registeredAt"));
                 break;
         }
         return pageable;
     }
 
-    private static <T> Set<T> getFirstNElements(Set<T> set, int n) {
-        Set<T> result = new HashSet<>();
-        int count = 0;
-
-        for (T element : set) {
-            if (count >= n) {
-                break;
-            }
-
-            result.add(element);
-            count++;
-        }
-
-        return result;
-    }
+//    private static <T> Set<T> getFirstNElements(Set<T> set, int n) {
+//        Set<T> result = new HashSet<>();
+//        int count = 0;
+//
+//        for (T element : set) {
+//            if (count >= n) {
+//                break;
+//            }
+//
+//            result.add(element);
+//            count++;
+//        }
+//
+//        return result;
+//    }
 
 }

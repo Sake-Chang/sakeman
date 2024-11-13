@@ -1,6 +1,7 @@
 package com.sakeman.service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -23,6 +24,7 @@ import org.springframework.util.StringUtils;
 
 import com.sakeman.dto.WebMangaUpdateInfoAdminResponseDTO;
 import com.sakeman.entity.User;
+import com.sakeman.entity.UserWebMangaSetting;
 import com.sakeman.entity.WebMangaUpdateInfo;
 import com.sakeman.entity.projection.webmanga.WebMangaUpdateInfoProjectionBasic;
 import com.sakeman.repository.WebMangaUpdateInfoRepository;
@@ -35,6 +37,8 @@ import lombok.RequiredArgsConstructor;
 public class WebMangaUpdateInfoService {
     private final WebMangaUpdateInfoRepository webRepository;
     private final MangaService maService;
+    private final UserWebMangaSettingService settingService;
+
 
     /** 全件を検索して返す **/
     @Transactional(readOnly = true)
@@ -123,8 +127,11 @@ public class WebMangaUpdateInfoService {
 
 
     @Transactional(readOnly=true)
-    public Page<WebMangaUpdateInfoProjectionBasic> getFiltered(List<Integer> genreIds, boolean isGenreEmpty, List<Integer> freeflags, Integer followflag, Integer userId, Integer oneshotflag, Pageable pageable, boolean useCache) {
-        return webRepository.findFiltered(freeflags, followflag, userId, oneshotflag, genreIds, isGenreEmpty, pageable);
+    public Page<WebMangaUpdateInfoProjectionBasic> getFiltered(UserWebMangaSetting setting, List<Integer> genreIds, Integer userId, Pageable pageable, boolean useCache) {
+        List<Integer> freeflags = settingService.getFreeflagNums(setting);
+        Integer followflag = setting.getFollowflagSetting();
+        Integer oneshotflag = setting.getOneshotflagSetting();
+        return webRepository.findFiltered(freeflags, followflag, oneshotflag, genreIds, genreIds.isEmpty(), userId, pageable);
     }
 
 /** 従前の個別のメソッド( getFilteredInfoListPageable ) ここから */
@@ -174,8 +181,9 @@ public class WebMangaUpdateInfoService {
 
     /** 今日更新のみ */
     @Transactional(readOnly = true)
-    @Cacheable(value = "webMangaUpdateInfoToday", key = "'today:' + #today.toLocalDate()", condition = "#useCache")
-    public List<WebMangaUpdateInfo> getTodayInfoList(LocalDateTime today, boolean useCache){
+    @Cacheable(value = "webMangaUpdateInfoToday", key = "'today'", condition = "#useCache")
+    public List<WebMangaUpdateInfo> getTodayInfoList(boolean useCache){
+        LocalDateTime today = LocalDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate().atStartOfDay();
         return webRepository.findByUpdateAtGreaterThanEqual(today);
     }
 

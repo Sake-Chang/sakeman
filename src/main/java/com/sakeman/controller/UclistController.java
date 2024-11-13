@@ -50,15 +50,22 @@ public class UclistController {
     public String getList(@AuthenticationPrincipal UserDetail userDetail,
                           @ModelAttribute Manga manga,
                           @PathVariable(name="tab", required=false) String tab,
-                          Integer page,
+                          @RequestParam(name="page", required=false, defaultValue = "1") int page,
                           Model model) {
 
         if (tab==null) tab = "recent";
-        if (page==null) page = 0;
+        if (page < 1) {
+            return String.format("redirect:/uclist/list/%s", tab);
+        }
+
         Manga mangaobj = null;
 
         Pageable pageable = getPageable(tab, page);
         Page<Uclist> uclListPages = service.getUclistListPageable(pageable);
+
+        if (page > Math.max(uclListPages.getTotalPages(), 1)) {
+            return String.format("redirect:/uclist/list/%s", tab);
+        }
 
         model.addAttribute("uclistlistPages", uclListPages);
         model.addAttribute("uclistlist", uclListPages.getContent());
@@ -77,24 +84,25 @@ public class UclistController {
                                @ModelAttribute Manga manga,
                                @PathVariable(name="manga-id", required=true) Integer mangaId,
                                @PathVariable(name="tab", required=false) String tab,
-                               Integer page,
+                               @RequestParam(name="page", required=false, defaultValue = "1") int page,
                                Model model) {
 
         if (tab==null) tab = "recent";
-        if (page==null) page = 0;
+        if (page < 1) {
+            return String.format("redirect:/uclist/list-manga/%s/%s", mangaId, tab);
+        }
+
         Manga mangaobj = mangaService.getManga(mangaId);
 
         Pageable pageable = getPageable(tab, page);
         Page<Uclist> uclistlistPages = service.getByMangaIdPageable(mangaId, pageable);
 
+        if (page > Math.max(uclistlistPages.getTotalPages(), 1)) {
+            return String.format("redirect:/uclist/list/%s", tab);
+        }
+
         model.addAttribute("uclistlistPages", uclistlistPages);
         model.addAttribute("uclistlist", uclistlistPages.getContent());
-
-//        /** いいねが多いレビューも返す */
-//        Pageable pageablePop = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "likes"));
-//        Page<Review> popReviewPages = service.getReviewListPageable(pageablePop);
-//        model.addAttribute("popReviewPages", popReviewPages);
-//        model.addAttribute("popReview", popReviewPages.getContent());
 
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
         model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
@@ -140,16 +148,15 @@ public class UclistController {
     /** Pageableオブジェクトの取得 */
     public Pageable getPageable(String tab, int page) {
         Pageable pageable;
-        if (tab == null) tab = "recent";
         switch (tab) {
             case "recent":
-                pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "registeredAt"));
+                pageable = PageRequest.of(page-1, 10, Sort.by(Sort.Direction.DESC, "registeredAt"));
                 break;
 //            case "popular":
 //                pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "likes"));
 //                break;
             default:
-                pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "registeredAt"));
+                pageable = PageRequest.of(page-1, 10, Sort.by(Sort.Direction.DESC, "registeredAt"));
                 break;
         }
         return pageable;

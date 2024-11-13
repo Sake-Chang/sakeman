@@ -123,10 +123,10 @@ public interface WebMangaUpdateInfoRepository extends JpaRepository<WebMangaUpda
     Page<WebMangaUpdateInfoProjectionBasic> findFiltered(
         @Param("freeflags") List<Integer> freeflags,
         @Param("followflag") Integer followflag,
-        @Param("userId") Integer userId,
         @Param("oneshotflag") Integer oneshotflag,
         @Param("genreIds") List<Integer> genreIds,
         @Param("isGenreEmpty") boolean isGenreEmpty,
+        @Param("userId") Integer userId,
         Pageable pageable);
 
 

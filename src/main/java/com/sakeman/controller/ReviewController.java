@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sakeman.entity.Manga;
@@ -46,15 +47,22 @@ public class ReviewController {
     public String getList(@AuthenticationPrincipal UserDetail userDetail,
                           @ModelAttribute Manga manga,
                           @PathVariable(name="tab", required=false) String tab,
-                          Integer page,
+                          @RequestParam(name="page", required=false, defaultValue = "1") int page,
                           Model model) {
 
         if (tab==null) tab = "recent";
-        if (page==null || page < 0) page = 0;
+        if (page < 1) {
+            return String.format("redirect:/review/list/%s", tab);
+        }
+
         Manga mangaobj = null;
 
         Pageable pageable = getPageable(tab, page);
         Page<Review> reviewlistPage = service.getReviewListPageable(pageable);
+
+        if (page > Math.max(reviewlistPage.getTotalPages(), 1)) {
+            return String.format("redirect:/review/list/%s", tab);
+        }
 
         model.addAttribute("reviewlistPages", reviewlistPage);
         model.addAttribute("reviewlist", reviewlistPage.getContent());
@@ -75,15 +83,22 @@ public class ReviewController {
                                @ModelAttribute Manga manga,
                                @PathVariable(name="manga-id", required=true) Integer mangaId,
                                @PathVariable(name="tab", required=false) String tab,
-                               Integer page,
+                               @RequestParam(name="page", required=false, defaultValue = "1") int page,
                                Model model) {
 
         if (tab==null) tab = "recent";
-        if (page==null || page < 0) page = 0;
+        if (page < 1) {
+            return String.format("redirect:/review/list-manga/%s/%s", mangaId, tab);
+        }
+
         Manga mangaobj = mangaService.getManga(mangaId);
 
         Pageable pageable = getPageable(tab, page);
         Page<Review> reviewlistPage = service.getReviewByMangaIdPageable(mangaId, pageable);
+
+        if (page > Math.max(reviewlistPage.getTotalPages(), 1)) {
+            return String.format("redirect:/review/list-manga/%s/%s", mangaId, tab);
+        }
 
         model.addAttribute("reviewlistPages", reviewlistPage);
         model.addAttribute("reviewlist", reviewlistPage.getContent());
@@ -172,16 +187,15 @@ public class ReviewController {
     /** Pageableオブジェクトの取得 */
     public Pageable getPageable(String tab, int page) {
         Pageable pageable;
-        if (tab == null) tab = "recent";
         switch (tab) {
             case "recent":
-                pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "registeredAt"));
+                pageable = PageRequest.of(page-1, 10, Sort.by(Sort.Direction.DESC, "registeredAt"));
                 break;
             case "popular":
-                pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "likes"));
+                pageable = PageRequest.of(page-1, 10, Sort.by(Sort.Direction.DESC, "likes"));
                 break;
             default:
-                pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "registeredAt"));
+                pageable = PageRequest.of(page-1, 10, Sort.by(Sort.Direction.DESC, "registeredAt"));
                 break;
         }
         return pageable;

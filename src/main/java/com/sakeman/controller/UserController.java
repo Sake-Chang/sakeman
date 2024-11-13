@@ -65,20 +65,27 @@ public class UserController {
     public String getListNew(@AuthenticationPrincipal UserDetail userDetail,
                              @ModelAttribute Manga manga,
                              @PathVariable(name="tab", required=false) String tab,
-                             Integer page,
+                             @RequestParam(name="page", required=false, defaultValue = "1") int page,
                              Model model) {
 
         if (tab==null) tab = "veteran";
-        if (page==null) page = 0;
+        if (page < 1) {
+            return String.format("redirect:/user/list/%s", tab);
+        }
 
         Pageable pageable = null;
         if (tab.equals("veteran")) {
-            pageable = PageRequest.of(page, 20, Sort.by(Sort.Direction.ASC, "id"));
+            pageable = PageRequest.of(page-1, 20, Sort.by(Sort.Direction.ASC, "id"));
         } else if (tab.equals("rookie")) {
-            pageable = PageRequest.of(page, 20, Sort.by(Sort.Direction.DESC, "id"));
+            pageable = PageRequest.of(page-1, 20, Sort.by(Sort.Direction.DESC, "id"));
         }
 
         Page<User> userEnabledPage = service.getEnabledUserListPageable(true, pageable);
+
+        if (page > Math.max(userEnabledPage.getTotalPages(), 1)) {
+            return String.format("redirect:/user/list/%s", tab);
+        }
+
         model.addAttribute("pages", userEnabledPage);
         model.addAttribute("userlist", userEnabledPage.getContent());
         model.addAttribute("followeelist", ufService.followeeIdListFollowedByUser(userDetail));
@@ -136,14 +143,25 @@ public class UserController {
     public String getFollowUaer(@AuthenticationPrincipal UserDetail userDetail,
                                 @PathVariable(name="id") Integer id,
                                 @PathVariable(name="tab") String tab,
-                                @PageableDefault(page=0, size=20) Pageable pageable,
+                                @RequestParam(name="page", required=false, defaultValue = "1") int page,
                                 Model model) {
+
+        if (tab==null) tab = "followings";
+        if (page < 1) {
+            return String.format("redirect:/user/%s/%s", id, tab);
+        }
+
+        Pageable pageable = PageRequest.of(page-1, 20, Sort.by(Sort.Direction.ASC, "id"));
 
         Page<User> userListPage = null;
         if (tab.equals("followings")) {
             userListPage = service.getFollowingsByUserId(id, pageable);
         } else if (tab.equals("followers")) {
             userListPage = service.getFollowersByUserId(id, pageable);
+        }
+
+        if (page > Math.max(userListPage.getTotalPages(), 1)) {
+            return String.format("redirect:/user/%s/%s", id, tab);
         }
 
         model.addAttribute("pages", userListPage);

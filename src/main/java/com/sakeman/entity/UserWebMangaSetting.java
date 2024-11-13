@@ -3,6 +3,7 @@ package com.sakeman.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -41,17 +42,18 @@ public class UserWebMangaSetting implements Serializable {
 
     @OneToMany(mappedBy = "userWebMangaSetting", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference("userWebMangaSetting-genres")
-    private List<UserWebMangaSettingGenre> webMangaSettingsGenres = new ArrayList<>();
+    private List<UserWebMangaSettingGenre> genreSettings = new ArrayList<>();
 
     @Column(name = "web_manga_settings_freeflag", nullable = false)
-    private Integer webMangaSettingsFreeflag = 0;
+    private Integer freeflagSetting = 0;
 
     @Column(name = "web_manga_settings_followflag", nullable = false)
-    private Integer webMangaSettingsFollowflag = 0;
+    private Integer followflagSetting = 0;
 
     @Column(name = "web_manga_settings_oneshotflag", nullable = false)
-    private Integer webMangaSettingsOneshotflag = 0;
+    private Integer oneshotflagSetting = 0;
 
     @Column(name = "delete_flag", nullable = false)
     private boolean deleteFlag = false;
+
 }

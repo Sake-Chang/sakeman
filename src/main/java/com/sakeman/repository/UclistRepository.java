@@ -18,4 +18,7 @@ public interface UclistRepository extends JpaRepository<Uclist, Integer> {
 
     Page<Uclist> findDistinctByUclistMangasMangaMangaAuthorsAuthorId(Integer aId, Pageable pageable);
 
+    List<Uclist> findTop10ByOrderByRegisteredAtDesc();
+
+
 }

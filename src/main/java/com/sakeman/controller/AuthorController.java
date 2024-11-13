@@ -44,12 +44,12 @@ public class AuthorController {
     private final LikeService likeService;
 
     /** 一覧表示（Pageable） */
-    @GetMapping("/list")
-    public String getList(Model model,  @PageableDefault(page=0, size=100, sort= {"id"}, direction=Direction.ASC) Pageable pageable) {
-        model.addAttribute("pages", service.getAuthorListPageable(pageable));
-        model.addAttribute("authorlist", service.getAuthorListPageable(pageable).getContent());
-        return "author/list";
-        }
+//    @GetMapping("/list")
+//    public String getList(Model model,  @PageableDefault(page=0, size=100, sort= {"id"}, direction=Direction.ASC) Pageable pageable) {
+//        model.addAttribute("pages", service.getAuthorListPageable(pageable));
+//        model.addAttribute("authorlist", service.getAuthorListPageable(pageable).getContent());
+//        return "author/list";
+//        }
 
     /** 詳細表示 */
     @GetMapping({"/{id}", "/{id}/{tab}"})

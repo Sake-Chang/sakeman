@@ -39,6 +39,11 @@ public class ReviewService {
         return reviewRepository.findById(id).get();
     }
 
+    @Transactional(readOnly = true)
+    public List<Review> getTop10() {
+        return reviewRepository.findTop10ByOrderByRegisteredAtDesc();
+    }
+
     /** マンガIDで検索して返す */
     @Transactional(readOnly = true)
     @Cacheable(value = "review", key = "'allEntries'")

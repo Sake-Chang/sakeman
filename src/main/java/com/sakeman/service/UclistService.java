@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sakeman.entity.Manga;
+import com.sakeman.entity.Review;
 import com.sakeman.entity.Uclist;
 import com.sakeman.repository.UclistRepository;
 
@@ -38,6 +39,11 @@ public class UclistService {
     @Transactional(readOnly = true)
     public Uclist getUclist(Integer id) {
         return uclistRepository.findById(id).get();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Uclist> getTop10() {
+        return uclistRepository.findTop10ByOrderByRegisteredAtDesc();
     }
 
     /** マンガで検索 */
