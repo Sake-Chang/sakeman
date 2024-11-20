@@ -10,13 +10,15 @@
         <div class="uclist-child __shelf" th:each="um : ${usermangalist}">
             <div class="uclist-child-figure">
 
-                <div th:if="${um.manga.reviews.?[user.id == user.id].size() > 0}" class="review-badge">
-                    <span class="material-icons-outlined md-18 md-HL md-bold">workspace_premium</span>
-                </div>
-                <div th:unless="${um.manga.reviews.?[user.id == user.id].size() > 0}" class="review-post">
-                    <a th:href="@{/review/post/__${um.manga.id}__}">
-                        <i class="uil uil-comment-edit md-18 md-PL"></i>
-                    </a>
+                <div  class="review-badge">
+                    <th:block th:if="${um.manga.reviews.?[user.id == user.id].size() > 0}">
+                        <span class="material-icons-outlined md-20 md-HL md-bold">workspace_premium</span>
+                    </th:block>
+                    <th:bliock th:unless="${um.manga.reviews.?[user.id == user.id].size() > 0}">
+                        <a th:href="@{/review/post/__${um.manga.id}__}">
+                            <i class="uil uil-comment-edit md-20 md-PL"></i>
+                        </a>
+                    </th:bliock>
                 </div>
 
                 <a th:href="@{/manga/detail/__${um.manga.id}__}">

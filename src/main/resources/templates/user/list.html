@@ -17,17 +17,19 @@
     <div class="tab-container">
         <a class="tab-link" th:href="@{/user/list/veteran}">
             <div class="tab" th:classappend="${tab == 'veteran'} ? 'tab-current'">
-                <div class="tabicon">
-                    <i class="uil uil-bolt"></i>
-                </div>
+<!--                <div class="tabicon">-->
+<!--                    <i class="uil uil-bolt"></i>-->
+<!--                </div>-->
+                <span class="material-icons-outlined md-24">offline_bolt</span>
                 <span class="tab-text">ベテラン勢</span>
             </div>
         </a>
         <a class="tab-link" th:href="@{/user/list/rookie}">
             <div class="tab" th:classappend="${tab == 'rookie'} ? 'tab-current'">
-                <div class="tabicon">
-                    <i class="uil uil-fire"></i>
-                </div>
+<!--                <div class="tabicon">-->
+<!--                    <i class="uil uil-fire"></i>-->
+<!--                </div>-->
+                <span class="material-icons-outlined md-24">stars</span>
                 <span class="tab-text">ルーキー</span>
             </div>
         </a>

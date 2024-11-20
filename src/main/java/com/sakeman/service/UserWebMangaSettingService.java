@@ -19,7 +19,7 @@ public class UserWebMangaSettingService {
     public boolean isDefaultSetting(UserWebMangaSetting setting, List<Integer> genreIdsExist) {
         return  setting.getFreeflagSetting() == 0 &&
                 setting.getFollowflagSetting() == 0 &&
-                setting.getOneshotflagSetting() == 0 &&
+//                setting.getOneshotflagSetting() == 0 &&
                 (genreIdsExist.contains(0) || genreIdsExist.size() == (int) genreService.countAll());
     }
 

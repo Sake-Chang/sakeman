@@ -528,7 +528,7 @@ h2>i {
     display: flex;
     align-items: center;
     justify-content: center;
-    column-gap: 16px;
+    column-gap: 8px;
 }
 
 .tab-current {
@@ -568,20 +568,20 @@ h2>i {
 
 .tabicon {
     display: flex;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
     background-color: var(--WH);
-    border: solid 2px var(--GR);
+    border: solid 1.5px var(--GR);
     border-radius: 50%;
     justify-content: center;
     align-items: center;
     color: var(--GR);
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .tab-current .tabicon {
-    border: solid 2px var(--PL);
+    border: solid 1.5px var(--PL);
     color: var(--PL);
 
 
@@ -3195,29 +3195,19 @@ input[id^=post-popup]:checked~.post-popup-overlay {
 
 .review-badge {
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: -1px;
+    right: -1px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--WH);
-    width: fit-content;
+    width: 32px;
+    height: 32px;
     padding: 3px;
-    border-radius: 50%;
+    border-radius: 0 8px 0 8px;
+    border: solid 1px var(--AS);
 }
 
-.review-post {
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--WH);
-    width: fit-content;
-    padding: 2px 3.5px;
-    border-radius: 50%;
-}
 
 .manga-info-synopsis {
     font-size: 12px;

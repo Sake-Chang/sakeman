@@ -78,9 +78,10 @@
 <div class="tab-container">
     <a class="tab-link" th:href="@{/manga/detail/__${manga.id}__/info}">
         <div class="tab" th:classappend="${tab == 'info'} ? 'tab-current'">
-            <div class="tabicon">
-                <i class="uil uil-arrow-growth"></i>
-            </div>
+<!--            <div class="tabicon">-->
+<!--                <i class="uil uil-arrow-growth"></i>-->
+<!--            </div>-->
+            <span class="material-icons-outlined md-24">stars</span>
             <span class="tab-text">オススメ情報</span>
         </div>
     </a>
