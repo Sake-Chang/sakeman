@@ -103,8 +103,14 @@ public class UserController {
                             @PathVariable("tab") String tab,
                             @PathVariable("display-type") String displayType,
                             Model model,
-                            @PageableDefault(page=0, size=99, sort= {"registeredAt"},
-                            direction=Direction.DESC) Pageable pageable) {
+                            @RequestParam(name="page", required=false, defaultValue = "1") int page) {
+
+        if (page < 1) {
+            return String.format("redirect:/user/%s/%s/%s", id, tab, displayType);
+        }
+
+        Sort sort = Sort.by(Sort.Order.desc("registeredAt"));
+        Pageable pageable = PageRequest.of(page - 1, 99, sort);
 
         User thisUser = service.getUser(id);
         Page<ReadStatus> userwantlistPage = rsService.findByUserAndStatusPageable(thisUser, Status.気になる, pageable);
@@ -115,6 +121,17 @@ public class UserController {
         Collections.shuffle(statuslist);
 
         Page<WebMangaFollow> userfollowlistPage  = wfService.findByUserPageable(thisUser, pageable);
+
+        Page<?> result;
+        switch (tab) {
+            case "want": result = userwantlistPage; break;
+            case "read": result = userreadlistPage; break;
+            case "follow": result = userfollowlistPage; break;
+            default: result = userwantlistPage;
+        }
+        if (page > Math.max(result.getTotalPages(), 1)) {
+            return String.format("redirect:/user/%s/%s/%s", id, tab, displayType);
+        }
 
         model.addAttribute("tab", tab);
         model.addAttribute("display-type", displayType);

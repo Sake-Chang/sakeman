@@ -11,7 +11,7 @@
         <div    class="web-manga-follow-toggle clickable"
                     th:with="mangaId=${mangaId}"
                     th:data-manga-id="${mangaId}">
-                <span   class="material-icons-outlined md-24 md-GR"
+                <span   class="material-icons-outlined md-24"
                         th:classappend="${#lists.contains(webmangafollowlist, mangaId)} ? 'md-HL'"
                         th:text="${#lists.contains(webmangafollowlist, mangaId)} ? 'bookmark' : 'bookmark_add'">
                 </span>

@@ -82,7 +82,7 @@ public class WebMangaUpdateInfoController {
         UserWebMangaSetting thisSetting = userService.getUserWebMangaSetting(thisUser).orElseGet(UserWebMangaSetting::new);
         List<Integer> genreIdsExist = settingService.getGenreIdsExist(thisSetting);
 
-        Page<WebMangaUpdateInfoProjectionBasic> result = settingService.isDefaultSetting(thisSetting)
+        Page<WebMangaUpdateInfoProjectionBasic> result = settingService.isDefaultSetting(thisSetting, genreIdsExist)
                 ? webService.getInfoListPageableProjection(pageable, true)
                 : webService.getFiltered(thisSetting, genreIdsExist, userDetail.getUser().getId(), pageable, true);
 

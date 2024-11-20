@@ -34,6 +34,11 @@ public class GenreService {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public long countAll() {
+        return repository.count();
+    }
+
     /** 全件を表示順で返す **/
     @Transactional(readOnly = true)
     @Cacheable("genreListOrdered")

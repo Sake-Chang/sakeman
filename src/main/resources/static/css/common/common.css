@@ -3223,3 +3223,7 @@ input[id^=post-popup]:checked~.post-popup-overlay {
     font-size: 12px;
     margin-bottom: 8px;
 }
+
+.web-manga-follow-toggle {
+    color: var(--GR);
+}

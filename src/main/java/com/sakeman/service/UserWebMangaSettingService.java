@@ -14,12 +14,13 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UserWebMangaSettingService {
+    private final GenreService genreService;
 
-    public boolean isDefaultSetting(UserWebMangaSetting setting) {
+    public boolean isDefaultSetting(UserWebMangaSetting setting, List<Integer> genreIdsExist) {
         return  setting.getFreeflagSetting() == 0 &&
                 setting.getFollowflagSetting() == 0 &&
                 setting.getOneshotflagSetting() == 0 &&
-                (setting.getGenreSettings() == null || setting.getGenreSettings().isEmpty());
+                (genreIdsExist.contains(0) || genreIdsExist.size() == (int) genreService.countAll());
     }
 
     public List<Integer> getGenreIdsAll(UserWebMangaSetting setting) {
@@ -33,12 +34,13 @@ public class UserWebMangaSettingService {
 
     public List<Integer> getGenreIdsExist(UserWebMangaSetting setting) {
         if (setting == null || setting.getGenreSettings() == null) {
-            return Collections.singletonList(0);
+            return List.of(0);
         }
-        return setting.getGenreSettings().stream()
-                .filter(settingGenre -> settingGenre.isDeleteFlag() == false)  // 削除されていないもののみ
-                .map(settingGenre -> settingGenre.getGenre().getId())  // Genre IDを取得
-                .collect(Collectors.toList());
+        List<Integer> genreIds = setting.getGenreSettings().stream()
+                                        .filter(settingGenre -> settingGenre.isDeleteFlag() == false)  // 削除されていないもののみ
+                                        .map(settingGenre -> settingGenre.getGenre().getId())  // Genre IDを取得
+                                        .collect(Collectors.toList());
+        return genreIds.isEmpty() ? List.of(0) : genreIds;
     }
 
     public List<Integer> getFreeflagNums(UserWebMangaSetting setting) {
