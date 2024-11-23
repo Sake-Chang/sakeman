@@ -6,7 +6,7 @@
 <th:block th:fragment="info-card-module(infolist, likelist)">
 
 <th:block th:if="${pages != null}">
-    <div class="container pagenation-container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+    <div class="container pagenation-container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
 </th:block>
 
 
@@ -104,7 +104,7 @@
 </div> <!--/* outer */-->
 
 <th:block th:if="${pages != null}">
-    <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+    <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
 </th:block>
 
 </th:block> <!--/* layout:fragment */-->

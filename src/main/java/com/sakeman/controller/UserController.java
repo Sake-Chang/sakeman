@@ -35,6 +35,7 @@ import com.sakeman.entity.User;
 import com.sakeman.entity.UserFollow;
 import com.sakeman.entity.WebMangaFollow;
 import com.sakeman.form.EditUserProfForm;
+import com.sakeman.form.RatingForm;
 import com.sakeman.service.BadgeUserService;
 import com.sakeman.service.ImageValidationService;
 import com.sakeman.service.ReadStatusService;
@@ -103,13 +104,14 @@ public class UserController {
                             @PathVariable("tab") String tab,
                             @PathVariable("display-type") String displayType,
                             Model model,
-                            @RequestParam(name="page", required=false, defaultValue = "1") int page) {
+                            @RequestParam(name="page", required=false, defaultValue = "1") int page
+                            ) {
 
         if (page < 1) {
             return String.format("redirect:/user/%s/%s/%s", id, tab, displayType);
         }
 
-        Sort sort = Sort.by(Sort.Order.desc("registeredAt"));
+        Sort sort = Sort.by(Sort.Order.desc("updatedAt"));
         Pageable pageable = PageRequest.of(page - 1, 99, sort);
 
         User thisUser = service.getUser(id);

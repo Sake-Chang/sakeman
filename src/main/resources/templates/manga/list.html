@@ -58,13 +58,13 @@
         </th:block>
 
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-    <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${mangaPages})}"></div>
+    <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${mangaPages})}"></div>
 
     <!--/* まんがカードモジュールを呼び出し */-->
     <div class="container" layout:include="~{module/card/manga-card :: manga-card(mangalist=${mangalist}, reviewlist=${reviewlist}, likelist=${likelist}, wantlist=${wantlist}, readlist=${readlist})}"></div>
 
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-    <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${mangaPages})}"></div>
+    <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${mangaPages})}"></div>
 
 </div>
 

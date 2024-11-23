@@ -9,7 +9,7 @@
 
     <div class="user-prof-head">
         <!--/* カバーを呼び出し */-->
-        <div layout:include="~{module/other/user-cover :: user-cover(user=${user}, statuslist=${statuslist})}"></div>
+        <div th:replace="~{module/other/user-cover :: user-cover(user=${user}, statuslist=${statuslist})}"></div>
 
         <a th:href="@{/user/{id}(id=${user.id})}">
             <th:block th:if="${user.img != null}">
@@ -22,7 +22,7 @@
         </a>
 
         <!--/* ユーザープロフィールボタンを呼び出し */-->
-        <div layout:include="~{module/btn/btn-user-prof :: btn-user-prof(user=${user}, followeelist=${followeelist})}"></div>
+        <div th:replace="~{module/btn/btn-user-prof :: btn-user-prof(user=${user}, followeelist=${followeelist})}"></div>
 
         <div class="userpage-head-container">
             <span class="userpage-username" th:text="${user.username}"></span>
@@ -37,12 +37,6 @@
                 </div>
             </div>
         </div>
-        <!--
-        <div class="read-more-002">
-            <p class="userpage-selfintro">[[${user.selfIntro}]]</p>
-            <label><input type="checkbox"/>続きを読む</label>
-        </div>
-        -->
         <div class="user-selfinfo-container">
             <div class="description-text-container">
                 <p class="card-description-text">[[${user.selfIntro}]]</p>
@@ -54,10 +48,6 @@
     <div th:if="${!#lists.isEmpty(badgelist)}" class="tag-container" th:each="badgeuser : ${badgelist}">
         <span class="tag" th:text="${badgeuser.badge.name}"></span>
     </div>
-
-    <!--
-    <div class="container" th:with="text='マイ本棚', class='uil-books'" layout:include="~{module/other/page-title-module :: h2(text=${text}, class=${class})}"></div>
-    -->
 
     <!--/* タブ */-->
     <div class="tab-container">
@@ -83,36 +73,36 @@
 
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
     <th:block th:if="${tab} == 'want'">
-        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${wantpages})}"></div>
+        <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${wantpages})}"></div>
     </th:block>
     <th:block th:if="${tab} == 'read'">
-        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${readpages})}"></div>
+        <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${readpages})}"></div>
     </th:block>
     <th:block th:if="${tab} == 'follow'">
-        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${followpages})}"></div>
+        <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${followpages})}"></div>
     </th:block>
 
     <!--/* 本棚モジュールを呼び出し（${userwantlist}, ${wantlist}, ${readlist}を引数として渡す） */-->
     <th:block th:if="${tab} == 'want'">
-        <div th:insert="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userwantlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
+        <div th:replace="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userwantlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
     </th:block>
     <th:block th:if="${tab} == 'read'">
-        <div th:insert="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userreadlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
+        <div th:replace="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userreadlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
     </th:block>
     <th:block th:if="${tab} == 'follow'">
-        <div th:insert="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userfollowlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
+        <div th:replace="~{module/card/shelf-card-module :: shelf-card-module(user=${user}, usermangalist=${userfollowlist}, wantlist=${wantlist}, readlist=${readlist}, tab=${tab}, allstatus=${allStatus})}"></div>
     </th:block>
 
 
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
     <th:block th:if="${tab} == 'want'">
-        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${wantpages})}"></div>
+        <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${wantpages})}"></div>
     </th:block>
     <th:block th:if="${tab} == 'read'">
-        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${readpages})}"></div>
+        <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${readpages})}"></div>
     </th:block>
     <th:block th:if="${tab} == 'follow'">
-        <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${followpages})}"></div>
+        <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${followpages})}"></div>
     </th:block>
 
 

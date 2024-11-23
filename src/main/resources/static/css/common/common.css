@@ -1439,7 +1439,7 @@ table.manga-info-table td.bar {
 -------------------------------------------------- */
 
 nav.pagenation {
-    margin: auto;
+    justify-content: center;
 }
 
 .pagenation {

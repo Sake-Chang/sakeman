@@ -57,7 +57,7 @@ public class Review {
     @Max(5)
     private Integer rating;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = true)
     @NotEmpty(message = "タイトルを入力してください！")
     private String title;
 

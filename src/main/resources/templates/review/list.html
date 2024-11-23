@@ -44,7 +44,7 @@
 
 
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-    <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${reviewlistPages})}"></div>
+    <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${reviewlistPages})}"></div>
 
     <!--/* レビューリストモジュールを呼び出し（${reviewlist}を引数として渡す） */-->
     <div class="container" layout:include="~{module/card/review-card-module :: review-card-module(reviewlist=${reviewlist}, likelist=${likelist}, wantlist=${wantlist}, readlist=${readlist}, followeelist=${followeelist})}"></div>
@@ -52,7 +52,7 @@
         <div th:if="${reviewlist.isEmpty}" class="tmp-container-2" th:with="mode='button', text1='この作品にはまだレビューがありません。', text2='一番のりでレビューしてみませんか？', text3='(会員登録［無料］が必要です)', btnText='この作品のレビューを書く', linkurl='@{/review/post/__${mangaobj.id}__}'" layout:include="~{module/other/message-info-module :: message-info-module(mode=${mode}, message=${message}, text1=${text1}, text2=${text2}, text3=${text3}, linkurl=${linkurl}, btnText=${btnText})}"></div>
     </div>
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-    <div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${reviewlistPages})}"></div>
+    <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${reviewlistPages})}"></div>
 
 
     <th:block th:if="${mangaobj}!=null">

@@ -1,4 +1,4 @@
-package com.sakeman.entity.projection.webmangamedia;
+package com.sakeman.entity.projection.webmanga;
 
 public interface WebMangaMediaProjectionForWebMangaUpdateInfo {
     Integer getId();

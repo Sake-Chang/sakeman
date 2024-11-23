@@ -2,7 +2,7 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<div layout:fragment="user-cover(user, statuslist)">
+<div th:fragment="user-cover(user, statuslist)">
     <div class="user-cover">
         <div class="author-cover" th:with="size=${#lists.size(statuslist)}">
             <th:block th:if="${size == 0}">

@@ -28,6 +28,9 @@
                                      @{https://sake-man.com/calligraphy/__${um.manga.calligraphy}__}" loading="lazy">
                     </figure>
                 </a>
+                <!--
+                <th:block th:insert="~{module/btn/btn-rating :: btn-rating(rating=${rating}, manga=${um.manga})}"></th:block>
+                -->
                 <th:block th:insert="~{module/btn/btn-store-circle :: btn-store-circle(manga=${um.manga})}"></th:block>
             </div>
 
@@ -73,7 +76,7 @@
                     </a>
                 </div>
                 <!--/* 気になるボタンを呼び出し（${manga.id}, ${wantlist}, ${readlist}を引数として渡す） */-->
-                <th:block class="" layout:include="~{module/btn/btn-read-status-select :: btn-read-status-select(umlist=${um}, wantlist=${wantlist}, readlist=${readlist}, allstatus=${allstatus})}"></th:block>
+                <th:block th:replace="~{module/btn/btn-read-status-select :: btn-read-status-select(umlist=${um}, wantlist=${wantlist}, readlist=${readlist}, allstatus=${allstatus})}"></th:block>
             </div>
         </div>
     </div>

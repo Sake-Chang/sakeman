@@ -198,13 +198,13 @@ public class MangaController {
         Pageable pageable;
         switch (tab) {
             case "recent":
-                pageable = PageRequest.of(page-1, 20, Sort.by(Sort.Direction.DESC, "registeredAt"));
+                pageable = PageRequest.of(page-1, 20, Sort.by(Sort.Direction.DESC, "updatedAt"));
                 break;
             case "popular":
                 pageable = PageRequest.of(page-1, 20, Sort.by(Sort.Direction.DESC, "readStatus"));
                 break;
             default:
-                pageable = PageRequest.of(page-1, 20, Sort.by(Sort.Direction.DESC, "registeredAt"));
+                pageable = PageRequest.of(page-1, 20, Sort.by(Sort.Direction.DESC, "updatedAt"));
                 break;
         }
         return pageable;

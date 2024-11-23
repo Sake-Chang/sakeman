@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<th:block th:fragment="btn-rating(rating, manga)">
+
+    <form class="post-review-form-container" method="post" th:action="@{/review/post}" th:object="${rating}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <input type="hidden" th:name="mangaId" th:value="${manga.id}">
+        <div class="rating-wrapper">
+            <input id="rating_1" type="radio" value="1" name="rating">
+                <label for="rating_1"><span class="material-icons-outlined">star</span></label>
+            <input id="rating_2" type="radio" value="2" name="rating">
+                <label for="rating_2"><span class="material-icons-outlined">star</span></label>
+            <input id="rating_3" type="radio" value="3" name="rating">
+                <label for="rating_3"><span class="material-icons-outlined">star</span></label>
+            <input id="rating_4" type="radio" value="4" name="rating">
+                <label for="rating_4"><span class="material-icons-outlined">star</span></label>
+            <input id="rating_5" type="radio" value="5" name="rating">
+                <label for="rating_5"><span class="material-icons-outlined">star</span></label>
+        </div>
+    </form>
+
+</th:block>
+
+</html>

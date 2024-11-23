@@ -60,7 +60,7 @@
 </th:block>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+<div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
 
 <!--/* ユーザーリストモジュールを呼び出し（${reviewlist}を引数として渡す） */-->
 <div class="container" layout:include="~{module/card/user-card :: user-card(mangalist=${mangalist}, userlist=${userlist}, userId=${userId}, reviewlist=${reviewlist}, followeelist=${followeelist})}"></div>
@@ -69,7 +69,7 @@
 <div th:if="${userlist.isEmpty and tab == 'followers'}" class="tmp-container-2" th:with="mode='text', message='フォローしてくれている人はまだいません。'" layout:include="~{module/other/message-info-module :: message-info-module(mode=${mode}, message=${message}, text1=${text1}, text2=${text2}, text3=${text3}, linkurl=${linkurl}, btnText=${btnText})}"></div>
 
 <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-<div class="container" layout:include="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
+<div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${pages})}"></div>
 
 </div>
 </html>

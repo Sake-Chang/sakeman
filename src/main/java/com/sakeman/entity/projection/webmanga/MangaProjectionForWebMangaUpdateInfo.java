@@ -1,10 +1,6 @@
-package com.sakeman.entity.projection.manga;
+package com.sakeman.entity.projection.webmanga;
 
 import java.util.List;
-
-import com.sakeman.entity.projection.mangatag.MangaTagProjectionForWebMangaUpdateInfo;
-import com.sakeman.entity.projection.review.ReviewProjectionForWebMangaUpdateInfo;
-import com.sakeman.entity.projection.webmangafollow.WebMangaFollowProjectionForWebMangaUpdateInfo;
 
 public interface MangaProjectionForWebMangaUpdateInfo {
     Integer getId();

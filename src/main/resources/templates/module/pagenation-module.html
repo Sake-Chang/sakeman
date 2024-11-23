@@ -2,7 +2,7 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<div layout:fragment="pagenation-module(pages)">
+<div th:fragment="pagenation-module(pages)">
 
     <th:block th:if="${pages.totalPages != 1}">
 
@@ -11,7 +11,7 @@
                     <!--/* 前のページ */-->
                     <li class="prev page-item" th:classappend="${pages.first} ? 'disabled'">
 <!--                        <a th:href="@{''(page=${pages.number - 1})}" class="prev page-item-text" aria-label="Previous">-->
-                        <a th:href="@{''(page=${pages.number})}" class="prev page-item-text" aria-label="Previous">
+                        <a th:href="@{''(page=${pages.number})}" class="prev page-item-text" aria-label="Previous" th:attr="data-page=${pages.number}">
                            <i class="uil uil-angle-left-b" aria-hidden="true"></i>
                         </a>
                     </li>
@@ -59,7 +59,7 @@
 
                     <!--/* 次のページ */-->
                     <li class="next page-item" th:classappend="${pages.last} ? 'disabled'">
-                        <a th:href="@{''(page=${pages.number + 1})}" class="next page-item-text" aria-label="Next">
+                        <a th:href="@{''(page=${pages.number + 2})}" class="next page-item-text" aria-label="Next" th:attr="data-page=${pages.number+2}">
                             <i class="uil uil-angle-right-b" aria-hidden="true"></i>
                         </a>
                     </li>

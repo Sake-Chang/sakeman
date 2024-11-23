@@ -131,7 +131,7 @@ public class WebMangaUpdateInfoService {
         List<Integer> freeflags = settingService.getFreeflagNums(setting);
         Integer followflag = setting.getFollowflagSetting();
         Integer oneshotflag = setting.getOneshotflagSetting();
-        return webRepository.findFiltered(freeflags, followflag, oneshotflag, genreIds, genreIds.isEmpty(), userId, pageable);
+        return webRepository.findFiltered(freeflags, followflag, oneshotflag, genreIds, genreIds.contains(0), userId, pageable);
     }
 
 /** 従前の個別のメソッド( getFilteredInfoListPageable ) ここから */

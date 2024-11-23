@@ -86,6 +86,7 @@ public class WebMangaUpdateInfoController {
                 ? webService.getInfoListPageableProjection(pageable, true)
                 : webService.getFiltered(thisSetting, genreIdsExist, userDetail.getUser().getId(), pageable, true);
 
+
         if (page > Math.max(result.getTotalPages(), 1)) {
             return "redirect:/web-manga-update-info";
         }

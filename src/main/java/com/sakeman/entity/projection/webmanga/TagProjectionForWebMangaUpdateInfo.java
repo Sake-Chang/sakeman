@@ -1,8 +1,6 @@
-package com.sakeman.entity.projection.tag;
+package com.sakeman.entity.projection.webmanga;
 
 import java.util.List;
-
-import com.sakeman.entity.projection.genretag.GenreTagProjectionForWebMangaUpdateInfo;
 
 public interface TagProjectionForWebMangaUpdateInfo {
     String getTagname();
