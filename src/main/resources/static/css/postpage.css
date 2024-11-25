@@ -1,8 +1,7 @@
 @charset "UTF-8";
 
 .postpage-title {
-    width: 100vw;
-    max-width: 400px;
+    width: 100%;
     display: inline-flex;
     justify-content: center;
     column-gap: 8px;

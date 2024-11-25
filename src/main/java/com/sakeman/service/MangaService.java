@@ -18,9 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.sakeman.dto.MangaAdminResponseDTO;
+import com.sakeman.dto.MangaForShelfDTO;
 import com.sakeman.entity.Author;
 import com.sakeman.entity.Manga;
 import com.sakeman.entity.MangaAuthor;
+import com.sakeman.entity.ReadStatus;
+import com.sakeman.entity.Review;
 import com.sakeman.exception.ResourceNotFoundException;
 import com.sakeman.repository.MangaRepository;
 import com.sakeman.repository.MangaSpecifications;
@@ -177,6 +180,69 @@ public class MangaService {
                 String.join(", ", authorNames)
             );
         }).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Manga> getMangaByUserIdAndReadStatus(Integer userId, ReadStatus.Status status, Pageable pageable){
+        return mangaRepository.findByReadStatusUserIdAndReadStatusStatus(userId, status, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Manga> getMangaByUserIdAndReadStatusSortByRating(Integer userId, ReadStatus.Status status, Pageable pageable){
+        return mangaRepository.findByReadStatusUserIdAndReadStatusStatusSortByRating(userId, status, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Manga> getMangaByWebMangaFollowsUserId(Integer userId, Pageable pageable){
+        return mangaRepository.findByWebMangaFollowsUserId(userId, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Manga> getMangaByWebMangaFollowsUserIdSortByRating(Integer userId, Pageable pageable){
+        return mangaRepository.findByWebMangaFollowsUserIdSortByRating(userId, pageable);
+    }
+
+    public Page<MangaForShelfDTO> convertToMangaForShelfDTO(Page<Manga> mangas, Integer userId) {
+        return mangas.map(manga -> mapToDto(manga, userId));
+    }
+
+    private MangaForShelfDTO mapToDto(Manga manga, Integer userId) {
+        return new MangaForShelfDTO(
+                manga.getId(),
+                manga.getTitle(),
+                manga.getCalligraphy(),
+                manga.getCompletionFlag(),
+                manga.getVolume(),
+                getUserRatingForManga(manga, userId),
+                areTitleAndContentNull(manga, userId),
+                manga.getReviews().size(),
+                calculateAverageRating(manga),
+                manga.getMangaAuthors().stream()
+                     .map(MangaAuthor::getAuthor)
+                     .toList()
+        );
+    }
+
+    private Integer getUserRatingForManga(Manga manga, Integer userId) {
+        return manga.getReviews().stream()
+                .filter(review -> review.getUser().getId().equals(userId))
+                .map(Review::getRating)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private boolean areTitleAndContentNull(Manga manga, Integer userId) {
+        return manga.getReviews().stream()
+                .filter(review -> review.getUser().getId().equals(userId))
+                .anyMatch(review -> review.getTitle() != null || review.getContent() != null);
+    }
+
+    private double calculateAverageRating(Manga manga) {
+        double average = manga.getReviews().stream()
+                .mapToDouble(Review::getRating)
+                .average()
+                .orElse(0.0);
+        return Math.round(average * 100.0) / 100.0;
     }
 
 

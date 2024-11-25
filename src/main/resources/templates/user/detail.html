@@ -3,13 +3,15 @@
 
 <head>
     <title>[[${user.username}]]のページ</title>
+    <meta name="owner-UID" th:content="${user.id}">
+    <meta name="current-UID" th:content="${currentUserId}">
 </head>
 
 <div layout:fragment="content">
 
     <div class="user-prof-head">
         <!--/* カバーを呼び出し */-->
-        <div th:replace="~{module/other/user-cover :: user-cover(user=${user}, statuslist=${statuslist})}"></div>
+        <div th:replace="~{module/other/user-cover :: user-cover(user=${user}, forCoverList=${forCoverList})}"></div>
 
         <a th:href="@{/user/{id}(id=${user.id})}">
             <th:block th:if="${user.img != null}">
@@ -53,23 +55,24 @@
     <div class="tab-container">
         <a class="tab-link" th:href="@{/user/{id}/want/grid(id=${user.id})}">
             <div class="tab" th:classappend="${tab == 'want'} ? 'tab-current' : ''">
-                <!--<i class="material-icons-outlined md-24">bookmark_added</i>-->
-                <span class="tab-text">気になる ([[${wantpages.totalElements}]])</span>
+                <span class="tab-text">気になる<br>([[${wantpages.totalElements}]])</span>
             </div>
         </a>
         <a class="tab-link" th:href="@{/user/{id}/read/grid(id=${user.id})}">
             <div class="tab" th:classappend="${tab == 'read'} ? 'tab-current' : ''">
-                <!--<i class="material-icons-outlined md-24">check_box</i>-->
-                <span class="tab-text">読んだ ([[${readpages.totalElements}]])</span>
+                <span class="tab-text">読んだ<br>([[${readpages.totalElements}]])</span>
             </div>
         </a>
         <a class="tab-link" th:href="@{/user/{id}/follow/grid(id=${user.id})}">
             <div class="tab" th:classappend="${tab == 'follow'} ? 'tab-current' : ''">
-                <!--<i class="material-icons-outlined md-24">check_box</i>-->
-                <span class="tab-text">Webフォロー ([[${followpages.totalElements}]])</span>
+                <span class="tab-text">Webフォロー<br>([[${followpages.totalElements}]])</span>
             </div>
         </a>
     </div>
+
+    <th:block sec:authorize="isAuthenticated()">
+        <span class="shelf-message">※書影画像の下の★をクリックでお気に入り度を登録・更新！</span>
+    </th:block>
 
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
     <th:block th:if="${tab} == 'want'">

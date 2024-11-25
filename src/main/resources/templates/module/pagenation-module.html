@@ -2,7 +2,7 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<div th:fragment="pagenation-module(pages)">
+<th:block th:fragment="pagenation-module(pages)">
 
     <th:block th:if="${pages.totalPages != 1}">
 
@@ -66,5 +66,5 @@
                 </ul>
           </nav>
     </th:block>
-</div>
+</th:block>
 </html>

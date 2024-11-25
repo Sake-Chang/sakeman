@@ -1,6 +1,7 @@
 package com.sakeman.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -11,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sakeman.entity.Manga;
 import com.sakeman.entity.Review;
+import com.sakeman.repository.MangaRepository;
 import com.sakeman.repository.ReviewRepository;
+import com.sakeman.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +23,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
+    private final MangaRepository mangaRepository;
+
 
     /** 全件を検索して返す **/
     @Transactional(readOnly = true)
@@ -32,6 +38,12 @@ public class ReviewService {
     public Page<Review> getReviewListPageable(Pageable pageable){
         return reviewRepository.findAll(pageable);
     }
+
+    @Transactional(readOnly = true)
+    public Page<Review> findByTitleIsNotNullOrContentIsNotNull(Pageable pageable){
+        return reviewRepository.findByTitleIsNotNullOrContentIsNotNull(pageable);
+    }
+
 
     /** 1件を検索して返す */
     @Transactional(readOnly = true)
@@ -57,11 +69,38 @@ public class ReviewService {
         return reviewRepository.findByMangaId(id, pageable);
     }
 
+    @Transactional(readOnly = true)
+    public Page<Review> findByMangaIdAndTitleIsNotNullOrContentIsNotNull(Integer id, Pageable pageable) {
+        return reviewRepository.findByMangaIdAndTitleIsNotNullOrContentIsNotNull(id, pageable);
+    }
+
     /** 著者で検索 **/
     @Transactional(readOnly = true)
     public Page<Review> getDistinctByMangaMangaAuthorsAuthorId(Integer aId, Pageable pageable) {
         return reviewRepository.findDistinctByMangaMangaAuthorsAuthorId(aId, pageable);
     }
+
+    /** ユーザーIDとまんがIDで検索 **/
+    @Transactional(readOnly = true)
+    public Optional<Review> getReviewByUserIdAndMangaId(Integer uid, Integer mid) {
+        return reviewRepository.findByUserIdAndMangaId(uid, mid);
+    }
+
+    @Transactional
+    public Review updateOrCreateReview(Integer userId, Integer mangaId, Integer rating) {
+        Optional<Review> optionalReview = reviewRepository.findByUserIdAndMangaId(userId, mangaId);
+
+        Review review = optionalReview.orElse(new Review());
+        if (!optionalReview.isPresent()) {
+            review.setUser(userRepository.findById(userId));
+            review.setManga(mangaRepository.findById(mangaId).orElseThrow(() -> new RuntimeException("Manga not found")));
+        }
+
+        review.setRating(rating);
+
+        return saveReview(review);
+    }
+
 
     /** 登録処理 */
     @Transactional

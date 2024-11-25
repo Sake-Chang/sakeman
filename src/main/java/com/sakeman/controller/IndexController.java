@@ -44,7 +44,8 @@ public class IndexController {
     @GetMapping("/")
     public String getList(@AuthenticationPrincipal UserDetail userDetail, Model model, @PageableDefault(page=0, size=10, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
         Page<Uclist> uclPage = uclService.getUclistListPageable(pageable);
-        Page<Review> reviewPage = reService.getReviewListPageable(pageable);
+//        Page<Review> reviewPage = reService.getReviewListPageable(pageable);
+        Page<Review> reviewPage = reService.findByTitleIsNotNullOrContentIsNotNull(pageable);
 
         model.addAttribute("uclPage", uclPage);
         model.addAttribute("uclistlist", uclPage.getContent());

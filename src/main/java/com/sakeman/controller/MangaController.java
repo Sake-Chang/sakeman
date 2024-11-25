@@ -175,7 +175,8 @@ public class MangaController {
             model.addAttribute("allList", allList);
         } else if (tab.equals("review")) {
             Pageable pageableEd = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "updatedAt"));
-            Page<Review> reviewlistPage = revService.getReviewByMangaIdPageable(id, pageableEd);
+//            Page<Review> reviewlistPage = revService.getReviewByMangaIdPageable(id, pageableEd);
+            Page<Review> reviewlistPage = revService.findByMangaIdAndTitleIsNotNullOrContentIsNotNull(id, pageableEd);
             Page<Uclist> ucllistPage = uclService.getByMangaPageable(service.getManga(id), pageableEd);
             model.addAttribute("reviewpage", reviewlistPage);
             model.addAttribute("reviewlist", reviewlistPage.getContent());

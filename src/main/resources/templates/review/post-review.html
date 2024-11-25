@@ -5,6 +5,7 @@
 
 <head>
 <title>レビュー登録</title>
+<meta name="user-id" th:content="${currentUserId}">
 </head>
 
 <div layout:fragment="content" class="space-16px">
@@ -29,6 +30,7 @@
 </div>
 
 <form class="post-review-form-container" method="post" th:action="@{/review/post}" th:object="${review}">
+    <input type="hidden" th:field="*{id}">
 
     <label class="form-label" for="manga.id">レビューする作品</label>
     <select class="select2-manga" name="manga.id" th:errorclass="err">
@@ -40,16 +42,16 @@
     <label class="form-label" for="rating">お気に入り度（星をクリック！）</label>
     <span th:errors="*{rating}" class="err"></span><br>
     <div class="rating-wrapper">
-        <input id="rating_1" type="radio" value="1" name="rating" th:errorclass="err">
-            <label for="rating_1"><span class="material-icons-outlined">star</span></label>
-        <input id="rating_2" type="radio" value="2" name="rating" th:errorclass="err">
-            <label for="rating_2"><span class="material-icons-outlined">star</span></label>
-        <input id="rating_3" type="radio" value="3" name="rating" th:errorclass="err">
-            <label for="rating_3"><span class="material-icons-outlined">star</span></label>
-        <input id="rating_4" type="radio" value="4" name="rating" th:errorclass="err">
-            <label for="rating_4"><span class="material-icons-outlined">star</span></label>
-        <input id="rating_5" type="radio" value="5" name="rating" th:errorclass="err">
-            <label for="rating_5"><span class="material-icons-outlined">star</span></label>
+        <th:block th:each="i : ${#numbers.sequence(1, 5)}">
+            <input th:id="|rating_${i}|" type="radio" name="rating" th:value="${i}"
+                   th:checked="${review.rating == i}" th:errorclass="err">
+            <label th:for="|rating_${i}|">
+                <span class="material-icons-outlined"
+                      th:classappend="${review.rating >= i} ? 'md-star' : 'md-AS'">
+                    star
+                </span>
+            </label>
+        </th:block>
     </div>
 
     <label class="form-label" for="title">レビュータイトル</label>

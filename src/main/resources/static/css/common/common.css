@@ -560,6 +560,7 @@ h2>i {
     font-size: 14px;
     color: inherit;
     font-weight: inherit;
+    text-align: center;
 }
 
 /*.tab i {*/
@@ -2846,7 +2847,7 @@ input[id^=post-popup]:checked~.post-popup-overlay {
     align-items: center;
     justify-content: center;
     row-gap: 8px;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     background-color: var(--PL);
     text-align: center;
@@ -3216,4 +3217,12 @@ input[id^=post-popup]:checked~.post-popup-overlay {
 
 .web-manga-follow-toggle {
     color: var(--GR);
+}
+
+.shelf-rating-wrapper {
+    display: flex;
+    width: 100%;
+    padding: 0 4px;
+    justify-content: space-between;
+
 }

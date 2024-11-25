@@ -58,12 +58,12 @@ public class Review {
     private Integer rating;
 
     @Column(name = "title", nullable = true)
-    @NotEmpty(message = "タイトルを入力してください！")
+//    @NotEmpty(message = "タイトルを入力してください！")
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "content", nullable = true)
     @Type(type = "text")
-    @NotEmpty(message = "レビュー本文を入力してください！")
+//    @NotEmpty(message = "レビュー本文を入力してください！")
     private String content;
 
     @Column(name = "registered_at", nullable = false, updatable = false)
@@ -75,7 +75,7 @@ public class Review {
     private Timestamp updatedAt;
 
     @Column(name = "delete_flag", nullable = false)
-    private Integer deleteFlag;
+    private Integer deleteFlag = 0;
 
 
     /** 関連エンティティ */

@@ -3,6 +3,8 @@ package com.sakeman.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sakeman.dto.MangaForShelfDTO;
 import com.sakeman.entity.Manga;
 import com.sakeman.entity.ReadStatus;
 import com.sakeman.entity.ReadStatus.Status;
@@ -38,6 +41,7 @@ import com.sakeman.form.EditUserProfForm;
 import com.sakeman.form.RatingForm;
 import com.sakeman.service.BadgeUserService;
 import com.sakeman.service.ImageValidationService;
+import com.sakeman.service.MangaService;
 import com.sakeman.service.ReadStatusService;
 import com.sakeman.service.ReviewService;
 import com.sakeman.service.S3Service;
@@ -53,6 +57,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService service;
+    private final MangaService maService;
     private final ReadStatusService rsService;
     private final UserFollowService ufService;
     private final ReviewService revService;
@@ -111,25 +116,35 @@ public class UserController {
             return String.format("redirect:/user/%s/%s/%s", id, tab, displayType);
         }
 
-        Sort sort = Sort.by(Sort.Order.desc("updatedAt"));
-        Pageable pageable = PageRequest.of(page - 1, 99, sort);
+//        Sort sort = Sort.by(Sort.Order.desc("updatedAt"));
+//        Pageable pageable = PageRequest.of(page - 1, 99, sort);
+        Pageable pageable = PageRequest.of(page - 1, 99);
 
-        User thisUser = service.getUser(id);
-        Page<ReadStatus> userwantlistPage = rsService.findByUserAndStatusPageable(thisUser, Status.気になる, pageable);
-        Page<ReadStatus> userreadlistPage = rsService.findByUserAndStatusPageable(thisUser, Status.読んだ, pageable);
-        List<ReadStatus> statuslist = new ArrayList<>();
-        statuslist.addAll(userwantlistPage.getContent());
-        statuslist.addAll(userreadlistPage.getContent());
-        Collections.shuffle(statuslist);
+        Page<Manga> followlistPage  = maService.getMangaByWebMangaFollowsUserIdSortByRating(id, pageable);
+        Page<MangaForShelfDTO> followlistDTOPage = maService.convertToMangaForShelfDTO(followlistPage, id);
+        Page<Manga> readlistPage = maService.getMangaByUserIdAndReadStatusSortByRating(id, Status.読んだ, pageable);
+        Page<MangaForShelfDTO> readlistDTOPage = maService.convertToMangaForShelfDTO(readlistPage, id);
+        Page<Manga> wantlistPage = maService.getMangaByUserIdAndReadStatusSortByRating(id, Status.気になる, pageable);
+        Page<MangaForShelfDTO> wantlistDTOPage = maService.convertToMangaForShelfDTO(wantlistPage, id);
 
-        Page<WebMangaFollow> userfollowlistPage  = wfService.findByUserPageable(thisUser, pageable);
+        List<MangaForShelfDTO> forCoverList = Stream.concat(
+                wantlistDTOPage.getContent().stream(),
+                readlistDTOPage.getContent().stream()
+            )
+            .collect(Collectors.collectingAndThen(
+                Collectors.toList(),
+                list -> {
+                    Collections.shuffle(list);
+                    return list.stream().limit(5).collect(Collectors.toList());
+                }
+            ));
 
         Page<?> result;
         switch (tab) {
-            case "want": result = userwantlistPage; break;
-            case "read": result = userreadlistPage; break;
-            case "follow": result = userfollowlistPage; break;
-            default: result = userwantlistPage;
+            case "want": result = wantlistDTOPage; break;
+            case "read": result = readlistDTOPage; break;
+            case "follow": result = followlistDTOPage; break;
+            default: result = wantlistDTOPage;
         }
         if (page > Math.max(result.getTotalPages(), 1)) {
             return String.format("redirect:/user/%s/%s/%s", id, tab, displayType);
@@ -139,17 +154,18 @@ public class UserController {
         model.addAttribute("display-type", displayType);
 
         model.addAttribute("user", service.getUser(id));
-        model.addAttribute("wantpages", userwantlistPage);
-        model.addAttribute("userwantlist", userwantlistPage.getContent());
-        model.addAttribute("readpages", userreadlistPage);
-        model.addAttribute("userreadlist", userreadlistPage.getContent());
-        model.addAttribute("followpages", userfollowlistPage);
-        model.addAttribute("userfollowlist", userfollowlistPage.getContent());
+        model.addAttribute("wantpages", wantlistDTOPage);
+        model.addAttribute("userwantlist", wantlistDTOPage.getContent());
+        model.addAttribute("readpages", readlistDTOPage);
+        model.addAttribute("userreadlist", readlistDTOPage.getContent());
+        model.addAttribute("followpages", followlistDTOPage);
+        model.addAttribute("userfollowlist", followlistDTOPage.getContent());
 
+        model.addAttribute("currentUserId", (userDetail != null) ? userDetail.getUser().getId() : 0 );
         model.addAttribute("followeelist", ufService.followeeIdListFollowedByUser(userDetail));
         model.addAttribute("wantlist", rsService.getWantMangaIdByUser(userDetail));
         model.addAttribute("readlist", rsService.getReadMangaIdByUser(userDetail));
-        model.addAttribute("statuslist", statuslist);
+        model.addAttribute("forCoverList", forCoverList);
         model.addAttribute("badgelist", buService.getByUserId(id));
 
         model.addAttribute("allStatus", ReadStatus.Status.values());

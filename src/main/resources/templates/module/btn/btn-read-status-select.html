@@ -6,97 +6,77 @@
 <th:block th:fragment="btn-read-status-select(umlist, wantlist, readlist, allstatus)">
 
 <th:block sec:authorize="isAuthenticated()">
-
-<div class="dropdown margin-cancel">
-    <!--/* ボタン部分 */-->
-<!--<button class="dropdown__btn minimanga-action" -->
-    <div class="dropdown__btn btn-read-status-mini"
-            th:classappend="!${#lists.contains(readlist, umlist.manga.id)} ?
-                            (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                    'btn-highlight' :
-                                    '' ):
-                                    'btn-purple' ">
-        <span class="material-icons-outlined md-18 status-icon"
-              th:text=  "!${#lists.contains(readlist, umlist.manga.id)} ?
-                         (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                    'bookmark' :
-                                    'bookmark_add') :
-                                    'check_box' "
-              th:classappend="  !${#lists.contains(readlist, umlist.manga.id)} ?
-                                (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                     'md-WH' :
-                                     '' ) :
-                                     'md-WH' "></span>
-<!--
-        <span class="minimanga-kininaru status-text"
--->
-        <span class="status-text"
-              th:text=" !${#lists.contains(readlist, umlist.manga.id)} ?
-                        (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                     '気になる' :
-                                     '気になる' ):
-                                     '読んだ！' "
-              th:classappend="  !${#lists.contains(readlist, umlist.manga.id)} ?
-                                (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                      'md-WH' ):
-                                      'md-WH' "></span>
-<!--</button>-->
-    </div>
-    <!--/* リスト部分 */-->
-    <div class="dropdown__body read-status-select">
-        <ul class="dropdown__list">
-            <!--
-            <th:block  th:each="item:${T(com.sakeman.entity.ReadStatus.Status).values()}">
-            -->
-            <th:block  th:each="item:${allstatus}">
-                <li class="dropdown__item" th:value="${item}" th:text="${item}" th:data-id="${umlist.id}"></li>
-            </th:block>
-        </ul>
-    </div>
-</div> <!--/* ドロップダウンボタン */-->
+    <div class="dropdown margin-cancel">
+        <div class="dropdown__btn btn-read-status-mini"
+                th:classappend="!${#lists.contains(readlist, umlist.id)} ?
+                                (${#lists.contains(wantlist, umlist.id)} ?
+                                        'btn-highlight' :
+                                        '' ):
+                                        'btn-purple' ">
+            <span class="material-icons-outlined md-18 status-icon"
+                  th:text=  "!${#lists.contains(readlist, umlist.id)} ?
+                             (${#lists.contains(wantlist, umlist.id)} ?
+                                        'bookmark' :
+                                        'bookmark_add') :
+                                        'check_box' "
+                  th:classappend="  !${#lists.contains(readlist, umlist.id)} ?
+                                    (${#lists.contains(wantlist, umlist.id)} ?
+                                         'md-WH' :
+                                         '' ) :
+                                         'md-WH' "></span>
+            <span class="status-text"
+                  th:text=" !${#lists.contains(readlist, umlist.id)} ?
+                            (${#lists.contains(wantlist, umlist.id)} ?
+                                         '気になる' :
+                                         '気になる' ):
+                                         '読んだ！' "
+                  th:classappend="  !${#lists.contains(readlist, umlist.id)} ?
+                                    (${#lists.contains(wantlist, umlist.id)} ?
+                                          'md-WH' ):
+                                          'md-WH' "></span>
+        </div>
+        <div class="dropdown__body read-status-select">
+            <ul class="dropdown__list">
+                <th:block  th:each="item:${allstatus}">
+                    <li class="dropdown__item" th:value="${item}" th:text="${item}" th:data-id="${umlist.id}"></li>
+                </th:block>
+            </ul>
+        </div>
+    </div> <!--/* ドロップダウンボタン */-->
 </th:block>
-
-
 
 <th:block sec:authorize="!isAuthenticated()">
     <input type="checkbox" id="alert-popup5">
     <label class="dropdown margin-cancel alert-popup-open" for="alert-popup5">
-    <!--/* ボタン部分 */-->
-<!--<button class="dropdown__btn minimanga-action" -->
-    <div class="dropdown__btn_inactive btn-read-status-mini"
-            th:classappend="!${#lists.contains(readlist, umlist.manga.id)} ?
-                            (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                    'btn-highlight' :
-                                    '' ):
-                                    'btn-purple' ">
-        <span class="material-icons-outlined md-18 status-icon"
-              th:text=  "!${#lists.contains(readlist, umlist.manga.id)} ?
-                         (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                    'bookmark' :
-                                    'bookmark_add') :
-                                    'check_box' "
-              th:classappend="  !${#lists.contains(readlist, umlist.manga.id)} ?
-                                (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                     'md-WH' :
-                                     '') :
-                                     'md-WH' "></span>
-<!--
-        <span class="minimanga-kininaru status-text"
--->
-        <span class="status-text"
-              th:text=" !${#lists.contains(readlist, umlist.manga.id)} ?
-                        (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                     '気になる' :
-                                     '気になる' ):
-                                     '読んだ！' "
-              th:classappend="  !${#lists.contains(readlist, umlist.manga.id)} ?
-                                (${#lists.contains(wantlist, umlist.manga.id)} ?
-                                      'md-WH' ):
-                                      'md-WH' "></span>
-<!--</button>-->
-    </div>
-
-</label> <!--/* ドロップダウンボタン */-->
+        <div class="dropdown__btn_inactive btn-read-status-mini"
+                th:classappend="!${#lists.contains(readlist, umlist.id)} ?
+                                (${#lists.contains(wantlist, umlist.id)} ?
+                                        'btn-highlight' :
+                                        '' ):
+                                        'btn-purple' ">
+            <span class="material-icons-outlined md-18 status-icon"
+                  th:text=  "!${#lists.contains(readlist, umlist.id)} ?
+                             (${#lists.contains(wantlist, umlist.id)} ?
+                                        'bookmark' :
+                                        'bookmark_add') :
+                                        'check_box' "
+                  th:classappend="  !${#lists.contains(readlist, umlist.id)} ?
+                                    (${#lists.contains(wantlist, umlist.id)} ?
+                                         'md-WH' :
+                                         '') :
+                                         'md-WH' "></span>
+            <span class="status-text"
+                  th:text=" !${#lists.contains(readlist, umlist.id)} ?
+                            (${#lists.contains(wantlist, umlist.id)} ?
+                                         '気になる' :
+                                         '気になる' ):
+                                         '読んだ！' "
+                  th:classappend="  !${#lists.contains(readlist, umlist.id)} ?
+                                    (${#lists.contains(wantlist, umlist.id)} ?
+                                          'md-WH' ):
+                                          'md-WH' "></span>
+        </div>
+    </label> <!--/* ドロップダウンボタン */-->
     <div class="alert-popup-overlay">
         <div class="alert-popup-window">
             <div class="alert-popup-container">
@@ -117,11 +97,7 @@
             </label>
         </div>
     </div>
-
-
-
 </th:block>
-
 
 </th:block> <!--/* layout:fragment */-->
 

@@ -80,10 +80,11 @@ public class ReadStatusRestController {
     @ResponseBody
     public int createReadStatus(@AuthenticationPrincipal UserDetail userDetail, @RequestBody ReadStatus readStatus, Model model) {
         // IdからreadStatusを取得
-        ReadStatus rs = readStatusService.getReadStatus(readStatus.getId());
+//        ReadStatus rs = readStatusService.getReadStatus(readStatus.getId());
 
         User objuser = userDetail.getUser();
-        Manga objmanga = rs.getManga();
+//        Manga objmanga = rs.getManga();
+        Manga objmanga = mangaService.getManga(readStatus.getId());
         Optional<ReadStatus> OptionRS = readStatusService.findByUserAndManga(objuser, objmanga);
 
         if (OptionRS.isEmpty()) {

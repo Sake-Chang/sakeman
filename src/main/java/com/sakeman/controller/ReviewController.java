@@ -1,11 +1,15 @@
 package com.sakeman.controller;
 
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -58,7 +62,8 @@ public class ReviewController {
         Manga mangaobj = null;
 
         Pageable pageable = getPageable(tab, page);
-        Page<Review> reviewlistPage = service.getReviewListPageable(pageable);
+//        Page<Review> reviewlistPage = service.getReviewListPageable(pageable);
+        Page<Review> reviewlistPage = service.findByTitleIsNotNullOrContentIsNotNull(pageable);
 
         if (page > Math.max(reviewlistPage.getTotalPages(), 1)) {
             return String.format("redirect:/review/list/%s", tab);
@@ -94,7 +99,8 @@ public class ReviewController {
         Manga mangaobj = mangaService.getManga(mangaId);
 
         Pageable pageable = getPageable(tab, page);
-        Page<Review> reviewlistPage = service.getReviewByMangaIdPageable(mangaId, pageable);
+//        Page<Review> reviewlistPage = service.getReviewByMangaIdPageable(mangaId, pageable);
+        Page<Review> reviewlistPage = service.findByMangaIdAndTitleIsNotNullOrContentIsNotNull(mangaId, pageable);
 
         if (page > Math.max(reviewlistPage.getTotalPages(), 1)) {
             return String.format("redirect:/review/list-manga/%s/%s", mangaId, tab);
@@ -119,24 +125,30 @@ public class ReviewController {
         return "review/list";
         }
 
+
     /** 新規登録（画面表示） */
     @GetMapping("/post")
-//    @PreAuthorize("isAuthenticated")
-    public String getRegister(@ModelAttribute Review review, Model model) {
-//        List<Manga> mangalist = maService.getMangaList();
-//        model.addAttribute("mangalist", mangalist);
+    public String getRegister(@AuthenticationPrincipal UserDetail userDetail, @ModelAttribute Review review, Model model) {
+        model.addAttribute("currentUserId", (userDetail != null) ? userDetail.getUser().getId() : 0 );
         return "review/post-review";
     }
 
     /** 新規登録（画面表示）mangaIdあり */
     @GetMapping("/post/{id}")
-//    @PreAuthorize("isAuthenticated")
-    public String getRegister(@ModelAttribute Review review, @PathVariable("id") Integer id, Model model) {
-//        List<Manga> mangalist = maService.getMangaList();
-//        model.addAttribute("mangalist", mangalist);
-        Review rev = new Review();
-        rev.setManga(mangaService.getManga(id));
-        model.addAttribute("review", rev);
+    public String getRegister(@AuthenticationPrincipal UserDetail userDetail, @ModelAttribute Review review, @PathVariable("id") Integer id, Model model) {
+        Optional<Review> existReview = service.getReviewByUserIdAndMangaId(userDetail.getUser().getId(), id);
+
+        existReview.ifPresentOrElse(
+            existingReview -> {
+                model.addAttribute("review", existingReview);
+            },
+            () -> {
+                Review rev = new Review();
+                rev.setManga(mangaService.getManga(id));
+                model.addAttribute("review", rev);
+            }
+        );
+        model.addAttribute("currentUserId", (userDetail != null) ? userDetail.getUser().getId() : 0 );
         return "review/post-review";
     }
 
@@ -145,11 +157,25 @@ public class ReviewController {
     @PreAuthorize("isAuthenticated")
     public String postRegister(@Validated Review review, BindingResult res, @AuthenticationPrincipal UserDetail userDetail, Model model, RedirectAttributes attrs) {
         if(res.hasErrors()) {
-            return getRegister(review, model);
+            return getRegister(userDetail, review, model);
         }
-        review.setUser(userDetail.getUser());
-        review.setDeleteFlag(0);
-        service.saveReview(review);
+
+        String inputTitle = review.getTitle();
+        String inputContent = review.getContent();
+
+        if (review.getId() == null) {
+            review.setTitle(inputTitle.trim().isEmpty() ? null : inputTitle);
+            review.setContent(inputContent.trim().isEmpty() ? null : inputContent);
+            review.setUser(userDetail.getUser());
+            review.setDeleteFlag(0);
+            service.saveReview(review);
+        } else {
+            Review existReview = service.getReview(review.getId());
+            existReview.setTitle(inputTitle.trim().isEmpty() ? null : inputTitle);
+            existReview.setContent(inputContent.trim().isEmpty() ? null : inputContent);
+            existReview.setRating(review.getRating());
+            service.saveReview(existReview);
+        }
 
         attrs.addFlashAttribute("success", "レビューが登録されました！");
         return "redirect:/";
