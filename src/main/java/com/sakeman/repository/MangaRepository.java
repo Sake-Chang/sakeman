@@ -41,7 +41,7 @@ public interface MangaRepository extends JpaRepository<Manga, Integer> {
             WHERE rs.user.id = :userId
               AND rs.status = :status
               AND (r.user.id = :userId OR r.user IS NULL)
-            ORDER BY r.rating DESC, m.updatedAt DESC
+            ORDER BY r.rating DESC, rs.updatedAt DESC
         """)
     Page<Manga> findByReadStatusUserIdAndReadStatusStatusSortByRating(Integer userId, ReadStatus.Status status, Pageable pageable);
 
@@ -52,7 +52,7 @@ public interface MangaRepository extends JpaRepository<Manga, Integer> {
             LEFT JOIN m.reviews r
             WHERE wf.user.id = :userId
               AND (r.user.id = :userId OR r.user IS NULL)
-            ORDER BY r.rating DESC, m.updatedAt DESC
+            ORDER BY r.rating DESC, wf.updatedAt DESC
         """)
     Page<Manga> findByWebMangaFollowsUserIdSortByRating(Integer userId, Pageable pageable);
 
