@@ -62,13 +62,14 @@ public class MangaService {
     @Transactional(readOnly = true)
     public Page<Manga> searchManga(String[] keywords, Pageable pageable) {
         Page<Manga> resultPage = mangaRepository.findAll(MangaSpecifications.searchManga(keywords), pageable);
-        List<Manga> uniqueMangas = new ArrayList<>(new HashSet<>(resultPage.getContent()));
+        for (Manga manga : resultPage.getContent()) {
+            System.out.println(manga.getTitle());
+        }
 
-        return new PageImpl<>(uniqueMangas, pageable, uniqueMangas.size());
+        return resultPage;
     }
 
     /** 検索結果 (select2用) */
-    /**　使用していない */
     @Transactional(readOnly = true)
     public List<Manga> getSearchResult(Manga manga) {
         ExampleMatcher matcher = ExampleMatcher

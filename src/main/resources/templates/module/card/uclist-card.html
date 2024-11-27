@@ -39,7 +39,8 @@
 
         <div class="uclist-container">
             <th:block th:if="!${#lists.isEmpty(uclist.uclistMangas)}" th:each="um : ${uclist.uclistMangas}">
-                <div class="uclist-child">
+
+                <div th:if="${um != null}" class="uclist-child">
                     <th:block th:insert="~{module/btn/btn-manga-info-uclist :: btn-manga-info-uclist(manga=${um.manga})}"></th:block>
                     <div class="uclist-child-figure">
                     <a th:href="@{/manga/detail/__${um.manga.id}__}">

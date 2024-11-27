@@ -90,7 +90,7 @@
 //  });
 
 $(document).ready(function() {
-    const submitButton = $('.form-button');
+    const submitButton = $('.post-review-form-container .form-button');
 
     function isFormValid() {
         const mangaSelected = !!$('.select2-manga option:selected').val();
