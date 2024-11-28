@@ -30,11 +30,11 @@ public class MangaSpecifications {
 
             Predicate[] predicates = new Predicate[keywords.length];
             for (int i = 0; i < keywords.length; i++) {
-                String likeKeyword = "%" + keywords[i].trim().toLowerCase() + "%";
+                String keyword = "%" + keywords[i].trim().toLowerCase() + "%";
                 predicates[i] = builder.or(
-                        builder.like(builder.lower(root.get("title")), likeKeyword),
-                        builder.like(builder.lower(root.get("synopsis")), likeKeyword),
-                        builder.like(builder.lower(authorJoin.get("name")), likeKeyword)
+                        builder.like(builder.lower(root.get("title")), keyword),
+                        builder.like(builder.lower(root.get("synopsis")), keyword),
+                        builder.like(builder.lower(authorJoin.get("name")), keyword)
                 );
             }
             return builder.and(predicates);

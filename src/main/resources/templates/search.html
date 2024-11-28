@@ -16,10 +16,10 @@
 
 <th:block th:if="!${searchResult.isEmpty}">
     <!--/* ページネーションモジュールを呼び出し（${pages}を引数として渡す） */-->
-    <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${searchResultPage})}"></div>
+    <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${searchResultPage}, query=${query})}"></div>
     <!--/* まんがリストモジュールを呼び出し（${mangalist},${reviewlist}を引数として渡す） */-->
     <div class="container" layout:include="~{module/card/manga-card :: manga-card(mangalist=${searchResult}, reviewlist=${reviewlist}, likelist=${likelist}, wantlist=${wantlist}, readlist=${readlist})}"></div>
-    <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${searchResultPage})}"></div>
+    <div class="container" th:insert="~{module/pagenation-module :: pagenation-module(pages=${searchResultPage}, query=${query})}"></div>
 </th:block>
 
 <th:block th:if="${searchResult.isEmpty}">

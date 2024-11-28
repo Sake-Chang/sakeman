@@ -1,9 +1,15 @@
 package com.sakeman.controller;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sakeman.entity.Manga;
 import com.sakeman.entity.Review;
@@ -62,9 +69,27 @@ public class IndexController {
     }
 
     @GetMapping("/search")
-    public String getSearchResult(@ModelAttribute SearchbarForm searchbarForm, @AuthenticationPrincipal UserDetail userDetail, Model model, @PageableDefault(page=0, size=20, sort= {"registeredAt"}, direction=Direction.DESC) Pageable pageable) {
+    public String getSearchResult(@ModelAttribute SearchbarForm searchbarForm,
+                                  @RequestParam(required = false) String inputKeyword,
+                                  @RequestParam(name="page", required=false, defaultValue = "1") int page,
+                                  @AuthenticationPrincipal UserDetail userDetail,
+                                  Model model) {
+
         String[] keywords = searchbarForm.getKeywords();
+
+        if (page < 1) {
+            String encodedKeyword = URLEncoder.encode(String.join(" ", keywords), StandardCharsets.UTF_8);
+            return String.format("redirect:/search?inputKeyword=%s", encodedKeyword);
+        }
+
+        Pageable pageable = PageRequest.of(page - 1, 20, Sort.by(Sort.Direction.ASC, "updatedAt"));
         Page<Manga> searchResultPage = maService.searchManga(keywords, pageable);
+
+        if (page > Math.max(searchResultPage.getTotalPages(), 1)) {
+            String encodedKeyword = URLEncoder.encode(String.join(" ", keywords), StandardCharsets.UTF_8);
+            return String.format("redirect:/search?inputKeyword=%s", encodedKeyword);
+        }
+
         model.addAttribute("searchResultPage", searchResultPage);
         model.addAttribute("searchResult", searchResultPage.getContent());
         model.addAttribute("reviewlist", reService.getReviewList());

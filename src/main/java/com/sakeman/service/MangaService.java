@@ -61,12 +61,7 @@ public class MangaService {
 
     @Transactional(readOnly = true)
     public Page<Manga> searchManga(String[] keywords, Pageable pageable) {
-        Page<Manga> resultPage = mangaRepository.findAll(MangaSpecifications.searchManga(keywords), pageable);
-        for (Manga manga : resultPage.getContent()) {
-            System.out.println(manga.getTitle());
-        }
-
-        return resultPage;
+        return mangaRepository.findAll(MangaSpecifications.searchManga(keywords), pageable);
     }
 
     /** 検索結果 (select2用) */
